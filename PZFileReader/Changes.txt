@@ -1,0 +1,39 @@
+Version 1.0.3
+-----------------------------------	
+2-5-2005
+		-added methods to set data in DataSet to all lower or all upper case setLowerCase(), setUpperCase()
+
+		-Changed the OrderBy class to make sure the elements being compared were the same case, so as not to make
+		case a factor when comparing.  If they are not the same case elements are converted to lower before comparing.
+		
+		-Added setLowerCase() and setUpperCase(0 to Java Docs
+
+
+Version 1.0.2
+-----------------------------------		
+1-27-2005
+	
+		-Changed parsing logic for delimited files with text qualifiers.  The parser will now parse lines that are qualified
+		and not qualified.  For example:
+		"here",1234,"test",50,test	
+		This will now parse into 5 seperate columns.  However if the text contains a delimiter or seperator inside the text,
+		it must be qualified to work correctly.
+
+
+
+Version 1.0.1
+-----------------------------------
+
+1-23-2005:
+		-Fixed bug in delimted parse.  If no elements were found
+		in a line, a string index out of bounds exception was thrown.
+		
+		-Added getDate(String,SimpleDateFormat).  By default, the current getDate(String) method
+		was expecting the date in yyyyMMdd format.  This method allows for another date format to be
+		specified.  This format should match the format in the text file.  If you would like to change the
+		formating of the date after it is returned from the DataSet, you can use SimpleDateFormat.format(Date)
+		
+		-Corrected javadocs for the getDate methods.  Had return type of double, changed to Date.
+		
+		-Added samples
+		
