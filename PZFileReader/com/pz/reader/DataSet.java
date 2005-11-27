@@ -26,7 +26,9 @@ import java.util.Vector;
 
 import com.pz.reader.ordering.OrderBy;
 import com.pz.reader.structure.Column;
+import com.pz.reader.structure.ColumnMetaData;
 import com.pz.reader.structure.Row;
+import com.pz.reader.util.ParserUtils;
 import com.pz.reader.xml.PZMapParser;
 
 /**
@@ -35,13 +37,15 @@ import com.pz.reader.xml.PZMapParser;
  * from columns.
  * 
  * @author	Paul Zepernick
- * @version 1.0
+ * @version 2.0
 */
 public class DataSet implements Serializable{
 	/**Array to hold the rows and their values in the text file*/
 	public Vector rows = null;
 	/**Array of errors that have occured during processing*/
 	private Vector errors = null;
+	/**Array of column metadata*/
+	private Vector columnMD = null;
 	/**Pointer for the current row in the array we are on*/
 	private int pointer = -1;
 	/**flag to indicate if data should be pulled as lower case*/
@@ -69,11 +73,12 @@ public class DataSet implements Serializable{
 		String sql = null;
 		ResultSet rs = null;
 		Statement stmt = null;
-		Column column = null;
+		ColumnMetaData column = null;
 		boolean hasResults = false;
-		ArrayList columnObjs = new ArrayList();
+		int recPosition = 1;
 		
 		try{
+		    columnMD = new Vector();
 			stmt = con.createStatement();
 			
 			sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
@@ -86,10 +91,15 @@ public class DataSet implements Serializable{
 			//put array of columns together.  These will be used to put together the dataset when reading in the file
 			while (rs.next()){
 			    
-			    column = new Column();
+			    column = new ColumnMetaData();
 			    column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
 			    column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
-			    columnObjs.add(column);
+			    column.setStartPosition(recPosition);
+				column.setEndPosition(recPosition + (rs.getInt("DATASTRUCTURE_LENGTH") - 1));
+				recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
+			    
+			    
+			    columnMD.add(column);
 			    
 			    
 				hasResults = true;
@@ -100,7 +110,7 @@ public class DataSet implements Serializable{
 			}
 			
 			//read in the fixed length file and construct the DataSet object
-			doFixedLengthFile(dataSource,columnObjs);
+			doFixedLengthFile(dataSource);
 			
 		}finally{
 		    if (rs != null) rs.close();
@@ -139,11 +149,11 @@ public class DataSet implements Serializable{
 		String sql = null;
 		ResultSet rs = null;
 		Statement stmt = null;
-		Column column = null;
+		ColumnMetaData column = null;
 		boolean hasResults = false;
-		ArrayList columnObjs = new ArrayList();
 		
 		try{
+		    columnMD = new Vector();
 			stmt = con.createStatement();
 			
 			sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
@@ -156,10 +166,10 @@ public class DataSet implements Serializable{
 			//put array of columns together.  These will be used to put together the dataset when reading in the file
 			while (rs.next()){
 			    
-			    column = new Column();
+			    column = new ColumnMetaData();
 			    column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
 			    column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
-			    columnObjs.add(column);
+			    columnMD.add(column);
 			    
 			    
 				hasResults = true;
@@ -170,7 +180,7 @@ public class DataSet implements Serializable{
 			}
 			
 			//read in the fixed length file and construct the DataSet object
-			doDelimitedFile(dataSource,delimiter,qualifier,ignoreFirstRecord,columnObjs);
+			doDelimitedFile(dataSource,delimiter,qualifier,ignoreFirstRecord);
 			
 		}finally{
 		    if (rs != null) rs.close();
@@ -206,8 +216,7 @@ public class DataSet implements Serializable{
 		
 		
 		PZMapParser parser = null;
-		ArrayList columnObjs = new ArrayList();
-		
+			
 	
 		if (!pzmapXML.exists()){
 			throw new 	FileNotFoundException("pzmap XML file does not exist ");
@@ -217,10 +226,41 @@ public class DataSet implements Serializable{
         
         parser.parse();
         
-        columnObjs = parser.getColumnDescriptors();
+        columnMD = new Vector(parser.getColumnDescriptors());
 		
 		//read in the delimited file and construct the DataSet object
-		doDelimitedFile(dataSource,delimiter,qualifier,ignoreFirstRecord,columnObjs);
+		doDelimitedFile(dataSource,delimiter,qualifier,ignoreFirstRecord);
+			
+		
+	}
+	
+	/**
+	 * Constructs a new DataSet using the first line of data found in the text file as the column
+	 * names.  This is used for a DELIMITED text file.
+	 * 
+	 * esacpe sequence reference  
+	 * \n  	newline  
+	 * \t 	tab 	
+	 * \b 	backspace 	
+	 * \r 	return 	
+	 * \f 	form feed 	
+	 * \\ 	backslash 	
+	 * \' 	single quote 	
+	 * \" 	double quote 	
+	 *
+	 * @param dataSource - text file datasource to read from
+	 * @param delimiter - Char the file is delimited By
+	 * @param qualifier - Char text is qualified by  
+	 * @exception Exception
+	 * 
+	*/
+	public DataSet(File dataSource,String delimiter, String qualifier) throws Exception{
+		super();
+		
+		//read the column names from the file
+		columnMD = new Vector(ParserUtils.getColumnMDFromFile(dataSource, delimiter, qualifier));
+		//read in the delimited file and construct the DataSet object
+		doDelimitedFile(dataSource,delimiter,qualifier,false);
 			
 		
 	}
@@ -239,7 +279,6 @@ public class DataSet implements Serializable{
 		
 		
 		PZMapParser parser = null;
-		ArrayList columnObjs = new ArrayList();
 		
 	
 		if (!pzmapXML.exists()){
@@ -250,10 +289,10 @@ public class DataSet implements Serializable{
         
         parser.parse();
         
-        columnObjs = parser.getColumnDescriptors();
+        columnMD = new Vector(parser.getColumnDescriptors());
 		
 		//read in the fixed length file and construct the DataSet object
-		doFixedLengthFile(dataSource,columnObjs);
+		doFixedLengthFile(dataSource);
 			
 		
 	}
@@ -262,7 +301,7 @@ public class DataSet implements Serializable{
 	 * puts together the dataset for fixed length file.   This is used for PZ XML mappings, and SQL table
 	 * mappings
 	 */	
-	private void doFixedLengthFile(File dataSource, ArrayList columnObjs) throws Exception{
+	private void doFixedLengthFile(File dataSource) throws Exception{
 		String line = null;
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -282,8 +321,8 @@ public class DataSet implements Serializable{
 			
 			
 			//loop through columns described and get the total line length
-			for (int i = 0; i < columnObjs.size(); i++){
-			    recordLength += ((Column)columnObjs.get(i)).getColLength();
+			for (int i = 0; i < columnMD.size(); i++){
+			    recordLength += ((ColumnMetaData)columnMD.get(i)).getColLength();
 			}
 
 			/**Read in the flat file*/
@@ -308,16 +347,12 @@ public class DataSet implements Serializable{
 				recPosition = 1;
 				row = new Row();
 				/**Build the columns for the row*/
-				for (int i = 0; i < columnObjs.size(); i++){
+				for (int i = 0; i < columnMD.size(); i++){
 					String tempValue = null;
 					column = new Column();
-					column.setColName(((Column)columnObjs.get(i)).getColName());
-					column.setColLength(((Column)columnObjs.get(i)).getColLength());
-					column.setStartPosition(recPosition);
-					column.setEndPosition(recPosition + (((Column)columnObjs.get(i)).getColLength()-1));
-					tempValue = line.substring(recPosition - 1,recPosition + (((Column)columnObjs.get(i)).getColLength()-1));
+					tempValue = line.substring(recPosition - 1,recPosition + (((ColumnMetaData)columnMD.get(i)).getColLength()-1));
 					column.setValue(tempValue.trim());
-					recPosition += ((Column)columnObjs.get(i)).getColLength();
+					recPosition += ((ColumnMetaData)columnMD.get(i)).getColLength();
 					row.addColumn(column);
 				}
 				row.setRowNumber(lineCount);
@@ -338,7 +373,7 @@ public class DataSet implements Serializable{
 	 * puts together the dataset for a DELIMITED file.   This is used for PZ XML mappings, and SQL table
 	 * mappings
 	 */	
-	private void doDelimitedFile(File dataSource,String delimiter, String qualifier, boolean ignoreFirstRecord, ArrayList columnObjs) throws Exception{
+	private void doDelimitedFile(File dataSource,String delimiter, String qualifier, boolean ignoreFirstRecord) throws Exception{
 		String line = null;
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -357,11 +392,9 @@ public class DataSet implements Serializable{
 			}
 			
 			
-			//loop through columns described and get the total column count
-			for (int i = 0; i < columnObjs.size(); i++){
-			    columnCount ++;	
-			}
-			
+			// get the total column count
+			columnCount = columnMD.size();
+
 			/**Read in the flat file*/
 			fr = new FileReader (dataSource.getAbsolutePath());
 			br = new BufferedReader(fr);
@@ -379,7 +412,7 @@ public class DataSet implements Serializable{
 				}
 				
 				//column values
-				columns = splitLine(line,delimiter,qualifier);
+				columns = ParserUtils.splitLine(line,delimiter,qualifier);
 				//DEBUG
 				/*for (int i = 0; i < columns.size(); i++){
 				    System.out.println(columns.get(i));
@@ -396,16 +429,18 @@ public class DataSet implements Serializable{
 
 				row = new Row();
 				/**Build the columns for the row*/
-				for (int i = 0; i < columnObjs.size(); i++){
+				for (int i = 0; i < columnMD.size(); i++){
 					column = new Column();
-					column.setColName(((Column)columnObjs.get(i)).getColName());
-					column.setColLength(((Column)columnObjs.get(i)).getColLength());
 					column.setValue((String)columns.get(i));
 					row.addColumn(column);
 				}
 				row.setRowNumber(lineCount);
 				/**add the row to the array*/
 				rows.add(row);
+				
+				//release some memory
+				columns.clear();
+				
 			}
 		}finally{
 			if (fr != null){
@@ -417,143 +452,15 @@ public class DataSet implements Serializable{
 		}						
 	}	
 
-	//helper function to return an array of elements
-	//from a line
-	private ArrayList splitLine(String line, String delimiter, String qualifier){
-	    ArrayList list = new ArrayList();
-	    String temp = "";
-	    boolean beginQualifier = false;
-	    //this will be used for delimted files that have some items qualified and some items dont
-	    boolean beginNoQualifier = false;
-	    
-	    //trim hard leading spaces at the begining of the line
-	    line = lTrim(line);
-	    
-	    for (int i = 0; i < line.length(); i++){
-            String remainderOfLine = line.substring(i); //data of the line which has not yet been read
-	        //check to see if there is a text qualifier
-	        if (qualifier != null && qualifier.trim().length() > 0){
-	            if (line.substring(i, i + 1).equals(qualifier) && !beginQualifier && !beginNoQualifier){
-	                //begining of a set of data
-	                beginQualifier = true;
-	            }else if (!beginQualifier && !beginNoQualifier &&
-	                    	!line.substring(i, i +1).equals(qualifier) && 
-                            !lTrim(remainderOfLine).startsWith(qualifier)){ //try to account for empty space before qualifier starts
-	                	//we have not yet begun a qualifier and the char we are on is NOT
-	                	//a qualifier.  Start reading data
-	                	beginNoQualifier = true;
-                        //make sure that this is not just an empty column with no qualifiers. ie "data",,"data"
-                        if (line.substring(i, i +1).equals(delimiter)){
-                            list.add(temp);
-                            temp = "";
-                            beginNoQualifier = false;
-                            continue;//grab the next char
-                        }
-                        temp += line.substring(i, i + 1);
-	            }else if ((!beginNoQualifier) && line.substring(i, i + 1).equals(qualifier) && beginQualifier &&
-	                    //i + 2 < line.length() && //looks to be an unnecessary check 
-                        (lTrim(line.substring(i + 1)).length() == 0 || //this will be true on empty undelmited columns at the end of the line
-	                    lTrim(line.substring(i + 1)).substring(0,1).equals(delimiter))){
-	                //end of a set of data that was qualified
-	                list.add(temp);
-	                temp = "";
-	                beginQualifier = false;
-	                //add to "i" so we can get past the qualifier, otherwise it is read into a set of data which 
-	                //may not be qualified.  Find out how many spaces to the delimiter
-                    int offset = getDelimiterOffset(line,i,delimiter) -1;//subtract 1 since i is going to get incremented again at the top of the loop
-                    //System.out.println("offset: " + offset);
-                    if (offset < 1){
-                        i++;
-                    }else{
-                        i += offset;
-                    }
-	            }else if (beginNoQualifier && line.substring(i, i + 1).equals(delimiter)){
-	                //check to see if we are done with an element that was not being qulified
-	                list.add(temp);
-	                temp = "";
-	                beginNoQualifier = false;
-	            }else if (beginNoQualifier || beginQualifier){
-	                //getting data in a NO qualifier element or qualified element
-	                temp += line.substring(i, i + 1);
-	            }
-                        
-	        }else{
-	            //not using a qualifier.  Using a delimiter only
-	            if (line.substring(i, i + 1).equals(delimiter)){
-	                list.add(temp);
-	                temp = "";
-	            }else{
-	                temp += line.substring(i,i + 1);
-	            }
-	        }
+	//finds the position of the specified column
+	private int findColumn(String columnName) throws NoSuchElementException{
+	    for (int i = 0; i < columnMD.size(); i++){
+	        ColumnMetaData cmd = (ColumnMetaData)columnMD.get(i);
+	        if (cmd.getColName().equalsIgnoreCase(columnName)) return i;
 	    }
 	    
-	    //remove the ending text qualifier if needed
-	    if (qualifier != null && qualifier.trim().length() > 0 && temp.trim().length()> 0){
-	        if (temp.trim().substring(temp.trim().length() -1).equals(qualifier)){
-	            temp = temp.trim().substring(0,temp.length() - 1);
-	        }
-	        
-	    }
-	    
-	    if (beginQualifier || beginNoQualifier || line.trim().endsWith(delimiter)){  
-	        //also account for a delimiter with an empty column at the end that was not qualified
-	        //check to see if we need to add the last column in..this will happen on empty columns
-	        //add the last column
-	        list.add(temp);
-	    }
-
-	    
-	    return list;
+	    throw new NoSuchElementException("Column Name: " + columnName + " does not exist");
 	}
-	
-    
-    //reads from the specified point in the line and returns how 
-    //many chars to the specified delimter
-    private int getDelimiterOffset(String line, int start,String delimiter){
-       int offset = 0;
-       for (int i = start; i < line.length(); i++){
-           offset++;
-           if (line.substring(i,i+1).equals(delimiter)){
-               return offset;
-           }
-       }
-       return -1;
-    }
-    
-	
-	 //trims the left side of the string  
-    private String lTrim(String value){  
-        String returnVal = "";  
-        boolean gotAChar = false;  
-          
-        for (int i = 0; i < value.length(); i++){  
-            if(value.substring(i,i+1).trim().length() == 0  
-                    && !gotAChar){  
-                continue;  
-            }else{  
-                gotAChar = true;  
-                returnVal += value.substring(i,i+1);  
-            }  
-        }  
-          
-        return returnVal;  
-          
-    }
-    
-    //removes the specified char from a String
-    private String removeChar(String character,String theString){
-        String s = "";
-        for (int i = 0; i < theString.length(); i++){
-            if (theString.substring(i,i+1).equalsIgnoreCase(character)){
-                continue;
-            }
-            s += theString.substring(i,i+1);
-        }
-        
-        return s;
-        
-    }
 	
 	
 	/**
@@ -572,7 +479,7 @@ public class DataSet implements Serializable{
 			/**get a reference to the row*/
 			row = (Row)rows.get(pointer);
 			/**change the value of the column*/
-			row.setValue(columnName,value);
+			row.setValue(findColumn(columnName),value);
 			/**update the row in the array*/
 			rows.set(pointer,row);
 			
@@ -639,19 +546,18 @@ public class DataSet implements Serializable{
 	 * @return String
 	*/
 	public String getString(String column) throws NoSuchElementException{
-	    
 	    if (upperCase){
 	        //convert data to uppercase before returning
-	        return ((Row)rows.get(pointer)).getValue(column).toUpperCase();
+	        return ((Row)rows.get(pointer)).getValue(findColumn(column)).toUpperCase();
 	    }
 	    
 	    if (lowerCase){
 	        //convert data to lowercase before returning
-	        return ((Row)rows.get(pointer)).getValue(column).toLowerCase();
+	        return ((Row)rows.get(pointer)).getValue(findColumn(column)).toLowerCase();
 	    }
 	    
 	    //return value as how it is in the file
-		return ((Row)rows.get(pointer)).getValue(column);
+		return ((Row)rows.get(pointer)).getValue(findColumn(column));
 	}
 	
 	/**
@@ -667,7 +573,7 @@ public class DataSet implements Serializable{
 		String newString = "";
 		String[] allowedChars = {"0","1","2","3","4","5","6","7","8","9",".","-"};
 		
-		s = ((Row)rows.get(pointer)).getValue(column);
+		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
 		
 		if (!strictNumericParse){
 			if (s.trim().length() == 0){
@@ -705,7 +611,7 @@ public class DataSet implements Serializable{
 		String newString = "";
 		String[] allowedChars = {"0","1","2","3","4","5","6","7","8","9","-"};
 		
-		s = ((Row)rows.get(pointer)).getValue(column);
+		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
 		
 		if (!strictNumericParse){
 			if (s.trim().length() == 0){
@@ -740,7 +646,7 @@ public class DataSet implements Serializable{
 	public Date getDate(String column) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String s = null;
-		s = ((Row)rows.get(pointer)).getValue(column);
+		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
 		return sdf.parse(s);		
 	}
 	
@@ -757,7 +663,7 @@ public class DataSet implements Serializable{
 	*/
 	public Date getDate(String column, SimpleDateFormat sdf) throws ParseException{
 		String s = null;
-		s = ((Row)rows.get(pointer)).getValue(column);
+		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
 		return sdf.parse(s);		
 	}
 	
@@ -768,20 +674,17 @@ public class DataSet implements Serializable{
 	 * @return String[]
 	*/
 	public String[] getColumns(){
-		Row row = null;
-		Column column = null;
-		Vector cols = null;
+		ColumnMetaData column = null;
 		String[] array = null;
 		
-		if (rows != null && rows.size() > 0){
-			row = (Row)rows.get(0);
-			cols = row.getCols();
-			array = new String[cols.size()];
-			for (int i=0; i<cols.size(); i++){
-				column = (Column)cols.get(i);
+		if (columnMD != null){
+		    array = new String[columnMD.size()];
+			for (int i=0; i < columnMD.size(); i++){
+				column = (ColumnMetaData)columnMD.get(i);
 				array[i] = column.getColName();	
 			}
 		}
+		
 		return array;
 	}
 	

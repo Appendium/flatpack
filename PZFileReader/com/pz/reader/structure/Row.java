@@ -18,9 +18,9 @@ import java.util.Vector;
  * This holds a collection of columns and their values along with the actual
  * rownumber they appear in the flat file
  * 
- * Last Updated: 10-16-2003  By: Paul Zepernick
+ * Last Updated: 11-27-2005  By: Paul Zepernick
  * @author	Paul Zepernick
- * @version 1.0
+ * @version 2.0
 */
 public class Row implements Serializable{
 	/**Vector to hold all columns that exist in the row*/
@@ -47,41 +47,26 @@ public class Row implements Serializable{
 	/**
 	 * Returns the value of a column for a specified column name 
 	 * 
-	 * @param colName - String column name
-	 * @exception NoSuchElementException
+	 * @param colPosition - int position of the column in the array
 	 * @return String value of column
 	*/
-	public String getValue(String colName) throws NoSuchElementException{
-		/**loop through the columns in the row until we find the name*/	
-		for (int i=0; i < cols.size(); i++){
-			if (((Column)cols.get(i)).getColName().equalsIgnoreCase(colName)){
-				return ((Column)cols.get(i)).getValue();
-			}
-		}
-		throw new NoSuchElementException("COLUMN " + colName + " DOES NOT EXIST");
+	public String getValue(int colPosition){
+	    return ((Column)cols.get(colPosition)).getValue();
 	}
 	
 	/**
 	 * Set the value of a column for a specified column name 
 	 * 
-	 * @param colName - String column name
+	 * @param columnIndex - column number to change
 	 * @param value - String column value
-	 * @exception NoSuchElementException
 	*/
-	public void setValue(String colName,String value) throws NoSuchElementException{
+	public void setValue(int columnIndex,String value){
 		/**loop through the columns in the row until we find the name*/	
 		Column column = null;
-		for (int i=0; i < cols.size(); i++){
-			if (((Column)cols.get(i)).getColName().equalsIgnoreCase(colName)){
-				column = (Column)cols.get(i);
-				/**get reference to column in the row and change the value*/
-				column.setValue(value);
-				/**update column in the row*/
-				cols.set(i,column);
-				return;
-			}
-		}
-		throw new NoSuchElementException("COLUMN " + colName + " DOES NOT EXIST");
+		column = (Column)cols.get(columnIndex);
+		/**get reference to column in the row and change the value*/
+		column.setValue(value);
+
 	}
 	/**
 	 * Returns the rowNumber.
