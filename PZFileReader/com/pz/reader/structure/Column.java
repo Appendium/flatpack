@@ -22,14 +22,6 @@ import java.io.Serializable;
  * @version 1.0
 */
 public class Column implements Serializable{
-	/**Column Name*/
-	private String colName = null;
-	/**column length*/
-	private int colLength  = 0;
-	/**starting position*/
-	private int startPosition = 0;
-	/**ending position*/
-	private int endPosition = 0;
 	/**column value*/
 	private String value = null;
 	
@@ -38,70 +30,6 @@ public class Column implements Serializable{
 		super();
 	}
 	
-	/**
-	 * Returns the colLength.
-	 * @return int
-	 */
-	public int getColLength() {
-		return colLength;
-	}
-
-	/**
-	 * Returns the colName.
-	 * @return String
-	 */
-	public String getColName() {
-		return colName;
-	}
-
-	/**
-	 * Returns the endPosition.
-	 * @return int
-	 */
-	public int getEndPosition() {
-		return endPosition;
-	}
-
-	/**
-	 * Returns the startPosition.
-	 * @return int
-	 */
-	public int getStartPosition() {
-		return startPosition;
-	}
-
-	/**
-	 * Sets the colLength.
-	 * @param colLength The colLength to set
-	 */
-	public void setColLength(int colLength) {
-		this.colLength = colLength;
-	}
-
-	/**
-	 * Sets the colName.
-	 * @param colName The colName to set
-	 */
-	public void setColName(String colName) {
-		this.colName = colName;
-	}
-
-	/**
-	 * Sets the endPosition.
-	 * @param endPosition The endPosition to set
-	 */
-	public void setEndPosition(int endPosition) {
-		this.endPosition = endPosition;
-	}
-
-	/**
-	 * Sets the startPosition.
-	 * @param startPosition The startPosition to set
-	 */
-	public void setStartPosition(int startPosition) {
-		this.startPosition = startPosition;
-	}
-
 	/**
 	 * Returns the value.
 	 * @return String
