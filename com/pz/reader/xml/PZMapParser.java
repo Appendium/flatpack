@@ -22,6 +22,7 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
 import com.pz.reader.structure.Column;
+import com.pz.reader.structure.ColumnMetaData;
 
 /**
  * @author zepernick
@@ -57,7 +58,7 @@ public class PZMapParser {
         Element root = null;
         List columns = null;
         Element column = null;
-        Column columnObj = null;
+        ColumnMetaData columnObj = null;
         
         
 		builder = new SAXBuilder();
@@ -69,7 +70,7 @@ public class PZMapParser {
 		columns = root.getChildren();
 		
 		for (int i = 0; i < columns.size(); i++){
-		    columnObj = new Column();
+		    columnObj = new ColumnMetaData();
 		    column = (Element)columns.get(i);
 		    
 		    //make sure the name attribute is present on the column
