@@ -452,16 +452,7 @@ public class DataSet implements Serializable{
 		}						
 	}	
 
-	//finds the position of the specified column
-	private int findColumn(String columnName) throws NoSuchElementException{
-	    for (int i = 0; i < columnMD.size(); i++){
-	        ColumnMetaData cmd = (ColumnMetaData)columnMD.get(i);
-	        if (cmd.getColName().equalsIgnoreCase(columnName)) return i;
-	    }
-	    
-	    throw new NoSuchElementException("Column Name: " + columnName + " does not exist");
-	}
-	
+
 	
 	/**
 	 * Changes the value of a specified column in a row in the set.  This change 
@@ -479,7 +470,7 @@ public class DataSet implements Serializable{
 			/**get a reference to the row*/
 			row = (Row)rows.get(pointer);
 			/**change the value of the column*/
-			row.setValue(findColumn(columnName),value);
+			row.setValue(ParserUtils.findColumn(columnName,columnMD),value);
 			/**update the row in the array*/
 			rows.set(pointer,row);
 			
@@ -548,16 +539,16 @@ public class DataSet implements Serializable{
 	public String getString(String column) throws NoSuchElementException{
 	    if (upperCase){
 	        //convert data to uppercase before returning
-	        return ((Row)rows.get(pointer)).getValue(findColumn(column)).toUpperCase();
+	        return ((Row)rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD)).toUpperCase();
 	    }
 	    
 	    if (lowerCase){
 	        //convert data to lowercase before returning
-	        return ((Row)rows.get(pointer)).getValue(findColumn(column)).toLowerCase();
+	        return ((Row)rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD)).toLowerCase();
 	    }
 	    
 	    //return value as how it is in the file
-		return ((Row)rows.get(pointer)).getValue(findColumn(column));
+		return ((Row)rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
 	}
 	
 	/**
@@ -570,10 +561,10 @@ public class DataSet implements Serializable{
 	*/
 	public double getDouble(String column) throws NoSuchElementException,NumberFormatException{
 		String s = null;
-		String newString = "";
+		StringBuffer newString = new StringBuffer();
 		String[] allowedChars = {"0","1","2","3","4","5","6","7","8","9",".","-"};
 		
-		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
+		s = ((Row)rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
 		
 		if (!strictNumericParse){
 			if (s.trim().length() == 0){
@@ -582,20 +573,20 @@ public class DataSet implements Serializable{
 		    for (int i = 0; i < s.length(); i++){
 		        for (int j = 0; j < allowedChars.length; j++){
 		            if (s.substring(i,i+1).equals(allowedChars[j])){
-		                newString += s.substring(i,i+1);
+		                newString.append(s.substring(i,i+1));
 		                break;
 		            }
 		        }
 		    }
-		    if (newString.trim().length() == 0 || (newString.length() == 1 && newString.equals("."))
-		            || (newString.length() == 1 && newString.equals("-"))){
-		        newString = "0";
+		    if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("."))
+		            || (newString.length() == 1 && newString.toString().equals("-"))){
+		        newString.append("0");
 		    }
 		}else{
-		    newString = s;
+		    newString.append(s);
 		}
 		
-		return Double.parseDouble(newString);
+		return Double.parseDouble(newString.toString());
 	}
 	
 	/**
@@ -608,10 +599,10 @@ public class DataSet implements Serializable{
 	*/
 	public int getInt(String column) throws NoSuchElementException,NumberFormatException{
 		String s = null;
-		String newString = "";
+		StringBuffer newString = new StringBuffer();
 		String[] allowedChars = {"0","1","2","3","4","5","6","7","8","9","-"};
 		
-		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
+		s = ((Row)rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
 		
 		if (!strictNumericParse){
 			if (s.trim().length() == 0){
@@ -620,20 +611,20 @@ public class DataSet implements Serializable{
 		    for (int i = 0; i < s.length(); i++){
 		        for (int j = 0; j < allowedChars.length; j++){
 		            if (s.substring(i,i+1).equals(allowedChars[j])){
-		                newString += s.substring(i,i+1);
+		                newString.append(s.substring(i,i+1));
 		                break;
 		            }
 		        }
 		    }
 		    //check to make sure we do not have a single length string with just a minus sign
-		    if (newString.trim().length() == 0 || (newString.length() == 1 && newString.equals("-"))){
-		        newString = "0";
+		    if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("-"))){
+		        newString.append("0");
 		    }
 		}else{
-		    newString = s;
+		    newString.append(s);
 		}
 		
-		return Integer.parseInt(newString);
+		return Integer.parseInt(newString.toString());
 	}
 	/**
 	 * Returns the date value of a specified column.  This assumes the date is in 
@@ -646,7 +637,7 @@ public class DataSet implements Serializable{
 	public Date getDate(String column) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String s = null;
-		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
+		s = ((Row)rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
 		return sdf.parse(s);		
 	}
 	
@@ -663,7 +654,7 @@ public class DataSet implements Serializable{
 	*/
 	public Date getDate(String column, SimpleDateFormat sdf) throws ParseException{
 		String s = null;
-		s = ((Row)rows.get(pointer)).getValue(findColumn(column));
+		s = ((Row)rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
 		return sdf.parse(s);		
 	}
 	
@@ -785,6 +776,7 @@ public class DataSet implements Serializable{
 	 */
 	public void orderRows(OrderBy ob){
 	    if (ob != null && rows != null){
+	        ob.setColumnMD(columnMD);
 	        Collections.sort(rows,ob);
 	        goTop();
 	    }
