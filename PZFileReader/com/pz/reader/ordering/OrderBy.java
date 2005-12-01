@@ -14,8 +14,10 @@ package com.pz.reader.ordering;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Vector;
 
 import com.pz.reader.structure.Row;
+import com.pz.reader.util.ParserUtils;
 
 /**
  * @author paul zepernick
@@ -26,6 +28,8 @@ import com.pz.reader.structure.Row;
 public class OrderBy implements Comparator{
     /**collection of order elements to sort by*/
     private ArrayList orderbys = new ArrayList();
+    /**column meta data*/
+    private Vector columnMD = null;
     
     
     /**
@@ -65,8 +69,8 @@ public class OrderBy implements Comparator{
             
             //convert to one type of case so the comparator does not take case into account when sorting
             
-            comp0 = (Comparable)row0.getValue(oc.getColumnName()).toLowerCase();
-            comp1 = (Comparable)row1.getValue(oc.getColumnName()).toLowerCase();
+            comp0 = (Comparable)row0.getValue(ParserUtils.findColumn(oc.getColumnName(),columnMD)).toLowerCase();
+            comp1 = (Comparable)row1.getValue(ParserUtils.findColumn(oc.getColumnName(),columnMD)).toLowerCase();
             
             if (comp0 == null){
                 comp0 = (Comparable) new String("");
@@ -91,4 +95,10 @@ public class OrderBy implements Comparator{
     
    
     
+    /**
+     * @param columnMD The columnMD to set.
+     */
+    public void setColumnMD(Vector columnMD) {
+        this.columnMD = columnMD;
+    }
 }
