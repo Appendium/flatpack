@@ -14,6 +14,10 @@ Version 2.0.0
     -created ANT build build file, and published to CVS
     
     -Removed the use of the Column object.  This was able to cut down on the parse time.
+    
+    -Add patch provided by Luke Driscoll [1371162].  This provides 2 new constructors for fixed length files.  There is a boolean
+    that can now be passed which will tell the parser to allow lines which are shorter then the allowed line length for a record.
+    Missing columns will be filled in with empties.
 
 
 Version 1.0.5
@@ -23,7 +27,7 @@ Version 1.0.5
     "errors" collection.  Thank you very much to Luke Driscoll who found this bug and submitted the patch.  See bug 
     [ 1275910 ] CSV File with blank last column, for more information.
     
-    - While fixeding bug 1275910, a couple of other bugs were brought to light.  Spaces before or after the delimiter with a text qualifier
+    - While fixing bug 1275910, a couple of other bugs were brought to light.  Spaces before or after the delimiter with a text qualifier
     was breaking the parse.  Example...assuming comma as delimter and double quote as the text qualifier. "value1" , "value2" ,"value"
 
 10-1-2005

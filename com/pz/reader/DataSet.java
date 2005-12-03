@@ -53,7 +53,26 @@ public class DataSet implements Serializable{
 	private boolean upperCase = false;
 	/**flag to indicate if a strict parse should be used when getting doubles and ints*/
 	private boolean strictNumericParse = false;
+	/**Flag to indicate that we can cope with lines shorter than the required lengh*/ 
+	private boolean handleShortLines = false;
 	
+	
+	/**
+	 * Constructs a new DataSet using the database table file layout method.  
+	 * This is used for a FIXED LENGTH text file.
+	 * 
+	 * This constructor was left for backward compatability
+	 * 
+	 * @param con - Connection to database with DATAFILE and DATASTRUCTURE tables
+	 * @param dataSource - Fixed length file to read from
+	 * @param dataDefinition - Name of dataDefinition in the DATAFILE table DATAFILE_DESC column
+	 * @deprecated - being replaced by DataSet(Connection, File, String, boolean)
+	 * @exception Exception
+	 * 
+	*/
+	public DataSet(Connection con, File dataSource,String dataDefinition) throws Exception{
+		this(con, dataSource, dataDefinition, false);
+	}
 	
 	/**
 	 * Constructs a new DataSet using the database table file layout method.  
@@ -62,12 +81,13 @@ public class DataSet implements Serializable{
 	 * @param con - Connection to database with DATAFILE and DATASTRUCTURE tables
 	 * @param dataSource - Fixed length file to read from
 	 * @param dataDefinition - Name of dataDefinition in the DATAFILE table DATAFILE_DESC column
+	 * @param handleShortLines - Pad lines out to fit the fixed length
 	 * @exception Exception
 	 * 
 	*/
-	public DataSet(Connection con, File dataSource,String dataDefinition) throws Exception{
+	public DataSet(Connection con, File dataSource,String dataDefinition, boolean handleShortLines) throws Exception{
 		super();
-		
+		this.handleShortLines = handleShortLines;
 		
 		String sql = null;
 		ResultSet rs = null;
@@ -268,14 +288,32 @@ public class DataSet implements Serializable{
 	 * Constructs a new DataSet using the PZMAP XML file layout method.  
 	 * This is used for a FIXED LENGTH text file.
 	 * 
+	 * This constructor was left for backward compatability
+	 * 
 	 * @param pzmapXML - Reference to the xml file holding the pzmap
 	 * @param dataSource - Delimited file to read from
 	 * @exception Exception
+	 * @deprecated - being replaced by DataSet(File, File, boolean)
 	 * 
 	*/
 	public DataSet(File pzmapXML, File dataSource) throws Exception{
+		this(pzmapXML, dataSource, false);
+	}
+	
+	
+	/**
+	 * Constructs a new DataSet using the PZMAP XML file layout method.  
+	 * This is used for a FIXED LENGTH text file.
+	 * 
+	 * @param pzmapXML - Reference to the xml file holding the pzmap
+	 * @param dataSource - Delimited file to read from
+	 * @param handleShortLines - Pad lines out to fit the fixed length
+	 * @exception Exception
+	 * 
+	*/
+	public DataSet(File pzmapXML, File dataSource, boolean handleShortLines) throws Exception{
 		super();
-		
+		this.handleShortLines = handleShortLines;
 		
 		PZMapParser parser = null;
 		
@@ -333,13 +371,32 @@ public class DataSet implements Serializable{
 				if (line.trim().length() == 0){
 					continue;
 				}
+				
 				/**Incorrect record length on line log the error.  Line
 				 * will not be included in the dataset*/
-				if (line.length() != recordLength){
+				if (line.length() > recordLength){
 					/**log the error*/
-					addError("INCORRECT LINE LENGTH. LINE IS "+ line.trim().length() + " LONG. SHOULD BE " + recordLength,
+					addError("LINE TOO LONG. LINE IS "+ line.length() + " LONG. SHOULD BE " + recordLength,
 								lineCount,2);
 					continue;			
+				}
+				else if (line.length() < recordLength) {
+					if (handleShortLines) {
+						// We can pad this line out
+						while (line.length() < recordLength) {
+							line = line + " ";
+						}
+						
+						//log a warning
+						addError("PADDED LINE TO CORRECT RECORD LENGTH",
+								lineCount,1);
+						
+					}
+					else {
+						addError("LINE TOO SHORT. LINE IS "+ line.length() + " LONG. SHOULD BE " + recordLength,
+								lineCount,2);
+						continue;
+					}
 				}
 
 				recPosition = 1;
