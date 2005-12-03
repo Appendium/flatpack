@@ -25,7 +25,6 @@ import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import com.pz.reader.ordering.OrderBy;
-import com.pz.reader.structure.Column;
 import com.pz.reader.structure.ColumnMetaData;
 import com.pz.reader.structure.Row;
 import com.pz.reader.util.ParserUtils;
@@ -305,7 +304,6 @@ public class DataSet implements Serializable{
 		String line = null;
 		FileReader fr = null;
 		BufferedReader br = null;
-		Column column = null;
 		Row row  = null;
 		int recordLength = 0;
 		int lineCount = 0;
@@ -349,11 +347,9 @@ public class DataSet implements Serializable{
 				/**Build the columns for the row*/
 				for (int i = 0; i < columnMD.size(); i++){
 					String tempValue = null;
-					column = new Column();
 					tempValue = line.substring(recPosition - 1,recPosition + (((ColumnMetaData)columnMD.get(i)).getColLength()-1));
-					column.setValue(tempValue.trim());
 					recPosition += ((ColumnMetaData)columnMD.get(i)).getColLength();
-					row.addColumn(column);
+					row.addColumn(tempValue.trim());
 				}
 				row.setRowNumber(lineCount);
 				/**add the row to the array*/
@@ -377,7 +373,6 @@ public class DataSet implements Serializable{
 		String line = null;
 		FileReader fr = null;
 		BufferedReader br = null;
-		Column column = null;
 		Row row  = null;
 		int columnCount = 0;
 		int lineCount = 0;
@@ -430,9 +425,7 @@ public class DataSet implements Serializable{
 				row = new Row();
 				/**Build the columns for the row*/
 				for (int i = 0; i < columnMD.size(); i++){
-					column = new Column();
-					column.setValue((String)columns.get(i));
-					row.addColumn(column);
+					row.addColumn((String)columns.get(i));
 				}
 				row.setRowNumber(lineCount);
 				/**add the row to the array*/
