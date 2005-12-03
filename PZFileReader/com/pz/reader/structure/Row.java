@@ -37,11 +37,10 @@ public class Row implements Serializable{
 	/**
 	 * Adds a column to a row
 	 * 
-	 * @param c - Column to add to the row
-	 * @see Column class
+	 * @param colValue - String value to add to the row
 	*/
-	public void addColumn(Column c){
-		cols.add(c);
+	public void addColumn(String colValue){
+		cols.add(colValue);
 	}
 	
 	/**
@@ -51,7 +50,7 @@ public class Row implements Serializable{
 	 * @return String value of column
 	*/
 	public String getValue(int colPosition){
-	    return ((Column)cols.get(colPosition)).getValue();
+	    return (String)cols.get(colPosition);
 	}
 	
 	/**
@@ -61,12 +60,7 @@ public class Row implements Serializable{
 	 * @param value - String column value
 	*/
 	public void setValue(int columnIndex,String value){
-		/**loop through the columns in the row until we find the name*/	
-		Column column = null;
-		column = (Column)cols.get(columnIndex);
-		/**get reference to column in the row and change the value*/
-		column.setValue(value);
-
+		cols.set(columnIndex,value);
 	}
 	/**
 	 * Returns the rowNumber.

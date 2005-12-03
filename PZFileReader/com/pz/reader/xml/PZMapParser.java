@@ -21,7 +21,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
-import com.pz.reader.structure.Column;
 import com.pz.reader.structure.ColumnMetaData;
 
 /**

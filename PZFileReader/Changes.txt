@@ -1,12 +1,55 @@
+Version 2.0.0
+----------------------------------
+11-27-2005
+    - Re-coded the way the MetaData was being stored.  It was being duplicated for every row in the file.  It is now only being stored 
+    once for the entire file.  This will drastically reduce memory usage.
+    
+    - Created a ParserUtils class.  This class can be used to perform low level reads if needed (no mapping file required).
+    For now, this change only applies to delimited files.
+    
+    - Changed the delimited file parser to use a StringBuffer.  It was performing a lot of String concatinations which could have been
+    bogging down performance, and creating un-necessary overhead.
+
+12-03-2005
+    -created ANT build build file, and published to CVS
+    
+    -Removed the use of the Column object.  This was able to cut down on the parse time.
+
+
+Version 1.0.5
+----------------------------------
+9-1-2005
+    -Fixed bug in delimited parse.  If the last column of the last column of the file was empty, the row was being logged to the
+    "errors" collection.  Thank you very much to Luke Driscoll who found this bug and submitted the patch.  See bug 
+    [ 1275910 ] CSV File with blank last column, for more information.
+    
+    - While fixeding bug 1275910, a couple of other bugs were brought to light.  Spaces before or after the delimiter with a text qualifier
+    was breaking the parse.  Example...assuming comma as delimter and double quote as the text qualifier. "value1" , "value2" ,"value"
+
+10-1-2005
+    -Added new method, freeMemory(), when called, the DataSet is cleared.
+    
+    -Updated examples and JavaDocs.
+
+Version 1.0.4
+-----------------------------------	
+7-20-2005
+		-Fixed bug in delimited parse.  If parsing a delimited file with text qualifiers, and the last column of a
+		line had hard spaces at the end, a string out of bounds exception was being thrown.
+
+		-Added setStrictNumericParse(boolean) method.  This is defaulted to false.  When calling getDouble or getInt 
+		on a column, all non numeric chars will be striped before performing the parse.  If the column is empty after 		the strip, it will be returned as 0.  Setting this to true will parse all numeric values as is.
 Version 1.0.3
 -----------------------------------	
 2-5-2005
 		-added methods to set data in DataSet to all lower or all upper case setLowerCase(), setUpperCase()
 
 		-Changed the OrderBy class to make sure the elements being compared were the same case, so as not to make
-		case a factor when comparing.  If they are not the same case elements are converted to lower before comparing.
+		case a factor when comparing.  If they are not the same case elements are converted to lower before 		comparing.
 		
-		-Added setLowerCase() and setUpperCase(0 to Java Docs
+		-Added setLowerCase() and setUpperCase() to Java Docs
+
+		-Added JSP example to samples
 
 
 Version 1.0.2
@@ -16,8 +59,7 @@ Version 1.0.2
 		-Changed parsing logic for delimited files with text qualifiers.  The parser will now parse lines that are qualified
 		and not qualified.  For example:
 		"here",1234,"test",50,test	
-		This will now parse into 5 seperate columns.  However if the text contains a delimiter or seperator inside the text,
-		it must be qualified to work correctly.
+		This will now parse into 5 seperate columns.  However if the text contains a delimiter or seperator inside 			the text, it must be qualified to work correctly.
 
 
 
