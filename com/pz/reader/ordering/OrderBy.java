@@ -24,6 +24,8 @@ import com.pz.reader.util.ParserUtils;
  *
  * resorts an array of objects.  Arrays get sorted by
  * OrderElements.  Right now, this class will only handle string comparisons.
+ * 
+ * @version 2.0
  */
 public class OrderBy implements Comparator{
     /**collection of order elements to sort by*/
