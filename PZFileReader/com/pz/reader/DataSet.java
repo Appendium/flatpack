@@ -269,13 +269,14 @@ public class DataSet implements Serializable{
 	 *
 	 * @param dataSource - text file datasource to read from
 	 * @param delimiter - Char the file is delimited By
-	 * @param qualifier - Char text is qualified by  
+	 * @param qualifier - Char text is qualified by
+	 * @param handleShortLines - when flaged as true, lines with less columns then the amount of column headers will be added as empty's instead of producing an error    
 	 * @exception Exception
 	 * 
 	*/
-	public DataSet(File dataSource,String delimiter, String qualifier) throws Exception{
+	public DataSet(File dataSource,String delimiter, String qualifier, boolean handleShortLines) throws Exception{
 		super();
-		
+		this.handleShortLines = handleShortLines;
 		//read the column names from the file
 		columnMD = new Vector(ParserUtils.getColumnMDFromFile(dataSource, delimiter, qualifier));
 		//read in the delimited file and construct the DataSet object
@@ -433,7 +434,7 @@ public class DataSet implements Serializable{
 		Row row  = null;
 		int columnCount = 0;
 		int lineCount = 0;
-		ArrayList columns = null;
+		Vector columns = null;
 		boolean processedFirst = false;
 		try{
 			rows = new Vector();
@@ -470,26 +471,40 @@ public class DataSet implements Serializable{
 				    System.out.println(columns.get(i));
 				}*/
 				
-				/**Incorrect record length on line log the error.  Line
-				 * will not be included in the dataset*/
-				if (columnCount != columns.size()){
-					/**log the error*/
-					addError("INCORRECT NUMBER OF ELEMENTS, WANTED:  "+ columnCount + " GOT:  " + columns.size(),
+				//Incorrect record length on line log the error.  Line
+				 // will not be included in the dataset
+				if (columns.size() > columnCount){
+					//log the error
+					addError("TOO MANY COLUMNS WANTED:  "+ columnCount + " GOT:  " + columns.size(),
 								lineCount,2);
 					continue;			
 				}
+				else if (columns.size() < columnCount){
+					if (handleShortLines) {
+						// We can pad this line out
+						while (columns.size() < columnCount) {
+							columns.add("");
+						}
+						
+						//log a warning
+						addError("PADDED LINE TO CORRECT NUMBER OF COLUMNS",
+								lineCount,1);
+						
+					}
+					else {
+						addError("TOO FEW COLUMNS WANTED:  "+ columnCount + " GOT:  " + columns.size(),
+								lineCount,2);
+						continue;
+					}
+				}
+				
 
 				row = new Row();
-				/**Build the columns for the row*/
-				for (int i = 0; i < columnMD.size(); i++){
-					row.addColumn((String)columns.get(i));
-				}
+				row.setCols(columns);
 				row.setRowNumber(lineCount);
 				/**add the row to the array*/
 				rows.add(row);
 				
-				//release some memory
-				columns.clear();
 				
 			}
 		}finally{
