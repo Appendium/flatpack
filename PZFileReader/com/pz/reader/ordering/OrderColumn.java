@@ -19,6 +19,8 @@ package com.pz.reader.ordering;
  *Used in conjunction with the OrderBy class.  Holds the name 
  *of the column to order by and the direction the order should go,
  *ASC, DESC.
+ *
+ *@version 2.0
  */
 public class OrderColumn {
     /**property name to sort by*/
