@@ -31,7 +31,6 @@ public class Row implements Serializable{
 	/**Constructs a new row*/
 	public Row(){
 		super();
-		cols = new Vector();
 	}
 	
 	/**
@@ -40,6 +39,9 @@ public class Row implements Serializable{
 	 * @param colValue - String value to add to the row
 	*/
 	public void addColumn(String colValue){
+	    if (cols == null){
+	        cols = new Vector();
+	    }
 		cols.add(colValue);
 	}
 	
@@ -84,6 +86,15 @@ public class Row implements Serializable{
 	 */
 	public Vector getCols() {
 		return cols;
+	}
+	
+	/**
+	 * Set the columns for the row.
+	 * 
+	 * @param cols - Vector of Strings 
+	 */
+	public void setCols(Vector cols) {
+		this.cols = cols;
 	}
 
 }
