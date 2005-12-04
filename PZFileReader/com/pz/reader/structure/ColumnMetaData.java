@@ -15,6 +15,8 @@ package com.pz.reader.structure;
  *
  *Holds information about the columns in the data set.  This is an improvment over 1.0.x.  This information was being
  *repeated for every row, causing a spike in memory usage
+ *
+ *@version 2.0
  */
 public class ColumnMetaData {
     

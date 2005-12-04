@@ -15,9 +15,8 @@ import java.io.Serializable;
  * This class holds errors that occured while parsing or processing
  * a data file.  
  * 
- * Last Updated: 10-16-2003  By: Paul Zepernick
  * @author	Paul Zepernick
- * @version 1.0
+ * @version 2.0
 */
 public class DataError implements Serializable{
 	/**Description of error*/
