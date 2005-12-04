@@ -24,6 +24,8 @@ import com.pz.reader.structure.ColumnMetaData;
  *Static utilities that are used to perform parsing in the DataSet class
  *These can also be used for low level parsing, if not wishing to
  *use the DataSet class.
+ *
+ *@version 2.0
  */
 public class ParserUtils {
 
@@ -37,8 +39,8 @@ public class ParserUtils {
 	 * @param qualifier - qualifier which is surrounding the text
 	 * @return ArrayList
 	 */
-	public static ArrayList splitLine(String line, String delimiter, String qualifier){
-	    ArrayList list = new ArrayList();
+	public static Vector splitLine(String line, String delimiter, String qualifier){
+	    Vector list = new Vector();
 	    //String temp = "";
 	    boolean beginQualifier = false;
 	    //this will be used for delimted files that have some items qualified and some items dont
@@ -201,12 +203,12 @@ public class ParserUtils {
      * @exception Exception
      * @return ArrayList - ColumnMetaData
      */
-    public static ArrayList getColumnMDFromFile(File theFile, String delimiter, String qualifier) throws Exception{
+    public static Vector getColumnMDFromFile(File theFile, String delimiter, String qualifier) throws Exception{
         BufferedReader br = null;
         FileReader fr = null;
         String line = null;
-        ArrayList lineData = null;
-        ArrayList results = new ArrayList();
+        Vector lineData = null;
+        Vector results = new Vector();
         
         try{
             fr = new FileReader(theFile);
