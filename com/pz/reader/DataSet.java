@@ -42,9 +42,9 @@ public class DataSet implements Serializable{
 	/**Array to hold the rows and their values in the text file*/
 	public Vector rows = null;
 	/**Array of errors that have occured during processing*/
-	private Vector errors = null;
+	public Vector errors = null;
 	/**Array of column metadata*/
-	private Vector columnMD = null;
+	public Vector columnMD = null;
 	/**Pointer for the current row in the array we are on*/
 	private int pointer = -1;
 	/**flag to indicate if data should be pulled as lower case*/
@@ -56,6 +56,16 @@ public class DataSet implements Serializable{
 	/**Flag to indicate that we can cope with lines shorter than the required lengh*/ 
 	private boolean handleShortLines = false;
 	
+    
+    
+    /**
+     * empty constructor.  THIS SHOULD ONLY BE USED FOR CUSTOM DataSet implementations.  It provides NO
+     * parsing abilities
+     */
+    public DataSet(){
+        
+    }
+    
 	
 	/**
 	 * Constructs a new DataSet using the database table file layout method.  
