@@ -147,6 +147,34 @@ public class DataSet implements Serializable{
 		}
 		
 	}
+    
+    /**
+     * Constructs a new DataSet using the database table file layout method.  
+     * This is used for a DELIMITED text file.
+     * 
+     * esacpe sequence reference  
+     * \n   newline  
+     * \t   tab     
+     * \b   backspace   
+     * \r   return  
+     * \f   form feed   
+     * \\   backslash   
+     * \'   single quote    
+     * \"   double quote    
+     *
+     * @param con - Connection to database with DATAFILE and DATASTRUCTURE tables
+     * @param dataSource - text file datasource to read from
+     * @param dataDefinition - Name of dataDefinition in the DATAFILE table DATAFILE_DESC column
+     * @param delimiter - Char the file is delimited By
+     * @param qualifier - Char text is qualified by  
+     * @param ignoreFirstRecord - skips the first line that contains data in the file
+     * @deprecated - being replaced by DataSet(Connection, File, String, String, String, boolean, boolean)
+     * @exception Exception
+     * 
+    */
+    public DataSet (Connection con, File dataSource,String dataDefinition,String delimiter, String qualifier, boolean ignoreFirstRecord) throws Exception{
+        this(con,dataSource,dataDefinition, delimiter, qualifier, ignoreFirstRecord, false);
+    }
 	
 	/**
 	 * Constructs a new DataSet using the database table file layout method.  
@@ -168,12 +196,14 @@ public class DataSet implements Serializable{
 	 * @param delimiter - Char the file is delimited By
 	 * @param qualifier - Char text is qualified by  
 	 * @param ignoreFirstRecord - skips the first line that contains data in the file
+     * @param handleShortLines - Adds missing columns as empty's to the DataSet instead of logging them as an error
 	 * @exception Exception
 	 * 
 	*/
-	public DataSet(Connection con, File dataSource,String dataDefinition,String delimiter, String qualifier, boolean ignoreFirstRecord) throws Exception{
+	public DataSet(Connection con, File dataSource,String dataDefinition,String delimiter, String qualifier, boolean ignoreFirstRecord, boolean handleShortLines) throws Exception{
 		super();
 		
+        this.handleShortLines = handleShortLines;
 		
 		String sql = null;
 		ResultSet rs = null;
@@ -218,6 +248,36 @@ public class DataSet implements Serializable{
 		
 	}
 	
+    
+    /**
+     * Constructs a new DataSet using the PZMAP XML file layout method.  
+     * This is used for a DELIMITED text file.
+     * 
+     * esacpe sequence reference  
+     * \n   newline  
+     * \t   tab     
+     * \b   backspace   
+     * \r   return  
+     * \f   form feed   
+     * \\   backslash   
+     * \'   single quote    
+     * \"   double quote    
+     *
+     * @param pzmapXML - Reference to the xml file holding the pzmap
+     * @param dataSource - text file datasource to read from
+     * @param delimiter - Char the file is delimited By
+     * @param qualifier - Char text is qualified by  
+     * @param ignoreFirstRecord - skips the first line that contains data in the file
+     * @deprecated - being replaced by DataSet(File, File, String, String, boolean, boolean)
+     * @exception Exception
+     * 
+    */
+    public DataSet(File pzmapXML, File dataSource,String delimiter, String qualifier, boolean ignoreFirstRecord) throws Exception{
+        this(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord, false);
+        
+    }
+    
+    
 	/**
 	 * Constructs a new DataSet using the PZMAP XML file layout method.  
 	 * This is used for a DELIMITED text file.
@@ -237,12 +297,14 @@ public class DataSet implements Serializable{
 	 * @param delimiter - Char the file is delimited By
 	 * @param qualifier - Char text is qualified by  
 	 * @param ignoreFirstRecord - skips the first line that contains data in the file
+     * @param handleShortLines - Adds missing columns as empty's to the DataSet instead of logging them as an error
 	 * @exception Exception
 	 * 
 	*/
-	public DataSet(File pzmapXML, File dataSource,String delimiter, String qualifier, boolean ignoreFirstRecord) throws Exception{
+	public DataSet(File pzmapXML, File dataSource,String delimiter, String qualifier, boolean ignoreFirstRecord, boolean handleShortLines) throws Exception{
 		super();
 		
+        this.handleShortLines = handleShortLines;
 		
 		PZMapParser parser = null;
 			
@@ -834,7 +896,7 @@ public class DataSet implements Serializable{
 	 */
 	public boolean isAnError(int lineNo){
 		for (int i=0; i<errors.size(); i++){
-			if (((DataError)errors.get(i)).getLineNo() == lineNo){
+			if (((DataError)errors.get(i)).getLineNo() == lineNo && ((DataError)errors.get(i)).getErrorLevel() > 1){
 				return true;
 			}
 		}
@@ -893,7 +955,8 @@ public class DataSet implements Serializable{
      *
      */
     public void freeMemory(){
-        rows.clear();
-        errors.clear();
+        if (rows != null) rows.clear();
+        if (errors != null) errors.clear();
+        if (columnMD != null) columnMD.clear();
     }
 }
