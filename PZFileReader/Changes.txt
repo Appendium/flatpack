@@ -19,6 +19,18 @@ Version 2.0.0
     that can now be passed which will tell the parser to allow lines which are shorter then the allowed line length for a record.
     Missing columns will be filled in with empties.
 
+12-22-2005
+	- The following objects in the DataSet are now public; rows, errors, columnMD, empty constructor.
+	This allows for the DataSet class to be extended if needed to provide custom functionality.
+	
+12-26-2005
+	- Took patch [1371162] a step further and also implemented for delimited files.  If the row is missing any columns, the parser
+	will automatically add the columns in as empty's.  This functionality happens only when the handleShortLines parameter is set 
+	to true.
+	
+	- Revamped user documenation.  The user documenation is now much more detailed.  User documentation and Java Docs are now
+	included with the distribution instead of having them in seperate downloads.
+
 
 Version 1.0.5
 ----------------------------------
