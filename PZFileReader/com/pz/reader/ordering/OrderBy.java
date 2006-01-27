@@ -1,5 +1,5 @@
 /*
-Copyright 2005 Paul Zepernick
+Copyright 2006 Paul Zepernick
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at 
 
@@ -14,7 +14,7 @@ package com.pz.reader.ordering;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Vector;
+import java.util.List;
 
 import com.pz.reader.structure.Row;
 import com.pz.reader.util.ParserUtils;
@@ -31,7 +31,7 @@ public class OrderBy implements Comparator{
     /**collection of order elements to sort by*/
     private ArrayList orderbys = new ArrayList();
     /**column meta data*/
-    private Vector columnMD = null;
+    private List columnMD = null;
     
     
     /**
@@ -100,7 +100,7 @@ public class OrderBy implements Comparator{
     /**
      * @param columnMD The columnMD to set.
      */
-    public void setColumnMD(Vector columnMD) {
+    public void setColumnMD(List columnMD) {
         this.columnMD = columnMD;
     }
 }
