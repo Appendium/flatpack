@@ -294,17 +294,31 @@ public class DataSet {
 
         this.handleShortLines = handleShortLines;
         InputStream dataSourceStream = null;
-
-        dataSourceStream = ParserUtils.createInputStream(dataSource);
-        // read the column names from the file
-        columnMD = ParserUtils.getColumnMDFromFile(dataSourceStream, delimiter, qualifier);
-        dataSourceStream.close();
         
-        dataSourceStream = ParserUtils.createInputStream(dataSource);
-        // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
-        // read in the delimited file and construct the DataSet object
-        doDelimitedFile(dataSourceStream, delimiter, qualifier, false);
-        dataSourceStream.close();
+        try{
+	        dataSourceStream = ParserUtils.createInputStream(dataSource);
+	
+	        // read the column names from the file
+	        columnMD = ParserUtils.getColumnMDFromFile(dataSourceStream, delimiter, qualifier);
+	        
+	        //if this is supported we can re-wind the InputStream without having to re-create it
+	        if (dataSourceStream.markSupported()){
+	            dataSourceStream.mark(0);
+	        }else{
+	            dataSourceStream.close(); //close this stream before we create a new one
+	        }
+	        
+	        if (!dataSourceStream.markSupported()){
+	            dataSourceStream = ParserUtils.createInputStream(dataSource);
+	        }else{
+	            dataSourceStream.reset();
+	        }
+	        // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
+	        // read in the delimited file and construct the DataSet object
+	        doDelimitedFile(dataSourceStream, delimiter, qualifier, false);
+        }finally{
+            if (dataSourceStream != null) dataSourceStream.close();
+        }
     }
 
 
