@@ -881,4 +881,13 @@ public class DataSet {
         if (columnMD != null)
             columnMD.clear();
     }
+    
+    /**
+     * Returns the version number of this pzFileReader
+     *
+     *@return String
+     */
+    public String getReaderVersion(){
+       return Version.VERSION;
+    }
 }
