@@ -1,3 +1,19 @@
+Version 2.1.0
+----------------------------------
+A VERY Special Thanks to Roland Klein for contributing the following enchancements:
+	- Ability to read a file from an InputStream, File object support still exists.  This enhancement makes pzfilereader
+	Java Web Start friendly :)
+	
+	- Added a method in ParserUtils to create an InputStream from a File object.
+	
+02-26-2006
+	- Implemented Roland's changed in cvs HEAD
+	
+	- Begining to write some simple Junit tests under com.test.*  These will be excluded from the production jar.
+	
+	- Added getRowCount() method.  This returns the total amount of rows parsed from the file.  Rows which had errors
+	during the parse are excluded from this count and are added to the error collection.
+
 Version 2.0.0
 ----------------------------------
 11-27-2005

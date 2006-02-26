@@ -315,7 +315,7 @@ public class DataSet {
 	        }
 	        // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
 	        // read in the delimited file and construct the DataSet object
-	        doDelimitedFile(dataSourceStream, delimiter, qualifier, false);
+	        doDelimitedFile(dataSourceStream, delimiter, qualifier, true);
         }finally{
             if (dataSourceStream != null) dataSourceStream.close();
         }
@@ -801,6 +801,16 @@ public class DataSet {
         }
 
         pointer = localPointer;
+    }
+    
+    /**
+     * Returns the total number of rows parsed in from the file
+     * 
+     * 
+     * @return int - Row Count
+     */
+    public int getRowCount(){
+        return rows.size();
     }
 
     /**
