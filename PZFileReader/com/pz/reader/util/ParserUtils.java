@@ -116,7 +116,8 @@ public class ParserUtils {
         // remove the ending text qualifier if needed
         if (qualifier != null && qualifier.trim().length() > 0 && sb.toString().trim().length() > 0) {
             if (sb.toString().trim().substring(sb.toString().trim().length() - 1).equals(qualifier)) {
-                String s = sb.toString().trim().substring(0, sb.toString().length() - 1);
+             //   System.out.println(sb.toString());
+                String s = sb.toString().trim().substring(0, sb.toString().trim().length() - 1);
                 sb.delete(0, sb.length());
                 sb.append(s);
             }
@@ -199,7 +200,7 @@ public class ParserUtils {
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited files. The first
      * line of the file which contains data will be used as the column names
-     * @param theFile
+     * @param theStream
      * @param delimiter
      * @param qualifier
      * @exception Exception
@@ -302,6 +303,77 @@ public class ParserUtils {
 
         throw new NoSuchElementException("Column Name: " + columnName + " does not exist");
     }
+    
+    
+    
+    /**
+     * Determines if the given line is the first part of a multiline record
+     * 
+     * @param chrArry - char data of the line
+     * @param delimiter - delimiter being used
+     * @param qualifier - qualifier being used
+     * @return boolean
+     */
+    public static boolean isMultiLine(char[] chrArry, String delimiter, String qualifier){
+        
+        //check if the last char is the qualifier, if so then this a good chance it is not multiline
+        if (chrArry[chrArry.length -1] != qualifier.charAt(0)){
+            //could be a potential line break
+            boolean qualiFound = false;
+            for (int i = chrArry.length - 1; i >= 0; i--){
+               // System.out.println("char: " + chrArry[i]);
+                //check to see if we can find a qualifier followed by a delimiter
+                //remember we are working are way backwards on the line
+                if (qualiFound){
+                    if (chrArry[i] ==  ' '){
+                        continue;
+                    }else{
+                        //not a space, if this char is the delimiter, then we have a line break
+                        //in the record
+                        if (chrArry[i] == delimiter.charAt(0)){
+                            return true;
+                        }
+                        qualiFound = false;
+                        continue;
+                    }
+                }else if (chrArry[i] == delimiter.charAt(0)){
+                    //if we have a delimiter followed by a qualifier, then we have moved on
+                    //to a new element and this could not be multiline.  start a new loop here in case there is
+                    //space between the delimiter and qualifier
+                    for (int j = i -1; j >= 0; j--){
+                        if (chrArry[j] == ' '){
+                            continue;
+                        }else if (chrArry[j] == qualifier.charAt(0)){
+                            return false;
+                        }
+                        break;
+                    }
+                    
+                }else if (chrArry[i] == qualifier.charAt(0)){
+                    qualiFound = true;
+                }
+            }
+        }else{
+            //we have determined that the last char on the line is a qualifier.  This most likely means
+            //that this is not multiline, however we must account for the following scenario
+            //data,data,"
+            //data
+            ///data"
+            for (int i = chrArry.length - 1; i >= 0; i--){
+                if (i == chrArry.length - 1 || chrArry[i] == ' '){
+                    // skip the first char, or any spaces we come across between the delimiter and qualifier
+                    continue; 
+                }
+                if (chrArry[i] == delimiter.charAt(0)){
+                    return true;
+                }
+                break;
+            }
+        }
+        
+        return false;
+    }
+    
 
     /**
      * Create an InputStream based on a File.
