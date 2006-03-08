@@ -461,6 +461,8 @@ public class DataSet {
         int lineCount = 0;
         List columns = null;
         boolean processedFirst = false;
+        boolean processingMultiLine = false;
+        String lineData = "";
         try {
             rows = new ArrayList();
             errors = new ArrayList();
@@ -477,7 +479,7 @@ public class DataSet {
             while ((line = br.readLine()) != null) {
                 lineCount++;
                 /** empty line skip past it */
-                if (line.trim().length() == 0) {
+                if (!processingMultiLine && line.trim().length() == 0) {
                     continue;
                 }
                 // check to see if the user has elected to skip the first record
@@ -485,13 +487,79 @@ public class DataSet {
                     processedFirst = true;
                     continue;
                 }
+                
+
+                //********************************************************
+                //new functionality as of 2.1.0  check to see if we have 
+                //any line breaks in the middle of the record, this will only
+                //be checked if we have specified a delimiter
+                //********************************************************
+                char[] chrArry = line.trim().toCharArray();
+                if (!processingMultiLine && delimiter != null && delimiter.trim().length() > 0){
+                    processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
+                }
+                
+                
+                //check to see if we have reached the end of the linebreak in the record
+                
+                if (processingMultiLine && lineData.trim().length() > 0){
+                    //need to do one last check here.  it is possible that the " could be part of the data
+                    //excel will escape these with another quote; here is some data ""  This would indicate
+                    //there is more to the multiline                    
+                    if (line.trim().endsWith(qualifier) && !line.trim().endsWith(qualifier + qualifier)){
+                        //it is safe to assume we have reached the end of the line break
+                        processingMultiLine = false;
+                        if (lineData.trim().length() > 0) lineData += "\r\n";
+                        lineData += line;
+                    }else{
+                    
+	                    //check to see if this is the last line of the record
+                        //looking for a qualifier followed by a delimiter
+                        if (lineData.trim().length() > 0) lineData += "\r\n";
+                        lineData += line;
+	                    boolean qualiFound = false;
+	                    for (int i = 0; i < chrArry.length; i ++){
+	                        if (qualiFound){
+	                            if (chrArry[i] ==  ' '){
+	                                continue;
+	                            }else{
+	                                //not a space, if this char is the delimiter, then we have reached the end of 
+	                                //the record
+	                                if (chrArry[i] == delimiter.charAt(0)){
+	                                    processingMultiLine = false;
+		                                break;
+	                                }
+	                                qualiFound = false;
+	                                continue;
+	                            }
+	                        }else if (chrArry[i] == qualifier.charAt(0)){
+	                            qualiFound = true;
+	                        }
+	                    }
+	                    //check to see if we are still in multi line mode, if so grab the next line
+	                    if (processingMultiLine){
+	                        continue;
+	                    }
+                    }
+                }else{
+                    //throw the line into lineData var.
+                    lineData += line;
+                    if (processingMultiLine){
+                        continue; //if we are working on a multiline rec, get the data on the next line
+                    }
+                }
+                //********************************************************************
+                //end record line break logic
+                //********************************************************************
+
 
                 // column values
-                columns = ParserUtils.splitLine(line, delimiter, qualifier);
+                columns = ParserUtils.splitLine(lineData, delimiter, qualifier);
+                lineData = "";
                 // DEBUG
-                /*
-                 * for (int i = 0; i < columns.size(); i++){ System.out.println(columns.get(i)); }
-                 */
+                
+                // for (int i = 0; i < columns.size(); i++){ System.out.println(columns.get(i)); }
+                 
 
                 // Incorrect record length on line log the error. Line
                 // will not be included in the dataset
