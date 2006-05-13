@@ -8,7 +8,7 @@
   <!--set this to the target of the build-->	
   <property name="dist"  location="c:/pzFileReader/distro"/>
   <property name="include" value="include"/>
-  <property name="version" value="2_0_0"/>
+  <property name="version" value="2_1_0"/>
 
   <target name="init">
     <!-- Create the build directory structure used by compile -->
@@ -21,7 +21,7 @@
   	<mkdir dir="JavaDocs"/>
   	
     <copy todir="${dist}/source">
-      <fileset dir="${src}" includes="**/*.java"/>
+      <fileset dir="${src}" includes="**/*.java" excludes="**/test/**" />
     </copy>
     <copy todir="${dist}/lib">
       <fileset dir="${include}" includes="**/*.jar"/>
@@ -33,7 +33,7 @@
   <target name="compile" depends="init"
         description="compile the source " >
     <!-- Compile the java code from ${src} into ${build} -->
-    <javac srcdir="${src}" destdir="${build}">
+    <javac srcdir="${src}" excludes="**/test/**" destdir="${build}">
     	  <classpath>
     	       <fileset dir="${include}">
     	           <include name="**/*.jar"/>
@@ -47,7 +47,7 @@
         description="generate the distribution" >
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/pzFileReader${version}.jar" basedir="${build}"/>
-  	<delete dir="${build}"/>
+  	<!--<delete dir="${build}"/>-->
   </target>
 
   <target name="clean"
@@ -71,7 +71,7 @@
     </copy>
   </target>
 
-  <!--THIS IS A STAND ALONE TARGE WHICH DOES NOT GET EXECUTED WITH THE REST OF THE SCRIPT-->	
+  <!--THIS IS A STAND ALONE TARGET WHICH DOES NOT GET EXECUTED WITH THE REST OF THE SCRIPT-->	
   <target name="cleanDistroDir"
         description="Removes Distro Dir..Should be run for a clean build" >
     <delete dir="${dist}/JavaDocs"/>

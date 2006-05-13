@@ -5,7 +5,6 @@
 package com.pz.reader;
 
 /**
- * @author zepernick
  *
  * Static class which stores the version of this pzFileReader
  */

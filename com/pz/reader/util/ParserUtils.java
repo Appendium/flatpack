@@ -253,7 +253,7 @@ public class ParserUtils {
      * @exception Exception
      * @return ArrayList - ColumnMetaData
      */
-    public static List getColumnMDFromFilex(File theFile, String delimiter, String qualifier) throws Exception {
+    public static List getColumnMDFromFile(File theFile, String delimiter, String qualifier) throws Exception {
         BufferedReader br = null;
         FileReader fr = null;
         String line = null;
