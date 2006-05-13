@@ -6,13 +6,44 @@ A VERY Special Thanks to Roland Klein for contributing the following enchancemen
 	
 	- Added a method in ParserUtils to create an InputStream from a File object.
 	
+	- Changed all ArrayLists and Vectors to List objects.  This affects the getErrors() method which was returning
+	a Vector.  This may potentially cause compilation errors if migrating from a previous version.
+	
 02-26-2006
 	- Implemented Roland's changed in cvs HEAD
+	
+	- Removed constructors depricated in 2.0.0
+	
+	- Added ability to parse delimited file which have records spanning multiple lines in the file.  The element
+	which is breaking to the next line must be qualified.  The data can be qualified with any char, a double quote
+	is used in the example.
+	
+	ie. 	element, element, "element with line break
+			more element data
+			more element data
+			more element data"
+			start next rec here
 	
 	- Begining to write some simple Junit tests under com.test.*  These will be excluded from the production jar.
 	
 	- Added getRowCount() method.  This returns the total amount of rows parsed from the file.  Rows which had errors
 	during the parse are excluded from this count and are added to the error collection.
+	
+	- Added getReaderVersion() method.  This will return a String representation for the pzFileReader version being used.
+	
+05-10-2006
+	- Added ability to transform a DataSet into excel.  This utilizes JExcelApi which can be found here:
+	http://sourceforge.net/projects/jexcelapi
+	
+	The jxl.jar has been included in the download for your convience and must be on the classpath if using this
+	new method --> writeToExcel(File) in the DataSet class
+	
+	- Changed examples to work with 2.1.0.  Some examples still refered to depricated constructors from 2.0.0 which have
+	been removed in this version.
+	
+	- Added 2 new examples to demonstrate the export to Excel and the parsing of multiline records.
+	
+	- Updated Java Docs	
 
 Version 2.0.0
 ----------------------------------

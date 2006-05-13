@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.List;
 
 import com.pz.reader.util.ParserUtils;
 
@@ -22,7 +22,7 @@ public class LowLevelParse {
         FileReader fr = null;
         File textFile = new File("PEOPLE-CommaDelimitedWithQualifier.txt");
         String line = null;
-        Vector elements = null;
+        List elements = null;
         
         try{
 	        fr = new FileReader(textFile);

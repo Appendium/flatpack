@@ -55,8 +55,6 @@ public class TestDelimitedColumnNamesInFile extends TestCase {
                 //check that we parsed in the right amount of rows
                 assertEquals(6, ds.rows.size());
                               
-                //check that we had no errors
-                assertEquals(0, ds.getErrors().size());
         
             
             }catch(Exception ex){
@@ -66,6 +64,27 @@ public class TestDelimitedColumnNamesInFile extends TestCase {
             }
         }
         
+        
+        //test to make sure we have the right number of column names from the file
+        public void testColumnNameCount(){
+            DataSet ds = null;
+            
+            try{
+                DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
+            
+                ds = testDelimted.getDsForTest();
+                
+                //check that we parsed in the right amount of column names
+                assertEquals(6, ds.getColumns().length);
+                              
+        
+            
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }finally{
+                if (ds != null) ds.freeMemory();
+            }
+        }
         
         
         public static void main(String[] args) {

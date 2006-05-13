@@ -28,6 +28,7 @@ import java.util.NoSuchElementException;
 import com.pz.reader.ordering.OrderBy;
 import com.pz.reader.structure.ColumnMetaData;
 import com.pz.reader.structure.Row;
+import com.pz.reader.util.ExcelTransformer;
 import com.pz.reader.util.ParserUtils;
 import com.pz.reader.xml.PZMapParser;
 
@@ -154,8 +155,8 @@ public class DataSet {
 
     /**
      * Constructs a new DataSet using the database table file layout method. This is used for a
-     * DELIMITED text file. esacpe sequence reference \n newline \t tab \b backspace \r return \f
-     * form feed \\ backslash \' single quote \" double quote
+     * DELIMITED text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
      * @param con - Connection to database with DATAFILE and DATASTRUCTURE tables
      * @param dataSource - text file datasource to read from
      * @param dataDefinition - Name of dataDefinition in the DATAFILE table DATAFILE_DESC column
@@ -174,8 +175,8 @@ public class DataSet {
     /**
      * New constructor based on InputStream.
      * Constructs a new DataSet using the database table file layout method. This is used for a
-     * DELIMITED text file. esacpe sequence reference \n newline \t tab \b backspace \r return \f
-     * form feed \\ backslash \' single quote \" double quote
+     * DELIMITED text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
      * @param con - Connection to database with DATAFILE and DATASTRUCTURE tables
      * @param dataSourceStream - text file datasource InputStream to read from
      * @param dataDefinition - Name of dataDefinition in the DATAFILE table DATAFILE_DESC column
@@ -239,8 +240,8 @@ public class DataSet {
  
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is used for a DELIMITED
-     * text file. esacpe sequence reference \n newline \t tab \b backspace \r return \f form feed \\
-     * backslash \' single quote \" double quote
+     * text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
      * @param pzmapXML - Reference to the xml file holding the pzmap
      * @param dataSource - text file datasource to read from
      * @param delimiter - Char the file is delimited By
@@ -258,8 +259,8 @@ public class DataSet {
     /**
      * New constructor based on InputStream.
      * Constructs a new DataSet using the PZMAP XML file layout method. This is used for a DELIMITED
-     * text file. esacpe sequence reference \n newline \t tab \b backspace \r return \f form feed \\
-     * backslash \' single quote \" double quote
+     * text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
      * @param pzmapXMLStream - Reference to the xml file holding the pzmap
      * @param dataSourceStream - text file datasource InputStream to read from
      * @param delimiter - Char the file is delimited By
@@ -281,8 +282,8 @@ public class DataSet {
 
     /**
      * Constructs a new DataSet using the first line of data found in the text file as the column
-     * names. This is used for a DELIMITED text file. esacpe sequence reference \n newline \t tab \b
-     * backspace \r return \f form feed \\ backslash \' single quote \" double quote
+     * names. This is used for a DELIMITED text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
      * @param dataSource - text file datasource to read from
      * @param delimiter - Char the file is delimited By
      * @param qualifier - Char text is qualified by
@@ -881,6 +882,22 @@ public class DataSet {
         return rows.size();
     }
 
+    
+    /**
+     * Returns total number of records which contained a parse error in the file.
+     * 
+     * @return int - Record Error Count
+     */
+    public int getErrorCount(){
+        if (getErrors() != null){
+            return getErrors().size();
+        }
+        
+        return 0;
+    }
+    
+    
+    
     /**
      * Returns true or false as to whether or not the line number contains an error. The import will
      * skip the line if it contains an error and it will not be processed
@@ -949,6 +966,21 @@ public class DataSet {
         if (columnMD != null)
             columnMD.clear();
     }
+    
+    
+    /**
+     * Writes this current DataSet out to the specified Excel file
+     *
+     * @param excelFileToBeWritten 
+     * @exception Exception
+     */
+    public void writeToExcel(File excelFileToBeWritten) throws Exception{
+        
+        ExcelTransformer et = new ExcelTransformer(this, excelFileToBeWritten);
+        et.writeExcelFile();
+        
+    }
+    
     
     /**
      * Returns the version number of this pzFileReader
