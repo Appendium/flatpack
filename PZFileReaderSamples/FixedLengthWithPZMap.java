@@ -19,7 +19,7 @@ public class FixedLengthWithPZMap {
         DataSet ds = null;
         String[] colNames = null;
         
-        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"),new File("PEOPLE-FixedLength.txt"));
+        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"),new File("PEOPLE-FixedLength.txt"), false);
         
         colNames = ds.getColumns();
         
