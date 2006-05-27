@@ -827,7 +827,7 @@ public class DataSet {
         if (columnMD != null) {
             List cmds = ParserUtils.getColumnMetaData("detail", columnMD);
             array = new String[cmds.size()];
-            for (int i = 0; i < columnMD.size(); i++) {
+            for (int i = 0; i < cmds.size(); i++) {
                 column = (ColumnMetaData) cmds.get(i);
                 array[i] = column.getColName();
             }
@@ -849,7 +849,7 @@ public class DataSet {
         if (columnMD != null) {
             List cmds = ParserUtils.getColumnMetaData(recordID, columnMD);
             array = new String[cmds.size()];
-            for (int i = 0; i < columnMD.size(); i++) {
+            for (int i = 0; i < cmds.size(); i++) {
                 column = (ColumnMetaData) cmds.get(i);
                 array[i] = column.getColName();
             }
