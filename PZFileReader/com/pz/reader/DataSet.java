@@ -22,7 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.pz.reader.ordering.OrderBy;
@@ -47,8 +49,8 @@ public class DataSet {
     /** Array of errors that have occured during processing */
     public List     errors             = null;
 
-    /** Array of column metadata */
-    public List     columnMD           = null;
+    /** Map of column metadata's */
+    public Map     columnMD           = null;
 
     /** Pointer for the current row in the array we are on */
     private int     pointer            = -1;
@@ -109,9 +111,10 @@ public class DataSet {
         ColumnMetaData column = null;
         boolean hasResults = false;
         int recPosition = 1;
+        List cmds = new ArrayList();
 
         try {
-            columnMD = new ArrayList();
+            columnMD = new HashMap();
             stmt = con.createStatement();
 
             sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
@@ -131,10 +134,12 @@ public class DataSet {
                 column.setEndPosition(recPosition + (rs.getInt("DATASTRUCTURE_LENGTH") - 1));
                 recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
 
-                columnMD.add(column);
+                cmds.add(column);
 
                 hasResults = true;
             }
+            
+            columnMD.put("detail",cmds);
 
             if (!hasResults) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + dataDefinition);
@@ -198,9 +203,10 @@ public class DataSet {
         Statement stmt = null;
         ColumnMetaData column = null;
         boolean hasResults = false;
+        List cmds = new ArrayList();
 
         try {
-            columnMD = new ArrayList();
+            columnMD = new HashMap();
             stmt = con.createStatement();
 
             sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
@@ -216,10 +222,12 @@ public class DataSet {
                 column = new ColumnMetaData();
                 column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
                 column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
-                columnMD.add(column);
+                cmds.add(column);
 
                 hasResults = true;
             }
+            
+            columnMD.put("detail",cmds);
 
             if (!hasResults) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + dataDefinition);
@@ -370,34 +378,36 @@ public class DataSet {
         int recordLength = 0;
         int lineCount = 0;
         int recPosition = 0;
+        //map of record lengths corrisponding to the ID's in the columnMD array
+        Map recordLengths = new HashMap();
+        String mdkey = null;
+        List cmds = null;
 
         try {
             rows = new ArrayList();
             errors = new ArrayList();
 
-            // loop through columns described and get the total line length
-            for (int i = 0; i < columnMD.size(); i++) {
-                recordLength += ((ColumnMetaData) columnMD.get(i)).getColLength();
-            }
+            recordLengths = ParserUtils.calculateRecordLengths(columnMD);
 
-            /** Read in the flat file */
-            // fr = new FileReader(dataSource.getAbsolutePath());
+            // Read in the flat file 
             isr = new InputStreamReader(dataSource);
             br = new BufferedReader(isr);
-            /** loop through each line in the file */
+            //loop through each line in the file
             while ((line = br.readLine()) != null) {
                 lineCount++;
-                /** empty line skip past it */
+                // empty line skip past it
                 if (line.trim().length() == 0) {
                     continue;
                 }
 
-                /**
-                 * Incorrect record length on line log the error. Line will not be included in the
-                 * dataset
-                 */
+                
+                mdkey = ParserUtils.getCMDKeyForFixedLengthFile(columnMD, line);
+                recordLength = ((Integer)recordLengths.get(mdkey)).intValue();
+                cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
+                
+                 //Incorrect record length on line log the error. Line will not be included in the
+                 //dataset
                 if (line.length() > recordLength) {
-                    /** log the error */
                     addError("LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount,
                             2);
                     continue;
@@ -420,16 +430,17 @@ public class DataSet {
 
                 recPosition = 1;
                 row = new Row();
-                /** Build the columns for the row */
-                for (int i = 0; i < columnMD.size(); i++) {
+                row.setMdkey(mdkey.equals("detail") ? null : mdkey);  //try to limit the memory use
+                //Build the columns for the row 
+                for (int i = 0; i < cmds.size(); i++) {
                     String tempValue = null;
                     tempValue = line.substring(recPosition - 1, recPosition
-                            + (((ColumnMetaData) columnMD.get(i)).getColLength() - 1));
-                    recPosition += ((ColumnMetaData) columnMD.get(i)).getColLength();
+                            + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
+                    recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
                     row.addColumn(tempValue.trim());
                 }
                 row.setRowNumber(lineCount);
-                /** add the row to the array */
+                // add the row to the array 
                 rows.add(row);
             }
         } finally {
@@ -464,13 +475,15 @@ public class DataSet {
         boolean processedFirst = false;
         boolean processingMultiLine = false;
         String lineData = "";
+        List cmds = null;
+        String mdkey = null;
+        
         try {
             rows = new ArrayList();
             errors = new ArrayList();
-
-            // columnCount = columnObjs.size();
+            
             // get the total column count
-            columnCount = columnMD.size();
+            //columnCount = columnMD.size();
 
             /** Read in the flat file */
             // fr = new FileReader(dataSource.getAbsolutePath());
@@ -557,6 +570,10 @@ public class DataSet {
                 // column values
                 columns = ParserUtils.splitLine(lineData, delimiter, qualifier);
                 lineData = "";
+                mdkey = ParserUtils.getCMDKeyForDelimitedFile(columnMD, columns);
+                cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
+                columnCount = cmds.size();
+                
                 // DEBUG
                 
                 // for (int i = 0; i < columns.size(); i++){ System.out.println(columns.get(i)); }
@@ -585,6 +602,7 @@ public class DataSet {
                 }
 
                 row = new Row();
+                row.setMdkey(mdkey.equals("detail") ? null : mdkey);  //try to limit the memory use
                 row.setCols(columns);
                 row.setRowNumber(lineCount);
                 /** add the row to the array */
@@ -609,20 +627,14 @@ public class DataSet {
      */
     public void setValue(String columnName, String value) throws Exception {
         Row row = null;
-
-        if (pointer > -1 && pointer <= rows.size() - 1) {
-            /** get a reference to the row */
-            row = (Row) rows.get(pointer);
-            /** change the value of the column */
-            row.setValue(ParserUtils.findColumn(columnName, columnMD), value);
-            /** update the row in the array */
-            rows.set(pointer, row);
-
-            return;
-        }
-
-        throw new Exception("POINTER IS SITTING ON AN INVALID ROW.");
-    }
+        
+       /** get a reference to the row */
+        row = (Row) rows.get(pointer);
+        List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        /** change the value of the column */
+        row.setValue(ParserUtils.findColumn(columnName, cmds), value);  
+      
+     }
 
     /**
      * Goes to the top of the data set. This will put the pointer one record before the first in the
@@ -672,18 +684,21 @@ public class DataSet {
      * @return String
      */
     public String getString(String column) throws NoSuchElementException {
+        Row row = (Row)rows.get(pointer);
+        List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        
         if (upperCase) {
             // convert data to uppercase before returning
-            return ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD)).toUpperCase();
+            return row.getValue(ParserUtils.findColumn(column, cmds)).toUpperCase();
         }
 
         if (lowerCase) {
             // convert data to lowercase before returning
-            return ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD)).toLowerCase();
+            return row.getValue(ParserUtils.findColumn(column, cmds)).toLowerCase();
         }
 
         // return value as how it is in the file
-        return ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
+        return row.getValue(ParserUtils.findColumn(column, cmds));
     }
 
     /**
@@ -697,8 +712,10 @@ public class DataSet {
         String s = null;
         StringBuffer newString = new StringBuffer();
         String[] allowedChars = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "-"};
-
-        s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
+        Row row = (Row)rows.get(pointer);
+        
+        List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, cmds));
 
         if (!strictNumericParse) {
             if (s.trim().length() == 0) {
@@ -734,8 +751,10 @@ public class DataSet {
         String s = null;
         StringBuffer newString = new StringBuffer();
         String[] allowedChars = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-"};
+        Row row = (Row)rows.get(pointer);
+        List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
 
-        s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
+        s = row.getValue(ParserUtils.findColumn(column, cmds));
 
         if (!strictNumericParse) {
             if (s.trim().length() == 0) {
@@ -771,7 +790,10 @@ public class DataSet {
     public Date getDate(String column) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String s = null;
-        s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
+        Row row = (Row)rows.get(pointer);
+        List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        
+        s = row.getValue(ParserUtils.findColumn(column, cmds));
         return sdf.parse(s);
     }
 
@@ -786,12 +808,16 @@ public class DataSet {
      */
     public Date getDate(String column, SimpleDateFormat sdf) throws ParseException {
         String s = null;
-        s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, columnMD));
+        Row row = (Row)rows.get(pointer);
+        List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        
+        s = row.getValue(ParserUtils.findColumn(column, cmds));
         return sdf.parse(s);
     }
 
     /**
-     * Returns a String array of column names in the DataSet
+     * Returns a String array of column names in the DataSet.  This will assume
+     * 'detail' <RECORD> ID.
      * @return String[]
      */
     public String[] getColumns() {
@@ -799,9 +825,32 @@ public class DataSet {
         String[] array = null;
 
         if (columnMD != null) {
-            array = new String[columnMD.size()];
+            List cmds = ParserUtils.getColumnMetaData("detail", columnMD);
+            array = new String[cmds.size()];
             for (int i = 0; i < columnMD.size(); i++) {
-                column = (ColumnMetaData) columnMD.get(i);
+                column = (ColumnMetaData) cmds.get(i);
+                array[i] = column.getColName();
+            }
+        }
+
+        return array;
+    }
+    
+    /**
+     * Returns a String array of column names in the DataSet for a given <RECORD> id
+     * 
+     * @param recordID
+     * @return String[]
+     */
+    public String[] getColumns(String recordID) {
+        ColumnMetaData column = null;
+        String[] array = null;
+
+        if (columnMD != null) {
+            List cmds = ParserUtils.getColumnMetaData(recordID, columnMD);
+            array = new String[cmds.size()];
+            for (int i = 0; i < columnMD.size(); i++) {
+                column = (ColumnMetaData) cmds.get(i);
                 array[i] = column.getColName();
             }
         }
@@ -873,6 +922,21 @@ public class DataSet {
     }
     
     /**
+     * Checks to see if the row has the given <RECORD> id
+     * 
+     * @param recordID
+     * @return boolean
+     */
+     public boolean isRecordID(String recordID){
+         String rowID = ((Row)rows.get(pointer)).getMdkey();
+         if (rowID == null && recordID.equals("detail")){
+             return true;
+         }
+         return rowID.equals(recordID);
+     }
+    
+    
+    /**
      * Returns the total number of rows parsed in from the file
      * 
      * 
@@ -915,14 +979,21 @@ public class DataSet {
 
     /**
      * Orders the data by column(s) specified. This will reposition the cursor to the top of the
-     * DataSet when executed
+     * DataSet when executed.  This is currently not supported when specying <RECORD> elements in 
+     * the mapping.  An exception will be thrown if this situation occurs
+     * 
      * @param ob - OrderBy object
+     * @exception Exception
      * @see com.pz.reader.ordering.OrderBy
      * @see com.pz.reader.ordering.OrderColumn
      */
-    public void orderRows(OrderBy ob) {
+    public void orderRows(OrderBy ob) throws Exception{
+        if (columnMD.size() > 1){
+            throw new Exception("orderRows does not currently support ordering with <RECORD> mappings");
+        }        
+        List cmds = ParserUtils.getColumnMetaData("detail", columnMD);
         if (ob != null && rows != null) {
-            ob.setColumnMD(columnMD);
+            ob.setColumnMD(cmds);
             Collections.sort(rows, ob);
             goTop();
         }

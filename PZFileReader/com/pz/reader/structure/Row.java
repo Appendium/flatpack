@@ -15,21 +15,19 @@ import java.util.List;
 
 /**
  * This holds a collection of columns and their values along with the actual rownumber they appear
- * in the flat file Last Updated: 11-27-2005 By: Paul Zepernick
+ * in the flat file
  * @author Paul Zepernick
  * @version 2.0
  */
 public class Row {
     /** List to hold all columns that exist in the row */
-    private List              cols             = null;
+    private List cols;
     /** Row number in flat file */
     private int               rowNumber        = 0;
+    /**key to the MD for this row, null will indicate it is "detail" MD*/
+    private String mdkey;
 
-    /** Constructs a new row */
-    public Row() {
-        super();
-    }
-
+ 
     /**
      * Adds a column to a row
      * @param colValue - String value to add to the row
@@ -89,5 +87,17 @@ public class Row {
      */
     public void setCols(List cols) {
         this.cols = cols;
+    }
+    /**
+     * @return Returns the mdkey.
+     */
+    public String getMdkey() {
+        return mdkey;
+    }
+    /**
+     * @param mdkey The mdkey to set.
+     */
+    public void setMdkey(String mdkey) {
+        this.mdkey = mdkey;
     }
 }
