@@ -17,10 +17,14 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.pz.reader.structure.ColumnMetaData;
+import com.pz.reader.xml.XMLRecordElement;
 
 /**
  * @author zepernick Static utilities that are used to perform parsing in the DataSet class These
@@ -204,15 +208,16 @@ public class ParserUtils {
      * @param delimiter
      * @param qualifier
      * @exception Exception
-     * @return ArrayList - ColumnMetaData
+     * @return Map - ColumnMetaData
      */
-    public static List getColumnMDFromFile(InputStream theStream, String delimiter, String qualifier) throws Exception {
+    public static Map getColumnMDFromFile(InputStream theStream, String delimiter, String qualifier) throws Exception {
         InputStreamReader isr = null;
         BufferedReader br = null;
         //FileReader fr = null;
         String line = null;
         List lineData = null;
         List results = new ArrayList();
+        Map columnMD = new HashMap();
 
         try {
             isr = new InputStreamReader(theStream);
@@ -241,7 +246,10 @@ public class ParserUtils {
             if (isr != null)
                 isr.close();
         }
-        return results;
+        
+        columnMD.put("detail",results);
+        
+        return columnMD;
     }
 
     /**
@@ -375,6 +383,135 @@ public class ParserUtils {
     }
     
 
+    /**
+     * Returns a map with the MD id's and their record lengths.  This
+     * is used for fixed length parsing
+     * 
+     * @param columnMD
+     * @return Map
+     * @exception Exception
+     */
+    public static Map calculateRecordLengths(Map columnMD) throws Exception{
+        Map recordLengths = new HashMap();
+        List cmds = null;
+        
+        Iterator columnMDIt = columnMD.keySet().iterator();
+        while (columnMDIt.hasNext()){
+            String key = (String)columnMDIt.next();                        
+            if (key.equals("detail")){
+                cmds = (List)columnMD.get(key);
+            }else{
+                cmds = ((XMLRecordElement)columnMD.get(key)).getColumns();
+            }
+            
+            int recordLength = 0;
+            for (int i = 0; i < cmds.size(); i++) {
+                recordLength += ((ColumnMetaData) cmds.get(i)).getColLength();
+            }
+            
+            recordLengths.put(key, new Integer(recordLength));
+            
+        }
+        
+        return recordLengths;
+                
+    }
+    
+    /**
+     * Returns the key to the list of ColumnMetaData objects.  Returns the 
+     * correct MetaData per the mapping file and the data contained on the line
+     * 
+     * 
+     * @param columnMD
+     * @param line
+     * @return List - ColumMetaData
+     */
+    public static String getCMDKeyForFixedLengthFile(Map columnMD, String line){
+        if (columnMD.size() == 1){
+            //no <RECORD> elments were specifed for this parse, just return the detail id
+            return "detail";
+        }
+        Iterator keys = columnMD.keySet().iterator();
+        //loop through the XMLRecordElement objects and see if we need a different MD object
+        while (keys.hasNext()){
+            String key = (String)keys.next();
+            if (key.equals("detail")) continue; //skip this key will be assumed if none of the others match
+            XMLRecordElement recordXMLElement = (XMLRecordElement) columnMD.get(key);
+            
+            if (recordXMLElement.getEndPositition() > line.length()){
+                //make sure our substring is not going to fail
+                continue;
+            }
+            int subfrm = recordXMLElement.getStartPosition() -1; //convert to 0 based
+            int subto = recordXMLElement.getEndPositition();
+            if (line.substring(subfrm, subto).equals(recordXMLElement.getIndicator())){
+               //we found the MD object we want to return
+                return key;
+            }
+            
+        }
+        
+        //must be a detail line
+        return "detail";
+        
+    }
+    
+    /**
+     * Returns the key to the list of ColumnMetaData objects.  Returns the 
+     * correct MetaData per the mapping file and the data contained on the line
+     * 
+     * 
+     * @param columnMD
+     * @param lineElements
+     * @return List - ColumMetaData
+     */
+    public static String getCMDKeyForDelimitedFile(Map columnMD, List lineElements){
+        if (columnMD.size() == 1){
+            //no <RECORD> elments were specifed for this parse, just return the detail id
+            return "detail";
+        }
+        Iterator keys = columnMD.keySet().iterator();
+        //loop through the XMLRecordElement objects and see if we need a different MD object
+        while (keys.hasNext()){
+            String key = (String)keys.next();
+            if (key.equals("detail")) continue; //skip this key will be assumed if none of the others match
+            XMLRecordElement recordXMLElement = (XMLRecordElement) columnMD.get(key);
+            
+            if (recordXMLElement.getElementNumber() > lineElements.size()){
+                //make sure our substring is not going to fail
+                continue;
+            }
+            String lineElement = (String)lineElements.get(recordXMLElement.getElementNumber() - 1);
+            if (lineElement.equals(recordXMLElement.getIndicator())){
+               //we found the MD object we want to return
+                return key;
+            }
+            
+        }
+        
+        //must be a detail line
+        return "detail";
+        
+    }
+    
+    /**
+     * Returns a list of ColumMetaData objects for the given key
+     * 
+     * @param key
+     * @param columnMD
+     * @return List
+     */
+    public static List getColumnMetaData(String key, Map columnMD){
+        
+        if (key == null || key.equals("detail")){
+            return (List)columnMD.get("detail");
+        }
+        
+        return ((XMLRecordElement)columnMD.get(key)).getColumns(); 
+        
+    }
+    
+    
     /**
      * Create an InputStream based on a File.
      * @param file The file.
