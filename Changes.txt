@@ -1,3 +1,9 @@
+Version 2.2.0
+----------------------------------
+05-27-2006
+	- Added the ability to specify Header, Trailer, or other records which can be uniquly identified by a piece
+	of data on the record.  These get mapped to their own set of column names seperate from the detail records.
+
 Version 2.1.0
 ----------------------------------
 A VERY Special Thanks to Roland Klein for contributing the following enchancements:

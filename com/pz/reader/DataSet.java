@@ -929,9 +929,8 @@ public class DataSet {
      */
      public boolean isRecordID(String recordID){
          String rowID = ((Row)rows.get(pointer)).getMdkey();
-         if (rowID == null && recordID.equals("detail")){
-             return true;
-         }
+         if (rowID == null)rowID = "detail";
+
          return rowID.equals(recordID);
      }
     
