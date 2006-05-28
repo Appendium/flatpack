@@ -80,6 +80,8 @@ public class PZMapParser {
 
 		builder = new SAXBuilder();
 		builder.setValidation(true);
+		//handle the ability to pull DTD from Jar if needed
+		builder.setEntityResolver(new ResolveLocalDTD());
 		document = builder.build(xmlStream);
 
 		root = document.getRootElement();
