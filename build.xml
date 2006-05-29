@@ -11,6 +11,8 @@
   <property name="version" value="2_2_0"/>
 
   <target name="init">
+  	<!--Wipe the source dir to clean old files if needed-->
+  	<delete dir="${dist}/source"/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
     <!-- Create the distribution directory -->
