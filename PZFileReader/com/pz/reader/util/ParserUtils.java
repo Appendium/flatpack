@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -217,7 +218,7 @@ public class ParserUtils {
         String line = null;
         List lineData = null;
         List results = new ArrayList();
-        Map columnMD = new HashMap();
+        Map columnMD = new LinkedHashMap();
 
         try {
             isr = new InputStreamReader(theStream);
@@ -416,6 +417,8 @@ public class ParserUtils {
         return recordLengths;
                 
     }
+    
+    
     
     /**
      * Returns the key to the list of ColumnMetaData objects.  Returns the 
