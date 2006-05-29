@@ -15,8 +15,8 @@ package com.pz.reader.xml;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +34,9 @@ import com.pz.reader.util.ParserUtils;
  * Parses a PZmap definition XML file
  */
 public class PZMapParser {
-
+    
+    private static final boolean SHOW_DEBUG = true;
+    
 	/**
 	 * Constructor
 	 * 
@@ -57,7 +59,7 @@ public class PZMapParser {
 		InputStream xmlStream = ParserUtils.createInputStream(xmlFile);
 		mdIndex = parse(xmlStream);
 		if (mdIndex == null) {
-		    mdIndex = new HashMap();
+		    mdIndex = new LinkedHashMap();
 		}
 		return mdIndex;
 	}
@@ -76,7 +78,7 @@ public class PZMapParser {
 		Element root = null;
 		List columns = null;
 		Element xmlElement = null;
-		Map mdIndex = new HashMap();
+		Map mdIndex = new LinkedHashMap();  //retain the same order specified in the mapping
 
 		builder = new SAXBuilder();
 		builder.setValidation(true);
@@ -88,7 +90,7 @@ public class PZMapParser {
 		
 		//lets first get all of the columns that are declared directly under the PZMAP
 		columns = getColumnChildren(root);
-		mdIndex.put("detail",columns);
+		mdIndex.put("detail",columns);  //always force detail to the top of the map no matter what
 		
 		//get all of the "record" elements and the columns under them
 		Iterator recordDescriptors = root.getChildren("RECORD").iterator();
@@ -111,7 +113,10 @@ public class PZMapParser {
 			mdIndex.put(xmlElement.getAttributeValue("id"),xmlre);
 		}
 		
-
+		if (SHOW_DEBUG){
+		    showDebug(mdIndex);
+		}
+		
 		return mdIndex;
 	}
 	
@@ -173,4 +178,38 @@ public class PZMapParser {
 		return columnResults;
 	    
 	}
+	
+	
+	private static void showDebug(Map xmlResults){
+	    Iterator columns = null;
+        Iterator mapIt = xmlResults.keySet().iterator();
+        XMLRecordElement xmlrecEle = null;
+        while (mapIt.hasNext()){
+            xmlrecEle = null;
+            String recordID = (String)mapIt.next();
+            if (recordID.equals("detail")){
+                columns = ((List)xmlResults.get(recordID)).iterator();
+            }else{
+                xmlrecEle = (XMLRecordElement)xmlResults.get(recordID);
+                columns = xmlrecEle.getColumns().iterator();
+            }
+            
+            System.out.println(">>>>Column MD Id: " + recordID);
+            if (xmlrecEle != null){
+                System.out.println("Start Position: " + xmlrecEle.getStartPosition() + " " 
+                        + "End Position: " + xmlrecEle.getEndPositition() + " "
+                        + "Element Number: " + xmlrecEle.getElementNumber() + " "
+                        + "Indicator: " + xmlrecEle.getIndicator());
+            }
+            while (columns.hasNext()){
+                ColumnMetaData cmd = (ColumnMetaData)columns.next();
+                System.out.println("          Column Name: " +
+            			 cmd.getColName() + " LENGTH: " +
+            			 cmd.getColLength());
+                
+            }
+	    
+        }
+	}
+	
 }
