@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -114,7 +114,7 @@ public class DataSet {
         List cmds = new ArrayList();
 
         try {
-            columnMD = new HashMap();
+            columnMD = new LinkedHashMap();
             stmt = con.createStatement();
 
             sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
@@ -206,7 +206,7 @@ public class DataSet {
         List cmds = new ArrayList();
 
         try {
-            columnMD = new HashMap();
+            columnMD = new LinkedHashMap();
             stmt = con.createStatement();
 
             sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
@@ -379,7 +379,7 @@ public class DataSet {
         int lineCount = 0;
         int recPosition = 0;
         //map of record lengths corrisponding to the ID's in the columnMD array
-        Map recordLengths = new HashMap();
+        Map recordLengths = null;
         String mdkey = null;
         List cmds = null;
 
