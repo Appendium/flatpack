@@ -35,7 +35,7 @@ import com.pz.reader.util.ParserUtils;
  */
 public class PZMapParser {
     
-    private static final boolean SHOW_DEBUG = true;
+    private static boolean SHOW_DEBUG = false;
     
 	/**
 	 * Constructor
@@ -179,6 +179,15 @@ public class PZMapParser {
 	    
 	}
 	
+	/**
+	 * If set to true, debug information for the map file will be thrown to the console after the parse is
+	 * finished
+	 * 
+	 * @param b
+	 */
+	public static void setDebug(boolean b){
+	    SHOW_DEBUG = b;
+	}
 	
 	private static void showDebug(Map xmlResults){
 	    Iterator columns = null;
