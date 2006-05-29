@@ -3,6 +3,19 @@ Version 2.2.0
 05-27-2006
 	- Added the ability to specify Header, Trailer, or other records which can be uniquly identified by a piece
 	of data on the record.  These get mapped to their own set of column names seperate from the detail records.
+	See the documentation included in the download for details on the new options in the mapping file.
+	
+	- Added isRecordID(String) method.  This can be used to see if the record being processed belongs to a particular
+	<RECORD> mapping in the xml file. This will need to be used if you have differnt column names mapped to different
+	record types. ie header, trailer, detail, etc
+	
+	- Added setDebug(boolean) to PZMapParser class.  When flagged true, the Parser will spit the results of the XML
+	parse to the console.
+	
+05-29-2006
+	- Added 2 new samples; CSVHeaderAndTrailer, FixedLengthHeaderAndTrailer
+	
+	
 
 Version 2.1.0
 ----------------------------------
