@@ -243,6 +243,28 @@ public class ParserUtils {
         }
         return results;
     }
+    
+    /**
+     * Returns a list of ColumnMetaData objects. This is for use with delimited files. The first
+     * line of the file which contains data will be used as the column names
+     * @param line
+     * @param delimiter
+     * @param qualifier
+     * @exception Exception
+     * @return ArrayList - ColumnMetaData
+     */
+    public static List getColumnMDFromFile(String line, String delimiter, String qualifier) throws Exception {
+        List lineData = null;
+        List results = new ArrayList();
+
+        lineData = splitLine(line, delimiter, qualifier);
+        for (int i = 0; i < lineData.size(); i++) {
+            ColumnMetaData cmd = new ColumnMetaData();
+            cmd.setColName((String) lineData.get(i));
+            results.add(cmd);
+        }
+        return results;
+    }
 
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited files. The first

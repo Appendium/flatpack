@@ -226,7 +226,7 @@ public class DataSet {
             }
 
             // read in the fixed length file and construct the DataSet object
-            doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+            doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord, false);
 
         } finally {
             if (rs != null)
@@ -276,7 +276,7 @@ public class DataSet {
         this.handleShortLines = handleShortLines;
         columnMD = PZMapParser.parse(pzmapXMLStream);
 
-        doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+        doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord, false);
 
     }
 
@@ -300,23 +300,23 @@ public class DataSet {
 	        dataSourceStream = ParserUtils.createInputStream(dataSource);
 	
 	        // read the column names from the file
-	        columnMD = ParserUtils.getColumnMDFromFile(dataSourceStream, delimiter, qualifier);
-	        
-	        //if this is supported we can re-wind the InputStream without having to re-create it
-	        if (dataSourceStream.markSupported()){
-	            dataSourceStream.mark(0);
-	        }else{
-	            dataSourceStream.close(); //close this stream before we create a new one
-	        }
-	        
-	        if (!dataSourceStream.markSupported()){
-	            dataSourceStream = ParserUtils.createInputStream(dataSource);
-	        }else{
-	            dataSourceStream.reset();
-	        }
+//	        columnMD = ParserUtils.getColumnMDFromFile(dataSourceStream, delimiter, qualifier);
+//	        
+//	        //if this is supported we can re-wind the InputStream without having to re-create it
+//	        if (dataSourceStream.markSupported()){
+//	            dataSourceStream.mark(0);
+//	        }else{
+//	            dataSourceStream.close(); //close this stream before we create a new one
+//	        }
+//	        
+//	        if (!dataSourceStream.markSupported()){
+//	            dataSourceStream = ParserUtils.createInputStream(dataSource);
+//	        }else{
+//	            dataSourceStream.reset();
+//	        }
 	        // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
 	        // read in the delimited file and construct the DataSet object
-	        doDelimitedFile(dataSourceStream, delimiter, qualifier, true);
+	        doDelimitedFile(dataSourceStream, delimiter, qualifier, false, true);
         }finally{
             if (dataSourceStream != null) dataSourceStream.close();
         }
@@ -339,7 +339,9 @@ public class DataSet {
         
         try{
             // read the column names from the file
-            columnMD = ParserUtils.getColumnMDFromFile(dataSource, delimiter, qualifier);
+          //  System.out.println("Reader MD From File: markissupported");
+          //  columnMD = ParserUtils.getColumnMDFromFile(dataSource, delimiter, qualifier);
+          //  System.out.println("Done Getting MD From File");
             
             //if this is supported we can re-wind the InputStream without having to re-create it
 //            if (dataSourceStream.markSupported()){
@@ -355,7 +357,8 @@ public class DataSet {
 //            }
             // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
             // read in the delimited file and construct the DataSet object
-            doDelimitedFile(dataSource, delimiter, qualifier, true);
+            System.out.println("Reading File");
+            doDelimitedFile(dataSource, delimiter, qualifier, false, true);
         }finally{
             if (dataSource != null) dataSource.close();
         }
@@ -488,7 +491,7 @@ public class DataSet {
      * puts together the dataset for a DELIMITED file. This is used for PZ XML mappings, and SQL
      * table mappings
      */
-    private void doDelimitedFile(InputStream dataSource, String delimiter, String qualifier, boolean ignoreFirstRecord) throws Exception {
+    private void doDelimitedFile(InputStream dataSource, String delimiter, String qualifier, boolean ignoreFirstRecord, boolean createMDFromFile) throws Exception {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
         }
@@ -509,7 +512,9 @@ public class DataSet {
 
             // columnCount = columnObjs.size();
             // get the total column count
-            columnCount = columnMD.size();
+            if (columnMD != null){
+                columnCount = columnMD.size();
+            }
 
             /** Read in the flat file */
             // fr = new FileReader(dataSource.getAbsolutePath());
@@ -525,6 +530,11 @@ public class DataSet {
                 // check to see if the user has elected to skip the first record
                 if (!processedFirst && ignoreFirstRecord) {
                     processedFirst = true;
+                    continue;
+                }else if (!processedFirst && createMDFromFile){
+                    processedFirst = true;
+                    columnMD = ParserUtils.getColumnMDFromFile(line, delimiter, qualifier);
+                    columnCount = columnMD.size();
                     continue;
                 }
                 
