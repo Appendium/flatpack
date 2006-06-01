@@ -321,6 +321,45 @@ public class DataSet {
             if (dataSourceStream != null) dataSourceStream.close();
         }
     }
+    
+    /**
+     * Constructs a new DataSet using the first line of data found in the text file as the column
+     * names. This is used for a DELIMITED text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * @param dataSource - text file InputStream to read from
+     * @param delimiter - Char the file is delimited By
+     * @param qualifier - Char text is qualified by
+     * @param handleShortLines - when flaged as true, lines with less columns then the amount of
+     *            column headers will be added as empty's instead of producing an error
+     * @exception Exception
+     */
+    public DataSet(InputStream dataSource, String delimiter, String qualifier, boolean handleShortLines) throws Exception {
+
+        this.handleShortLines = handleShortLines;
+        
+        try{
+            // read the column names from the file
+            columnMD = ParserUtils.getColumnMDFromFile(dataSource, delimiter, qualifier);
+            
+            //if this is supported we can re-wind the InputStream without having to re-create it
+//            if (dataSourceStream.markSupported()){
+//                dataSourceStream.mark(0);
+//            }else{
+//                dataSourceStream.close(); //close this stream before we create a new one
+//            }
+//            
+//            if (!dataSourceStream.markSupported()){
+//                dataSourceStream = ParserUtils.createInputStream(dataSource);
+//            }else{
+//                dataSourceStream.reset();
+//            }
+            // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
+            // read in the delimited file and construct the DataSet object
+            doDelimitedFile(dataSource, delimiter, qualifier, true);
+        }finally{
+            if (dataSource != null) dataSource.close();
+        }
+    }
 
 
     /**
