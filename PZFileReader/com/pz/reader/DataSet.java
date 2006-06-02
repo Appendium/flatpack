@@ -357,7 +357,7 @@ public class DataSet {
 //            }
             // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
             // read in the delimited file and construct the DataSet object
-            System.out.println("Reading File");
+           // System.out.println("Reading File");
             doDelimitedFile(dataSource, delimiter, qualifier, false, true);
         }finally{
             if (dataSource != null) dataSource.close();
