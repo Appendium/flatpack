@@ -102,12 +102,12 @@ public class LargeDataSet extends DataSet{
         this.fileType = DELIMITED_FILE;
         setHandleShortLines(handleShortLines);
         InputStream dataSourceStream = null;
-        System.out.println("creating input stream");
+       // System.out.println("creating input stream");
         dataSourceStream = ParserUtils.createInputStream(dataSource);
         this.is = dataSourceStream;
-        System.out.println("creating input stream reader");
+        //System.out.println("creating input stream reader");
         this.isr = new InputStreamReader(is);
-        System.out.println("creating buffered reader");
+       // System.out.println("creating buffered reader");
         this.br = new BufferedReader(this.isr);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
@@ -152,6 +152,10 @@ public class LargeDataSet extends DataSet{
             return readNextFixedLen();
         }catch(Exception ex){
             throw new RuntimeException(ex);
+        }finally{
+            //Advance the pointer in the DataSet to the first position if needed
+            //we only throw one record into the array at a time
+            if (super.getIndex() == -1) super.next();
         }
     }
     
