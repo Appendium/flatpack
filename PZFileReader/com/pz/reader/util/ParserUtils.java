@@ -124,7 +124,11 @@ public class ParserUtils {
 
         }
 
-        if (beginQualifier || beginNoQualifier || line.trim().endsWith(delimiter)) {
+        if (qualifier == null || 
+                qualifier.trim().length() == 0 || 
+                beginQualifier || 
+                beginNoQualifier || 
+                line.trim().endsWith(delimiter)) {
             // also account for a delimiter with an empty column at the end that was not qualified
             // check to see if we need to add the last column in..this will happen on empty columns
             // add the last column
