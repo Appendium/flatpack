@@ -234,7 +234,7 @@ public class DataSet {
             }
 
             // read in the fixed length file and construct the DataSet object
-            doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+            doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord, false);
 
         } finally {
             if (rs != null)
@@ -284,7 +284,7 @@ public class DataSet {
         this.handleShortLines = handleShortLines;
         columnMD = PZMapParser.parse(pzmapXMLStream);
 
-        doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+        doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord, false);
 
     }
 
@@ -306,29 +306,33 @@ public class DataSet {
         
         try{
 	        dataSourceStream = ParserUtils.createInputStream(dataSource);
-	
-	        // read the column names from the file
-	        columnMD = ParserUtils.getColumnMDFromFile(dataSourceStream, delimiter, qualifier);
-	        
-	        //if this is supported we can re-wind the InputStream without having to re-create it
-	        if (dataSourceStream.markSupported()){
-	            dataSourceStream.mark(0);
-	        }else{
-	            dataSourceStream.close(); //close this stream before we create a new one
-	        }
-	        
-	        if (!dataSourceStream.markSupported()){
-	            dataSourceStream = ParserUtils.createInputStream(dataSource);
-	        }else{
-	            dataSourceStream.reset();
-	        }
-	        // Open second time, because FileInputStream does not support marking, so you cannot reset the Stream.
-	        // read in the delimited file and construct the DataSet object
-	        doDelimitedFile(dataSourceStream, delimiter, qualifier, true);
+   	        doDelimitedFile(dataSourceStream, delimiter, qualifier, false, true);
         }finally{
             if (dataSourceStream != null) dataSourceStream.close();
         }
     }
+    
+    /** 
+    * Constructs a new DataSet using the first line of data found in the text file as the column
+    * names. This is used for a DELIMITED text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+    * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+    * @param dataSource - text file InputStream to read from
+    * @param delimiter - Char the file is delimited By
+    * @param qualifier - Char text is qualified by
+    * @param handleShortLines - when flaged as true, lines with less columns then the amount of
+    *            column headers will be added as empty's instead of producing an error
+    * @exception Exception
+    */
+   public DataSet(InputStream dataSource, String delimiter, String qualifier, boolean handleShortLines) throws Exception {
+
+       this.handleShortLines = handleShortLines;
+       
+       try{
+           doDelimitedFile(dataSource, delimiter, qualifier, false, true);
+       }finally{
+           if (dataSource != null) dataSource.close();
+       }
+   }
 
 
     /**
@@ -460,7 +464,7 @@ public class DataSet {
      * puts together the dataset for a DELIMITED file. This is used for PZ XML mappings, and SQL
      * table mappings
      */
-    private void doDelimitedFile(InputStream dataSource, String delimiter, String qualifier, boolean ignoreFirstRecord) throws Exception {
+    private void doDelimitedFile(InputStream dataSource, String delimiter, String qualifier, boolean ignoreFirstRecord, boolean createMDFromFile) throws Exception {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
         }
@@ -496,9 +500,14 @@ public class DataSet {
                 if (!processingMultiLine && line.trim().length() == 0) {
                     continue;
                 }
+                
                 // check to see if the user has elected to skip the first record
                 if (!processedFirst && ignoreFirstRecord) {
                     processedFirst = true;
+                    continue;
+                }else if (!processedFirst && createMDFromFile){
+                    processedFirst = true;
+                    columnMD = ParserUtils.getColumnMDFromFile(line, delimiter, qualifier);
                     continue;
                 }
                 
@@ -573,7 +582,6 @@ public class DataSet {
                 mdkey = ParserUtils.getCMDKeyForDelimitedFile(columnMD, columns);
                 cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
                 columnCount = cmds.size();
-                
                 // DEBUG
                 
                 // for (int i = 0; i < columns.size(); i++){ System.out.println(columns.get(i)); }
@@ -642,7 +650,6 @@ public class DataSet {
      */
     public void goTop() {
         pointer = -1;
-        return;
     }
 
     /**
@@ -650,7 +657,6 @@ public class DataSet {
      */
     public void goBottom() {
         pointer = rows.size() - 1;
-        return;
     }
 
     /**
@@ -1059,5 +1065,20 @@ public class DataSet {
      */
     public String getReaderVersion(){
        return Version.VERSION;
+    }
+    /**
+     * @return Returns the handleShortLines.
+     */
+    public boolean isHandleShortLines() {
+        return handleShortLines;
+    }
+    /**
+     * This is used for LargeDataSet compatability.  Setting this will have no affect on the DataSet parser. 
+     * It must be passed on the constructor
+     * 
+     * @param handleShortLines The handleShortLines to set.
+     */
+    public void setHandleShortLines(boolean handleShortLines) {
+        this.handleShortLines = handleShortLines;
     }
 }

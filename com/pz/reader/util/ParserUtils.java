@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -129,7 +130,11 @@ public class ParserUtils {
 
         }
 
-        if (beginQualifier || beginNoQualifier || line.trim().endsWith(delimiter)) {
+        if (qualifier == null || 
+                qualifier.trim().length() == 0 || 
+                beginQualifier || 
+                beginNoQualifier || 
+                line.trim().endsWith(delimiter)) {
             // also account for a delimiter with an empty column at the end that was not qualified
             // check to see if we need to add the last column in..this will happen on empty columns
             // add the last column
@@ -210,6 +215,7 @@ public class ParserUtils {
      * @param qualifier
      * @exception Exception
      * @return Map - ColumnMetaData
+     * @deprecated see getColumMDFromFile(String, String, String)
      */
     public static Map getColumnMDFromFile(InputStream theStream, String delimiter, String qualifier) throws Exception {
         InputStreamReader isr = null;
@@ -253,6 +259,33 @@ public class ParserUtils {
         return columnMD;
     }
 
+    /**
+     * Returns a list of ColumnMetaData objects. This is for use with delimited files. The first
+     * line of the file which contains data will be used as the column names
+     * @param line
+     * @param delimiter
+     * @param qualifier
+     * @exception Exception
+     * @return ArrayList - ColumnMetaData
+     */
+    public static Map getColumnMDFromFile(String line, String delimiter, String qualifier) throws Exception {
+        List lineData = null;
+        List results = new ArrayList();
+        Map columnMD = new LinkedHashMap();        
+
+        lineData = splitLine(line, delimiter, qualifier);
+        for (int i = 0; i < lineData.size(); i++) {
+            ColumnMetaData cmd = new ColumnMetaData();
+            cmd.setColName((String) lineData.get(i));
+            results.add(cmd);
+        }
+        
+        columnMD.put("detail",results);
+        
+        return columnMD;
+    }
+    
+    
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited files. The first
      * line of the file which contains data will be used as the column names
@@ -536,5 +569,29 @@ public class ParserUtils {
         InputStream xmlStream = null;
         xmlStream = new FileInputStream(file.getAbsolutePath());
         return xmlStream;
+    }
+    
+    /**
+     * Closes the given reader
+     * @param reader
+     * 
+     */
+    public static void closeReader(Reader reader){
+        try{
+           reader.close();
+        }catch(Exception ignore){}
+        
+    }
+        
+    /**
+     * Closes the given reader
+     * @param reader
+     * 
+     */
+    public static void closeReader(InputStream reader){
+        try{
+           reader.close();
+        }catch(Exception ignore){}
+        
     }
 }

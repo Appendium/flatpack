@@ -1,5 +1,16 @@
 Version 2.2.0
 ----------------------------------
+06-11-2006
+	- When using column names out of the CSV file 2 input streams were being created.  One to read the file and
+	the other to get the column names.  This has been reduced to one.
+	
+	- Added a new constructor to have the ability to provide an InputStream when reading columns from the file.
+	
+	- Added a LargeDataSet class.  This should be used to read large files.  It provides the ability to read large
+	files without reading them into memory.  The following methods are not applicable for this class;
+	previous(), writeToExcel, orderRows(), absolute(), remove(), getIndex(), goBottom(), goTop(),
+	setValue().  An exception will be thrown if these are called.
+	
 05-27-2006
 	- Added the ability to specify Header, Trailer, or other records which can be uniquly identified by a piece
 	of data on the record.  These get mapped to their own set of column names seperate from the detail records.
