@@ -75,7 +75,7 @@ public class ParserUtils {
                 } else if ((!beginNoQualifier) && line.substring(i, i + 1).equals(qualifier)
                         && beginQualifier && (lTrim(line.substring(i + 1)).length() == 0 ||
                         // this will be true on empty undelmited columns at the end of theline
-                        lTrim(line.substring(i + 1)).substring(0, 1).equals(delimiter))) {
+                        lTrimKeepTabs(line.substring(i + 1)).substring(0, 1).equals(delimiter))) {
                     // end of a set of data that was qualified
                     list.add(sb.toString());
                     sb.delete(0, sb.length());
@@ -171,6 +171,28 @@ public class ParserUtils {
 
         for (int i = 0; i < value.length(); i++) {
             if (value.substring(i, i + 1).trim().length() == 0 && !gotAChar) {
+                continue;
+            } else {
+                gotAChar = true;
+                returnVal.append(value.substring(i, i + 1));
+            }
+        }
+
+        return returnVal.toString();
+
+    }
+    
+    /**
+     * Removes empty space from the begining of a string, except for tabs
+     * @param value - to be trimmed
+     * @return String
+     */
+    public static String lTrimKeepTabs(String value) {
+        StringBuffer returnVal = new StringBuffer();
+        boolean gotAChar = false;
+
+        for (int i = 0; i < value.length(); i++) {
+            if (!value.substring(i, i + 1).equals("\t") && value.substring(i, i + 1).trim().length() == 0 && !gotAChar) {
                 continue;
             } else {
                 gotAChar = true;
