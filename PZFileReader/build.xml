@@ -8,7 +8,7 @@
   <!--set this to the target of the build-->	
   <property name="dist"  location="c:/pzFileReader/distro"/>
   <property name="include" value="include"/>
-  <property name="version" value="2_2_0"/>
+  <property name="version" value="2_2_1"/>
 
   <target name="init">
   	<!--Wipe the source dir to clean old files if needed-->

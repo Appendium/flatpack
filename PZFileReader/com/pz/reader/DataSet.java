@@ -549,7 +549,10 @@ public class DataSet {
 	                                //not a space, if this char is the delimiter, then we have reached the end of 
 	                                //the record
 	                                if (chrArry[i] == delimiter.charAt(0)){
-	                                    processingMultiLine = false;
+	                                    //processingMultiLine = false;
+                                        //fix put in, setting to false caused bug when processing multiple multi-line
+                                        //columns on the same record
+                                        processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
 		                                break;
 	                                }
 	                                qualiFound = false;

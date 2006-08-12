@@ -9,7 +9,9 @@ With Some Breaks In The Address
 Field","AVON","OH","44001", "comments here"
 "FRED","ZNAME","123 ROCKY WY","ELYRIA","OH","12345","more comments"
 "FRED","ZNAME","123 ROCKY WY","ELYRIA","OH","12345",""
-"FRED","ZNAME","Text Qualifier " and seperator, 
+"FRED","ZNAME line break
+in the middle of
+the last name","Text Qualifier " and seperator, 
 in string break
 break 
 break","ELYRIA","OH","","last comment :)"

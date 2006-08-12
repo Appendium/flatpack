@@ -17,6 +17,7 @@ public class AllJunitTests {
         TestSuite suite = new TestSuite("Test For All PZFileReader Functionality");
         //$JUnit-BEGIN$
         suite.addTest(new TestSuite(com.test.delim.columnInFile.TestDelimitedColumnNamesInFile.class));
+        suite.addTest(new TestSuite(com.test.delim.tab.TestTabDelimited.class));
         //$JUnit-END$
         return suite;
     }
