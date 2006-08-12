@@ -1,3 +1,9 @@
+Version 2.2.1
+----------------------------------
+8-12-2006
+	- Fixed a bug in the delimited parser.  Errors were caused by multiple column multi-line records.  Special thanks
+	to Malcolm Dobson for bringing the bug to attention and providing the fix.
+
 Version 2.2.0
 ----------------------------------
 06-11-2006

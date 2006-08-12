@@ -56,7 +56,7 @@ public class CSVPerformanceTest {
 	        colNames = ds.getColumns();
 	        
 	        int times = 0;
-	        while (ds.next() && times < 2) {
+	        while (ds.next()) {
 	            for (int i = 0; i < colNames.length; i++){
 	                System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
 	            }
