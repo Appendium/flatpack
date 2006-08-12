@@ -61,7 +61,7 @@ public class LargeDataSet extends DataSet{
     /**
      * Constructor based on InputStream.
      * Constructs a new LargeDataSet using the PZMAP XML file layout method. This is used for a DELIMITED
-     * text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * text file. esacpe sequence reference:<br> \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
      * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
      * @param pzmapXMLStream - Reference to the xml file holding the pzmap
      * @param dataSourceStream - text file datasource InputStream to read from
@@ -89,7 +89,7 @@ public class LargeDataSet extends DataSet{
     
     /**
      * Constructs a new LargeDataSet using the first line of data found in the text file as the column
-     * names. This is used for a DELIMITED text file. esacpe sequence reference: \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * names. This is used for a DELIMITED text file. esacpe sequence reference:<br> \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
      * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
      * @param dataSource - text file datasource to read from
      * @param delimiter - Char the file is delimited By
@@ -99,12 +99,25 @@ public class LargeDataSet extends DataSet{
      * @exception Exception
      */
     public LargeDataSet(File dataSource, String delimiter, String qualifier, boolean handleShortLines) throws Exception {
+        this(ParserUtils.createInputStream(dataSource),delimiter, qualifier, handleShortLines); 
+    }
+    
+    /**
+     * Constructs a new LargeDataSet using the first line of data found in the text file as the column names. 
+     * This is used for a DELIMITED text file. esacpe sequence reference:<br> \n newline <br> \t tab <br> \b backspace <br> \r return <br> \f 
+     * form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * @param dataSource - text file datasource to read from
+     * @param delimiter - Char the file is delimited By
+     * @param qualifier - Char text is qualified by
+     * @param handleShortLines - when flaged as true, lines with less columns then the amount of
+     *            column headers will be added as empty's instead of producing an error
+     * @exception Exception
+     */
+    public LargeDataSet(InputStream dataSource, String delimiter, String qualifier, boolean handleShortLines) throws Exception {
         this.fileType = DELIMITED_FILE;
         setHandleShortLines(handleShortLines);
-        InputStream dataSourceStream = null;
        // System.out.println("creating input stream");
-        dataSourceStream = ParserUtils.createInputStream(dataSource);
-        this.is = dataSourceStream;
+        this.is = dataSource;
         //System.out.println("creating input stream reader");
         this.isr = new InputStreamReader(is);
        // System.out.println("creating buffered reader");
@@ -117,8 +130,7 @@ public class LargeDataSet extends DataSet{
     
     
     /**
-     * New constructor based on InputStream.
-     * Constructs a new LargeDataSet using the PZMAP XML file layout method. This is used for a FIXED
+     * New constructor based on InputStream. Constructs a new LargeDataSet using the PZMAP XML file layout method. This is used for a FIXED
      * LENGTH text file.
      * @param pzmapXMLStream - Reference to the xml file InputStream holding the pzmap
      * @param dataSourceStream - Delimited file InputStream to read from
@@ -321,7 +333,10 @@ public class LargeDataSet extends DataSet{
                                 //not a space, if this char is the delimiter, then we have reached the end of 
                                 //the record
                                 if (chrArry[i] == delimiter.charAt(0)){
-                                    processingMultiLine = false;
+                                    //processingMultiLine = false;
+                                    //fix put in, setting to false caused bug when processing multiple multi-line
+                                    //columns on the same record
+                                    processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
 	                                break;
                                 }
                                 qualiFound = false;
