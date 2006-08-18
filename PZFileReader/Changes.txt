@@ -1,3 +1,9 @@
+Version 2.2.2
+----------------------------------
+8-18-2006
+	- Fixed bug in LargeDataSet.  Multiline delimited records were not being parsed correctly.  They were showing
+	up as errors when being parsed.
+
 Version 2.2.1
 ----------------------------------
 8-12-2006

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.pz.reader.DataError;
-import com.pz.reader.DataSet;
+import com.pz.reader.LargeDataSet;
 
 /*
  * Created on Dec 1, 2005
@@ -25,7 +25,7 @@ public class CSVPerformanceTest {
 
     public static void main(String[] args) {
         
-        DataSet ds = null;
+        LargeDataSet ds = null;
         String[] colNames = null;
        
         try{
@@ -36,7 +36,7 @@ public class CSVPerformanceTest {
 	        //text qualified by double quotes
 	        //ignore first record
             long timeStarted = System.currentTimeMillis();
-	        ds = new DataSet(new File("com/test/delim/multiLine/PEOPLE-CommaDelimitedWithQualifier.txt"),",","\"",false);
+	        ds = new LargeDataSet(new File("com/test/delim/multiLine/PEOPLE-CommaDelimitedWithQualifier.txt"),",","\"",false);
 	        long timeFinished = System.currentTimeMillis();
 	        
 	        
@@ -53,10 +53,10 @@ public class CSVPerformanceTest {
 	        Thread.sleep(2000); //sleep for a couple seconds to the message above can be read
 	        
             timeStarted = System.currentTimeMillis();
-	        colNames = ds.getColumns();
 	        
 	        int times = 0;
 	        while (ds.next()) {
+                colNames = ds.getColumns();
 	            for (int i = 0; i < colNames.length; i++){
 	                System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
 	            }
