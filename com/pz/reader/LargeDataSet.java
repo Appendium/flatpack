@@ -291,7 +291,7 @@ public class LargeDataSet extends DataSet{
             //column names are coming from inside the CSV file
             else if (!this.processedFirst && this.createMDFromFile){ 
                 this.processedFirst = true;
-                this.columnMD = ParserUtils.getColumnMDFromFile(line, delimiter, qualifier);
+                super.columnMD = ParserUtils.getColumnMDFromFile(line, delimiter, qualifier);
                 continue;
             }
             
@@ -364,7 +364,7 @@ public class LargeDataSet extends DataSet{
 
 
             // column values
-            columns = ParserUtils.splitLine(line, this.delimiter, this.qualifier);
+            columns = ParserUtils.splitLine(lineData, this.delimiter, this.qualifier);
             lineData = "";
             mdkey = ParserUtils.getCMDKeyForDelimitedFile(columnMD, columns);
             cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
