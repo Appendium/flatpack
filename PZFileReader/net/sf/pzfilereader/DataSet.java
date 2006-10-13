@@ -7,7 +7,7 @@
 
  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.  
  */
-package com.pz.reader;
+package net.sf.pzfilereader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,15 +24,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.pz.reader.ordering.OrderBy;
-import com.pz.reader.structure.ColumnMetaData;
-import com.pz.reader.structure.Row;
-import com.pz.reader.util.ExcelTransformer;
-import com.pz.reader.util.ParserUtils;
-import com.pz.reader.xml.PZMapParser;
+import net.sf.pzfilereader.ordering.OrderBy;
+import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.structure.Row;
+import net.sf.pzfilereader.util.ExcelTransformer;
+import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.pzfilereader.xml.PZMapParser;
+
 
 /**
  * This class parses a datafile and holds methods to scroll back and forth through the datafile
@@ -698,12 +700,12 @@ public class DataSet {
         
         if (upperCase) {
             // convert data to uppercase before returning
-            return row.getValue(ParserUtils.findColumn(column, cmds)).toUpperCase();
+            return row.getValue(ParserUtils.findColumn(column, cmds)).toUpperCase(Locale.getDefault());
         }
 
         if (lowerCase) {
             // convert data to lowercase before returning
-            return row.getValue(ParserUtils.findColumn(column, cmds)).toLowerCase();
+            return row.getValue(ParserUtils.findColumn(column, cmds)).toLowerCase(Locale.getDefault());
         }
 
         // return value as how it is in the file
@@ -992,8 +994,8 @@ public class DataSet {
      * 
      * @param ob - OrderBy object
      * @exception Exception
-     * @see com.pz.reader.ordering.OrderBy
-     * @see com.pz.reader.ordering.OrderColumn
+     * @see net.sf.pzfilereader.ordering.OrderBy
+     * @see net.sf.pzfilereader.ordering.OrderColumn
      */
     public void orderRows(OrderBy ob) throws Exception{
         if (columnMD.size() > 1){

@@ -1,3 +1,9 @@
+Version 3.0
+----------------------------------
+10-13-2006
+ 	- Chaned the pacakge structure from com.pz.reader to net.sf.pzfilereader.  This was done per the requirments
+ 	of ibiblio.
+
 Version 2.2.2
 ----------------------------------
 8-18-2006
