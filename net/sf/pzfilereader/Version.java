@@ -2,7 +2,7 @@
  * Created on Feb 26, 2006
  *
 */
-package com.pz.reader;
+package net.sf.pzfilereader;
 
 /**
  *

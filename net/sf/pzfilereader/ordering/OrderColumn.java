@@ -11,7 +11,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
  * Created on Nov 23, 2004
  *
  */
-package com.pz.reader.ordering;
+package net.sf.pzfilereader.ordering;
 
 /**
  * @author paul zepernick

@@ -1,16 +1,17 @@
-package com.test.delim.columnInFile;
-
+package net.sf.test.delim.tab;
 /*
  * Created on Nov 27, 2005
  *
- */ 
+ */
 
 import java.io.File;
+import java.io.FileInputStream;
 
-import com.pz.reader.DataError;
-import com.pz.reader.DataSet;
-import com.pz.reader.ordering.OrderBy;
-import com.pz.reader.ordering.OrderColumn;
+import net.sf.pzfilereader.DataError;
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.ordering.OrderBy;
+import net.sf.pzfilereader.ordering.OrderColumn;
+
 
 /**
  * @author zepernick
@@ -18,23 +19,27 @@ import com.pz.reader.ordering.OrderColumn;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class DelimitedColumnNamesInFile {
+public class TabDelimited {
     public static void main(String[] args)throws Exception{
         DataSet ds = null;
         String[] colNames = null;
         OrderBy orderby = null;
+        File tmpFile = null;
         
         
         //delimited by a comma
         //text qualified by double quotes
         //ignore first record
-        ds = new DataSet(new File("com/test/delim/columnInFile/PEOPLE-CommaDelimitedWithQualifier.txt"),",","\"",false);
+        tmpFile = new File("com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt");
+        System.out.println("tmp file path: " + tmpFile);
+        //ds = new DataSet(new FileInputStream(tmpFile),"\t","",true);
+        ds = new DataSet(tmpFile,"\t","\"",true);
         
         //re order the data set by last name
-        orderby = new OrderBy();
+       /* orderby = new OrderBy();
         orderby.addOrderColumn(new OrderColumn("CITY",false));
         orderby.addOrderColumn(new OrderColumn("LASTNAME",true));
-        ds.orderRows(orderby);
+        ds.orderRows(orderby);*/
         
         colNames = ds.getColumns();
         
@@ -64,6 +69,6 @@ public class DelimitedColumnNamesInFile {
     //used for Junit test
     
     public DataSet getDsForTest() throws Exception{
-      return new DataSet(new File("com/test/delim/columnInFile/PEOPLE-CommaDelimitedWithQualifier.txt"),",","\"",false);
+      return new DataSet(new File("com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"),"\t","\"",true);
     }
 }

@@ -10,7 +10,7 @@
 /*
  * Created on Dec 31, 2004
  */
-package com.pz.reader.xml;
+package net.sf.pzfilereader.xml;
 
 import java.io.File;
 import java.io.InputStream;
@@ -20,13 +20,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.util.ParserUtils;
+
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
-import com.pz.reader.structure.ColumnMetaData;
-import com.pz.reader.util.ParserUtils;
 
 /**
  * @author zepernick
