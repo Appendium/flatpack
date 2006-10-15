@@ -7,7 +7,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.  
 */
-package net.sf.pzfilereader;
+package com.pz.reader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.pzfilereader.ordering.OrderBy;
-import net.sf.pzfilereader.structure.ColumnMetaData;
-import net.sf.pzfilereader.structure.Row;
-import net.sf.pzfilereader.util.ParserUtils;
-import net.sf.pzfilereader.xml.PZMapParser;
+import com.pz.reader.ordering.OrderBy;
+import com.pz.reader.structure.ColumnMetaData;
+import com.pz.reader.structure.Row;
+import com.pz.reader.util.ParserUtils;
+import com.pz.reader.xml.PZMapParser;
+
 
 
 /**
@@ -193,8 +194,8 @@ public class LargeDataSet extends DataSet{
      * Not Supported! 
      * @param ob - OrderBy object
      * @exception Exception
-     * @see net.sf.pzfilereader.ordering.OrderBy
-     * @see net.sf.pzfilereader.ordering.OrderColumn
+     * @see com.pz.reader.ordering.OrderBy
+     * @see com.pz.reader.ordering.OrderColumn
      */
     public void orderRows(OrderBy ob) throws Exception{
         throw new RuntimeException("orderRows() is Not Implemented For LargeDataSet"); 
