@@ -4,9 +4,9 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package net.sf.test.delim.tab;
+package com.test.delim.columnInFile;
 
-import net.sf.pzfilereader.DataSet;
+import com.pz.reader.DataSet;
 
 import junit.framework.TestCase;
 
@@ -16,20 +16,20 @@ import junit.framework.TestCase;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class TestTabDelimited extends TestCase {
-    public TestTabDelimited(
+public class TestDelimitedColumnNamesInFile extends TestCase {
+    public TestDelimitedColumnNamesInFile(
             String name) {
             super(name);
         }
     
-        //tests to make sure we have 0 errors
+    	//tests to make sure we have 0 errors
         public void testErrorCount() {
             DataSet ds = null;
             
             try{
-                TabDelimited testTab = new TabDelimited();
+                DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
             
-                ds = testTab.getDsForTest();
+                ds = testDelimted.getDsForTest();
                               
                 //check that we had no errors
                 assertEquals(0, ds.getErrors().size());
@@ -48,12 +48,12 @@ public class TestTabDelimited extends TestCase {
             DataSet ds = null;
             
             try{
-                TabDelimited testTab = new TabDelimited();
+                DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
             
-                ds = testTab.getDsForTest();
+                ds = testDelimted.getDsForTest();
                 
                 //check that we parsed in the right amount of rows
-                assertEquals(2, ds.rows.size());
+                assertEquals(6, ds.rows.size());
                               
         
             
@@ -70,12 +70,12 @@ public class TestTabDelimited extends TestCase {
             DataSet ds = null;
             
             try{
-                TabDelimited testTab = new TabDelimited();
+                DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
             
-                ds = testTab.getDsForTest();
+                ds = testDelimted.getDsForTest();
                 
                 //check that we parsed in the right amount of column names
-                assertEquals(5, ds.getColumns().length);
+                assertEquals(6, ds.getColumns().length);
                               
         
             
@@ -89,6 +89,6 @@ public class TestTabDelimited extends TestCase {
         
         public static void main(String[] args) {
             junit.textui.TestRunner.run(
-                TestTabDelimited.class);
+                TestDelimitedColumnNamesInFile.class);
         }
 }

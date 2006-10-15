@@ -7,7 +7,7 @@
 
  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.  
  */
-package net.sf.pzfilereader.util;
+package com.pz.reader.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,8 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.sf.pzfilereader.structure.ColumnMetaData;
-import net.sf.pzfilereader.xml.XMLRecordElement;
+import com.pz.reader.structure.ColumnMetaData;
+import com.pz.reader.xml.XMLRecordElement;
+
 
 
 /**

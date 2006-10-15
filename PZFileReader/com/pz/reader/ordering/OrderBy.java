@@ -10,14 +10,15 @@ Unless required by applicable law or agreed to in writing, software distributed 
 /*
  * Created on Nov 23, 2004
  */
-package net.sf.pzfilereader.ordering;
+package com.pz.reader.ordering;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sf.pzfilereader.structure.Row;
-import net.sf.pzfilereader.util.ParserUtils;
+import com.pz.reader.structure.Row;
+import com.pz.reader.util.ParserUtils;
+
 
 
 /**
