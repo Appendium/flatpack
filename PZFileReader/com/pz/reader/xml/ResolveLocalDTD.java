@@ -11,7 +11,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
  * Created on May 28, 2006
  *
  *  */
-package net.sf.pzfilereader.xml;
+package com.pz.reader.xml;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package net.sf.test.delim.columnInFile;
+package com.test.delim.columnInFile;
 
 /*
  * Created on Nov 27, 2005
@@ -7,10 +7,11 @@ package net.sf.test.delim.columnInFile;
 
 import java.io.File;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.ordering.OrderBy;
-import net.sf.pzfilereader.ordering.OrderColumn;
+import com.pz.reader.DataError;
+import com.pz.reader.DataSet;
+import com.pz.reader.ordering.OrderBy;
+import com.pz.reader.ordering.OrderColumn;
+
 
 
 /**

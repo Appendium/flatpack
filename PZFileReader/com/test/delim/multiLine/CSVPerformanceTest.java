@@ -1,12 +1,13 @@
-package net.sf.test.delim.multiLine;
+package com.test.delim.multiLine;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.LargeDataSet;
+import com.pz.reader.DataError;
+import com.pz.reader.LargeDataSet;
+
 
 
 /*
