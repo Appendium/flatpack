@@ -66,6 +66,21 @@
             <includes>
                <include>**/*.txt</include>
                <include>**/*.xml</include>
+               <include>**/*.csv</include>
+            </includes>
+            <filtering>false</filtering>
+         </resource>
+         <resource>
+            <directory>${basedir}/../common-build/lib</directory>
+            <includes>
+               <include>**/*.jar</include>
+            </includes>
+            <filtering>false</filtering>
+         </resource>
+         <resource>
+            <directory>${basedir}/common-build/lib</directory>
+            <includes>
+               <include>**/*.jar</include>
             </includes>
             <filtering>false</filtering>
          </resource>

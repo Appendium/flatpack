@@ -13,6 +13,8 @@
             href="multiproject/pzfilereader/index.html" />
          <item name="History"
             href="history.html" />
+         <item name="Features"
+            href="features.html" />
          <item name="Examples"
             href="multiproject/pzfilereader-examples/index.html" />
          <item name="JavaDoc" class="newWindow" target="_new" href="apidocs/index.html" />
