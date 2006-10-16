@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <classpath>
-	<classpathentry kind="src" path=""/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="include/jdom.jar"/>
-	<classpathentry kind="lib" path="include/junit.jar"/>
-	<classpathentry kind="lib" path="include/jxl.jar"/>
-	<classpathentry kind="output" path=""/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"></classpathentry>
+  <classpathentry excluding="" kind="src" path="src/main/java"></classpathentry>
+  <classpathentry output="target/test-classes" kind="src" path="src/test/java"></classpathentry>
+  <classpathentry path="MAVEN_REPO/junit/jars/junit-3.8.2.jar" kind="var"></classpathentry>
+  <classpathentry path="MAVEN_REPO/jdom/jars/jdom-1.0.jar" kind="var"></classpathentry>
+  <classpathentry path="MAVEN_REPO/jexcelapi/jars/jxl-2.4.2.jar" kind="var"></classpathentry>
+  <classpathentry kind="output" path="target/classes"></classpathentry>
 </classpath>
