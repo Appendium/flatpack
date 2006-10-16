@@ -12,83 +12,80 @@ import junit.framework.TestCase;
 
 /**
  * @author zepernick
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
 public class TabDelimitedTest extends TestCase {
-    public TabDelimitedTest(
-            String name) {
-            super(name);
-        }
+    public TabDelimitedTest(final String name) {
+        super(name);
+    }
 
-        //tests to make sure we have 0 errors
-        public void testErrorCount() {
-            DataSet ds = null;
+    // tests to make sure we have 0 errors
+    public void testErrorCount() {
+        DataSet ds = null;
 
-            try{
-                TabDelimited testTab = new TabDelimited();
+        try {
+            final TabDelimited testTab = new TabDelimited();
 
-                ds = testTab.getDsForTest();
+            ds = testTab.getDsForTest();
 
-                //check that we had no errors
-                assertEquals(0, ds.getErrors().size());
+            // check that we had no errors
+            assertEquals(0, ds.getErrors().size());
 
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }finally{
-                if (ds != null) ds.freeMemory();
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ds != null) {
+                ds.freeMemory();
             }
         }
+    }
 
-        //test to make sure we parsed the correct number
-        //of rows in the file
-        public void testRowCount(){
-            DataSet ds = null;
+    // test to make sure we parsed the correct number
+    // of rows in the file
+    public void testRowCount() {
+        DataSet ds = null;
 
-            try{
-                TabDelimited testTab = new TabDelimited();
+        try {
+            final TabDelimited testTab = new TabDelimited();
 
-                ds = testTab.getDsForTest();
+            ds = testTab.getDsForTest();
 
-                //check that we parsed in the right amount of rows
-                assertEquals(2, ds.rows.size());
+            // check that we parsed in the right amount of rows
+            assertEquals(2, ds.getRows().size());
 
-
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }finally{
-                if (ds != null) ds.freeMemory();
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ds != null) {
+                ds.freeMemory();
             }
         }
+    }
 
+    // test to make sure we have the right number of column names from the file
+    public void testColumnNameCount() {
+        DataSet ds = null;
 
-        //test to make sure we have the right number of column names from the file
-        public void testColumnNameCount(){
-            DataSet ds = null;
+        try {
+            final TabDelimited testTab = new TabDelimited();
 
-            try{
-                TabDelimited testTab = new TabDelimited();
+            ds = testTab.getDsForTest();
 
-                ds = testTab.getDsForTest();
+            // check that we parsed in the right amount of column names
+            assertEquals(5, ds.getColumns().length);
 
-                //check that we parsed in the right amount of column names
-                assertEquals(5, ds.getColumns().length);
-
-
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }finally{
-                if (ds != null) ds.freeMemory();
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ds != null) {
+                ds.freeMemory();
             }
         }
+    }
 
-
-        public static void main(String[] args) {
-            junit.textui.TestRunner.run(
-                TabDelimitedTest.class);
-        }
+    public static void main(final String[] args) {
+        junit.textui.TestRunner.run(TabDelimitedTest.class);
+    }
 }

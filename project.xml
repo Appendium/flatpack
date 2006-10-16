@@ -27,7 +27,7 @@
    <name>PZFileReader</name>
    <artifactId>pzfilereader</artifactId>
    <package>com.pz.reader</package>
-   <shortDescription>PZFileReader </shortDescription>
+   <shortDescription>Flat File Parser via XML Mappings (fixed length,csv).</shortDescription>
    <description>
        Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
        Maps column positions in the file to user friendly names via XML. See PZFileReader Feature List under News for complete feature list.
