@@ -24,8 +24,8 @@
 
 <project>
    <extend>../common-build/project.xml</extend>
-   <name>PZFileReader</name>
-   <artifactId>pzfilereader</artifactId>
+   <name>PZFileReader Examples</name>
+   <artifactId>pzfilereader-examples</artifactId>
    <package>com.pz.reader</package>
    <shortDescription>PZFileReader </shortDescription>
    <description>
@@ -40,14 +40,21 @@
          scm:svn:https://svn.sourceforge.net/svnroot/pzfilereader/trunk/PZFileReader
       </developerConnection>
    </repository>
-   <dependencies />
+   <dependencies>
+      <dependency>
+         <groupId>com.pz.reader</groupId>
+         <artifactId>pzfilereader</artifactId>
+         <version>${pom.currentVersion}</version>
+         <type>jar</type>
+      </dependency>
+   </dependencies>
 
    <build>
       <sourceDirectory>src/main/java</sourceDirectory>
       <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
       <unitTest>
          <includes>
-            <include>**/*Test.java</include>
+            <include>**/*NOTest.java</include>
          </includes>
          <excludes>
             <exclude>**/Abstract*.java</exclude>

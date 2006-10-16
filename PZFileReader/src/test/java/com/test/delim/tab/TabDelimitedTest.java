@@ -16,79 +16,79 @@ import junit.framework.TestCase;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class TestTabDelimited extends TestCase {
-    public TestTabDelimited(
+public class TabDelimitedTest extends TestCase {
+    public TabDelimitedTest(
             String name) {
             super(name);
         }
-    
+
         //tests to make sure we have 0 errors
         public void testErrorCount() {
             DataSet ds = null;
-            
+
             try{
                 TabDelimited testTab = new TabDelimited();
-            
+
                 ds = testTab.getDsForTest();
-                              
+
                 //check that we had no errors
                 assertEquals(0, ds.getErrors().size());
-        
-            
+
+
             }catch(Exception ex){
                 ex.printStackTrace();
             }finally{
                 if (ds != null) ds.freeMemory();
             }
         }
-        
+
         //test to make sure we parsed the correct number
         //of rows in the file
         public void testRowCount(){
             DataSet ds = null;
-            
+
             try{
                 TabDelimited testTab = new TabDelimited();
-            
+
                 ds = testTab.getDsForTest();
-                
+
                 //check that we parsed in the right amount of rows
                 assertEquals(2, ds.rows.size());
-                              
-        
-            
+
+
+
             }catch(Exception ex){
                 ex.printStackTrace();
             }finally{
                 if (ds != null) ds.freeMemory();
             }
         }
-        
-        
+
+
         //test to make sure we have the right number of column names from the file
         public void testColumnNameCount(){
             DataSet ds = null;
-            
+
             try{
                 TabDelimited testTab = new TabDelimited();
-            
+
                 ds = testTab.getDsForTest();
-                
+
                 //check that we parsed in the right amount of column names
                 assertEquals(5, ds.getColumns().length);
-                              
-        
-            
+
+
+
             }catch(Exception ex){
                 ex.printStackTrace();
             }finally{
                 if (ds != null) ds.freeMemory();
             }
         }
-        
-        
+
+
         public static void main(String[] args) {
             junit.textui.TestRunner.run(
-                TestTabDelimited.class);
+                TabDelimitedTest.class);
         }
 }
