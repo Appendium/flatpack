@@ -14,5 +14,5 @@
    xmlns:log="jelly:log">
 
    <goal name="pz:build" prereqs="jar:install" />
-   <goal name="pz:rebuild" prereqs="clean,kit:build" />
+   <goal name="pz:rebuild" prereqs="clean,pz:build" />
 </project>

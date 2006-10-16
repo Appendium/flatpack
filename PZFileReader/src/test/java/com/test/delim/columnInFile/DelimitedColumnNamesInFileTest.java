@@ -12,83 +12,80 @@ import junit.framework.TestCase;
 
 /**
  * @author zepernick
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
 public class DelimitedColumnNamesInFileTest extends TestCase {
-    public DelimitedColumnNamesInFileTest(
-            String name) {
-            super(name);
-        }
+    public DelimitedColumnNamesInFileTest(final String name) {
+        super(name);
+    }
 
-    	//tests to make sure we have 0 errors
-        public void testErrorCount() {
-            DataSet ds = null;
+    // tests to make sure we have 0 errors
+    public void testErrorCount() {
+        DataSet ds = null;
 
-            try{
-                DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
+        try {
+            final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
 
-                ds = testDelimted.getDsForTest();
+            ds = testDelimted.getDsForTest();
 
-                //check that we had no errors
-                assertEquals(0, ds.getErrors().size());
+            // check that we had no errors
+            assertEquals(0, ds.getErrors().size());
 
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }finally{
-                if (ds != null) ds.freeMemory();
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ds != null) {
+                ds.freeMemory();
             }
         }
+    }
 
-        //test to make sure we parsed the correct number
-        //of rows in the file
-        public void testRowCount(){
-            DataSet ds = null;
+    // test to make sure we parsed the correct number
+    // of rows in the file
+    public void testRowCount() {
+        DataSet ds = null;
 
-            try{
-                DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
+        try {
+            final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
 
-                ds = testDelimted.getDsForTest();
+            ds = testDelimted.getDsForTest();
 
-                //check that we parsed in the right amount of rows
-                assertEquals(6, ds.rows.size());
+            // check that we parsed in the right amount of rows
+            assertEquals(6, ds.getRows().size());
 
-
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }finally{
-                if (ds != null) ds.freeMemory();
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ds != null) {
+                ds.freeMemory();
             }
         }
+    }
 
+    // test to make sure we have the right number of column names from the file
+    public void testColumnNameCount() {
+        DataSet ds = null;
 
-        //test to make sure we have the right number of column names from the file
-        public void testColumnNameCount(){
-            DataSet ds = null;
+        try {
+            final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
 
-            try{
-                DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
+            ds = testDelimted.getDsForTest();
 
-                ds = testDelimted.getDsForTest();
+            // check that we parsed in the right amount of column names
+            assertEquals(6, ds.getColumns().length);
 
-                //check that we parsed in the right amount of column names
-                assertEquals(6, ds.getColumns().length);
-
-
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }finally{
-                if (ds != null) ds.freeMemory();
+        } catch (final Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ds != null) {
+                ds.freeMemory();
             }
         }
+    }
 
-
-        public static void main(String[] args) {
-            junit.textui.TestRunner.run(
-                DelimitedColumnNamesInFileTest.class);
-        }
+    public static void main(final String[] args) {
+        junit.textui.TestRunner.run(DelimitedColumnNamesInFileTest.class);
+    }
 }

@@ -7,14 +7,14 @@
          <item name="Main Page"
             href="../../index.html" />
          <item name="Main Library"
-            href="../PZFileReader/index.html" />
+            href="../pzfilereader/index.html" />
          <item name="Sitemap" href="sitemap.html" />
       </menu>
     <links>
          <item name="PZFileReader on SourceForge.net"
             href="http://sourceforge.net/projects/PZFileReader" />
       <item name="Overall project" href="../../index.html" />
-      <item name="main" href="../PZFileReader/index.html" />
+      <item name="main" href="../pzfilereader/index.html" />
     </links>
     <sitemap/>
     <search/>
