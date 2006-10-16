@@ -37,7 +37,7 @@ import com.pz.reader.util.ParserUtils;
  */
 public final class PZMapParser {
 
-    private static boolean SHOW_DEBUG = false;
+    private static boolean showDebug = false;
 
     /**
      * Constructor
@@ -123,7 +123,7 @@ public final class PZMapParser {
             mdIndex.put(xmlElement.getAttributeValue("id"), xmlre);
         }
 
-        if (SHOW_DEBUG) {
+        if (showDebug) {
             showDebug(mdIndex);
         }
 
@@ -189,7 +189,7 @@ public final class PZMapParser {
      * @param b
      */
     public static void setDebug(final boolean b) {
-        SHOW_DEBUG = b;
+        showDebug = b;
     }
 
     private static void showDebug(final Map xmlResults) {

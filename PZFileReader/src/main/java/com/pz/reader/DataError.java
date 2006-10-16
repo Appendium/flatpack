@@ -22,20 +22,19 @@ package com.pz.reader;
  */
 public class DataError {
 
-    /** Description of error */
+    /** Description of error. */
     private String errorDesc = null;
 
-    /** line number in file error occured on */
+    /** line number in file error occured on. */
     private int lineNo = 0;
 
     /**
-     * Severity of the error 1 = Warning 2 = Moderate 3 = Severe
+     * Severity of the error 1 = Warning 2 = Moderate 3 = Severe.
      */
     private int errorLevel = 0;
 
     /** default constructor */
     public DataError() {
-        super();
     }
 
     /**
