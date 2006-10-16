@@ -8,8 +8,7 @@
 	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
 	/>
 
-    <meta name="keywords"
-        content="Date calculator, IMM Dates, Period Calculator, Financial Calendar, Business Calendar, java, open source" />
+    <meta name="keywords" content="CSV, Fixed length file parser" />
     <meta name="Subject" content="Date Calculators" />
     <meta name="Copyright" content="ObjectLab Financial Ltd" />
     <meta name="Language" content="English" />
@@ -28,7 +27,18 @@
     
 
     <subsection name="So, what is on offer?">
-
+	<p>PZFileReader releases one library and a set of examples (pzfilereader-examples.jar)</p>	
+	<p>See the <a href="changes-report.html">changes</a> section for news.</p>
+    </subsection>
+    
+    <subsection name="Documentation">
+    	<p>The documentation is available here:
+    	<ul>
+    	<li><a href="documentation/pzfilereader-manual.doc">A WORD Document</a></li>
+    	<li><a href="documentation/pzfilereader-manual.pdf">A PDF Document</a></li>
+    	<li><a href="documentation/index.html">A set of examples XML</a></li>    	
+    	</ul>
+    	</p>
     </subsection>
     
     </section>

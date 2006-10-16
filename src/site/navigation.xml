@@ -11,6 +11,8 @@
       <menu name="PZFileReader">
          <item name="Main library"
             href="multiproject/pzfilereader/index.html" />
+         <item name="History"
+            href="history.html" />
          <item name="Examples"
             href="multiproject/pzfilereader-examples/index.html" />
          <item name="JavaDoc" class="newWindow" target="_new" href="apidocs/index.html" />
@@ -21,6 +23,7 @@
       <search/>
       <menu name="Links">
          <item name="QALab"  href="http://qalab.sourceforge.net/" />
+         <item name="ObjectLab Kit"  href="http://objectlabkit.sourceforge.net/" />
          <item name="ObjectLab"  href="http://www.objectlab.co.uk" />
       </menu>
       <footer>

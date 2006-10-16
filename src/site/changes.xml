@@ -7,9 +7,10 @@
     <title>Changes</title>
   </properties>
   <body>
-    <release version="2.3.0" date="in svn" description="Move to Maven">
+    <release version="2.3.0" date="in svn" description="Move to Maven and Subversion">
     	<action dev="benoitx" type="add">Move build to Maven 1.1.x and generate the entire website from the build.</action>
     	<action dev="benoitx" type="fix">Modify code following warning by Findbugs, checkstyle and PMD.</action>
+    	<action dev="marchy" type="add">Move to Subversion.</action>
     </release>
     <release version="2.2.2" date="2006-08-18" description="Fix">
       <action dev="zepernick" type="fix">Fixed bug in LargeDataSet.  Multiline delimited records were not being parsed correctly.  They were showing
