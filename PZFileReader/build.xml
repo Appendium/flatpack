@@ -3,7 +3,7 @@
         Disto Build Script For pzFileReader
     </description>
   <!-- set global properties for this build -->
-  <property name="src" location="."/>
+  <property name="src" location="./src/main/java"/>
   <property name="build" location="build"/>
   <!--set this to the target of the build-->	
   <property name="dist"  location="c:/pzFileReader/distro"/>
