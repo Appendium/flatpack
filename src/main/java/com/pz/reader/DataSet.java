@@ -823,7 +823,7 @@ public class DataSet {
      * @exception NoSuchElementException
      * @return String
      */
-    public String getString(final String column) throws NoSuchElementException {
+    public String getString(final String column) {
         final Row row = (Row) rows.get(pointer);
         final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
 
@@ -850,7 +850,7 @@ public class DataSet {
      * @exception NumberFormatException
      * @return double
      */
-    public double getDouble(final String column) throws NoSuchElementException, NumberFormatException {
+    public double getDouble(final String column) {
         String s = null;
         final StringBuffer newString = new StringBuffer();
         final String[] allowedChars = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "-" };
@@ -891,7 +891,7 @@ public class DataSet {
      * @exception NumberFormatException
      * @return double
      */
-    public int getInt(final String column) throws NoSuchElementException, NumberFormatException {
+    public int getInt(final String column) {
         String s = null;
         final StringBuffer newString = new StringBuffer();
         final String[] allowedChars = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-" };
@@ -1076,7 +1076,7 @@ public class DataSet {
      *            int
      * @exception IndexOutOfBoundsException
      */
-    public void absolute(final int localPointer) throws IndexOutOfBoundsException {
+    public void absolute(final int localPointer) {
         if (localPointer < 0 || localPointer > rows.size() - 1) {
             throw new IndexOutOfBoundsException("INVALID POINTER LOCATION: " + localPointer);
         }
