@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT PZMAP (RECORD*,COLUMN+,RECORD*)>
+    <!ELEMENT RECORD (COLUMN+)>
+    <!ATTLIST RECORD id ID #REQUIRED
+    		  startPosition CDATA  "1"
+			  endPosition CDATA "1"
+              elementNumber CDATA "1"
+              indicator CDATA #REQUIRED>
+	<!ELEMENT COLUMN EMPTY>
+	<!ATTLIST COLUMN name CDATA  #REQUIRED
+			  length CDATA  "1"	>
