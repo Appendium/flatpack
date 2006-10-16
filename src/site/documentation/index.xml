@@ -1,0 +1,152 @@
+<document>
+  <properties>
+    <title>PZFileReader XML Examples</title>
+  </properties>
+  <head>
+    <meta name="description"
+	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	/>
+
+    <meta name="keywords"
+        content="Open source, flat file api, csv parser, fixed length parser" />
+    <meta name="Subject" content="Date Calculators" />
+    <meta name="Copyright" content="ObjectLab Financial Ltd" />
+    <meta name="Language" content="English" />
+    <meta name="Designer" content="ObjectLab Financial Ltd" />
+    <meta name="Distribution" content="Global" />
+    <meta name="robots" content="ALL"/>
+    <meta name="Revisit-After" content="20 Days" />
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="XML Examples">
+
+    <subsection name="Delimited.pzmap.xml">
+	<div class="code">
+	<pre>
+&lt;?xml version="1.0"?>
+&lt;!-- DTD can be pulled from the Jar or over the web-->
+&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+&lt;PZMAP>
+	&lt;COLUMN name="FIRSTNAME" />
+	&lt;COLUMN name="LASTNAME" />
+	&lt;COLUMN name="ADDRESS" />
+	&lt;COLUMN name="CITY" />
+	&lt;COLUMN name="STATE" />
+	&lt;COLUMN name="ZIP" />
+		
+&lt;/PZMAP> 
+	</pre>
+	</div>
+    </subsection>
+    
+    <subsection name="DelimitedWithHeaderAndTrailer.pzmap.xml">
+	<div class="code">
+	<pre>
+&lt;?xml version='1.0'?>
+&lt;!-- DTD can be pulled from the Jar or over the web-->
+&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+&lt;PZMAP>
+    &lt;RECORD id="header" indicator="H" elementNumber="1">
+        &lt;COLUMN name="RECORDINDICATOR" />
+        &lt;COLUMN name="HEADERDATA" />
+    &lt;/RECORD>
+	&lt;COLUMN name="FIRSTNAME" />
+	&lt;COLUMN name="LASTNAME" />
+	&lt;COLUMN name="ADDRESS" />
+	&lt;COLUMN name="CITY" />
+	&lt;COLUMN name="STATE" />
+	&lt;COLUMN name="ZIP" />
+    &lt;RECORD id="trailer" indicator="T" elementNumber="1">
+        &lt;COLUMN name="RECORDINDICATOR" />
+        &lt;COLUMN name="TRAILERDATA" />
+    &lt;/RECORD>
+		
+&lt;/PZMAP> 
+	</pre>
+	</div>
+    </subsection>
+    
+    <subsection name="FixedLength.pzmap.xml">
+	<div class="code">
+	<pre>
+&lt;?xml version="1.0"?>
+&lt;!-- DTD can be pulled from the Jar or over the web-->
+&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+&lt;PZMAP>
+	&lt;COLUMN name="FIRSTNAME" length="35" />
+	&lt;COLUMN name="LASTNAME" length="35" />
+	&lt;COLUMN name="ADDRESS" length="100" />
+	&lt;COLUMN name="CITY" length="100" />
+	&lt;COLUMN name="STATE" length="2" />
+	&lt;COLUMN name="ZIP" length="5" />
+		
+&lt;/PZMAP> 
+	</pre>
+	</div>
+    </subsection>
+    
+    <subsection name="FixedLengthWithHeaderAndTrailer.pzmap.xml">
+	<div class="code">
+	<pre>
+&lt;?xml version='1.0'?>
+&lt;!-- DTD can be pulled from the Jar or over the web-->
+&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+
+&lt;PZMAP>
+    &lt;RECORD id="header" startPosition="1" endPosition="7" indicator="HEADER ">
+        &lt;COLUMN name="INDICATOR" length="7" />
+	    &lt;COLUMN name="HEADERDATA" length="19" />
+    &lt;/RECORD>
+	&lt;COLUMN name="FIRSTNAME" length="35" />
+	&lt;COLUMN name="LASTNAME" length="35" />
+	&lt;COLUMN name="ADDRESS" length="100" />
+	&lt;COLUMN name="CITY" length="100" />
+	&lt;COLUMN name="STATE" length="2" />
+	&lt;COLUMN name="ZIP" length="5" />
+    &lt;RECORD id="trailer" startPosition="1" endPosition="7" indicator="TRAILER">
+        &lt;COLUMN name="INDICATOR" length="7" />
+	    &lt;COLUMN name="TRAILERDATA" length="19" />
+    &lt;/RECORD>
+		
+&lt;/PZMAP> 
+	</pre>
+	</div>
+    </subsection>
+    
+    
+    <subsection name="SQLTableLayout">
+	<div class="code">
+	<pre>
+Below is the layout for the 2 sql tables needed to map column names in a text file.  
+THIS IS ONLY NEEDED IF NOT USING THE PZMAP XML to map columns.
+
+This should work with just about any database.  The contructor for the DataSet class accepts 
+a java.sql.Connection object if using this mapping method.
+
+TABLE1:
+
+	>Table Name: DATAFILE
+		*Column: DATAFILE_NO - Numeric &lt;PK>
+		*Column: DATAFILE_DESC - VarChar(45) - the value of this column is what needs to be passed into the 
+			dataDefinition parameter on the DataSet constructor.
+
+TABLE2:
+	>Table Name: DATASTRUCTURE
+		*Column: DATASTRUCTURE_NO - Numeric &lt;PK>
+		*Column: DATAFILE_NO - Numeric &lt;FK> - Links to DATAFILE table
+		*Column: DATASTRUCTURE_COLUMN - VarChar(100) - Name of the column to map
+		*Column: DATASTRUCTURE_LENGTH - Numeric - Length of the column, ONLY APPLIES TO FIXED LENGTH FILES
+		*Column: DATASTRUCTURE_COL_ORDER - Numeric - Numerical ordering columns appear in file 1,2,3...etc 
+	</pre>
+	</div>
+    </subsection>
+    
+    </section>
+
+  </body>
+</document>

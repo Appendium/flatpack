@@ -5,11 +5,10 @@
   </properties>
   <head>
     <meta name="description"
-	content="PZFIle Reader Apache 2.0 license."
+	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
 	/>
 
-    <meta name="keywords"
-        content="CSV, Fixed length file parser" />
+    <meta name="keywords" content="CSV, Fixed length file parser" />
     <meta name="Subject" content="Fixed Length parser" />
     <meta name="Copyright" content="ObjectLab Financial Ltd" />
     <meta name="Language" content="English" />
