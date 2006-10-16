@@ -72,12 +72,13 @@ public class OrderBy implements Comparator {
             comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
             comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
 
-            if (comp0 == null) {
-                comp0 = new String("");
-            }
-            if (comp1 == null) {
-                comp1 = new String("");
-            }
+//+ BX will never be equal to null.            
+//            if (comp0 == null) {
+//                comp0 = new String("");
+//            }
+//            if (comp1 == null) {
+//                comp1 = new String("");
+//            }
 
             // multiply by the sort indicator to get a ASC or DESC result
             result = comp0.compareTo(comp1) * oc.getSortIndicator();

@@ -400,7 +400,7 @@ public final class ParserUtils {
      * @return int - position of the column in the file
      * @throws NoSuchElementException
      */
-    public static int findColumn(final String columnName, final List columnMD) throws NoSuchElementException {
+    public static int findColumn(final String columnName, final List columnMD) {
         for (int i = 0; i < columnMD.size(); i++) {
             final ColumnMetaData cmd = (ColumnMetaData) columnMD.get(i);
             if (cmd.getColName().equalsIgnoreCase(columnName)) {
@@ -679,4 +679,38 @@ public final class ParserUtils {
         }
 
     }
+    
+    /**
+     * <p>Returns padding using the specified delimiter repeated
+     * to a given length.</p>
+     *
+     * <pre>
+     * StringUtils.padding(0, 'e')  = ""
+     * StringUtils.padding(3, 'e')  = "eee"
+     * StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
+     * </pre>
+     *
+     * <p>Note: this method doesn't not support padding with
+     * <a href="http://www.unicode.org/glossary/#supplementary_character">Unicode Supplementary Characters</a>
+     * as they require a pair of <code>char</code>s to be represented.
+     * If you are needing to support full I18N of your applications
+     * consider using {@link #repeat(String, int)} instead. 
+     * </p>
+     *
+     * @param repeat  number of times to repeat delim
+     * @param padChar  character to repeat
+     * @return String with repeated character
+     * @throws IndexOutOfBoundsException if <code>repeat &lt; 0</code>
+     * @see #repeat(String, int)
+     */
+    public static String padding(int repeat, char padChar) {
+        if (repeat < 0) {
+            throw new IndexOutOfBoundsException("Cannot pad a negative amount: " + repeat);
+        }
+        final char[] buf = new char[repeat];
+        for (int i = 0; i < buf.length; i++) {
+            buf[i] = padChar;
+        }
+        return new String(buf);
+    }    
 }

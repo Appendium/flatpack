@@ -261,7 +261,7 @@ public class LargeDataSet extends DataSet {
      *            int
      * @exception IndexOutOfBoundsException
      */
-    public void absolute(final int localPointer) throws IndexOutOfBoundsException {
+    public void absolute(final int localPointer) {
         throw new RuntimeException("absolute() is Not Implemented For LargeDataSet");
     }
 
@@ -524,7 +524,7 @@ public class LargeDataSet extends DataSet {
                 if (isHandleShortLines()) {
                     // We can pad this line out
                     while (line.length() < recordLength) {
-                        line = line + " ";
+                        line += ParserUtils.padding(recordLength-line.length(), ' ');
                     }
 
                     // log a warning
