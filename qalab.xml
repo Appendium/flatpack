@@ -42,7 +42,7 @@
         <summaryresult date="2006-10-15" filecount="7" statvalue="20" type="findbugs"/>
         <summaryresult date="2006-10-15" filecount="3" statvalue="170" type="simian"/>
         <summaryresult date="2006-10-16" filecount="18" statvalue="32" type="checkstyle"/>
-        <summaryresult date="2006-10-16" filecount="3" statvalue="5" type="pmd"/>
+        <summaryresult date="2006-10-16" filecount="2" statvalue="4" type="pmd"/>
         <summaryresult date="2006-10-16" filecount="7" statvalue="16" type="findbugs"/>
         <summaryresult date="2006-10-16" filecount="3" statvalue="116" type="simian"/>
         <summaryresult date="2006-10-16" filecount="13" statvalue="17" type="cobertura-line"/>
@@ -162,7 +162,7 @@
         <result date="2006-10-15" statvalue="5" type="findbugs"/>
         <result date="2006-10-16" statvalue="9" type="checkstyle"/>
         <result date="2006-10-16" statvalue="3" type="findbugs"/>
-        <result date="2006-10-16" statvalue="21" type="cobertura-line"/>
+        <result date="2006-10-16" statvalue="20" type="cobertura-line"/>
         <result date="2006-10-16" statvalue="25" type="cobertura-branch"/>
     </file>
     <file id="com_pz_reader_LargeDataSet.java" path="com/pz/reader/LargeDataSet.java">
@@ -304,7 +304,5 @@
         <result date="2006-10-16" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
-        id="C:_project_pzfilereader_PZFileReader_src_test_java_com_test_delim_multiLine_TestCSVPerformance.java" path="C:/project/pzfilereader/PZFileReader/src/test/java/com/test/delim/multiLine/TestCSVPerformance.java">
-        <result date="2006-10-16" statvalue="1" type="pmd"/>
-    </file>
+        id="C:_project_pzfilereader_PZFileReader_src_test_java_com_test_delim_multiLine_TestCSVPerformance.java" path="C:/project/pzfilereader/PZFileReader/src/test/java/com/test/delim/multiLine/TestCSVPerformance.java"/>
 </qalab>
