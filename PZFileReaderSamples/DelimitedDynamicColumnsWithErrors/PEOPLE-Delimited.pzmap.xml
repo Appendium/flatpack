@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<!DOCTYPE PZMAP SYSTEM
+	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >
+<PZMAP>
+	<COLUMN name="FIRSTNAME" />
+	<COLUMN name="LASTNAME" />
+	<COLUMN name="ADDRESS" />
+	<COLUMN name="CITY" />
+	<COLUMN name="STATE" />
+	<COLUMN name="ZIP" />
+		
+</PZMAP> 

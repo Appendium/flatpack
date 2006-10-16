@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+<!-- DTD can be pulled from the Jar or over the web-->
+<!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
+<!--<!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+
+<PZMAP>
+    <RECORD id="header" startPosition="1" endPosition="7" indicator="HEADER ">
+        <COLUMN name="INDICATOR" length="7" />
+	    <COLUMN name="HEADERDATA" length="19" />
+    </RECORD>
+	<COLUMN name="FIRSTNAME" length="35" />
+	<COLUMN name="LASTNAME" length="35" />
+	<COLUMN name="ADDRESS" length="100" />
+	<COLUMN name="CITY" length="100" />
+	<COLUMN name="STATE" length="2" />
+	<COLUMN name="ZIP" length="5" />
+    <RECORD id="trailer" startPosition="1" endPosition="7" indicator="TRAILER">
+        <COLUMN name="INDICATOR" length="7" />
+	    <COLUMN name="TRAILERDATA" length="19" />
+    </RECORD>
+		
+</PZMAP> 
