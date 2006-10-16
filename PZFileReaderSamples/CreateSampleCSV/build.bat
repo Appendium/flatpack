@@ -1,2 +1,0 @@
-javac CSVTestFileCreator.java 
-pause
