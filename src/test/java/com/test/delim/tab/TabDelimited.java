@@ -5,12 +5,9 @@ package com.test.delim.tab;
  */
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import com.pz.reader.DataError;
 import com.pz.reader.DataSet;
-import com.pz.reader.ordering.OrderBy;
-import com.pz.reader.ordering.OrderColumn;
 
 
 
@@ -24,10 +21,9 @@ public class TabDelimited {
     public static void main(String[] args)throws Exception{
         DataSet ds = null;
         String[] colNames = null;
-        OrderBy orderby = null;
         File tmpFile = null;
-        
-        
+
+
         //delimited by a comma
         //text qualified by double quotes
         //ignore first record
@@ -35,15 +31,15 @@ public class TabDelimited {
         System.out.println("tmp file path: " + tmpFile);
         //ds = new DataSet(new FileInputStream(tmpFile),"\t","",true);
         ds = new DataSet(tmpFile,"\t","\"",true);
-        
+
         //re order the data set by last name
        /* orderby = new OrderBy();
         orderby.addOrderColumn(new OrderColumn("CITY",false));
         orderby.addOrderColumn(new OrderColumn("LASTNAME",true));
         ds.orderRows(orderby);*/
-        
+
         colNames = ds.getColumns();
-        
+
         while (ds.next()){
             for (int i = 0; i < colNames.length; i++){
                 System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
@@ -51,8 +47,8 @@ public class TabDelimited {
 
             System.out.println("===========================================================================");
         }
-        
-        
+
+
         if (ds.getErrors() != null && ds.getErrors().size() > 0){
             System.out.println("FOUND ERRORS IN FILE....");
             for (int i = 0; i < ds.getErrors().size(); i++){
@@ -60,16 +56,16 @@ public class TabDelimited {
                 System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());
             }
         }
-        
+
         //clear out the DataSet object for the JVM to collect
         ds.freeMemory();
-        
+
     }
-    
-    
+
+
     //used for Junit test
-    
+
     public DataSet getDsForTest() throws Exception{
-      return new DataSet(new File("com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"),"\t","\"",true);
+      return new DataSet(new File("src/test/java/com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"),"\t","\"",true);
     }
 }
