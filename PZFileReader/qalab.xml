@@ -17,87 +17,290 @@
 ]>
 <qalab version="1.1">
     <summary>
-        <summaryresult date="2006-10-16" filecount="18" statvalue="469" type="checkstyle"/>
+        <summaryresult date="2006-10-05" filecount="31" statvalue="1696" type="checkstyle"/>
+        <summaryresult date="2006-10-05" filecount="2" statvalue="4" type="pmd"/>
+        <summaryresult date="2006-10-05" filecount="7" statvalue="20" type="findbugs"/>
+        <summaryresult date="2006-10-05" filecount="3" statvalue="170" type="simian"/>
+        <summaryresult date="2006-10-06" filecount="18" statvalue="469" type="checkstyle"/>
+        <summaryresult date="2006-10-06" filecount="2" statvalue="4" type="pmd"/>
+        <summaryresult date="2006-10-06" filecount="7" statvalue="20" type="findbugs"/>
+        <summaryresult date="2006-10-06" filecount="3" statvalue="170" type="simian"/>
+        <summaryresult date="2006-10-12" filecount="31" statvalue="1696" type="checkstyle"/>
+        <summaryresult date="2006-10-12" filecount="2" statvalue="4" type="pmd"/>
+        <summaryresult date="2006-10-12" filecount="7" statvalue="20" type="findbugs"/>
+        <summaryresult date="2006-10-12" filecount="3" statvalue="170" type="simian"/>
+        <summaryresult date="2006-10-13" filecount="31" statvalue="1696" type="checkstyle"/>
+        <summaryresult date="2006-10-13" filecount="2" statvalue="4" type="pmd"/>
+        <summaryresult date="2006-10-13" filecount="7" statvalue="20" type="findbugs"/>
+        <summaryresult date="2006-10-13" filecount="3" statvalue="170" type="simian"/>
+        <summaryresult date="2006-10-14" filecount="31" statvalue="1696" type="checkstyle"/>
+        <summaryresult date="2006-10-14" filecount="2" statvalue="4" type="pmd"/>
+        <summaryresult date="2006-10-14" filecount="7" statvalue="20" type="findbugs"/>
+        <summaryresult date="2006-10-14" filecount="3" statvalue="170" type="simian"/>
+        <summaryresult date="2006-10-15" filecount="31" statvalue="1696" type="checkstyle"/>
+        <summaryresult date="2006-10-15" filecount="2" statvalue="4" type="pmd"/>
+        <summaryresult date="2006-10-15" filecount="7" statvalue="20" type="findbugs"/>
+        <summaryresult date="2006-10-15" filecount="3" statvalue="170" type="simian"/>
+        <summaryresult date="2006-10-16" filecount="18" statvalue="32" type="checkstyle"/>
         <summaryresult date="2006-10-16" filecount="2" statvalue="4" type="pmd"/>
         <summaryresult date="2006-10-16" filecount="7" statvalue="16" type="findbugs"/>
-        <summaryresult date="2006-10-16" filecount="3" statvalue="170" type="simian"/>
+        <summaryresult date="2006-10-16" filecount="3" statvalue="116" type="simian"/>
         <summaryresult date="2006-10-16" filecount="13" statvalue="17" type="cobertura-line"/>
-        <summaryresult date="2006-10-16" filecount="13" statvalue="26" type="cobertura-branch"/>
+        <summaryresult date="2006-10-16" filecount="13" statvalue="23" type="cobertura-branch"/>
     </summary>
-    <file id="com_pz_reader_util_ParserUtils.java" path="com/pz/reader/util/ParserUtils.java">
-        <result date="2006-10-16" statvalue="25" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="3" type="pmd"/>
-        <result date="2006-10-16" statvalue="3" type="findbugs"/>
-        <result date="2006-10-16" statvalue="37" type="cobertura-line"/>
-        <result date="2006-10-16" statvalue="48" type="cobertura-branch"/>
+    <file id="com_pz_reader_ordering_package.html" path="com/pz/reader/ordering/package.html">
+        <result date="2006-10-05" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
     </file>
-    <file id="com_pz_reader_xml_PZMapParser.java" path="com/pz/reader/xml/PZMapParser.java">
-        <result date="2006-10-16" statvalue="158" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="1" type="pmd"/>
-        <result date="2006-10-16" statvalue="1" type="findbugs"/>
+    <file id="com_pz_reader_package.html" path="com/pz/reader/package.html">
+        <result date="2006-10-05" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
     </file>
-    <file
-        id="C:_project_pzfilereader_PZFileReader_src_test_java_com_test_delim_multiLine_CSVPerformanceTest.java" path="C:/project/pzfilereader/PZFileReader/src/test/java/com/test/delim/multiLine/CSVPerformanceTest.java"/>
-    <file
-        id="C:_project_pzfilereader_PZFileReader_src_test_java_com_test_delim_tab_TabDelimited.java" path="C:/project/pzfilereader/PZFileReader/src/test/java/com/test/delim/tab/TabDelimited.java"/>
-    <file id="com_pz_reader_DataSet.java" path="com/pz/reader/DataSet.java">
-        <result date="2006-10-16" statvalue="103" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="2" type="findbugs"/>
-        <result date="2006-10-16" statvalue="20" type="cobertura-line"/>
-        <result date="2006-10-16" statvalue="25" type="cobertura-branch"/>
+    <file id="com_pz_reader_util_package.html" path="com/pz/reader/util/package.html">
+        <result date="2006-10-05" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
     </file>
-    <file id="com_pz_reader_LargeDataSet.java" path="com/pz/reader/LargeDataSet.java">
-        <result date="2006-10-16" statvalue="63" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="2" type="findbugs"/>
+    <file id="com_pz_reader_xml_package.html" path="com/pz/reader/xml/package.html">
+        <result date="2006-10-05" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
     </file>
-    <file id="com_pz_reader_ordering_OrderBy.java" path="com/pz/reader/ordering/OrderBy.java">
-        <result date="2006-10-16" statvalue="12" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="5" type="findbugs"/>
-    </file>
-    <file id="com_pz_reader_xml_ResolveLocalDTD.java" path="com/pz/reader/xml/ResolveLocalDTD.java">
-        <result date="2006-10-16" statvalue="16" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="2" type="findbugs"/>
+    <file id="com_pz_reader_structure_package.html" path="com/pz/reader/structure/package.html">
+        <result date="2006-10-05" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
     </file>
     <file id="com_pz_reader_structure_Row.java" path="com/pz/reader/structure/Row.java">
-        <result date="2006-10-16" statvalue="2" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="1" type="findbugs"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="2" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="findbugs"/>
+        <result date="2006-10-12" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="findbugs"/>
+        <result date="2006-10-13" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="findbugs"/>
+        <result date="2006-10-14" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="findbugs"/>
+        <result date="2006-10-15" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="findbugs"/>
         <result date="2006-10-16" statvalue="1" type="findbugs"/>
         <result date="2006-10-16" statvalue="44" type="cobertura-line"/>
     </file>
     <file id="com_pz_reader_DataError.java" path="com/pz/reader/DataError.java">
-        <result date="2006-10-16" statvalue="5" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="22" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="5" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="22" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="22" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="22" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="22" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="3" type="checkstyle"/>
         <result date="2006-10-16" statvalue="100" type="cobertura-branch"/>
+    </file>
+    <file id="com_pz_reader_DataSet.java" path="com/pz/reader/DataSet.java">
+        <result date="2006-10-05" statvalue="485" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="5" type="findbugs"/>
+        <result date="2006-10-06" statvalue="103" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="5" type="findbugs"/>
+        <result date="2006-10-12" statvalue="485" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="5" type="findbugs"/>
+        <result date="2006-10-13" statvalue="485" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="5" type="findbugs"/>
+        <result date="2006-10-14" statvalue="485" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="5" type="findbugs"/>
+        <result date="2006-10-15" statvalue="485" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="5" type="findbugs"/>
+        <result date="2006-10-16" statvalue="9" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="3" type="findbugs"/>
+        <result date="2006-10-16" statvalue="21" type="cobertura-line"/>
+        <result date="2006-10-16" statvalue="25" type="cobertura-branch"/>
+    </file>
+    <file id="com_pz_reader_LargeDataSet.java" path="com/pz/reader/LargeDataSet.java">
+        <result date="2006-10-05" statvalue="278" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="3" type="findbugs"/>
+        <result date="2006-10-06" statvalue="63" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="3" type="findbugs"/>
+        <result date="2006-10-12" statvalue="278" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="3" type="findbugs"/>
+        <result date="2006-10-13" statvalue="278" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="3" type="findbugs"/>
+        <result date="2006-10-14" statvalue="278" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="3" type="findbugs"/>
+        <result date="2006-10-15" statvalue="278" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="3" type="findbugs"/>
+        <result date="2006-10-16" statvalue="5" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="findbugs"/>
     </file>
     <file id="com_pz_reader_Version.java" path="com/pz/reader/Version.java">
+        <result date="2006-10-05" statvalue="2" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="2" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="2" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="2" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="2" type="checkstyle"/>
         <result date="2006-10-16" statvalue="100" type="cobertura-branch"/>
     </file>
+    <file id="com_pz_reader_ordering_OrderBy.java" path="com/pz/reader/ordering/OrderBy.java">
+        <result date="2006-10-05" statvalue="65" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="5" type="findbugs"/>
+        <result date="2006-10-06" statvalue="12" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="5" type="findbugs"/>
+        <result date="2006-10-12" statvalue="65" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="5" type="findbugs"/>
+        <result date="2006-10-13" statvalue="65" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="5" type="findbugs"/>
+        <result date="2006-10-14" statvalue="65" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="5" type="findbugs"/>
+        <result date="2006-10-15" statvalue="65" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="5" type="findbugs"/>
+        <result date="2006-10-16" statvalue="5" type="findbugs"/>
+    </file>
+    <file id="com_pz_reader_ordering_OrderColumn.java" path="com/pz/reader/ordering/OrderColumn.java">
+        <result date="2006-10-05" statvalue="25" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="4" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="25" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="25" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="25" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="25" type="checkstyle"/>
+    </file>
     <file id="com_pz_reader_structure_ColumnMetaData.java" path="com/pz/reader/structure/ColumnMetaData.java">
-        <result date="2006-10-16" statvalue="66" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="99" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="66" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="99" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="99" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="99" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="99" type="checkstyle"/>
         <result date="2006-10-16" statvalue="50" type="cobertura-line"/>
         <result date="2006-10-16" statvalue="100" type="cobertura-branch"/>
     </file>
-    <file id="com_pz_reader_xml_XMLRecordElement.java" path="com/pz/reader/xml/XMLRecordElement.java">
-        <result date="2006-10-16" statvalue="2" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="100" type="cobertura-branch"/>
-    </file>
-    <file id="com_pz_reader_structure_package.html" path="com/pz/reader/structure/package.html">
-        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
-    </file>
-    <file id="com_pz_reader_util_package.html" path="com/pz/reader/util/package.html">
-        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
-    </file>
-    <file id="com_pz_reader_ordering_package.html" path="com/pz/reader/ordering/package.html">
-        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
-    </file>
-    <file id="com_pz_reader_package.html" path="com/pz/reader/package.html">
-        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
-    </file>
-    <file id="com_pz_reader_xml_package.html" path="com/pz/reader/xml/package.html">
-        <result date="2006-10-16" statvalue="1" type="checkstyle"/>
-    </file>
-    <file id="com_pz_reader_ordering_OrderColumn.java" path="com/pz/reader/ordering/OrderColumn.java">
-        <result date="2006-10-16" statvalue="4" type="checkstyle"/>
-    </file>
+    <file id="com_pz_reader_structure_Row.java" path="com/pz/reader/structure/Row.java"/>
     <file id="com_pz_reader_util_ExcelTransformer.java" path="com/pz/reader/util/ExcelTransformer.java">
-        <result date="2006-10-16" statvalue="8" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="60" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="8" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="60" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="60" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="60" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="60" type="checkstyle"/>
+    </file>
+    <file id="com_pz_reader_util_ParserUtils.java" path="com/pz/reader/util/ParserUtils.java">
+        <result date="2006-10-05" statvalue="290" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="3" type="pmd"/>
+        <result date="2006-10-05" statvalue="3" type="findbugs"/>
+        <result date="2006-10-06" statvalue="25" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="3" type="pmd"/>
+        <result date="2006-10-06" statvalue="3" type="findbugs"/>
+        <result date="2006-10-12" statvalue="290" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="3" type="pmd"/>
+        <result date="2006-10-12" statvalue="3" type="findbugs"/>
+        <result date="2006-10-13" statvalue="290" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="3" type="pmd"/>
+        <result date="2006-10-13" statvalue="3" type="findbugs"/>
+        <result date="2006-10-14" statvalue="290" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="3" type="pmd"/>
+        <result date="2006-10-14" statvalue="3" type="findbugs"/>
+        <result date="2006-10-15" statvalue="290" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="3" type="pmd"/>
+        <result date="2006-10-15" statvalue="3" type="findbugs"/>
+        <result date="2006-10-16" statvalue="5" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="3" type="pmd"/>
+        <result date="2006-10-16" statvalue="3" type="findbugs"/>
+        <result date="2006-10-16" statvalue="35" type="cobertura-line"/>
+        <result date="2006-10-16" statvalue="42" type="cobertura-branch"/>
+    </file>
+    <file id="com_pz_reader_xml_PZMapParser.java" path="com/pz/reader/xml/PZMapParser.java">
+        <result date="2006-10-05" statvalue="257" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="1" type="pmd"/>
+        <result date="2006-10-05" statvalue="1" type="findbugs"/>
+        <result date="2006-10-06" statvalue="158" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="1" type="pmd"/>
+        <result date="2006-10-06" statvalue="1" type="findbugs"/>
+        <result date="2006-10-12" statvalue="257" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="1" type="pmd"/>
+        <result date="2006-10-12" statvalue="1" type="findbugs"/>
+        <result date="2006-10-13" statvalue="257" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="1" type="pmd"/>
+        <result date="2006-10-13" statvalue="1" type="findbugs"/>
+        <result date="2006-10-14" statvalue="257" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="1" type="pmd"/>
+        <result date="2006-10-14" statvalue="1" type="findbugs"/>
+        <result date="2006-10-15" statvalue="257" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="1" type="pmd"/>
+        <result date="2006-10-15" statvalue="1" type="findbugs"/>
+        <result date="2006-10-16" statvalue="5" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="pmd"/>
+        <result date="2006-10-16" statvalue="1" type="findbugs"/>
+    </file>
+    <file id="com_pz_reader_xml_ResolveLocalDTD.java" path="com/pz/reader/xml/ResolveLocalDTD.java">
+        <result date="2006-10-05" statvalue="40" type="checkstyle"/>
+        <result date="2006-10-05" statvalue="2" type="findbugs"/>
+        <result date="2006-10-06" statvalue="16" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="2" type="findbugs"/>
+        <result date="2006-10-12" statvalue="40" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="2" type="findbugs"/>
+        <result date="2006-10-13" statvalue="40" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="2" type="findbugs"/>
+        <result date="2006-10-14" statvalue="40" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="2" type="findbugs"/>
+        <result date="2006-10-15" statvalue="40" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="2" type="findbugs"/>
+        <result date="2006-10-16" statvalue="2" type="findbugs"/>
+    </file>
+    <file id="com_pz_reader_xml_XMLRecordElement.java" path="com/pz/reader/xml/XMLRecordElement.java">
+        <result date="2006-10-05" statvalue="34" type="checkstyle"/>
+        <result date="2006-10-06" statvalue="2" type="checkstyle"/>
+        <result date="2006-10-12" statvalue="34" type="checkstyle"/>
+        <result date="2006-10-13" statvalue="34" type="checkstyle"/>
+        <result date="2006-10-14" statvalue="34" type="checkstyle"/>
+        <result date="2006-10-15" statvalue="34" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="100" type="cobertura-branch"/>
     </file>
 </qalab>

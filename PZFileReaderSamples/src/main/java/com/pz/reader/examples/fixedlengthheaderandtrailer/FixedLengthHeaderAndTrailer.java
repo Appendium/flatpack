@@ -1,34 +1,33 @@
 package com.pz.reader.examples.fixedlengthheaderandtrailer;
+
 /*
  * Created on Dec 31, 2004
  *
  */
 
-
 import java.io.File;
 import java.util.Iterator;
 
-import com.pz.reader.DataSet;
 import com.pz.reader.DataError;
+import com.pz.reader.DataSet;
 
 /**
  * @author zepernick
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
 public class FixedLengthHeaderAndTrailer {
-    public static void main(String[] args)throws Exception{
+    public static void main(final String[] args) throws Exception {
         DataSet ds = null;
         Iterator errors = null;
         DataError dataError = null;
 
-        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"),new File("PEOPLE-FixedLength.txt"), false);
+        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"), new File("PEOPLE-FixedLength.txt"), false);
 
+        while (ds.next()) {
 
-        while (ds.next()){
-
-            if(ds.isRecordID("header")){
+            if (ds.isRecordID("header")) {
                 System.out.println(">>>>found header");
                 System.out.println("COLUMN NAME: INDICATOR VALUE: " + ds.getString("INDICATOR"));
                 System.out.println("COLUMN NAME: HEADERDATA VALUE: " + ds.getString("HEADERDATA"));
@@ -36,7 +35,7 @@ public class FixedLengthHeaderAndTrailer {
                 continue;
             }
 
-            if(ds.isRecordID("trailer")){
+            if (ds.isRecordID("trailer")) {
                 System.out.println(">>>>found trailer");
                 System.out.println("COLUMN NAME: INDICATOR VALUE: " + ds.getString("INDICATOR"));
                 System.out.println("COLUMN NAME: TRAILERDATA VALUE: " + ds.getString("TRAILERDATA"));
@@ -52,20 +51,19 @@ public class FixedLengthHeaderAndTrailer {
             System.out.println("COLUMN NAME: ZIP VALUE: " + ds.getString("ZIP"));
             System.out.println("===========================================================================");
 
-
         }
 
-        if (ds.getErrors() != null && ds.getErrors().size() > 0){
+        if (ds.getErrors() != null && ds.getErrors().size() > 0) {
             errors = ds.getErrors().iterator();
 
-            while (errors.hasNext()){
-                dataError = (DataError)errors.next();
+            while (errors.hasNext()) {
+                dataError = (DataError) errors.next();
 
                 System.out.println("ERROR: " + dataError.getErrorDesc() + " LINE NUMBER: " + dataError.getLineNo());
             }
         }
 
-        //clear out the DataSet object for the JVM to collect
+        // clear out the DataSet object for the JVM to collect
         ds.freeMemory();
 
     }

@@ -10,9 +10,9 @@
 
       <menu name="PZFileReader">
          <item name="Main library"
-            href="multiproject/PZFileReader/index.html" />
+            href="multiproject/pzfilereader/index.html" />
          <item name="Examples"
-            href="multiproject/PZFileReaderExamples/index.html" />
+            href="multiproject/pzfilereader-examples/index.html" />
          <item name="JavaDoc" class="newWindow" target="_new" href="apidocs/index.html" />
          <item name="In the press" href="press/index.html" />
          <item name="Sitemap" href="sitemap.html" />

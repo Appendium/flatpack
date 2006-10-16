@@ -17,10 +17,10 @@
 ]>
 <qalab version="1.1">
     <summary>
-        <summaryresult date="2006-10-16" filecount="30" statvalue="223" type="checkstyle"/>
-        <summaryresult date="2006-10-16" filecount="6" statvalue="12" type="pmd"/>
+        <summaryresult date="2006-10-16" filecount="30" statvalue="119" type="checkstyle"/>
+        <summaryresult date="2006-10-16" filecount="2" statvalue="2" type="pmd"/>
         <summaryresult date="2006-10-16" filecount="4" statvalue="5" type="findbugs"/>
-        <summaryresult date="2006-10-16" filecount="4" statvalue="70" type="simian"/>
+        <summaryresult date="2006-10-16" filecount="4" statvalue="74" type="simian"/>
     </summary>
     <file id="com_pz_reader_examples_numericsanddates_package.html" path="com/pz/reader/examples/numericsanddates/package.html">
         <result date="2006-10-16" statvalue="1" type="checkstyle"/>
@@ -78,18 +78,17 @@
     </file>
     <file
         id="com_pz_reader_examples_createsamplecsv_CSVTestFileCreator.java" path="com/pz/reader/examples/createsamplecsv/CSVTestFileCreator.java">
-        <result date="2006-10-16" statvalue="9" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="7" type="checkstyle"/>
         <result date="2006-10-16" statvalue="1" type="pmd"/>
         <result date="2006-10-16" statvalue="1" type="findbugs"/>
     </file>
     <file
         id="com_pz_reader_examples_csvheaderandtrailer_CSVHeaderAndTrailer.java" path="com/pz/reader/examples/csvheaderandtrailer/CSVHeaderAndTrailer.java">
-        <result date="2006-10-16" statvalue="20" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="3" type="pmd"/>
+        <result date="2006-10-16" statvalue="17" type="checkstyle"/>
     </file>
     <file
         id="com_pz_reader_examples_csvperformancetest_CSVPerformanceTest.java" path="com/pz/reader/examples/csvperformancetest/CSVPerformanceTest.java">
-        <result date="2006-10-16" statvalue="57" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="14" type="checkstyle"/>
         <result date="2006-10-16" statvalue="1" type="findbugs"/>
     </file>
     <file
@@ -118,31 +117,28 @@
     </file>
     <file
         id="com_pz_reader_examples_largedataset_delimiteddynamiccolumns_DelimitedWithPZMap.java" path="com/pz/reader/examples/largedataset/delimiteddynamiccolumns/DelimitedWithPZMap.java">
-        <result date="2006-10-16" statvalue="9" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="2" type="pmd"/>
-    </file>
-    <file
-        id="com_pz_reader_examples_largedataset_fixedlengthdynamiccolumns_FixedLengthWithPZMap.java" path="com/pz/reader/examples/largedataset/fixedlengthdynamiccolumns/FixedLengthWithPZMap.java">
         <result date="2006-10-16" statvalue="4" type="checkstyle"/>
     </file>
     <file
+        id="com_pz_reader_examples_largedataset_fixedlengthdynamiccolumns_FixedLengthWithPZMap.java" path="com/pz/reader/examples/largedataset/fixedlengthdynamiccolumns/FixedLengthWithPZMap.java">
+        <result date="2006-10-16" statvalue="3" type="checkstyle"/>
+    </file>
+    <file
         id="com_pz_reader_examples_largedataset_largecsvperformancetest_CSVLarge.java" path="com/pz/reader/examples/largedataset/largecsvperformancetest/CSVLarge.java">
-        <result date="2006-10-16" statvalue="33" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="9" type="checkstyle"/>
         <result date="2006-10-16" statvalue="1" type="findbugs"/>
     </file>
     <file id="com_pz_reader_examples_lowlevelparse_LowLevelParse.java" path="com/pz/reader/examples/lowlevelparse/LowLevelParse.java">
-        <result date="2006-10-16" statvalue="24" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="2" type="pmd"/>
+        <result date="2006-10-16" statvalue="4" type="checkstyle"/>
+        <result date="2006-10-16" statvalue="1" type="pmd"/>
         <result date="2006-10-16" statvalue="2" type="findbugs"/>
     </file>
     <file
         id="com_pz_reader_examples_multilinedelimitedrecord_DelimitedMultiLine.java" path="com/pz/reader/examples/multilinedelimitedrecord/DelimitedMultiLine.java">
-        <result date="2006-10-16" statvalue="8" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="2" type="pmd"/>
+        <result date="2006-10-16" statvalue="4" type="checkstyle"/>
     </file>
     <file
         id="com_pz_reader_examples_numericsanddates_NumericsAndDates.java" path="com/pz/reader/examples/numericsanddates/NumericsAndDates.java">
-        <result date="2006-10-16" statvalue="8" type="checkstyle"/>
-        <result date="2006-10-16" statvalue="2" type="pmd"/>
+        <result date="2006-10-16" statvalue="6" type="checkstyle"/>
     </file>
 </qalab>

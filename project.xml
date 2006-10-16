@@ -27,8 +27,12 @@
    <artifactId>pzfilereader-site</artifactId>
    <name>PZFileReader</name>
    <shortDescription>
-       Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters.
+       Flat File Parser via XML Mappings (fixed length,csv).
    </shortDescription>
+   <description>
+       Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters. 
+       Bind delimited or fixed width text to column names via XML mappings.  Support for header and trailer records.  Optionally, column names can be retrieved from the first record of a delimited file.
+   </description>
    <reports>
       <report>maven-faq-plugin</report>
       <report>maven-dashboard-plugin</report>
