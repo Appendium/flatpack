@@ -31,7 +31,7 @@ public class TestCSVPerformance {
             // text qualified by double quotes
             // ignore first record
             long timeStarted = System.currentTimeMillis();
-            ds = new LargeDataSet(new File("com/test/delim/multiLine/PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"", false);
+            ds = new LargeDataSet(new File("net/sf/pzfilereader/multiLine/PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"", false);
             long timeFinished = System.currentTimeMillis();
 
             String timeMessage = "";

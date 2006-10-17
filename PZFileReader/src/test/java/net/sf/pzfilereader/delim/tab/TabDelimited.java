@@ -25,7 +25,7 @@ public class TabDelimited {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        tmpFile = new File("com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt");
+        tmpFile = new File("net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt");
         System.out.println("tmp file path: " + tmpFile);
         // ds = new DataSet(new FileInputStream(tmpFile),"\t","",true);
         ds = new DataSet(tmpFile, "\t", "\"", true);
@@ -63,6 +63,6 @@ public class TabDelimited {
     // used for Junit test
 
     public DataSet getDsForTest() throws Exception {
-        return new DataSet(new File("src/test/java/com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
+        return new DataSet(new File("src/test/java/net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
     }
 }

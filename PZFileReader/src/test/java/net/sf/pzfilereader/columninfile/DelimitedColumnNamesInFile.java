@@ -27,7 +27,7 @@ public class DelimitedColumnNamesInFile {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File("com/test/delim/columnInFile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"", false);
+        ds = new DataSet(new File("net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"", false);
 
         // re order the data set by last name
         orderby = new OrderBy();
@@ -61,7 +61,7 @@ public class DelimitedColumnNamesInFile {
     // used for Junit test
 
     public DataSet getDsForTest() throws Exception {
-        return new DataSet(new File("src/test/java/com/test/delim/columnInFile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",",
+        return new DataSet(new File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",",
                 "\"", false);
     }
 }
