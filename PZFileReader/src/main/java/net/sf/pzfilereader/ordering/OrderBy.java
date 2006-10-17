@@ -12,14 +12,14 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for 
  the specific language governing permissions and limitations under the License.  
  */
-package com.pz.reader.ordering;
+package net.sf.pzfilereader.ordering;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.pz.reader.structure.Row;
-import com.pz.reader.util.ParserUtils;
+import net.sf.pzfilereader.structure.Row;
+import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author paul zepernick

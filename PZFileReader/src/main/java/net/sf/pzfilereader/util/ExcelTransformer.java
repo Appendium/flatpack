@@ -12,7 +12,7 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for 
  the specific language governing permissions and limitations under the License.  
  */
-package com.pz.reader.util;
+package net.sf.pzfilereader.util;
 
 import java.io.File;
 
@@ -23,7 +23,7 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
-import com.pz.reader.DataSet;
+import net.sf.pzfilereader.DataSet;
 
 /**
  * @author Paul Zepernick

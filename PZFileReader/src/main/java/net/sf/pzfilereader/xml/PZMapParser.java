@@ -12,7 +12,7 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for 
  the specific language governing permissions and limitations under the License.  
  */
-package com.pz.reader.xml;
+package net.sf.pzfilereader.xml;
 
 import java.io.File;
 import java.io.InputStream;
@@ -27,8 +27,8 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
-import com.pz.reader.structure.ColumnMetaData;
-import com.pz.reader.util.ParserUtils;
+import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author zepernick
