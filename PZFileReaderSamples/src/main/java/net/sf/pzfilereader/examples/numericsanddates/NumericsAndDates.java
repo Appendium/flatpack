@@ -1,4 +1,4 @@
-package com.pz.reader.examples.numericsanddates;
+package net.sf.pzfilereader.examples.numericsanddates;
 
 /*
  * Created on Dec 31, 2004
@@ -8,7 +8,7 @@ package com.pz.reader.examples.numericsanddates;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
-import com.pz.reader.DataSet;
+import net.sf.pzfilereader.DataSet;
 
 /**
  * @author zepernick

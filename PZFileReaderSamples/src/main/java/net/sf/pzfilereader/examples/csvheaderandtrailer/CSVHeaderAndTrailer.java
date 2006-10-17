@@ -1,4 +1,4 @@
-package com.pz.reader.examples.csvheaderandtrailer;
+package net.sf.pzfilereader.examples.csvheaderandtrailer;
 
 /*
  * Created on Dec 31, 2004
@@ -7,7 +7,7 @@ package com.pz.reader.examples.csvheaderandtrailer;
 
 import java.io.File;
 
-import com.pz.reader.DataSet;
+import net.sf.pzfilereader.DataSet;
 
 /**
  * @author zepernick

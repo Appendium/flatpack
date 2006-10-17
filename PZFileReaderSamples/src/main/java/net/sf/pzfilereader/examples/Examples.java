@@ -1,24 +1,24 @@
 /**
  * 
  */
-package com.pz.reader.examples;
+package net.sf.pzfilereader.examples;
 
 import java.lang.reflect.Method;
 
-import com.pz.reader.examples.createsamplecsv.CSVTestFileCreator;
-import com.pz.reader.examples.csvheaderandtrailer.CSVHeaderAndTrailer;
-import com.pz.reader.examples.csvperformancetest.CSVPerformanceTest;
-import com.pz.reader.examples.delimiteddynamiccolumns.DelimitedWithPZMap;
-import com.pz.reader.examples.delimiteddynamiccolumnswitherrors.DelimitedWithPZMapErrors;
-import com.pz.reader.examples.exporttoexcel.DelimitedFileExportToExcel;
-import com.pz.reader.examples.fixedlengthdynamiccolumns.FixedLengthWithPZMap;
-import com.pz.reader.examples.fixedlengthheaderandtrailer.FixedLengthHeaderAndTrailer;
-import com.pz.reader.examples.largedataset.delimiteddynamiccolumns.LargeDelimitedWithPZMap;
-import com.pz.reader.examples.largedataset.fixedlengthdynamiccolumns.LargeFixedLengthWithPZMap;
-import com.pz.reader.examples.largedataset.largecsvperformancetest.CSVLarge;
-import com.pz.reader.examples.lowlevelparse.LowLevelParse;
-import com.pz.reader.examples.multilinedelimitedrecord.DelimitedMultiLine;
-import com.pz.reader.examples.numericsanddates.NumericsAndDates;
+import net.sf.pzfilereader.examples.createsamplecsv.CSVTestFileCreator;
+import net.sf.pzfilereader.examples.csvheaderandtrailer.CSVHeaderAndTrailer;
+import net.sf.pzfilereader.examples.csvperformancetest.CSVPerformanceTest;
+import net.sf.pzfilereader.examples.delimiteddynamiccolumns.DelimitedWithPZMap;
+import net.sf.pzfilereader.examples.delimiteddynamiccolumnswitherrors.DelimitedWithPZMapErrors;
+import net.sf.pzfilereader.examples.exporttoexcel.DelimitedFileExportToExcel;
+import net.sf.pzfilereader.examples.fixedlengthdynamiccolumns.FixedLengthWithPZMap;
+import net.sf.pzfilereader.examples.fixedlengthheaderandtrailer.FixedLengthHeaderAndTrailer;
+import net.sf.pzfilereader.examples.largedataset.delimiteddynamiccolumns.LargeDelimitedWithPZMap;
+import net.sf.pzfilereader.examples.largedataset.fixedlengthdynamiccolumns.LargeFixedLengthWithPZMap;
+import net.sf.pzfilereader.examples.largedataset.largecsvperformancetest.CSVLarge;
+import net.sf.pzfilereader.examples.lowlevelparse.LowLevelParse;
+import net.sf.pzfilereader.examples.multilinedelimitedrecord.DelimitedMultiLine;
+import net.sf.pzfilereader.examples.numericsanddates.NumericsAndDates;
 
 /**
  * @author Benoit Xhenseval

@@ -63,7 +63,7 @@
 	
   <target name="docs" depends="clean">
    <!-- create javadocs -->
-	 <javadoc packagenames="com.pz.reader.*"
+	 <javadoc packagenames="net.sf.pzfilereader.*"
 	           sourcepath="${dist}/source"
 	           defaultexcludes="yes"
 	           destdir="JavaDocs"

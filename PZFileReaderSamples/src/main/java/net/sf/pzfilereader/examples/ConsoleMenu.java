@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.pz.reader.examples;
+package net.sf.pzfilereader.examples;
 
 import java.io.BufferedReader;
 import java.io.IOException;

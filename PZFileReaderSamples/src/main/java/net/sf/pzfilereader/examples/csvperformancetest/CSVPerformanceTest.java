@@ -1,4 +1,4 @@
-package com.pz.reader.examples.csvperformancetest;
+package net.sf.pzfilereader.examples.csvperformancetest;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.pz.reader.DataError;
-import com.pz.reader.DataSet;
+import net.sf.pzfilereader.DataError;
+import net.sf.pzfilereader.DataSet;
 
 /*
  * Created on Dec 1, 2005

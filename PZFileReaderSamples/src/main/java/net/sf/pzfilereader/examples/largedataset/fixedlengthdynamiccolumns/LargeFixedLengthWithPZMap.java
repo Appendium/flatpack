@@ -1,4 +1,4 @@
-package com.pz.reader.examples.largedataset.fixedlengthdynamiccolumns;
+package net.sf.pzfilereader.examples.largedataset.fixedlengthdynamiccolumns;
 
 /*
  * Created on Dec 31, 2004
@@ -8,7 +8,7 @@ package com.pz.reader.examples.largedataset.fixedlengthdynamiccolumns;
 import java.io.File;
 import java.io.FileInputStream;
 
-import com.pz.reader.LargeDataSet;
+import net.sf.pzfilereader.LargeDataSet;
 
 /**
  * @author zepernick

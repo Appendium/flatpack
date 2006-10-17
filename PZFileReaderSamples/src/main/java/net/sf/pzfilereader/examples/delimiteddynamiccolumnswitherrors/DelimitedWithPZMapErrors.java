@@ -1,4 +1,4 @@
-package com.pz.reader.examples.delimiteddynamiccolumnswitherrors;
+package net.sf.pzfilereader.examples.delimiteddynamiccolumnswitherrors;
 
 /*
  * Created on Dec 31, 2004
@@ -8,10 +8,10 @@ package com.pz.reader.examples.delimiteddynamiccolumnswitherrors;
 import java.io.File;
 import java.util.Iterator;
 
-import com.pz.reader.DataError;
-import com.pz.reader.DataSet;
-import com.pz.reader.ordering.OrderBy;
-import com.pz.reader.ordering.OrderColumn;
+import net.sf.pzfilereader.DataError;
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.ordering.OrderBy;
+import net.sf.pzfilereader.ordering.OrderColumn;
 
 /**
  * @author zepernick
