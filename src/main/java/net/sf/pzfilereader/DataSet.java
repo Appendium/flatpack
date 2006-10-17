@@ -46,6 +46,7 @@ import net.sf.pzfilereader.xml.PZMapParser;
  * 
  * @author Paul Zepernick
  * @version 2.0.1
+ * @todo Ought to implement an interface for the access to data.
  */
 public class DataSet {
 
@@ -1198,7 +1199,7 @@ public class DataSet {
     }
 
     /**
-     * erases the dataset and releases memory for the JVM to reclaim
+     * Erases the dataset early and releases memory for the JVM to reclaim
      */
     public void freeMemory() {
         if (rows != null) {
