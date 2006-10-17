@@ -246,27 +246,24 @@ public class DataSet {
 
         this.handleShortLines = handleShortLines;
 
-        String sql = null;
         ResultSet rs = null;
         Statement stmt = null;
-        ColumnMetaData column = null;
-        boolean hasResults = false;
-        final List cmds = new ArrayList();
-
         try {
             columnMD = new LinkedHashMap();
             stmt = con.createStatement();
 
-            sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
+            String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
                     + "WHERE DATAFILE.DATAFILE_DESC = '" + dataDefinition + "' " + "ORDER BY DATASTRUCTURE_COL_ORDER";
 
             rs = stmt.executeQuery(sql);
 
+            final List cmds = new ArrayList();
+            boolean hasResults = false;
             // put array of columns together. These will be used to put together
             // the dataset when reading in the file
             while (rs.next()) {
 
-                column = new ColumnMetaData();
+                ColumnMetaData column = new ColumnMetaData();
                 column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
                 column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
                 cmds.add(column);
@@ -467,7 +464,6 @@ public class DataSet {
 
         // read in the fixed length file and construct the DataSet object
         doFixedLengthFile(dataSourceStream);
-
     }
 
     /*
@@ -520,9 +516,7 @@ public class DataSet {
                 } else if (line.length() < recordLength) {
                     if (handleShortLines) {
                         // We can pad this line out
-                        while (line.length() < recordLength) {
-                            line = line + " ";
-                        }
+                        line += ParserUtils.padding(recordLength-line.length(), ' ');
 
                         // log a warning
                         addError("PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
