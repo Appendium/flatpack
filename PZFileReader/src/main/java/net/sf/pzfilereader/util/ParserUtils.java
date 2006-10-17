@@ -611,7 +611,6 @@ public final class ParserUtils {
 
         // must be a detail line
         return DETAIL_ID;
-
     }
 
     /**
