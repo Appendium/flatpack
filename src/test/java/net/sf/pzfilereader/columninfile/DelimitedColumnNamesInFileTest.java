@@ -4,9 +4,9 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package com.test.delim.tab;
+package net.sf.pzfilereader.columninfile;
 
-import com.pz.reader.DataSet;
+import net.sf.pzfilereader.DataSet;
 
 import junit.framework.TestCase;
 
@@ -16,8 +16,8 @@ import junit.framework.TestCase;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class TabDelimitedTest extends TestCase {
-    public TabDelimitedTest(final String name) {
+public class DelimitedColumnNamesInFileTest extends TestCase {
+    public DelimitedColumnNamesInFileTest(final String name) {
         super(name);
     }
 
@@ -26,9 +26,9 @@ public class TabDelimitedTest extends TestCase {
         DataSet ds = null;
 
         try {
-            final TabDelimited testTab = new TabDelimited();
+            final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
 
-            ds = testTab.getDsForTest();
+            ds = testDelimted.getDsForTest();
 
             // check that we had no errors
             assertEquals(0, ds.getErrors().size());
@@ -48,12 +48,12 @@ public class TabDelimitedTest extends TestCase {
         DataSet ds = null;
 
         try {
-            final TabDelimited testTab = new TabDelimited();
+            final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
 
-            ds = testTab.getDsForTest();
+            ds = testDelimted.getDsForTest();
 
             // check that we parsed in the right amount of rows
-            assertEquals(2, ds.getRows().size());
+            assertEquals(6, ds.getRows().size());
 
         } catch (final Exception ex) {
             ex.printStackTrace();
@@ -69,12 +69,12 @@ public class TabDelimitedTest extends TestCase {
         DataSet ds = null;
 
         try {
-            final TabDelimited testTab = new TabDelimited();
+            final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
 
-            ds = testTab.getDsForTest();
+            ds = testDelimted.getDsForTest();
 
             // check that we parsed in the right amount of column names
-            assertEquals(5, ds.getColumns().length);
+            assertEquals(6, ds.getColumns().length);
 
         } catch (final Exception ex) {
             ex.printStackTrace();
@@ -86,6 +86,6 @@ public class TabDelimitedTest extends TestCase {
     }
 
     public static void main(final String[] args) {
-        junit.textui.TestRunner.run(TabDelimitedTest.class);
+        junit.textui.TestRunner.run(DelimitedColumnNamesInFileTest.class);
     }
 }

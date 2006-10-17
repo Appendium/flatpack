@@ -1,4 +1,4 @@
-package com.test.delim.tab;
+package net.sf.pzfilereader.columninfile;
 
 /*
  * Created on Nov 27, 2005
@@ -7,8 +7,10 @@ package com.test.delim.tab;
 
 import java.io.File;
 
-import com.pz.reader.DataError;
-import com.pz.reader.DataSet;
+import net.sf.pzfilereader.DataError;
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.ordering.OrderBy;
+import net.sf.pzfilereader.ordering.OrderColumn;
 
 /**
  * @author zepernick
@@ -16,26 +18,22 @@ import com.pz.reader.DataSet;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class TabDelimited {
+public class DelimitedColumnNamesInFile {
     public static void main(final String[] args) throws Exception {
         DataSet ds = null;
         String[] colNames = null;
-        File tmpFile = null;
+        OrderBy orderby = null;
 
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        tmpFile = new File("com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt");
-        System.out.println("tmp file path: " + tmpFile);
-        // ds = new DataSet(new FileInputStream(tmpFile),"\t","",true);
-        ds = new DataSet(tmpFile, "\t", "\"", true);
+        ds = new DataSet(new File("com/test/delim/columnInFile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"", false);
 
         // re order the data set by last name
-        /*
-         * orderby = new OrderBy(); orderby.addOrderColumn(new
-         * OrderColumn("CITY",false)); orderby.addOrderColumn(new
-         * OrderColumn("LASTNAME",true)); ds.orderRows(orderby);
-         */
+        orderby = new OrderBy();
+        orderby.addOrderColumn(new OrderColumn("CITY", false));
+        orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
+        ds.orderRows(orderby);
 
         colNames = ds.getColumns();
 
@@ -63,6 +61,7 @@ public class TabDelimited {
     // used for Junit test
 
     public DataSet getDsForTest() throws Exception {
-        return new DataSet(new File("src/test/java/com/test/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
+        return new DataSet(new File("src/test/java/com/test/delim/columnInFile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",",
+                "\"", false);
     }
 }
