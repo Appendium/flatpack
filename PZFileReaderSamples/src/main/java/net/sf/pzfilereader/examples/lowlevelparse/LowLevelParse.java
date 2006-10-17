@@ -1,11 +1,11 @@
-package com.pz.reader.examples.lowlevelparse;
+package net.sf.pzfilereader.examples.lowlevelparse;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
-import com.pz.reader.util.ParserUtils;
+import net.sf.pzfilereader.util.ParserUtils;
 
 /*
  * Created on Nov 27, 2005

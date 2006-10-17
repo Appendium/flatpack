@@ -26,7 +26,7 @@
    <extend>../common-build/project.xml</extend>
    <name>PZFileReader Examples</name>
    <artifactId>pzfilereader-examples</artifactId>
-   <package>com.pz.reader</package>
+   <package>net.sf.pzfilereader</package>
    <shortDescription>Examples for Flat File Parser via XML Mappings (fixed length,csv)</shortDescription>
    <description>
        Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
@@ -42,7 +42,7 @@
    </repository>
    <dependencies>
       <dependency>
-         <groupId>com.pz.reader</groupId>
+         <groupId>net.sf.pzfilereader</groupId>
          <artifactId>pzfilereader</artifactId>
          <version>${pom.currentVersion}</version>
          <type>jar</type>

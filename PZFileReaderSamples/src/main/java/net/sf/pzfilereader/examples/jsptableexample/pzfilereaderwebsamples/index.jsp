@@ -1,5 +1,5 @@
 
-<%@ page language="java" import="java.util.*,com.pz.reader.*,com.pz.reader.ordering.*,java.io.File" %>
+<%@ page language="java" import="java.util.*,net.sf.pzfilereader.*,net.sf.pzfilereader.ordering.*,java.io.File" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">

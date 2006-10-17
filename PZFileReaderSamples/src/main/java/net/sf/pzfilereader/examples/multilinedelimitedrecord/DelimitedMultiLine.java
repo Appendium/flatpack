@@ -1,4 +1,4 @@
-package com.pz.reader.examples.multilinedelimitedrecord;
+package net.sf.pzfilereader.examples.multilinedelimitedrecord;
 
 /*
  * Created on Dec 31, 2004
@@ -7,7 +7,7 @@ package com.pz.reader.examples.multilinedelimitedrecord;
 
 import java.io.File;
 
-import com.pz.reader.DataSet;
+import net.sf.pzfilereader.DataSet;
 
 /**
  * @author zepernick

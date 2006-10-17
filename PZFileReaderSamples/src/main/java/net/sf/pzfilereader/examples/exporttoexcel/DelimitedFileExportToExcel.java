@@ -1,4 +1,4 @@
-package com.pz.reader.examples.exporttoexcel;
+package net.sf.pzfilereader.examples.exporttoexcel;
 
 /*
  * Created on Dec 31, 2004
@@ -7,9 +7,9 @@ package com.pz.reader.examples.exporttoexcel;
 
 import java.io.File;
 
-import com.pz.reader.DataSet;
-import com.pz.reader.ordering.OrderBy;
-import com.pz.reader.ordering.OrderColumn;
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.ordering.OrderBy;
+import net.sf.pzfilereader.ordering.OrderColumn;
 
 /**
  * @author zepernick
