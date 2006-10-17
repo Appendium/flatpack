@@ -1154,9 +1154,11 @@ public class DataSet {
      * @see com.pz.reader.ordering.OrderColumn
      */
     public void orderRows(final OrderBy ob) throws Exception {
-        if (columnMD.size() > 1) {
-            throw new Exception("orderRows does not currently support ordering with <RECORD> mappings");
-        }
+       //PZ try to handle other <records> by sending them to 
+        //the bottom of the sort
+        // if (columnMD.size() > 1) {
+       //     throw new Exception("orderRows does not currently support ordering with <RECORD> mappings");
+       // }
         final List cmds = ParserUtils.getColumnMetaData("detail", columnMD);
         if (ob != null && rows != null) {
             ob.setColumnMD(cmds);
