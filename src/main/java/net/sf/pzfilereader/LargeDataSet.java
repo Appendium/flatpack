@@ -247,8 +247,8 @@ public class LargeDataSet extends DataSet {
      * @param ob -
      *            OrderBy object
      * @exception Exception
-     * @see com.pz.reader.ordering.OrderBy
-     * @see com.pz.reader.ordering.OrderColumn
+     * @see net.sf.pzfilereader.ordering.OrderBy
+     * @see net.sf.pzfilereader.ordering.OrderColumn
      */
     public void orderRows(final OrderBy ob) throws Exception {
         throw new RuntimeException("orderRows() is Not Implemented For LargeDataSet");
