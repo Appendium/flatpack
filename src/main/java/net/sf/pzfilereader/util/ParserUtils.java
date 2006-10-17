@@ -12,7 +12,7 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for 
  the specific language governing permissions and limitations under the License.  
  */
-package com.pz.reader.util;
+package net.sf.pzfilereader.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,8 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.pz.reader.structure.ColumnMetaData;
-import com.pz.reader.xml.XMLRecordElement;
+import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.xml.XMLRecordElement;
 
 /**
  * @author zepernick Static utilities that are used to perform parsing in the
