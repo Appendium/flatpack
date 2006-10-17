@@ -1,18 +1,19 @@
 <document>
   <properties>
-    <author email="Kit@objectlab.co.uk">Benoit Xhenseval</author>
+    <author email="paulz17@yahoo.com">Paul Zepernick</author>
     <title>Introduction</title>
   </properties>
   <head>
     <meta name="description"
-	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	content="Flat File Parser (fixed length, csv, etc) via XML Column Mappings, released under the business-friendly Apache 2.0 license."
 	/>
 
-    <meta name="keywords" content="CSV, Fixed length file parser" />
-    <meta name="Subject" content="Date Calculators" />
-    <meta name="Copyright" content="ObjectLab Financial Ltd" />
+    <meta name="keywords"
+        content="Java CSV, Java Fixed Width, Open Source Java Parser, Java Delimited, Java Fixed Width, Java Flat File, Java Text Parser" />
+    <meta name="Subject" content="Flat File Parser" />
+    <!--<meta name="Copyright" content="ObjectLab Financial Ltd" />-->
     <meta name="Language" content="English" />
-    <meta name="Designer" content="ObjectLab Financial Ltd" />
+    <meta name="Designer" content="Paul Zepernick" />
     <meta name="Distribution" content="Global" />
     <meta name="robots" content="ALL"/>
     <meta name="Revisit-After" content="20 Days" />
@@ -21,26 +22,92 @@
     <!-- The body of the document contains a number of sections -->
     <section name="PZFileReader Introduction">
 
-    <p>This one is released under
-    the business-friendly Apache 2.0 license.     <a href="http://digg.com/submit?phase=2&amp;url=objectlabkit.sourceforge.net&amp;title=ObjectLab%20Kit%3A%20Open%20Source%20Date%20Calculators%20for%20Business%20and%20Finance&amp;bodytext=ObjectLab%20released%20version%201%2E0%2E1%20of%20ObjectLab%20Kit%20for%20Java%201%2E5,%20available%20for%20download%20via%20SourceForge%20or%20the%20Maven%20Central%20Repository%2E%20The%20Kit%20provides%20a%20Date%20Calculator%20that%20handle%20holidays,%20a%20IMM%20Date%20and%20Period%20Count%20Calculator%20and%20comes%20in%20two%20versions%3A%20one%20based%20on%20pure%20JDK%20(1%2E5)%20and%20one%20based%20on%20the%20Joda-time%20library%20(1%2E3%2B,%20JDK%201%2E5)%2E&amp;topic=programming">
+    <p>PZFileReader came out of the frustration of having to mix file parsing logic with business logic.
+    Substrings in a <strong>fixed width parse</strong> can be daunting to deal with when trying to analyze what existing code is doing, 
+    and what about when you have no comments...
+    We also provide <strong>delimited file parsing</strong>; works with any delimiter / qualifier, multiline records, delimiter or qualifier allowed in column value
+    This is released under the business-friendly Apache 2.0 license.     <a href="http://digg.com/submit?phase=2&amp;url=objectlabkit.sourceforge.net&amp;title=ObjectLab%20Kit%3A%20Open%20Source%20Date%20Calculators%20for%20Business%20and%20Finance&amp;bodytext=ObjectLab%20released%20version%201%2E0%2E1%20of%20ObjectLab%20Kit%20for%20Java%201%2E5,%20available%20for%20download%20via%20SourceForge%20or%20the%20Maven%20Central%20Repository%2E%20The%20Kit%20provides%20a%20Date%20Calculator%20that%20handle%20holidays,%20a%20IMM%20Date%20and%20Period%20Count%20Calculator%20and%20comes%20in%20two%20versions%3A%20one%20based%20on%20pure%20JDK%20(1%2E5)%20and%20one%20based%20on%20the%20Joda-time%20library%20(1%2E3%2B,%20JDK%201%2E5)%2E&amp;topic=programming">
     <img src="http://digg.com/img/badges/91x17-digg-button.png" width="91" height="17" alt="Digg!" style="vertical-align:middle" /></a></p>
     
 
-    <subsection name="So, what is on offer?">
-	<p>PZFileReader releases one library and a set of examples (pzfilereader-examples.jar)</p>	
-	<p>See the <a href="changes-report.html">changes</a> section for news.</p>
+    <subsection name="Problem Sorting Data Prior To File Processing?">
+        <p>PZFileReader provides a sorting mechanism for your flat files.  This allows for your data to be properly sorted before processing your business logic.</p>
     </subsection>
     
-    <subsection name="Documentation">
-    	<p>The documentation is available here:
-    	<ul>
-    	<li><a href="documentation/pzfilereader-manual.doc">A WORD Document</a></li>
-    	<li><a href="documentation/pzfilereader-manual.pdf">A PDF Document</a></li>
-    	<li><a href="documentation/index.html">A set of examples XML</a></li>    	
-    	</ul>
-    	</p>
+    <subsection name ="Bad Numeric Data?">
+        <p> Do often receive numeric data with dollar signs, or commas?  PZFileReader has the ability to strip these out and return as a double or int.  
+            Even empty elements or hard spaces can be converted to a numeric without issue.</p>       
+    </subsection>
+
+
+    <subsection name ="Problems With One Bad Record Blowing Up The Entire Parse?">
+        <p>Bad records get excluded from the DataSet and added to an error collection.  This error collection can be checked at the end of the parse to 
+        report on bad records.  A description of the error and the line number in the file is provided.  Why blow up an entire import for one bad record?</p>
     </subsection>
     
+    <subsection name="Which JDK?">
+        <p>1.4 and up</p>
+    </subsection>
+    
+    <subsection name="UML?">
+    <p>We are using yDoc to generate a 'javadoc-like' documentation per module with the added twist of UML diagrams:</p>
+    <ul>
+       <li><a href="multiproject/PZFileReader/apidocs/index.html">UML for PZFileReader</a></li>
+       <li><a href="multiproject/PZFileReaderSamples/apidocs/index.html">UML for Examples</a></li>
+    </ul>
+    </subsection>
+
+    </section>
+    
+    <section name="How do I use it?">
+    <p>Basic Steps</p>
+    <ul>
+        <li>Construct DataSet()</li>
+    	<li>Call DataSet.next() to advance record pointer</li>
+    	<li>Process columns; DataSet.getString("colname"), getInt("colname"), getDouble("colname"), getDate("colname"), etc</li>
+        <li>Check for parse errors; DataSet.getErrors()</li>
+    	<li>Release memmory; DataSet.freeMemory()</li>
+    </ul>
+    
+    <subsection name="Reading Delimited File">
+    
+    <div class="source"><pre>
+        DataSet ds = null;
+        
+        //construct DataSet
+        ds = new DataSet(new File("ColumnMappings.pzmap.xml"), //xml mapping file
+            new File("delimitedfile.txt"), //text file to parse
+            ",", //delimiter
+            "\"", //text qualifier (can be null or empty)
+            true); //pad out missing columns (we mapped 5 columns but only 3 were there)
+            
+        while (ds.next()){ //loop through file
+            ds.getString("mycolumnName");
+        }
+        
+        ds.freeMemory();
+    </pre></div>
+      
+    </subsection>
+
+    <subsection name="Reading Fixed Width File">
+    
+    <div class="source"><pre>
+        DataSet ds = null;
+        
+        //construct DataSet
+        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"), //xml mapping file
+            new File("PEOPLE-FixedLength.txt")); //text file to parse
+            
+        while (ds.next()){ //loop through file
+            ds.getString("mycolumnName");
+        }
+        
+        ds.freeMemory();
+    </pre></div>
+      
+    </subsection>
+
     </section>
 
   </body>
