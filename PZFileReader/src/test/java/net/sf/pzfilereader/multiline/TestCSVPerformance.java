@@ -1,9 +1,9 @@
-package com.test.delim.multiLine;
+package net.sf.pzfilereader.multiline;
 
 import java.io.File;
 
-import com.pz.reader.DataError;
-import com.pz.reader.LargeDataSet;
+import net.sf.pzfilereader.DataError;
+import net.sf.pzfilereader.LargeDataSet;
 
 /*
  * Created on Dec 1, 2005
