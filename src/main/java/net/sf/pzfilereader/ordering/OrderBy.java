@@ -54,18 +54,11 @@ public class OrderBy implements Comparator {
      * @return int
      */
     public int compare(final Object arg0, final Object arg1) {
-        OrderColumn oc = null;
-        Comparable comp0 = null;
-        Comparable comp1 = null;
-        Row row0 = null;
-        Row row1 = null;
-        int result = 0;
-
-        row0 = (Row) arg0;
-        row1 = (Row) arg1;
+        final Row row0 = (Row) arg0;
+        final Row row1 = (Row) arg1;
 
         for (int i = 0; i < orderbys.size(); i++) {
-            oc = (OrderColumn) orderbys.get(i);
+            final OrderColumn oc = (OrderColumn) orderbys.get(i);
             
             //null indicates "detail" record which is what the parser assigns to <column> 's setup outside of <record> elements
             //shift all non detail records to the bottom of the DataSet
@@ -77,8 +70,8 @@ public class OrderBy implements Comparator {
             
             // convert to one type of case so the comparator does not take case
             // into account when sorting
-            comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
-            comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
+            final Comparable comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
+            final Comparable comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
 
 //+ BX will never be equal to null.            
 //            if (comp0 == null) {
@@ -89,14 +82,13 @@ public class OrderBy implements Comparator {
 //            }
 
             // multiply by the sort indicator to get a ASC or DESC result
-            result = comp0.compareTo(comp1) * oc.getSortIndicator();
+            final int result = comp0.compareTo(comp1) * oc.getSortIndicator();
 
             // if it is = 0 then the primary sort is done, and it can start the
             // secondary sorts
             if (result != 0) {
                 return result;
             }
-
         }
 
         return 0;

@@ -19,5 +19,5 @@ package net.sf.pzfilereader;
  * Static class which stores the version of this pzFileReader
  */
 public class Version {
-    public static final String VERSION = "2.2.2";
+    public static final String VERSION = "2.3.0";
 }
