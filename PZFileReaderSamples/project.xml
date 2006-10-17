@@ -70,6 +70,14 @@
             </includes>
             <filtering>false</filtering>
          </resource>
+<!--         <resource>
+            <directory>${basedir}/../pzfilereader/target</directory>
+            <includes>
+               <include>**/*.jar</include>
+            </includes>
+            <filtering>false</filtering>
+         </resource>
+         -->
          <resource>
             <directory>${basedir}/../common-build/lib</directory>
             <includes>

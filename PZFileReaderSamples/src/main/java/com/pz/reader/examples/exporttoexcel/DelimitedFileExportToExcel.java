@@ -19,14 +19,28 @@ import com.pz.reader.ordering.OrderColumn;
  */
 public class DelimitedFileExportToExcel {
     public static void main(final String[] args) throws Exception {
+        String mapping = getDefaultMapping();
+        String data = getDefaultDataFile();
+        call(mapping, data);
+
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-CommaDelimitedWithQualifierAndHeaderTrailer.txt";
+    }
+
+    public static String getDefaultMapping() {
+        return "PEOPLE-Delimited.pzmap.xml";
+    }
+
+    public static void call(String mapping, String data) throws Exception {
         DataSet ds = null;
         OrderBy orderby = null;
 
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File("PEOPLE-Delimited.pzmap.xml"), new File("PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"",
-                true, false);
+        ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
 
         // re order the data set by last name
         orderby = new OrderBy();

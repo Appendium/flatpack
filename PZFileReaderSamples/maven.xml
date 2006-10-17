@@ -13,6 +13,28 @@
    xmlns:define="jelly:define" xmlns:doc="doc" xmlns:util="jelly:util"
    xmlns:log="jelly:log">
 
-   <goal name="pz:build" prereqs="jar:install" />
+   <goal name="pz:copyscript">
+        <ant:copy todir="${maven.build.dir}">
+            <ant:fileset dir="${maven.src.dir}/main/script" includes="*.bat">
+	    </ant:fileset>
+	    <ant:filterset>
+	       <ant:filter token="JARFILEEXAMPLES" value="${maven.jar.final.name}"/>
+	       <ant:filter token="JARFILE" value="${pom.currentVersion}"/>
+	    </ant:filterset>
+        </ant:copy>
+        <ant:copy todir="${maven.build.dir}">
+            <ant:fileset dir="${basedir}/../pzfilereader/target" includes="*.jar"/>
+        </ant:copy>
+        <ant:copy todir="${maven.build.dir}">
+            <ant:fileset dir="${basedir}/../common-build/lib" includes="*.jar"/>
+        </ant:copy>
+        <ant:copy todir="${maven.build.dir}">
+            <ant:fileset dir="${maven.src.dir}/main/script" includes="*.xml"/>
+            <ant:fileset dir="${maven.src.dir}/main/script" includes="*.txt"/>
+            <ant:fileset dir="${maven.src.dir}/main/script" includes="*.csv"/>
+        </ant:copy>
+   </goal>
+
+   <goal name="pz:build" prereqs="jar:install,pz:copyscript" />
    <goal name="pz:rebuild" prereqs="clean,pz:build" />
 </project>

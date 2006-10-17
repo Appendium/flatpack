@@ -16,13 +16,26 @@ import com.pz.reader.LargeDataSet;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class FixedLengthWithPZMap {
+public class LargeFixedLengthWithPZMap {
     public static void main(final String[] args) throws Exception {
+        String mapping = getDefaultMapping();
+        String data = getDefaultDataFile();
+        call(mapping, data);
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-FixedLength.txt";
+    }
+
+    public static String getDefaultMapping() {
+        return "PEOPLE-FixedLength.pzmap.xml";
+    }
+
+    public static void call(String mapping, String data) throws Exception {
         LargeDataSet ds = null;
         String[] colNames = null;
 
-        ds = new LargeDataSet(new FileInputStream(new File("PEOPLE-FixedLength.pzmap.xml")), new FileInputStream(new File(
-                "PEOPLE-FixedLength.txt")), false);
+        ds = new LargeDataSet(new FileInputStream(new File(mapping)), new FileInputStream(new File(data)), false);
 
         colNames = ds.getColumns();
 

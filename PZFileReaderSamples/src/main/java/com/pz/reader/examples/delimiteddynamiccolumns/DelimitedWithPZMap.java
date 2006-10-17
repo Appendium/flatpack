@@ -19,15 +19,29 @@ import com.pz.reader.ordering.OrderColumn;
  */
 public class DelimitedWithPZMap {
     public static void main(final String[] args) throws Exception {
-        DataSet ds = null;
-        String[] colNames = null;
-        OrderBy orderby = null;
 
+        String mapping = getDefaultMapping();
+        String data = getDefaultDataFile();
+        call(mapping, data);
+
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-CommaDelimitedWithQualifierAndHeaderTrailer.txt";
+    }
+
+    public static String getDefaultMapping() {
+        return "PEOPLE-DelimitedWithHeaderTrailer.pzmap.xml";
+    }
+
+    public static void call(String mapping, String data) throws Exception {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File("PEOPLE-Delimited.pzmap.xml"), new File("PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"",
-                true, false);
+        DataSet ds = null;
+        String[] colNames = null;
+        OrderBy orderby = null;
+        ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
 
         // re order the data set by last name
         orderby = new OrderBy();
@@ -51,6 +65,5 @@ public class DelimitedWithPZMap {
 
         // clear out the DataSet object for the JVM to collect
         ds.freeMemory();
-
     }
 }

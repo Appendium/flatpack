@@ -19,11 +19,26 @@ import com.pz.reader.DataSet;
  */
 public class FixedLengthHeaderAndTrailer {
     public static void main(final String[] args) throws Exception {
+        String mapping = getDefaultMapping();
+        String data = getDefaultDataFile();
+        call(mapping, data);
+
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-FixedLengthWithHeaderTrailer.txt";
+    }
+
+    public static String getDefaultMapping() {
+        return "PEOPLE-FixedLengthWithHeaderTrailer.pzmap.xml";
+    }
+
+    public static void call(String mapping, String data) throws Exception {
         DataSet ds = null;
         Iterator errors = null;
         DataError dataError = null;
 
-        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"), new File("PEOPLE-FixedLength.txt"), false);
+        ds = new DataSet(new File(mapping), new File(data), false);
 
         while (ds.next()) {
 

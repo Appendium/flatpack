@@ -17,10 +17,25 @@ import com.pz.reader.DataSet;
  */
 public class FixedLengthWithPZMap {
     public static void main(final String[] args) throws Exception {
+        String mapping = getDefaultMapping();
+        String data = getDefaultDataFile();
+        call(mapping, data);
+
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-FixedLength.txt";
+    }
+
+    public static String getDefaultMapping() {
+        return "PEOPLE-FixedLength.pzmap.xml";
+    }
+
+    public static void call(String mapping, String data) throws Exception {
         DataSet ds = null;
         String[] colNames = null;
 
-        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"), new File("PEOPLE-FixedLength.txt"), false);
+        ds = new DataSet(new File(mapping), new File(data), false);
 
         colNames = ds.getColumns();
 

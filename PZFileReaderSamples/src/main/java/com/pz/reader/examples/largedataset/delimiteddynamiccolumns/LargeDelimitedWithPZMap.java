@@ -16,15 +16,30 @@ import com.pz.reader.LargeDataSet;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class DelimitedWithPZMap {
+public class LargeDelimitedWithPZMap {
     public static void main(final String[] args) throws Exception {
+        String mapping = getDefaultMapping();
+        String data = getDefaultDataFile();
+        call(mapping, data);
+
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-CommaDelimitedWithQualifier.txt";
+    }
+
+    public static String getDefaultMapping() {
+        return "PEOPLE-Delimited.pzmap.xml";
+    }
+
+    public static void call(String mapping, String data) throws Exception {
         LargeDataSet ds = null;
         String[] colNames = null;
         FileInputStream pzmap = null;
         FileInputStream fileToParse = null;
 
-        pzmap = new FileInputStream(new File("PEOPLE-Delimited.pzmap.xml"));
-        fileToParse = new FileInputStream(new File("PEOPLE-CommaDelimitedWithQualifier.txt"));
+        pzmap = new FileInputStream(new File(mapping));
+        fileToParse = new FileInputStream(new File(data));
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
