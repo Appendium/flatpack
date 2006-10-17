@@ -66,9 +66,17 @@ public class OrderBy implements Comparator {
 
         for (int i = 0; i < orderbys.size(); i++) {
             oc = (OrderColumn) orderbys.get(i);
+            
+            //null indicates "detail" record which is what the parser assigns to <column> 's setup outside of <record> elements
+            //shift all non detail records to the bottom of the DataSet
+            if (row0.getMdkey() != null && !row0.getMdkey().equals("detail")){
+                return 1;
+            }else if (row1.getMdkey() != null && !row1.getMdkey().equals("detail")){
+                return 0;
+            }
+            
             // convert to one type of case so the comparator does not take case
             // into account when sorting
-
             comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
             comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
 
