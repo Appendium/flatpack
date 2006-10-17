@@ -40,6 +40,8 @@ import net.sf.pzfilereader.xml.XMLRecordElement;
  * @version 2.0
  */
 public final class ParserUtils {
+    private static final String DETAIL_ID = "detail";
+
     private ParserUtils() {
 
     }
@@ -311,7 +313,7 @@ public final class ParserUtils {
             }
         }
 
-        columnMD.put("detail", results);
+        columnMD.put(DETAIL_ID, results);
 
         return columnMD;
     }
@@ -339,7 +341,7 @@ public final class ParserUtils {
             results.add(cmd);
         }
 
-        columnMD.put("detail", results);
+        columnMD.put(DETAIL_ID, results);
 
         return columnMD;
     }
@@ -504,7 +506,7 @@ public final class ParserUtils {
         final Iterator columnMDIt = columnMD.keySet().iterator();
         while (columnMDIt.hasNext()) {
             final String key = (String) columnMDIt.next();
-            if (key.equals("detail")) {
+            if (key.equals(DETAIL_ID)) {
                 cmds = (List) columnMD.get(key);
             } else {
                 cmds = ((XMLRecordElement) columnMD.get(key)).getColumns();
@@ -536,14 +538,14 @@ public final class ParserUtils {
         if (columnMD.size() == 1) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return "detail";
+            return DETAIL_ID;
         }
         final Iterator keys = columnMD.keySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (keys.hasNext()) {
             final String key = (String) keys.next();
-            if (key.equals("detail")) {
+            if (key.equals(DETAIL_ID)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
@@ -565,7 +567,7 @@ public final class ParserUtils {
         }
 
         // must be a detail line
-        return "detail";
+        return DETAIL_ID;
 
     }
 
@@ -582,14 +584,14 @@ public final class ParserUtils {
         if (columnMD.size() == 1) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return "detail";
+            return DETAIL_ID;
         }
         final Iterator keys = columnMD.keySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (keys.hasNext()) {
             final String key = (String) keys.next();
-            if (key.equals("detail")) {
+            if (key.equals(DETAIL_ID)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
@@ -608,7 +610,7 @@ public final class ParserUtils {
         }
 
         // must be a detail line
-        return "detail";
+        return DETAIL_ID;
 
     }
 
@@ -620,9 +622,8 @@ public final class ParserUtils {
      * @return List
      */
     public static List getColumnMetaData(final String key, final Map columnMD) {
-
-        if (key == null || key.equals("detail")) {
-            return (List) columnMD.get("detail");
+        if (key == null || key.equals(DETAIL_ID)) {
+            return (List) columnMD.get(DETAIL_ID);
         }
 
         return ((XMLRecordElement) columnMD.get(key)).getColumns();
@@ -661,7 +662,6 @@ public final class ParserUtils {
             reader.close();
         } catch (final Exception ignore) {
         }
-
     }
 
     /**
@@ -675,7 +675,6 @@ public final class ParserUtils {
             reader.close();
         } catch (final Exception ignore) {
         }
-
     }
     
     /**

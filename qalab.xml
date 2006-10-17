@@ -51,7 +51,7 @@
         <summaryresult date="2006-10-17" filecount="3" statvalue="5" type="pmd"/>
         <summaryresult date="2006-10-17" filecount="7" statvalue="12" type="findbugs"/>
         <summaryresult date="2006-10-17" filecount="3" statvalue="114" type="simian"/>
-        <summaryresult date="2006-10-17" filecount="13" statvalue="16" type="cobertura-line"/>
+        <summaryresult date="2006-10-17" filecount="13" statvalue="17" type="cobertura-line"/>
         <summaryresult date="2006-10-17" filecount="13" statvalue="23" type="cobertura-branch"/>
     </summary>
     <file id="com_pz_reader_ordering_package.html" path="com/pz/reader/ordering/package.html">
