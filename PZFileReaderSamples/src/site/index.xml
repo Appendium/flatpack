@@ -27,7 +27,7 @@
     
     <subsection name="The Examples">
     <p>All examples are in the com.pz.reader.examples sub-directories. There is an application to run these, com.px.reader.examples.Examples but
-    the easiest way is to run the run-examples.bat is in the target directory after build:</p>
+    the easiest way is to run the <code>run-examples.bat</code> in the target directory after build via Maven:</p>
     
     <div class="code"><pre>
 Menu Options

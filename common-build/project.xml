@@ -161,7 +161,7 @@
       <report>maven-simian-plugin</report>
       <report>maven-cobertura-plugin</report>
       <report>maven-qalab-plugin</report>
-      <report>maven-javadoc-plugin</report>
+      <report>maven-ydoc-plugin</report>
       <report>maven-jdepend-plugin</report>
       <report>maven-faq-plugin</report>
       <report>maven-junit-report-plugin</report>
@@ -171,14 +171,14 @@
 
    <versions>
       <version>
-         <id>2.2.0</id>
-         <name>2.2.0</name>
-         <tag>v2.2.0</tag>
-      </version>
-      <version>
          <id>2.3.0</id>
          <name>2.3.0</name>
          <tag>2.3.0</tag>
+      </version>
+      <version>
+         <id>2.2.0</id>
+         <name>2.2.0</name>
+         <tag>v2.2.0</tag>
       </version>
    </versions>
 </project>

@@ -29,9 +29,13 @@
          <item name="ObjectLab"  href="http://www.objectlab.co.uk" />
       </menu>
       <footer>
+      <div style="vertical-align:middle">
          <a href="http://sourceforge.net">
             <img src="http://sourceforge.net/sflogo.php?group_id=97367&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" />
          </a>         
+<a href="http://digg.com/submit?phase=2&amp;url=objectlabkit.sourceforge.net&amp;title=Paul%20Zepernick%20and%20ObjectLab%20have%20released%20version%202%2E3%2E0%20of%20PZFileReader%2E&amp;bodytext=PZFileReader%20on%20SourceForge%3A%20a%20Java%20(1%2E4%2B)%20flat%20file%20parser%20that%20handles%20CSV,%20fixed%20length%20and%20custom%20delimiters%2E%20The%20formats%20are%20configured%20in%20XML%20or%20in%20DB%2E%20Once%20parsed%20the%20data%20is%20easily%20accessible%20record%20by%20record%20and%20via%20a%20column%20name,%20regardless%20of%20order%2E%20%20It%20is%20fast%20and%20released%20under%20Apache%20license%202%2E0%2E&amp;topic=programming">
+    <img src="http://digg.com/img/badges/91x17-digg-button.png" width="91" height="17" alt="Digg!" style="vertical-align:middle" /></a>         
+      </div>
          <script src="http://www.google-analytics.com/urchin.js"
             type="text/javascript">
          </script>
