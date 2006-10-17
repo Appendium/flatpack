@@ -5,7 +5,7 @@
   </properties>
   <head>
     <meta name="description"
-	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	content="How did we here and why?"
 	/>
 
     <meta name="keywords" content="CSV, Fixed length file parser" />
@@ -41,7 +41,7 @@
 	If you have a good experience with this project, and it has benefited you in some way, please spread the word.</p>
     
     <p>Recently, <a href="http://www.objectlab.co.uk">ObjectLab</a> from the UK has decided to offer some support to PZFileReader.
-    PZFileReader is part of the ObjectLab Kit family, a 'support' group for useful open source projects.  
+    PZFileReader is now "kind of" part of the ObjectLab Kit family, a 'support' group for useful open source projects.  
     They developed the Maven build, the website and are active members of this project. They are world leaders in the design
     and development of bespoke applications for the Securities Finance Industry.</p>
     
