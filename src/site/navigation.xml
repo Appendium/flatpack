@@ -11,6 +11,8 @@
       <menu name="PZFileReader">
          <item name="Main library"
             href="multiproject/pzfilereader/index.html" />
+         <item name="Documentation"
+            href="documentation/index.html" />
          <item name="History"
             href="history.html" />
          <item name="Features"
