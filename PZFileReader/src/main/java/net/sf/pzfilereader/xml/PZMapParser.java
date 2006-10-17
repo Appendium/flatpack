@@ -59,9 +59,8 @@ public final class PZMapParser {
      * @deprecated
      */
     public static Map parse(final File xmlFile) throws Exception {
-        Map mdIndex = null;
         final InputStream xmlStream = ParserUtils.createInputStream(xmlFile);
-        mdIndex = parse(xmlStream);
+        Map mdIndex = parse(xmlStream);
         if (mdIndex == null) {
             mdIndex = new LinkedHashMap();
         }
@@ -78,32 +77,26 @@ public final class PZMapParser {
      * @throws Exception
      */
     public static Map parse(final InputStream xmlStream) throws Exception {
-        Document document = null;
-        SAXBuilder builder = null;
-        Element root = null;
-        List columns = null;
-        Element xmlElement = null;
-        final Map mdIndex = new LinkedHashMap(); // retain the same order
-                                                    // specified in the mapping
-
-        builder = new SAXBuilder();
+        SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         // handle the ability to pull DTD from Jar if needed
         builder.setEntityResolver(new ResolveLocalDTD());
-        document = builder.build(xmlStream);
+        Document document = builder.build(xmlStream);
 
-        root = document.getRootElement();
+        Element root = document.getRootElement();
 
         // lets first get all of the columns that are declared directly under
         // the PZMAP
-        columns = getColumnChildren(root);
+        List columns = getColumnChildren(root);
+        final Map mdIndex = new LinkedHashMap(); // retain the same order
+        // specified in the mapping
         mdIndex.put("detail", columns); // always force detail to the top of the
-                                        // map no matter what
+        // map no matter what
 
         // get all of the "record" elements and the columns under them
         final Iterator recordDescriptors = root.getChildren("RECORD").iterator();
         while (recordDescriptors.hasNext()) {
-            xmlElement = (Element) recordDescriptors.next();
+            Element xmlElement = (Element) recordDescriptors.next();
 
             // make sure the id attribute does not have a value of "detail" this
             // is the harcoded
@@ -132,7 +125,6 @@ public final class PZMapParser {
 
     // helper to convert to integer
     private static int convertAttributeToInt(final Attribute attribute) {
-
         if (attribute == null) {
             return 0;
         }
@@ -143,19 +135,16 @@ public final class PZMapParser {
         }
 
         return 0;
-
     }
 
     // helper to retrieve the "COLUMN" elements from the given parent
     private static List getColumnChildren(final Element parent) throws Exception {
         final List columnResults = new ArrayList();
         final Iterator xmlChildren = parent.getChildren("COLUMN").iterator();
-        Element xmlColumn = null;
-        ColumnMetaData cmd = null;
 
         while (xmlChildren.hasNext()) {
-            cmd = new ColumnMetaData();
-            xmlColumn = (Element) xmlChildren.next();
+            ColumnMetaData cmd = new ColumnMetaData();
+            Element xmlColumn = (Element) xmlChildren.next();
 
             // make sure the name attribute is present on the column
             if (xmlColumn.getAttributeValue("name") == null) {
@@ -193,12 +182,12 @@ public final class PZMapParser {
     }
 
     private static void showDebug(final Map xmlResults) {
-        Iterator columns = null;
         final Iterator mapIt = xmlResults.keySet().iterator();
-        XMLRecordElement xmlrecEle = null;
+//        XMLRecordElement xmlrecEle = null;
         while (mapIt.hasNext()) {
-            xmlrecEle = null;
+            XMLRecordElement xmlrecEle = null;
             final String recordID = (String) mapIt.next();
+            Iterator columns = null;
             if (recordID.equals("detail")) {
                 columns = ((List) xmlResults.get(recordID)).iterator();
             } else {

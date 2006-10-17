@@ -37,9 +37,7 @@ public class ResolveLocalDTD implements EntityResolver {
     public InputSource resolveEntity(final String publicId, final String systemId) throws SAXException, IOException {
         try {
             if (!systemId.toLowerCase().startsWith("http://")) {
-                URL resource = null;
-
-                resource = getClass().getResource("pzfilereader.dtd");
+                URL resource = getClass().getResource("pzfilereader.dtd");
 
                 if (resource != null) {
                     return new InputSource(resource.openStream());
@@ -52,7 +50,6 @@ public class ResolveLocalDTD implements EntityResolver {
         }
 
         // must be pulling from the web, stick with default implementation
-
         return null;
     }
 }
