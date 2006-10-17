@@ -647,9 +647,7 @@ public final class ParserUtils {
         if (!file.canRead()) {
             throw new FileNotFoundException("file cannot be read " + file.getAbsolutePath());
         }
-        InputStream xmlStream = null;
-        xmlStream = new FileInputStream(file.getAbsolutePath());
-        return xmlStream;
+        return new FileInputStream(file.getAbsolutePath());
     }
 
     /**
