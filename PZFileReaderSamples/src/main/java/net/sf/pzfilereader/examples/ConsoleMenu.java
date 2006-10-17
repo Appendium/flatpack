@@ -57,7 +57,7 @@ public class ConsoleMenu {
      *            how the entry will be displayed in the menu
      * @param methodName
      *            name of the public method
-     * @parem askForRepeat call back for repeat
+     * @param askForRepeat call back for repeat
      */
     public void addMenuItem(final String menuDisplay, final String methodName, final boolean repeat) {
         menu.add(menuDisplay);

@@ -29,26 +29,28 @@
     <p>Substrings in a <strong>fixed width parse</strong> can be daunting to deal with when trying to analyze what existing code is doing, 
     and what about when you have no comments...</p>
     
-    <p>We also provide <strong>delimited file parsing</strong>; works with any delimiter / qualifier, multiline records, delimiter or qualifier allowed in column value
-    This is released under the business-friendly Apache 2.0 license.     <a href="http://digg.com/submit?phase=2&amp;url=objectlabkit.sourceforge.net&amp;title=Paul%20Zepernick%20and%20ObjectLab%20have%20released%20version%202%2E3%2E0%20of%20PZFileReader%2E&amp;bodytext=PZFileReader%20on%20SourceForge%3A%20a%20Java%20(1%2E4%2B)%20flat%20file%20parser%20that%20handles%20CSV,%20fixed%20length%20and%20custom%20delimiters%2E%20The%20formats%20are%20configured%20in%20XML%20or%20in%20DB%2E%20Once%20parsed%20the%20data%20is%20easily%20accessible%20record%20by%20record%20and%20via%20a%20column%20name,%20regardless%20of%20order%2E%20%20It%20is%20fast%20and%20released%20under%20Apache%20license%202%2E0%2E&amp;topic=programming">
-
-    <img src="http://digg.com/img/badges/91x17-digg-button.png" width="91" height="17" alt="Digg!" style="vertical-align:middle" /></a></p>
+    <p>We also provide <strong>delimited file parsing</strong>; works with any delimiter / qualifier, multiline records, delimiter or qualifier allowed in column value.</p>
     
-    <p>PZFileReader is part of the ObjectLab Kit family.</p>
+    <p>PZFileReader is part of the ObjectLab Kit family.<a href="http://digg.com/submit?phase=2&amp;url=objectlabkit.sourceforge.net&amp;title=Paul%20Zepernick%20and%20ObjectLab%20have%20released%20version%202%2E3%2E0%20of%20PZFileReader%2E&amp;bodytext=PZFileReader%20on%20SourceForge%3A%20a%20Java%20(1%2E4%2B)%20flat%20file%20parser%20that%20handles%20CSV,%20fixed%20length%20and%20custom%20delimiters%2E%20The%20formats%20are%20configured%20in%20XML%20or%20in%20DB%2E%20Once%20parsed%20the%20data%20is%20easily%20accessible%20record%20by%20record%20and%20via%20a%20column%20name,%20regardless%20of%20order%2E%20%20It%20is%20fast%20and%20released%20under%20Apache%20license%202%2E0%2E&amp;topic=programming">
+    <img src="http://digg.com/img/badges/91x17-digg-button.png" width="91" height="17" alt="Digg!" style="vertical-align:middle" /></a></p>    
 
-    <subsection name="Problem Sorting Data Prior To File Processing?">
-        <p>PZFileReader provides a sorting mechanism for your flat files.  This allows for your data to be properly sorted before processing your business logic.</p>
-    </subsection>
+    <subsection name="Why should you use PZFileParser?">
+
+	<p>There is more to it than one could imagine at first sight:</p>
+	<ul>
+	
+	<li><strong>Problem Sorting Data Prior To File Processing?</strong></li>
+	<ul><li>PZFileReader provides a sorting mechanism for your flat files.  This allows for your data to be properly sorted before processing your business logic.</li></ul>
+
     
-    <subsection name ="Bad Numeric Data?">
-        <p> Do often receive numeric data with dollar signs, or commas?  PZFileReader has the ability to strip these out and return as a double or int.  
-            Even empty elements or hard spaces can be converted to a numeric without issue.</p>       
-    </subsection>
+    	<li><strong>Bad Numeric Data?</strong></li>
+    	<ul><li>Do you often receive numeric data with dollar signs, or commas?  PZFileReader has the ability to strip these out and return as a double or int.  
+            Even empty elements or hard spaces can be converted to a numeric without issue.</li></ul>
 
-
-    <subsection name ="Problems With One Bad Record Blowing Up The Entire Parse?">
-        <p>Bad records get excluded from the DataSet and added to an error collection.  This error collection can be checked at the end of the parse to 
-        report on bad records.  A description of the error and the line number in the file is provided.  Why blow up an entire import for one bad record?</p>
+    	<li><strong>Problems With One Bad Record Blowing Up The Entire Parse?</strong></li>
+        <ul><li>Bad records get excluded from the DataSet and added to an error collection.  This error collection can be checked at the end of the parse to 
+        report on bad records.  A description of the error and the line number in the file is provided.  Why blow up an entire import for one bad record?</li></ul>
+        </ul>
     </subsection>
     
     <subsection name="Which JDK?">
@@ -67,25 +69,39 @@
     
     <section name="How do I use it?">
     <p>Basic Steps</p>
-    <ul>
-        <li>Construct DataSet()</li>
+    <ol>
+        <li>Construct DataSet() with a File, a InputStream or a Reader (soon)</li>
     	<li>Call DataSet.next() to advance record pointer</li>
     	<li>Process columns; DataSet.getString("colname"), getInt("colname"), getDouble("colname"), getDate("colname"), etc</li>
         <li>Check for parse errors; DataSet.getErrors()</li>
-    	<li>Release memmory; DataSet.freeMemory()</li>
-    </ul>
+    	<li>Release memory early; DataSet.freeMemory()</li>
+    </ol>
     
     <subsection name="Reading Delimited File">
     
     <div class="source"><pre>
-        DataSet ds = null;
-        
         //construct DataSet
-        ds = new DataSet(new File("ColumnMappings.pzmap.xml"), //xml mapping file
+        DataSet ds = new DataSet(new File("ColumnMappings.pzmap.xml"), //xml mapping file
             new File("delimitedfile.txt"), //text file to parse
             ",", //delimiter
             "\"", //text qualifier (can be null or empty)
             true); //pad out missing columns (we mapped 5 columns but only 3 were there)
+            
+        while (ds.next()){ //loop through file
+            ds.getString("mycolumnName");
+        }
+        
+        ds.freeMemory(); // probably should be in a finally.
+    </pre></div>
+      
+    </subsection>
+
+    <subsection name="Reading Fixed Width File">
+    
+    <div class="source"><pre>
+        //construct DataSet
+        DataSet ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"), //xml mapping file
+            new File("PEOPLE-FixedLength.txt")); //text file to parse
             
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
@@ -96,20 +112,12 @@
       
     </subsection>
 
-    <subsection name="Reading Fixed Width File">
+    <subsection name="Reading a Message of Fixed Width">
     
     <div class="source"><pre>
-        DataSet ds = null;
-        
-        //construct DataSet
-        ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"), //xml mapping file
-            new File("PEOPLE-FixedLength.txt")); //text file to parse
-            
-        while (ds.next()){ //loop through file
-            ds.getString("mycolumnName");
-        }
-        
-        ds.freeMemory();
+
+... coming soon
+
     </pre></div>
       
     </subsection>
