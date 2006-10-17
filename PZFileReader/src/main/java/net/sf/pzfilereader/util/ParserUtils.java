@@ -701,7 +701,7 @@ public final class ParserUtils {
      * @throws IndexOutOfBoundsException if <code>repeat &lt; 0</code>
      * @see #repeat(String, int)
      */
-    public static String padding(int repeat, char padChar) {
+    public static String padding(final int repeat, final char padChar) {
         if (repeat < 0) {
             throw new IndexOutOfBoundsException("Cannot pad a negative amount: " + repeat);
         }
