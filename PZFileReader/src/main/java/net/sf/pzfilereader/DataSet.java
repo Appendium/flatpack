@@ -127,28 +127,25 @@ public class DataSet {
         super();
         this.handleShortLines = handleShortLines;
 
-        String sql = null;
         ResultSet rs = null;
         Statement stmt = null;
-        ColumnMetaData column = null;
-        boolean hasResults = false;
-        int recPosition = 1;
-        final List cmds = new ArrayList();
 
         try {
             columnMD = new LinkedHashMap();
             stmt = con.createStatement();
 
-            sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
+            String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
                     + "WHERE DATAFILE.DATAFILE_DESC = '" + dataDefinition + "' " + "ORDER BY DATASTRUCTURE_COL_ORDER";
 
             rs = stmt.executeQuery(sql);
 
+            int recPosition = 1;
+            final List cmds = new ArrayList();
             // put array of columns together. These will be used to put together
             // the dataset when reading in the file
             while (rs.next()) {
 
-                column = new ColumnMetaData();
+                ColumnMetaData column = new ColumnMetaData();
                 column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
                 column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
                 column.setStartPosition(recPosition);
@@ -156,13 +153,11 @@ public class DataSet {
                 recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
 
                 cmds.add(column);
-
-                hasResults = true;
             }
 
             columnMD.put("detail", cmds);
 
-            if (!hasResults) {
+            if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + dataDefinition);
             }
 
@@ -252,7 +247,7 @@ public class DataSet {
             columnMD = new LinkedHashMap();
             stmt = con.createStatement();
 
-            String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
+            final String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
                     + "WHERE DATAFILE.DATAFILE_DESC = '" + dataDefinition + "' " + "ORDER BY DATASTRUCTURE_COL_ORDER";
 
             rs = stmt.executeQuery(sql);
@@ -263,7 +258,7 @@ public class DataSet {
             // the dataset when reading in the file
             while (rs.next()) {
 
-                ColumnMetaData column = new ColumnMetaData();
+                final ColumnMetaData column = new ColumnMetaData();
                 column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
                 column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
                 cmds.add(column);
@@ -352,7 +347,6 @@ public class DataSet {
         columnMD = PZMapParser.parse(pzmapXMLStream);
 
         doDelimitedFile(dataSourceStream, delimiter, qualifier, ignoreFirstRecord, false);
-
     }
 
     /**
@@ -474,27 +468,21 @@ public class DataSet {
      * mappings, and SQL table mappings
      */
     private void doFixedLengthFile(final InputStream dataSource) throws Exception {
-        String line = null;
         InputStreamReader isr = null;
         BufferedReader br = null;
-        Row row = null;
-        int recordLength = 0;
-        int lineCount = 0;
-        int recPosition = 0;
-        // map of record lengths corrisponding to the ID's in the columnMD array
-        Map recordLengths = null;
-        String mdkey = null;
-        List cmds = null;
 
         try {
             rows = new ArrayList();
             errors = new ArrayList();
 
-            recordLengths = ParserUtils.calculateRecordLengths(columnMD);
+            final Map recordLengths = ParserUtils.calculateRecordLengths(columnMD);
 
             // Read in the flat file
             isr = new InputStreamReader(dataSource);
             br = new BufferedReader(isr);
+            String line = null;
+            int lineCount = 0;
+            // map of record lengths corrisponding to the ID's in the columnMD array
             // loop through each line in the file
             while ((line = br.readLine()) != null) {
                 lineCount++;
@@ -503,9 +491,9 @@ public class DataSet {
                     continue;
                 }
 
-                mdkey = ParserUtils.getCMDKeyForFixedLengthFile(columnMD, line);
-                recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
-                cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
+                final String mdkey = ParserUtils.getCMDKeyForFixedLengthFile(columnMD, line);
+                final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
+                final List cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
 
                 // Incorrect record length on line log the error. Line will not
                 // be included in the
@@ -527,8 +515,8 @@ public class DataSet {
                     }
                 }
 
-                recPosition = 1;
-                row = new Row();
+                int recPosition = 1;
+                final Row row = new Row();
                 row.setMdkey(mdkey.equals("detail") ? null : mdkey); // try
                 // to
                 // limit
@@ -569,19 +557,9 @@ public class DataSet {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
         }
-        String line = null;
 
         InputStreamReader isr = null;
         BufferedReader br = null;
-        Row row = null;
-        int columnCount = 0;
-        int lineCount = 0;
-        List columns = null;
-        boolean processedFirst = false;
-        boolean processingMultiLine = false;
-        String lineData = "";
-        List cmds = null;
-        String mdkey = null;
 
         try {
             rows = new ArrayList();
@@ -594,7 +572,13 @@ public class DataSet {
             // fr = new FileReader(dataSource.getAbsolutePath());
             isr = new InputStreamReader(dataSource);
             br = new BufferedReader(isr);
+
+            boolean processedFirst = false;
+            boolean processingMultiLine = false;
+            int lineCount = 0;
+            String lineData = "";
             /** loop through each line in the file */
+            String line = null;
             while ((line = br.readLine()) != null) {
                 lineCount++;
                 /** empty line skip past it */
@@ -692,11 +676,11 @@ public class DataSet {
                 // ********************************************************************
 
                 // column values
-                columns = ParserUtils.splitLine(lineData, delimiter, qualifier);
+                List columns = ParserUtils.splitLine(lineData, delimiter, qualifier);
                 lineData = "";
-                mdkey = ParserUtils.getCMDKeyForDelimitedFile(columnMD, columns);
-                cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
-                columnCount = cmds.size();
+                String mdkey = ParserUtils.getCMDKeyForDelimitedFile(columnMD, columns);
+                List cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
+                int columnCount = cmds.size();
                 // DEBUG
 
                 // Incorrect record length on line log the error. Line
@@ -721,7 +705,7 @@ public class DataSet {
                     }
                 }
 
-                row = new Row();
+                Row row = new Row();
                 row.setMdkey(mdkey.equals("detail") ? null : mdkey); // try
                 // to
                 // limit
@@ -756,14 +740,11 @@ public class DataSet {
      *                exception will be thrown if pointer in not on a valid row
      */
     public void setValue(final String columnName, final String value) throws Exception {
-        Row row = null;
-
         /** get a reference to the row */
-        row = (Row) rows.get(pointer);
+        Row row = (Row) rows.get(pointer);
         final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
         /** change the value of the column */
         row.setValue(ParserUtils.findColumn(columnName, cmds), value);
-
     }
 
     /**
@@ -846,13 +827,12 @@ public class DataSet {
      * @return double
      */
     public double getDouble(final String column) {
-        String s = null;
         final StringBuffer newString = new StringBuffer();
         final String[] allowedChars = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "-" };
         final Row row = (Row) rows.get(pointer);
 
         final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
-        s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, cmds));
+        String s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, cmds));
 
         if (!strictNumericParse) {
             if (s.trim().length() == 0) {
@@ -887,13 +867,12 @@ public class DataSet {
      * @return double
      */
     public int getInt(final String column) {
-        String s = null;
         final StringBuffer newString = new StringBuffer();
         final String[] allowedChars = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-" };
         final Row row = (Row) rows.get(pointer);
         final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
 
-        s = row.getValue(ParserUtils.findColumn(column, cmds));
+        String s = row.getValue(ParserUtils.findColumn(column, cmds));
 
         if (!strictNumericParse) {
             if (s.trim().length() == 0) {
@@ -931,11 +910,10 @@ public class DataSet {
      */
     public Date getDate(final String column) throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        String s = null;
         final Row row = (Row) rows.get(pointer);
         final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
 
-        s = row.getValue(ParserUtils.findColumn(column, cmds));
+        String s = row.getValue(ParserUtils.findColumn(column, cmds));
         return sdf.parse(s);
     }
 
@@ -953,11 +931,10 @@ public class DataSet {
      * @return Date
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
-        String s = null;
         final Row row = (Row) rows.get(pointer);
         final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
 
-        s = row.getValue(ParserUtils.findColumn(column, cmds));
+        String s = row.getValue(ParserUtils.findColumn(column, cmds));
         return sdf.parse(s);
     }
 
@@ -991,14 +968,13 @@ public class DataSet {
      * @return String[]
      */
     public String[] getColumns(final String recordID) {
-        ColumnMetaData column = null;
         String[] array = null;
 
         if (columnMD != null) {
             final List cmds = ParserUtils.getColumnMetaData(recordID, columnMD);
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
-                column = (ColumnMetaData) cmds.get(i);
+                ColumnMetaData column = (ColumnMetaData) cmds.get(i);
                 array[i] = column.getColName();
             }
         }
@@ -1154,8 +1130,8 @@ public class DataSet {
         // if (columnMD.size() > 1) {
        //     throw new Exception("orderRows does not currently support ordering with <RECORD> mappings");
        // }
-        final List cmds = ParserUtils.getColumnMetaData("detail", columnMD);
         if (ob != null && rows != null) {
+            final List cmds = ParserUtils.getColumnMetaData("detail", columnMD);
             ob.setColumnMD(cmds);
             Collections.sort(rows, ob);
             goTop();
@@ -1214,10 +1190,8 @@ public class DataSet {
      * @exception Exception
      */
     public void writeToExcel(final File excelFileToBeWritten) throws Exception {
-
         final ExcelTransformer et = new ExcelTransformer(this, excelFileToBeWritten);
         et.writeExcelFile();
-
     }
 
     /**
@@ -1251,7 +1225,7 @@ public class DataSet {
         return columnMD;
     }
 
-    public void setColumnMD(Map columnMD) {
+    public void setColumnMD(final Map columnMD) {
         this.columnMD = columnMD;
     }
 
@@ -1259,11 +1233,11 @@ public class DataSet {
         return rows;
     }
 
-    public void setRows(List rows) {
+    public void setRows(final List rows) {
         this.rows = rows;
     }
 
-    public void setErrors(List errors) {
+    public void setErrors(final List errors) {
         this.errors = errors;
     }
 }
