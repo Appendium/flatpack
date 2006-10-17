@@ -56,11 +56,6 @@ public class ExcelTransformer {
      */
     public void writeExcelFile() throws Exception {
         WritableWorkbook excelWrkBook = null;
-        WritableSheet wrkSheet = null;
-        final WritableFont times10ptBold = new WritableFont(WritableFont.TIMES, 10, WritableFont.BOLD);
-        final WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10, WritableFont.NO_BOLD);
-        WritableCellFormat cellFormat = null;
-        Label xlsTextLbl = null;
         int curDsPointer = 0;
 
         try {
@@ -72,12 +67,14 @@ public class ExcelTransformer {
             ds.goTop();
 
             excelWrkBook = Workbook.createWorkbook(xlsFile);
-            wrkSheet = excelWrkBook.createSheet("results", 0);
+            final WritableSheet wrkSheet = excelWrkBook.createSheet("results", 0);
 
+            final WritableFont times10ptBold = new WritableFont(WritableFont.TIMES, 10, WritableFont.BOLD);
+            final WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10, WritableFont.NO_BOLD);
             // write the column headings in the spreadsheet
-            cellFormat = new WritableCellFormat(times10ptBold);
+            WritableCellFormat cellFormat = new WritableCellFormat(times10ptBold);
             for (int i = 0; i < columnNames.length; i++) {
-                xlsTextLbl = new Label(i, 0, columnNames[i], cellFormat);
+                final Label xlsTextLbl = new Label(i, 0, columnNames[i], cellFormat);
                 wrkSheet.addCell(xlsTextLbl);
             }
 
@@ -85,9 +82,8 @@ public class ExcelTransformer {
             int row = 1;
             while (ds.next()) {
                 for (int i = 0; i < columnNames.length; i++) {
-                    xlsTextLbl = new Label(i, row, ds.getString(columnNames[i]), cellFormat);
+                    final Label xlsTextLbl = new Label(i, row, ds.getString(columnNames[i]), cellFormat);
                     wrkSheet.addCell(xlsTextLbl);
-
                 }
 
                 row++;

@@ -325,13 +325,9 @@ public class LargeDataSet extends DataSet {
     // reads the next record and sets it into the row array
     private boolean readNextDelimited() throws Exception {
         String line = null;
-        Row row = null;
-        List columns = null;
         boolean processingMultiLine = false;
         boolean readRecordOk = false;
         String lineData = "";
-        String mdkey = null;
-        List cmds = null;
 
         if (getRows() == null) {
             setRows(new ArrayList());
@@ -437,10 +433,10 @@ public class LargeDataSet extends DataSet {
             // ********************************************************************
 
             // column values
-            columns = ParserUtils.splitLine(lineData, this.delimiter, this.qualifier);
+            final List columns = ParserUtils.splitLine(lineData, this.delimiter, this.qualifier);
             lineData = "";
-            mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
-            cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
+            final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
+            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
             this.columnCount = cmds.size();
             // DEBUG
 
@@ -466,7 +462,7 @@ public class LargeDataSet extends DataSet {
                 }
             }
 
-            row = new Row();
+            final Row row = new Row();
             row.setCols(columns);
             row.setRowNumber(lineCount);
             // with the LargeDataSet we are never going to store more than 1
@@ -482,12 +478,7 @@ public class LargeDataSet extends DataSet {
 
     private boolean readNextFixedLen() throws Exception {
         String line = null;
-        Row row = null;
-        int recordLength = 0;
-        final int aLineCount = 0;
-        int recPosition = 0;
-        String mdkey = null;
-        List cmds = null;
+        final int aLineCount = 0; //+++++++++++++++++++++++++++++++++ Paul this does not seem incremented at all...
         boolean readRecordOk = false;
 
         if (getRows() == null) {
@@ -510,9 +501,9 @@ public class LargeDataSet extends DataSet {
                 continue;
             }
 
-            mdkey = ParserUtils.getCMDKeyForFixedLengthFile(getColumnMD(), line);
-            recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
-            cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
+            final String mdkey = ParserUtils.getCMDKeyForFixedLengthFile(getColumnMD(), line);
+            final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
+            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
 
             // Incorrect record length on line log the error. Line will not be
             // included in the
@@ -536,8 +527,8 @@ public class LargeDataSet extends DataSet {
                 }
             }
 
-            recPosition = 1;
-            row = new Row();
+            int recPosition = 1;
+            final Row row = new Row();
             row.setMdkey(mdkey.equals("detail") ? null : mdkey); // try to
                                                                     // limit the
                                                                     // memory
