@@ -18,8 +18,6 @@ public class CSVTestFileCreator {
     public static void main(final String[] args) {
         int cols = 0;
         int rows = 0;
-        FileWriter fw = null;
-        PrintWriter out = null;
 
         if (args.length != 2) {
             printUsage();
@@ -34,9 +32,19 @@ public class CSVTestFileCreator {
             return;
         }
 
+        createFile(cols, rows);
+    }
+    
+    public static void createFile(int cols, int rows) {
+        createFile(cols,rows,"SampleCSV.csv");
+    }
+    
+    public static void createFile(int cols, int rows, final String filename) {
+        FileWriter fw = null;
+        PrintWriter out = null;
         try {
 
-            fw = new FileWriter("SampleCSV.csv");
+            fw = new FileWriter(filename);
             out = new PrintWriter(fw);
 
             // write the column names across the top of the file
@@ -60,6 +68,9 @@ public class CSVTestFileCreator {
 
                 out.write("\r\n");
                 out.flush();
+                if (i % 100000 == 0) {
+                    System.out.print(".");
+                }
             }
 
         } catch (final Exception ex) {
@@ -76,7 +87,6 @@ public class CSVTestFileCreator {
             }
 
         }
-
     }
 
     private static void printUsage() {

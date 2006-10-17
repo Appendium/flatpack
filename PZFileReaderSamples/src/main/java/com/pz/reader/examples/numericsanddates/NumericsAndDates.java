@@ -18,6 +18,20 @@ import com.pz.reader.DataSet;
  */
 public class NumericsAndDates {
     public static void main(final String[] args) throws Exception {
+        String mapping = getDefaultMapping();
+        String data = getDefaultDataFile();
+        call(mapping, data);
+    }
+
+    public static String getDefaultDataFile() {
+        return "INVENTORY-CommaDelimitedWithQualifier.txt";
+    }
+
+    public static String getDefaultMapping() {
+        return "INVENTORY-Delimited.pzmap.xml";
+    }
+
+    public static void call(String mapping, String data) throws Exception {
         DataSet ds = null;
         // wll provide a clean format for printing the date to the screen
         final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -25,8 +39,7 @@ public class NumericsAndDates {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File("INVENTORY-Delimited.pzmap.xml"), new File("INVENTORY-CommaDelimitedWithQualifier.txt"), ",",
-                "\"", true, false);
+        ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
 
         // demonstrates the casting abilities of PZFileReader
         while (ds.next()) {

@@ -40,7 +40,7 @@
    </goal>
 
    <goal name="pz:releasebuild">
-      <attainGoal name="pz:clean" />
+      <attainGoal name="pz:rebuild" />
       <j:set var="goal" value="artifact:create-upload-bundle" />
       <attainGoal name="multiproject:goal" />
       <attainGoal name="pz:site" />

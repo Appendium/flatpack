@@ -16,13 +16,28 @@ import com.pz.reader.DataSet;
  * Preferences - Java - Code Style - Code Templates
  */
 public class DelimitedMultiLine {
+
     public static void main(final String[] args) throws Exception {
+        String data = getDefaultDataFile();
+        try {
+            call(data);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-CommaDelimitedWithQualifierMultiLine.txt";
+    }
+
+    public static void call(String data) throws Exception {
         DataSet ds = null;
         String[] colNames = null;
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File("PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"", false);
+        ds = new DataSet(new File(data), ",", "\"", false);
 
         colNames = ds.getColumns();
 

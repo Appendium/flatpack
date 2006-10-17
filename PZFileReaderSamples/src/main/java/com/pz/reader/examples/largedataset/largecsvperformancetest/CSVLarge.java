@@ -25,18 +25,29 @@ import com.pz.reader.LargeDataSet;
 public class CSVLarge {
 
     public static void main(final String[] args) {
+        try {
+            Map settings = readSettings();
+            String data = (String) settings.get("csvFile");
+            call(data);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
+    public static String getDefaultDataFile() {
+        return "LargeSampleCSV.csv";
+    }
+
+    public static void call(String data) throws Exception {
         LargeDataSet ds = null;
-        Map settings = null;
-
         try {
 
-            settings = readSettings();
 
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-            ds = new LargeDataSet(new File((String) settings.get("csvFile")), ",", "\"", false);
+            ds = new LargeDataSet(new File(data), ",", "\"", false);
 
             final long timeStarted = System.currentTimeMillis();
             int totalCount = 0;

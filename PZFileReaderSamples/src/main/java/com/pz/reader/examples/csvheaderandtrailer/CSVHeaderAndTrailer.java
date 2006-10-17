@@ -17,12 +17,24 @@ import com.pz.reader.DataSet;
  */
 public class CSVHeaderAndTrailer {
     public static void main(final String[] args) throws Exception {
-        DataSet ds = null;
+        call(getDefaultMapping(), getDefaultDataFile());
+    }
+
+    public static String getDefaultMapping() {
+        return "PEOPLE-DelimitedWithHeaderTrailer.pzmap.xml";
+    }
+
+    public static String getDefaultDataFile() {
+        return "PEOPLE-CommaDelimitedWithQualifier.txt";
+    }
+
+    public static void call(final String mapping, final String data) throws Exception {
+        File mapFile = new File(mapping);
+        File dataFile = new File(data);
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File("PEOPLE-Delimited.pzmap.xml"), new File("PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"",
-                true, false);
+        DataSet ds = new DataSet(mapFile, dataFile, ",", "\"", true, false);
 
         while (ds.next()) {
 
@@ -57,6 +69,5 @@ public class CSVHeaderAndTrailer {
 
         // clear out the DataSet object for the JVM to collect
         ds.freeMemory();
-
     }
 }

@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <!DOCTYPE PZMAP SYSTEM
-	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >
+	"pzfilereader.dtd" >
 <PZMAP>
 	<COLUMN name="ITEM_DESC" />
 	<COLUMN name="IN_STOCK" />

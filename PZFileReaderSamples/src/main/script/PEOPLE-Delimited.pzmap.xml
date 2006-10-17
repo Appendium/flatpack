@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <!DOCTYPE PZMAP SYSTEM
-	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >
+	"pzfilereader.dtd" >
 <PZMAP>
 	<COLUMN name="FIRSTNAME" />
 	<COLUMN name="LASTNAME" />
