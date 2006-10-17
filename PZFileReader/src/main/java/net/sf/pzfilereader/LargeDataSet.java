@@ -50,7 +50,8 @@ public class LargeDataSet extends DataSet {
     private InputStream is = null; // stream used to read the file
 
     private int lineCount = 0; // keeps track of the current line being
-                                // procssed in the file
+
+    // procssed in the file
 
     // used for delimited files
     private boolean ignoreFirstRecord = false;
@@ -65,10 +66,11 @@ public class LargeDataSet extends DataSet {
 
     private int columnCount = 0;
 
-    /** used for fixed length files, map of record lengths corresponding to the
+    /**
+     * used for fixed length files, map of record lengths corresponding to the
      * ID's in the columnMD array.
      */
-    private Map recordLengths = null; 
+    private Map recordLengths = null;
 
     /**
      * Constructor based on InputStream. Constructs a new LargeDataSet using the
@@ -425,7 +427,7 @@ public class LargeDataSet extends DataSet {
                 lineData += line;
                 if (processingMultiLine) {
                     continue; // if we are working on a multiline rec, get the
-                                // data on the next line
+                    // data on the next line
                 }
             }
             // ********************************************************************
@@ -478,7 +480,8 @@ public class LargeDataSet extends DataSet {
 
     private boolean readNextFixedLen() throws Exception {
         String line = null;
-        final int aLineCount = 0; //+++++++++++++++++++++++++++++++++ Paul this does not seem incremented at all...
+        final int aLineCount = 0; // +++++++++++++++++++++++++++++++++ Paul
+        // this does not seem incremented at all...
         boolean readRecordOk = false;
 
         if (getRows() == null) {
@@ -513,14 +516,11 @@ public class LargeDataSet extends DataSet {
                 continue;
             } else if (line.length() < recordLength) {
                 if (isHandleShortLines()) {
-                    // We can pad this line out
-                    while (line.length() < recordLength) {
-                        line += ParserUtils.padding(recordLength-line.length(), ' ');
-                    }
+                    // We can pad this line out in one go.
+                    line += ParserUtils.padding(recordLength - line.length(), ' ');
 
                     // log a warning
                     addError("PADDED LINE TO CORRECT RECORD LENGTH", aLineCount, 1);
-
                 } else {
                     addError("LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, aLineCount, 2);
                     continue;
@@ -530,13 +530,11 @@ public class LargeDataSet extends DataSet {
             int recPosition = 1;
             final Row row = new Row();
             row.setMdkey(mdkey.equals("detail") ? null : mdkey); // try to
-                                                                    // limit the
-                                                                    // memory
-                                                                    // use
+            // limit the memory use
             // Build the columns for the row
             for (int i = 0; i < cmds.size(); i++) {
-                String tempValue = null;
-                tempValue = line.substring(recPosition - 1, recPosition + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
+                final String tempValue = line.substring(recPosition - 1, recPosition
+                        + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
                 recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
                 row.addColumn(tempValue.trim());
             }
@@ -547,8 +545,6 @@ public class LargeDataSet extends DataSet {
             readRecordOk = true;
             break;
         }
-
         return readRecordOk;
-
     }
 }

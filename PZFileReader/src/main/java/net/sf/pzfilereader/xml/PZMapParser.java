@@ -36,6 +36,7 @@ import net.sf.pzfilereader.util.ParserUtils;
  * Parses a PZmap definition XML file
  */
 public final class PZMapParser {
+    private static final String DETAIL_ID = "detail";
 
     private static boolean showDebug = false;
 
@@ -77,32 +78,32 @@ public final class PZMapParser {
      * @throws Exception
      */
     public static Map parse(final InputStream xmlStream) throws Exception {
-        SAXBuilder builder = new SAXBuilder();
+        final SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         // handle the ability to pull DTD from Jar if needed
         builder.setEntityResolver(new ResolveLocalDTD());
-        Document document = builder.build(xmlStream);
+        final Document document = builder.build(xmlStream);
 
-        Element root = document.getRootElement();
+        final Element root = document.getRootElement();
 
         // lets first get all of the columns that are declared directly under
         // the PZMAP
         List columns = getColumnChildren(root);
         final Map mdIndex = new LinkedHashMap(); // retain the same order
         // specified in the mapping
-        mdIndex.put("detail", columns); // always force detail to the top of the
-        // map no matter what
+        mdIndex.put(DETAIL_ID, columns); // always force detail to the top of
+                                         // the map no matter what
 
         // get all of the "record" elements and the columns under them
         final Iterator recordDescriptors = root.getChildren("RECORD").iterator();
         while (recordDescriptors.hasNext()) {
-            Element xmlElement = (Element) recordDescriptors.next();
+            final Element xmlElement = (Element) recordDescriptors.next();
 
             // make sure the id attribute does not have a value of "detail" this
             // is the harcoded
             // value we are using to mark columns specified outside of a
             // <RECORD> element
-            if (xmlElement.getAttributeValue("id").equals("detail")) {
+            if (xmlElement.getAttributeValue("id").equals(DETAIL_ID)) {
                 throw new Exception("The ID 'detail' on the <RECORD> element is reserved, please select another id");
             }
 
@@ -143,8 +144,8 @@ public final class PZMapParser {
         final Iterator xmlChildren = parent.getChildren("COLUMN").iterator();
 
         while (xmlChildren.hasNext()) {
-            ColumnMetaData cmd = new ColumnMetaData();
-            Element xmlColumn = (Element) xmlChildren.next();
+            final ColumnMetaData cmd = new ColumnMetaData();
+            final Element xmlColumn = (Element) xmlChildren.next();
 
             // make sure the name attribute is present on the column
             if (xmlColumn.getAttributeValue("name") == null) {
@@ -162,13 +163,10 @@ public final class PZMapParser {
                             + xmlColumn.getAttributeValue("length"));
                 }
             }
-
             columnResults.add(cmd);
-
         }
 
         return columnResults;
-
     }
 
     /**
@@ -183,12 +181,11 @@ public final class PZMapParser {
 
     private static void showDebug(final Map xmlResults) {
         final Iterator mapIt = xmlResults.keySet().iterator();
-//        XMLRecordElement xmlrecEle = null;
         while (mapIt.hasNext()) {
             XMLRecordElement xmlrecEle = null;
             final String recordID = (String) mapIt.next();
             Iterator columns = null;
-            if (recordID.equals("detail")) {
+            if (recordID.equals(DETAIL_ID)) {
                 columns = ((List) xmlResults.get(recordID)).iterator();
             } else {
                 xmlrecEle = (XMLRecordElement) xmlResults.get(recordID);
@@ -206,8 +203,6 @@ public final class PZMapParser {
                 System.out.println("          Column Name: " + cmd.getColName() + " LENGTH: " + cmd.getColLength());
 
             }
-
         }
     }
-
 }
