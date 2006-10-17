@@ -12,7 +12,7 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for 
  the specific language governing permissions and limitations under the License.  
  */
-package com.pz.reader;
+package net.sf.pzfilereader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,12 +33,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.pz.reader.ordering.OrderBy;
-import com.pz.reader.structure.ColumnMetaData;
-import com.pz.reader.structure.Row;
-import com.pz.reader.util.ExcelTransformer;
-import com.pz.reader.util.ParserUtils;
-import com.pz.reader.xml.PZMapParser;
+import net.sf.pzfilereader.ordering.OrderBy;
+import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.structure.Row;
+import net.sf.pzfilereader.util.ExcelTransformer;
+import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.pzfilereader.xml.PZMapParser;
 
 /**
  * This class parses a datafile and holds methods to scroll back and forth
@@ -1150,8 +1150,8 @@ public class DataSet {
      * @param ob -
      *            OrderBy object
      * @exception Exception
-     * @see com.pz.reader.ordering.OrderBy
-     * @see com.pz.reader.ordering.OrderColumn
+     * @see net.sf.pzfilereader.ordering.OrderBy
+     * @see net.sf.pzfilereader.ordering.OrderColumn
      */
     public void orderRows(final OrderBy ob) throws Exception {
        //PZ try to handle other <records> by sending them to 

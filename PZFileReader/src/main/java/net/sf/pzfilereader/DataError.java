@@ -12,7 +12,7 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for 
  the specific language governing permissions and limitations under the License.  
  */
-package com.pz.reader;
+package net.sf.pzfilereader;
 
 /**
  * This class holds errors that occured while parsing or processing a data file.
