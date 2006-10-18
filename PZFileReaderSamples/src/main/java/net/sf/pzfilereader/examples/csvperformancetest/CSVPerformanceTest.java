@@ -34,19 +34,20 @@ public class CSVPerformanceTest {
             String filename = (String) settings.get("csvFile");
             String verbose = (String) settings.get("verbose");
 
-            call(filename, Boolean.valueOf(verbose).booleanValue());
+            call(filename, Boolean.valueOf(verbose).booleanValue(), true);
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-    public static void call(String filename, boolean verbose) throws Exception, InterruptedException {
+    public static void call(String filename, boolean verbose, boolean traverse) throws Exception, InterruptedException {
         DataSet ds = null;
         String[] colNames = null;
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
+        System.out.println("Parsing....");
         long timeStarted = System.currentTimeMillis();
         ds = new DataSet(new File(filename), ",", "\"", false);
         long timeFinished = System.currentTimeMillis();
@@ -56,35 +57,46 @@ public class CSVPerformanceTest {
         if (timeFinished - timeStarted < 1000) {
             timeMessage = (timeFinished - timeStarted) + " Milleseconds...";
         } else {
-            timeMessage = ((timeFinished - timeStarted) / 1000) + " Seconds...";
+            timeMessage = ((float) ((timeFinished - timeStarted) / 1000.0)) + " Seconds...";
         }
 
         System.out.println("");
         System.out.println("********FILE PARSED IN: " + timeMessage + " ******");
-        Thread.sleep(2000); // sleep for a couple seconds to the message
-                            // above can be read
 
-        if (verbose) {
+        if (traverse) {
+            if (verbose) {
+                Thread.sleep(2000); // sleep for a couple seconds to the message
+                // above can be read
+            }
             timeStarted = System.currentTimeMillis();
             colNames = ds.getColumns();
-
+            int rowCount = 0;
+            int colCount = colNames.length;
             while (ds.next()) {
+                rowCount++;
                 for (int i = 0; i < colNames.length; i++) {
-                    System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+                    String string = ds.getString(colNames[i]);
+
+                    if (verbose) {
+                        System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + string);
+                    }
                 }
 
-                System.out.println("===========================================================================");
+                if (verbose) {
+                    System.out.println("===========================================================================");
+                }
             }
             timeFinished = System.currentTimeMillis();
 
             if (timeFinished - timeStarted < 1000) {
                 timeMessage = (timeFinished - timeStarted) + " Milleseconds...";
             } else {
-                timeMessage = ((timeFinished - timeStarted) / 1000) + " Seconds...";
+                timeMessage = ((float)((timeFinished - timeStarted) / 1000.0)) + " Seconds...";
             }
 
             System.out.println("");
-            System.out.println("********Displayed Data To Console In: " + timeMessage + " ******");
+            System.out.println("********Traversed Data In: " + timeMessage + " (rows: " + rowCount + " Col:" + colCount
+                    + ") ******");
 
         }
 

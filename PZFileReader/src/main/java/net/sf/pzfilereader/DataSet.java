@@ -31,11 +31,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.ExcelTransformer;
+import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.xml.PZMapParser;
 
@@ -48,8 +50,6 @@ import net.sf.pzfilereader.xml.PZMapParser;
  * @todo Ought to implement an interface for the access to data.
  */
 public class DataSet {
-    private static final String DETAIL_ID = "detail";
-
     /** Array to hold the rows and their values in the text file */
     private List rows = null;
 
@@ -148,7 +148,7 @@ public class DataSet {
             // the dataset when reading in the file
             while (rs.next()) {
 
-                ColumnMetaData column = new ColumnMetaData();
+                final ColumnMetaData column = new ColumnMetaData();
                 column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
                 column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
                 column.setStartPosition(recPosition);
@@ -158,7 +158,8 @@ public class DataSet {
                 cmds.add(column);
             }
 
-            columnMD.put(DETAIL_ID, cmds);
+            columnMD.put(PZConstants.DETAIL_ID, cmds);
+            columnMD.put(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + dataDefinition);
@@ -271,7 +272,8 @@ public class DataSet {
                 hasResults = true;
             }
 
-            columnMD.put(DETAIL_ID, cmds);
+            columnMD.put(PZConstants.DETAIL_ID, cmds);
+            columnMD.put(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds));
 
             if (!hasResults) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + dataDefinition);
@@ -522,7 +524,7 @@ public class DataSet {
 
                 int recPosition = 1;
                 final Row row = new Row();
-                row.setMdkey(mdkey.equals(DETAIL_ID) ? null : mdkey); // try
+                row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
 
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
                 // to limit the memory use
@@ -678,11 +680,11 @@ public class DataSet {
                 // ********************************************************************
 
                 // column values
-                List columns = ParserUtils.splitLine(lineData, delimiter, qualifier);
+                final List columns = ParserUtils.splitLine(lineData, delimiter, qualifier);
                 lineData = "";
-                String mdkey = ParserUtils.getCMDKeyForDelimitedFile(columnMD, columns);
-                List cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
-                int columnCount = cmds.size();
+                final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(columnMD, columns);
+                final List cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
+                final int columnCount = cmds.size();
                 // DEBUG
 
                 // Incorrect record length on line log the error. Line
@@ -707,8 +709,8 @@ public class DataSet {
                     }
                 }
 
-                Row row = new Row();
-                row.setMdkey(mdkey.equals(DETAIL_ID) ? null : mdkey); // try
+                final Row row = new Row();
+                row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
                 // to limit the memory use
                 row.setCols(columns);
                 row.setRowNumber(lineCount);
@@ -739,10 +741,14 @@ public class DataSet {
      */
     public void setValue(final String columnName, final String value) throws Exception {
         /** get a reference to the row */
-        Row row = (Row) rows.get(pointer);
-        final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        final Row row = (Row) rows.get(pointer);
+
+        final int idx = ParserUtils.getColumnIndex(row.getMdkey(), columnMD, columnName);
+        row.setValue(idx, value);
+        // final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(),
+        // columnMD);
         /** change the value of the column */
-        row.setValue(ParserUtils.findColumn(columnName, cmds), value);
+        // row.setValue(ParserUtils.findColumn(columnName, cmds), value);
     }
 
     /**
@@ -799,20 +805,27 @@ public class DataSet {
      */
     public String getString(final String column) {
         final Row row = (Row) rows.get(pointer);
-        final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        // final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(),
+        // columnMD);
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
 
         if (upperCase) {
             // convert data to uppercase before returning
-            return row.getValue(ParserUtils.findColumn(column, cmds)).toUpperCase(Locale.getDefault());
+            // return row.getValue(ParserUtils.findColumn(column,
+            // cmds)).toUpperCase(Locale.getDefault());
+            return s.toUpperCase(Locale.getDefault());
         }
 
         if (lowerCase) {
             // convert data to lowercase before returning
-            return row.getValue(ParserUtils.findColumn(column, cmds)).toLowerCase(Locale.getDefault());
+            // return row.getValue(ParserUtils.findColumn(column,
+            // cmds)).toLowerCase(Locale.getDefault());
+            return s.toLowerCase(Locale.getDefault());
         }
 
         // return value as how it is in the file
-        return row.getValue(ParserUtils.findColumn(column, cmds));
+        // return row.getValue(ParserUtils.findColumn(column, cmds));
+        return s;
     }
 
     /**
@@ -828,8 +841,11 @@ public class DataSet {
         final StringBuffer newString = new StringBuffer();
         final Row row = (Row) rows.get(pointer);
 
-        final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
-        String s = ((Row) rows.get(pointer)).getValue(ParserUtils.findColumn(column, cmds));
+        // final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(),
+        // columnMD);
+        // String s = ((Row)
+        // rows.get(pointer)).getValue(ParserUtils.findColumn(column, cmds));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
 
         if (!strictNumericParse) {
             if (s.trim().length() == 0) {
@@ -864,9 +880,11 @@ public class DataSet {
     public int getInt(final String column) {
         final StringBuffer newString = new StringBuffer();
         final Row row = (Row) rows.get(pointer);
-        final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
-
-        String s = row.getValue(ParserUtils.findColumn(column, cmds));
+        // final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(),
+        // columnMD);
+        //
+        // String s = row.getValue(ParserUtils.findColumn(column, cmds));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
 
         if (!strictNumericParse) {
             if (s.trim().length() == 0) {
@@ -903,9 +921,11 @@ public class DataSet {
     public Date getDate(final String column) throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         final Row row = (Row) rows.get(pointer);
-        final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
+        // final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(),
+        // columnMD);
 
-        String s = row.getValue(ParserUtils.findColumn(column, cmds));
+        // String s = row.getValue(ParserUtils.findColumn(column, cmds));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
         return sdf.parse(s);
     }
 
@@ -924,9 +944,11 @@ public class DataSet {
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
         final Row row = (Row) rows.get(pointer);
-        final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(), columnMD);
-
-        String s = row.getValue(ParserUtils.findColumn(column, cmds));
+        // final List cmds = ParserUtils.getColumnMetaData(row.getMdkey(),
+        // columnMD);
+        //
+        // String s = row.getValue(ParserUtils.findColumn(column, cmds));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
         return sdf.parse(s);
     }
 
@@ -941,11 +963,13 @@ public class DataSet {
         String[] array = null;
 
         if (columnMD != null) {
-            final List cmds = ParserUtils.getColumnMetaData(DETAIL_ID, columnMD);
+            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
+
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
                 column = (ColumnMetaData) cmds.get(i);
                 array[i] = column.getColName();
+                System.out.println(i + "/ Columns... " + column.getColName());
             }
         }
 
@@ -966,7 +990,7 @@ public class DataSet {
             final List cmds = ParserUtils.getColumnMetaData(recordID, columnMD);
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
-                ColumnMetaData column = (ColumnMetaData) cmds.get(i);
+                final ColumnMetaData column = (ColumnMetaData) cmds.get(i);
                 array[i] = column.getColName();
             }
         }
@@ -1056,7 +1080,7 @@ public class DataSet {
     public boolean isRecordID(final String recordID) {
         String rowID = ((Row) rows.get(pointer)).getMdkey();
         if (rowID == null) {
-            rowID = DETAIL_ID;
+            rowID = PZConstants.DETAIL_ID;
         }
 
         return rowID.equals(recordID);
@@ -1124,7 +1148,7 @@ public class DataSet {
         // with <RECORD> mappings");
         // }
         if (ob != null && rows != null) {
-            final List cmds = ParserUtils.getColumnMetaData(DETAIL_ID, columnMD);
+            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
             ob.setColumnMD(cmds);
             Collections.sort(rows, ob);
             goTop();

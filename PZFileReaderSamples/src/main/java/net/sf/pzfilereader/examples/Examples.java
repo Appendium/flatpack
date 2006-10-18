@@ -67,6 +67,7 @@ public class Examples implements Repeater {
         menu.addMenuItem("LowLevelParse", "doLowLevelParse", false);
         menu.addMenuItem("DelimitedMultiLine", "doDelimitedMultiLine", false);
         menu.addMenuItem("NumericsAndDates", "doNumericsAndDates", false);
+        menu.addMenuItem("Ask for GC", "doGC", false);
         
         menu.addMenuItem("Who you gonna call?", "doCall", false);
         menu.displayMenu();
@@ -91,8 +92,9 @@ public class Examples implements Repeater {
     public void doCSVPerformanceTest() {
         try {
             final String mapping = ConsoleMenu.getString("CSV File ", "SampleCSV.csv");
-            final boolean data = ConsoleMenu.getBoolean("Verbose", false);
-            CSVPerformanceTest.call(mapping,data);
+            final boolean data = ConsoleMenu.getBoolean("Traverse the entire parsed file", true);
+            final boolean verbose = ConsoleMenu.getBoolean("Verbose", false);
+            CSVPerformanceTest.call(mapping,verbose,data);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -210,6 +212,10 @@ public class Examples implements Repeater {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void doGC() {
+        System.gc();
     }
 
 }

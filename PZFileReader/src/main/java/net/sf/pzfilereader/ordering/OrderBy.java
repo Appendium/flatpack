@@ -47,7 +47,7 @@ public class OrderBy implements Comparator {
     }
 
     /**
-     * over ridden from the Comparator class.
+     * overridden from the Comparator class.
      * 
      * Performs the sort
      * 
@@ -59,27 +59,28 @@ public class OrderBy implements Comparator {
 
         for (int i = 0; i < orderbys.size(); i++) {
             final OrderColumn oc = (OrderColumn) orderbys.get(i);
-            
-            //null indicates "detail" record which is what the parser assigns to <column> 's setup outside of <record> elements
-            //shift all non detail records to the bottom of the DataSet
-            if (row0.getMdkey() != null && !row0.getMdkey().equals("detail")){
+
+            // null indicates "detail" record which is what the parser assigns
+            // to <column> 's setup outside of <record> elements
+            // shift all non detail records to the bottom of the DataSet
+            if (row0.getMdkey() != null && !row0.getMdkey().equals("detail")) {
                 return 1;
-            }else if (row1.getMdkey() != null && !row1.getMdkey().equals("detail")){
+            } else if (row1.getMdkey() != null && !row1.getMdkey().equals("detail")) {
                 return 0;
             }
-            
+
             // convert to one type of case so the comparator does not take case
             // into account when sorting
             final Comparable comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
             final Comparable comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
 
-//+ BX will never be equal to null.            
-//            if (comp0 == null) {
-//                comp0 = new String("");
-//            }
-//            if (comp1 == null) {
-//                comp1 = new String("");
-//            }
+            // + BX will never be equal to null.
+            // if (comp0 == null) {
+            // comp0 = new String("");
+            // }
+            // if (comp1 == null) {
+            // comp1 = new String("");
+            // }
 
             // multiply by the sort indicator to get a ASC or DESC result
             final int result = comp0.compareTo(comp1) * oc.getSortIndicator();
