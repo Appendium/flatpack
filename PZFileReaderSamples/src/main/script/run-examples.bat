@@ -9,6 +9,6 @@ set CLASSPATH=%CLASSPATH%;.
 
 echo %CLASSPATH%
 
-"%JAVA_HOME%\bin\java" -Xmx512m -Xms512m  com.pz.reader.examples.Examples
+"%JAVA_HOME%\bin\java" -Xmx512m -Xms512m  net.sf.pzfilereader.examples.Examples
 
 pause
