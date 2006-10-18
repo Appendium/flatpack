@@ -39,7 +39,6 @@ public class DelimitedWithPZMap {
         // text qualified by double quotes
         // ignore first record
         DataSet ds = null;
-        String[] colNames = null;
         OrderBy orderby = null;
         ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
 
@@ -49,7 +48,7 @@ public class DelimitedWithPZMap {
         orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
         // ds.orderRows(orderby);
 
-        colNames = ds.getColumns();
+        String[] colNames = ds.getColumns();
 
         while (ds.next()) {
             for (int i = 0; i < colNames.length; i++) {

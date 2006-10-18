@@ -22,13 +22,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.util.PZConstants;
+import net.sf.pzfilereader.util.ParserUtils;
+
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-
-import net.sf.pzfilereader.structure.ColumnMetaData;
-import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author zepernick
@@ -36,8 +37,6 @@ import net.sf.pzfilereader.util.ParserUtils;
  * Parses a PZmap definition XML file
  */
 public final class PZMapParser {
-    private static final String DETAIL_ID = "detail";
-
     private static boolean showDebug = false;
 
     /**
@@ -91,8 +90,10 @@ public final class PZMapParser {
         List columns = getColumnChildren(root);
         final Map mdIndex = new LinkedHashMap(); // retain the same order
         // specified in the mapping
-        mdIndex.put(DETAIL_ID, columns); // always force detail to the top of
-                                         // the map no matter what
+        mdIndex.put(PZConstants.DETAIL_ID, columns); // always force detail
+                                                        // to the top of
+        // the map no matter what
+        mdIndex.put(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns));
 
         // get all of the "record" elements and the columns under them
         final Iterator recordDescriptors = root.getChildren("RECORD").iterator();
@@ -103,7 +104,7 @@ public final class PZMapParser {
             // is the harcoded
             // value we are using to mark columns specified outside of a
             // <RECORD> element
-            if (xmlElement.getAttributeValue("id").equals(DETAIL_ID)) {
+            if (xmlElement.getAttributeValue("id").equals(PZConstants.DETAIL_ID)) {
                 throw new Exception("The ID 'detail' on the <RECORD> element is reserved, please select another id");
             }
 
@@ -185,7 +186,7 @@ public final class PZMapParser {
             XMLRecordElement xmlrecEle = null;
             final String recordID = (String) mapIt.next();
             Iterator columns = null;
-            if (recordID.equals(DETAIL_ID)) {
+            if (recordID.equals(PZConstants.DETAIL_ID)) {
                 columns = ((List) xmlResults.get(recordID)).iterator();
             } else {
                 xmlrecEle = (XMLRecordElement) xmlResults.get(recordID);

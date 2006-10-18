@@ -40,10 +40,7 @@ import net.sf.pzfilereader.xml.XMLRecordElement;
  * @version 2.0
  */
 public final class ParserUtils {
-    private static final String DETAIL_ID = "detail";
-
     private ParserUtils() {
-
     }
 
     /**
@@ -73,11 +70,9 @@ public final class ParserUtils {
         line = lTrim(line);
         for (int i = 0; i < line.length(); i++) {
             final String remainderOfLine = line.substring(i); // data of the
-            // line which
-            // has not yet
-            // been
-            // read
+            // line which has not yet been read
             // check to see if there is a text qualifier
+            final char currentChar = line.charAt(i);
             if (qualifier != null && qualifier.trim().length() > 0) {
                 if (line.substring(i, i + 1).equals(qualifier) && !beginQualifier && !beginNoQualifier) {
                     // begining of a set of data
@@ -98,7 +93,7 @@ public final class ParserUtils {
                         beginNoQualifier = false;
                         continue;// grab the next char
                     }
-                    sb.append(line.substring(i, i + 1));
+                    sb.append(currentChar);
                 } else if ((!beginNoQualifier) && line.substring(i, i + 1).equals(qualifier) && beginQualifier
                         && (lTrim(line.substring(i + 1)).length() == 0
                         // this will be true on empty undelmited columns at the
@@ -130,7 +125,7 @@ public final class ParserUtils {
                 } else if (beginNoQualifier || beginQualifier) {
                     // getting data in a NO qualifier element or qualified
                     // element
-                    sb.append(line.substring(i, i + 1));
+                    sb.append(currentChar);
                 }
 
             } else {
@@ -139,7 +134,7 @@ public final class ParserUtils {
                     list.add(sb.toString());
                     sb.delete(0, sb.length());
                 } else {
-                    sb.append(line.substring(i, i + 1));
+                    sb.append(currentChar);
                 }
             }
         }
@@ -151,7 +146,6 @@ public final class ParserUtils {
                 sb.delete(0, sb.length());
                 sb.append(s);
             }
-
         }
 
         if (qualifier == null || qualifier.trim().length() == 0 || beginQualifier || beginNoQualifier
@@ -180,14 +174,29 @@ public final class ParserUtils {
      */
 
     public static int getDelimiterOffset(final String line, final int start, final String delimiter) {
-        int offset = 0;
-        for (int i = start; i < line.length(); i++) {
-            offset++;
-            if (line.substring(i, i + 1).equals(delimiter)) {
-                return offset;
-            }
+        int idx = line.indexOf(delimiter, start);
+        if (idx >= 0) {
+            // idx++;
+            // idx-=start;
+            idx -= start - 1;
         }
-        return -1;
+        return idx;
+
+        // int offset = 0;
+        // for (int i = start; i < line.length(); i++) {
+        // offset++;
+        // if (line.substring(i, i + 1).equals(delimiter)) {
+        // if (offset != idx) {
+        // System.out.println("String [" + line + "] start:" + start + "(" +
+        // line.charAt(start) + ") delim ["
+        // + delimiter + "] length:" + delimiter.length() + " Old:" + offset + "
+        // new:" + idx);
+        // }
+        //
+        // return offset;
+        // }
+        // }
+        // return -1;
     }
 
     /**
@@ -198,20 +207,34 @@ public final class ParserUtils {
      * @return String
      */
     public static String lTrim(final String value) {
-        final StringBuffer returnVal = new StringBuffer();
-        boolean gotAChar = false;
-
-        for (int i = 0; i < value.length(); i++) {
-            if (value.substring(i, i + 1).trim().length() == 0 && !gotAChar) {
-                continue;
-            } else {
-                gotAChar = true;
-                returnVal.append(value.substring(i, i + 1));
-            }
+        String trimmed = value;
+        int offset = 0;
+        final int maxLength = value.length();
+        while (offset < maxLength && (value.charAt(offset) == ' ' || value.charAt(offset) == '\t')) {
+            offset++;
         }
 
-        return returnVal.toString();
+        if (offset > 0) {
+            trimmed = value.substring(offset);
+        }
 
+        return trimmed;
+        //        
+        //        
+        // final StringBuffer returnVal = new StringBuffer();
+        // boolean gotAChar = false;
+        //
+        // for (int i = 0; i < value.length(); i++) {
+        // if (value.substring(i, i + 1).trim().length() == 0 && !gotAChar) {
+        // continue;
+        // } else {
+        // gotAChar = true;
+        // returnVal.append(value.substring(i, i + 1));
+        // }
+        // }
+        //
+        // return returnVal.toString();
+        //
     }
 
     /**
@@ -222,19 +245,32 @@ public final class ParserUtils {
      * @return String
      */
     public static String lTrimKeepTabs(final String value) {
-        final StringBuffer returnVal = new StringBuffer();
-        boolean gotAChar = false;
-
-        for (int i = 0; i < value.length(); i++) {
-            if (!value.substring(i, i + 1).equals("\t") && value.substring(i, i + 1).trim().length() == 0 && !gotAChar) {
-                continue;
-            } else {
-                gotAChar = true;
-                returnVal.append(value.substring(i, i + 1));
-            }
+        String trimmed = value;
+        int offset = 0;
+        final int maxLength = value.length();
+        while (offset < maxLength && value.charAt(offset) == ' ') {
+            offset++;
         }
 
-        return returnVal.toString();
+        if (offset > 0) {
+            trimmed = value.substring(offset);
+        }
+
+        return trimmed;
+        // final StringBuffer returnVal = new StringBuffer();
+        // boolean gotAChar = false;
+        //
+        // for (int i = 0; i < value.length(); i++) {
+        // if (!value.substring(i, i + 1).equals("\t") && value.substring(i, i +
+        // 1).trim().length() == 0 && !gotAChar) {
+        // continue;
+        // } else {
+        // gotAChar = true;
+        // returnVal.append(value.substring(i, i + 1));
+        // }
+        // }
+        //
+        // return returnVal.toString();
 
     }
 
@@ -247,16 +283,25 @@ public final class ParserUtils {
      *            string to search
      * @return String
      */
-    public static String removeChar(final String character, final String theString) {
+    public static String removeChar(final char theChar, final String theString) {
         final StringBuffer s = new StringBuffer();
         for (int i = 0; i < theString.length(); i++) {
-            if (theString.substring(i, i + 1).equalsIgnoreCase(character)) {
-                continue;
+            final char currentChar = theString.charAt(i);
+            if (currentChar != theChar) {
+                s.append(currentChar);
             }
-            s.append(theString.substring(i, i + 1));
         }
 
         return s.toString();
+        // final StringBuffer s = new StringBuffer();
+        // for (int i = 0; i < theString.length(); i++) {
+        // if (theString.substring(i, i + 1).equalsIgnoreCase(character)) {
+        // continue;
+        // }
+        // s.append(theString.substring(i, i + 1));
+        // }
+        //
+        // return s.toString();
 
     }
 
@@ -313,7 +358,8 @@ public final class ParserUtils {
             }
         }
 
-        columnMD.put(DETAIL_ID, results);
+        columnMD.put(PZConstants.DETAIL_ID, results);
+        columnMD.put(PZConstants.COL_IDX, buidColumnIndexMap(results));
 
         return columnMD;
     }
@@ -341,7 +387,8 @@ public final class ParserUtils {
             results.add(cmd);
         }
 
-        columnMD.put(DETAIL_ID, results);
+        columnMD.put(PZConstants.DETAIL_ID, results);
+        columnMD.put(PZConstants.COL_IDX, buidColumnIndexMap(results));
 
         return columnMD;
     }
@@ -401,6 +448,7 @@ public final class ParserUtils {
      *            vector of ColumnMetaData objects
      * @return int - position of the column in the file
      * @throws NoSuchElementException
+     * @deprecated surely not...
      */
     public static int findColumn(final String columnName, final List columnMD) {
         for (int i = 0; i < columnMD.size(); i++) {
@@ -506,8 +554,8 @@ public final class ParserUtils {
         final Iterator columnMDIt = columnMD.keySet().iterator();
         while (columnMDIt.hasNext()) {
             final String key = (String) columnMDIt.next();
-            if (key.equals(DETAIL_ID)) {
-                cmds = (List) columnMD.get(key);
+            if (key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
+                cmds = (List) columnMD.get(PZConstants.DETAIL_ID);
             } else {
                 cmds = ((XMLRecordElement) columnMD.get(key)).getColumns();
             }
@@ -538,14 +586,14 @@ public final class ParserUtils {
         if (columnMD.size() == 1) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return DETAIL_ID;
+            return PZConstants.DETAIL_ID;
         }
         final Iterator keys = columnMD.keySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (keys.hasNext()) {
             final String key = (String) keys.next();
-            if (key.equals(DETAIL_ID)) {
+            if (key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
@@ -567,7 +615,7 @@ public final class ParserUtils {
         }
 
         // must be a detail line
-        return DETAIL_ID;
+        return PZConstants.DETAIL_ID;
 
     }
 
@@ -584,14 +632,14 @@ public final class ParserUtils {
         if (columnMD.size() == 1) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return DETAIL_ID;
+            return PZConstants.DETAIL_ID;
         }
         final Iterator keys = columnMD.keySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (keys.hasNext()) {
             final String key = (String) keys.next();
-            if (key.equals(DETAIL_ID)) {
+            if (key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
@@ -610,7 +658,7 @@ public final class ParserUtils {
         }
 
         // must be a detail line
-        return DETAIL_ID;
+        return PZConstants.DETAIL_ID;
     }
 
     /**
@@ -621,12 +669,41 @@ public final class ParserUtils {
      * @return List
      */
     public static List getColumnMetaData(final String key, final Map columnMD) {
-        if (key == null || key.equals(DETAIL_ID)) {
-            return (List) columnMD.get(DETAIL_ID);
+        if (key == null || key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
+            return (List) columnMD.get(PZConstants.DETAIL_ID);
         }
 
         return ((XMLRecordElement) columnMD.get(key)).getColumns();
+    }
 
+    /**
+     * Use this method to find the index of a column.
+     * @author Benoit Xhenseval
+     * @param key
+     * @param columnMD
+     * @param colName
+     * @return -1 if it does not find it
+     */
+    public static int getColumnIndex(final String key, final Map columnMD, final String colName) {
+        int idx = -1;
+        if (key != null && !key.equals(PZConstants.DETAIL_ID) && !key.equals(PZConstants.COL_IDX)) {
+            // if ("header".equals(key)) {
+            // System.out.println("Columsn====header == "+ ((XMLRecordElement)
+            // columnMD.get(key)).getColumns());
+            // }
+            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(colName);
+        } else if (key == null || key.equals(PZConstants.DETAIL_ID)) {
+            final Map map = (Map) columnMD.get(PZConstants.COL_IDX);
+            // System.out.println("Map == " + map);
+            // System.out.println("look for == " + colName);
+            idx = ((Integer) map.get(colName)).intValue();
+            // System.out.println("-------------> " + idx);
+        }
+
+        if (idx < 0) {
+            throw new NoSuchElementException("Column " + colName + " does not exist, check case/spelling. key:" + key);
+        }
+        return idx;
     }
 
     /**
@@ -675,28 +752,33 @@ public final class ParserUtils {
         } catch (final Exception ignore) {
         }
     }
-    
+
     /**
-     * <p>Returns padding using the specified delimiter repeated
-     * to a given length.</p>
-     *
-     * <pre>
-     * StringUtils.padding(0, 'e')  = ""
-     * StringUtils.padding(3, 'e')  = "eee"
-     * StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
-     * </pre>
-     *
-     * <p>Note: this method doesn't not support padding with
-     * <a href="http://www.unicode.org/glossary/#supplementary_character">Unicode Supplementary Characters</a>
-     * as they require a pair of <code>char</code>s to be represented.
-     * If you are needing to support full I18N of your applications
-     * consider using {@link #repeat(String, int)} instead. 
+     * <p>
+     * Returns padding using the specified delimiter repeated to a given length.
      * </p>
-     *
-     * @param repeat  number of times to repeat delim
-     * @param padChar  character to repeat
+     * 
+     * <pre>
+     *          StringUtils.padding(0, 'e')  = &quot;&quot;
+     *          StringUtils.padding(3, 'e')  = &quot;eee&quot;
+     *          StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
+     * </pre>
+     * 
+     * <p>
+     * Note: this method doesn't not support padding with <a
+     * href="http://www.unicode.org/glossary/#supplementary_character">Unicode
+     * Supplementary Characters</a> as they require a pair of <code>char</code>s
+     * to be represented. If you are needing to support full I18N of your
+     * applications consider using {@link #repeat(String, int)} instead.
+     * </p>
+     * 
+     * @param repeat
+     *            number of times to repeat delim
+     * @param padChar
+     *            character to repeat
      * @return String with repeated character
-     * @throws IndexOutOfBoundsException if <code>repeat &lt; 0</code>
+     * @throws IndexOutOfBoundsException
+     *             if <code>repeat &lt; 0</code>
      * @see #repeat(String, int)
      */
     public static String padding(final int repeat, final char padChar) {
@@ -708,5 +790,24 @@ public final class ParserUtils {
             buf[i] = padChar;
         }
         return new String(buf);
-    }    
+    }
+
+    /**
+     * Build a map of name/position based on a list of ColumnMetaData.
+     * @author Benoit Xhenseval
+     * @param columns
+     * @return a new Map
+     */
+    public static Map buidColumnIndexMap(final List columns) {
+        Map map = null;
+        if (columns != null && !columns.isEmpty()) {
+            map = new HashMap();
+            int idx = 0;
+            for (final Iterator it = columns.iterator(); it.hasNext(); idx++) {
+                final ColumnMetaData meta = (ColumnMetaData) it.next();
+                map.put(meta.getColName(), Integer.valueOf(idx));
+            }
+        }
+        return map;
+    }
 }
