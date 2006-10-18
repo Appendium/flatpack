@@ -15,6 +15,9 @@
 package net.sf.pzfilereader.xml;
 
 import java.util.List;
+import java.util.Map;
+
+import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author Paul Zepernick
@@ -31,6 +34,8 @@ public class XMLRecordElement {
     private String indicator;
 
     private List columns;
+
+    private Map columnIndex;
 
     /**
      * @return Returns the elementNumber.
@@ -105,5 +110,23 @@ public class XMLRecordElement {
      */
     public void setColumns(final List columns) {
         this.columns = columns;
+        this.columnIndex = ParserUtils.buidColumnIndexMap(columns);
+    }
+
+    /**
+     * Returns the index of the column name.
+     * @author Benoit Xhenseval
+     * @param colName
+     * @return -1 if the column name does not exist.
+     */
+    public int getColumnIndex(final String colName) {
+        int idx = -1;
+        if (columnIndex != null) {
+            final Integer i = (Integer) columnIndex.get(colName);
+            if (i != null) {
+                idx = i.intValue();
+            }
+        }
+        return idx;
     }
 }
