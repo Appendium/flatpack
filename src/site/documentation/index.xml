@@ -19,6 +19,10 @@
   </head>
   <body>
     <!-- The body of the document contains a number of sections -->
+    <section name="Documentation">
+    <p>A manual is available as <a href="pzfilereader-manual.doc">Word</a> document or a <a href="pzfilereader-manual.pdf">PDF</a>.</p>
+    </section>
+
     <section name="XML Examples">
 
     <subsection name="Delimited.pzmap.xml">
