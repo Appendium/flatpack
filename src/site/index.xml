@@ -92,8 +92,6 @@
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
         }
-        
-        ds.freeMemory(); // probably should be in a finally.
     </pre></div>
       
     </subsection>
@@ -108,8 +106,6 @@
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
         }
-        
-        ds.freeMemory();
     </pre></div>
       
     </subsection>

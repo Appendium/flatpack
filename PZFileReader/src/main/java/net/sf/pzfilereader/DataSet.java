@@ -1186,7 +1186,8 @@ public class DataSet {
     }
 
     /**
-     * Erases the dataset early and releases memory for the JVM to reclaim
+     * Erases the dataset early and releases memory for the JVM to reclaim, this invalidates the object.
+     * @deprecated You can still use it but truly you should keep the scope of the DataSet to a MINIMUM.
      */
     public void freeMemory() {
         if (rows != null) {
