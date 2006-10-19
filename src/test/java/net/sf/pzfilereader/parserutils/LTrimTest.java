@@ -67,7 +67,7 @@ public class LTrimTest extends TestCase{
     public void testKeepLeadingTabs(){
         final String testS = "     \t\t\tRemoveAllSpacesFromMe     ";
         final String tResult = ParserUtils.lTrimKeepTabs(testS);
-        assertEquals(true , !tResult.startsWith("\t") && tResult.endsWith(" "));        
+        assertEquals(true , tResult.startsWith("\t") && tResult.endsWith(" "));        
     }
     
     
