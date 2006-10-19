@@ -805,7 +805,8 @@ public final class ParserUtils {
             int idx = 0;
             for (final Iterator it = columns.iterator(); it.hasNext(); idx++) {
                 final ColumnMetaData meta = (ColumnMetaData) it.next();
-                map.put(meta.getColName(), Integer.valueOf(idx));
+                //map.put(meta.getColName(), Integer.valueOf(idx)); breaks 1.4 compile
+                map.put(meta.getColName(), new Integer(idx));
             }
         }
         return map;
