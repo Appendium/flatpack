@@ -73,7 +73,8 @@ public final class PZMapParser {
      * returns a Map containing Lists of ColumnMetaData.
      * 
      * @param xmlStream
-     * @return
+     * @return Map
+     *           <records> with their corrisponding 
      * @throws Exception
      */
     public static Map parse(final InputStream xmlStream) throws Exception {
@@ -81,7 +82,11 @@ public final class PZMapParser {
         builder.setValidation(true);
         // handle the ability to pull DTD from Jar if needed
         builder.setEntityResolver(new ResolveLocalDTD());
-        final Document document = builder.build(xmlStream);
+        
+        //JDOM started to blow up on the parse if the system id param was not specified
+        //not sure why this started to happen now.  Was not making to EntityResolver to pull
+        //dtd out of the jar if needed
+        final Document document = builder.build(xmlStream, "file:///");
 
         final Element root = document.getRootElement();
 
