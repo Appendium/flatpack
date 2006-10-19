@@ -51,6 +51,23 @@ public class DelimitedWithPZMap {
         String[] colNames = ds.getColumns();
 
         while (ds.next()) {
+            
+            if (ds.isRecordID("header")) {
+                System.out.println(">>>>found header");
+                System.out.println("COLUMN NAME: INDICATOR VALUE: " + ds.getString("RECORDINDICATOR"));
+                System.out.println("COLUMN NAME: HEADERDATA VALUE: " + ds.getString("HEADERDATA"));
+                System.out.println("===========================================================================");
+                continue;
+            }
+
+            if (ds.isRecordID("trailer")) {
+                System.out.println(">>>>found trailer");
+                System.out.println("COLUMN NAME: INDICATOR VALUE: " + ds.getString("RECORDINDICATOR"));
+                System.out.println("COLUMN NAME: TRAILERDATA VALUE: " + ds.getString("TRAILERDATA"));
+                System.out.println("===========================================================================");
+                continue;
+            }
+            
             for (int i = 0; i < colNames.length; i++) {
                 System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
             }
