@@ -73,10 +73,8 @@ public class LTrimTest extends TestCase{
      */
     public void testWithTabsInMiddleAndEnd() {
         assertEquals("RemoveAll \tSpaces \t\t",ParserUtils.lTrim("\t \t RemoveAll \tSpaces \t\t"));
-
-        // Paul what should happen for the following tests, should they skip the tab and get rid of the spaces or stop at the first tab??
         assertEquals("\t \t RemoveAll \tSpaces \t\t ",ParserUtils.lTrimKeepTabs(" \t \t RemoveAll \tSpaces \t\t "));
-        assertEquals("\t\tRemoveAll \tSpaces \t\t",ParserUtils.lTrimKeepTabs("\t \t RemoveAll \tSpaces \t\t"));
+        assertEquals("\t \t RemoveAll \tSpaces \t\t",ParserUtils.lTrimKeepTabs("\t \t RemoveAll \tSpaces \t\t"));
     }
     
     public static void main(final String[] args) {
