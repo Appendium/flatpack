@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sf.pzfilereader.structure.Row;
+import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
 /**
@@ -59,13 +60,18 @@ public class OrderBy implements Comparator {
 
         for (int i = 0; i < orderbys.size(); i++) {
             final OrderColumn oc = (OrderColumn) orderbys.get(i);
-
             // null indicates "detail" record which is what the parser assigns
             // to <column> 's setup outside of <record> elements
+            final String mdkey0 = row0.getMdkey() == null ? PZConstants.DETAIL_ID : row0.getMdkey();
+            final String mdkey1 = row1.getMdkey() == null ? PZConstants.DETAIL_ID : row1.getMdkey();
+
             // shift all non detail records to the bottom of the DataSet
-            if (row0.getMdkey() != null && !row0.getMdkey().equals("detail")) {
+            if (!mdkey0.equals(PZConstants.DETAIL_ID) && !mdkey1.equals(PZConstants.DETAIL_ID)){
+                //keep headers / trailers in the same order at the bottom of the DataSet
+                return 0;
+            }else if (!mdkey0.equals(PZConstants.DETAIL_ID)) {
                 return 1;
-            } else if (row1.getMdkey() != null && !row1.getMdkey().equals("detail")) {
+            } else if (!mdkey1.equals(PZConstants.DETAIL_ID)) {
                 return 0;
             }
 
