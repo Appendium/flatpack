@@ -27,7 +27,7 @@ public class DelimitedWithPZMap {
     }
 
     public static String getDefaultDataFile() {
-        return "PEOPLE-CommaDelimitedWithQualifierAndHeaderTrailer.txt";
+        return "PEOPLE-CommaDelimitedWithQualifierAndHeaderTrailerRecError.txt";
     }
 
     public static String getDefaultMapping() {
