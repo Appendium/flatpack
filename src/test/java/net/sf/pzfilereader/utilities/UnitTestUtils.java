@@ -39,9 +39,10 @@ public class UnitTestUtils {
    public static String buildDelimString(final String[] elements, final char delimiter){
        final StringBuffer sb = new StringBuffer();
        for (int i = 0; i < elements.length; i++){
-           if (i > 0){
+           if (i > 0) {
                sb.append(delimiter);
            }
+           sb.append(elements[i]);
        }
        
        
