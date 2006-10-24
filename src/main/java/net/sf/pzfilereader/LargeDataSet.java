@@ -60,9 +60,9 @@ public class LargeDataSet extends DataSet {
 
     private boolean processedFirst = false;
 
-    private String delimiter = null;
+    private char delimiter = 0;
 
-    private String qualifier = null;
+    private char qualifier = 0;
 
     private int columnCount = 0;
 
@@ -96,9 +96,41 @@ public class LargeDataSet extends DataSet {
      *            Adds missing columns as empty's to the DataSet instead of
      *            logging them as an error
      * @exception Exception
+     * @deprecated use the char version.
      */
     public LargeDataSet(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final String delimiter,
             final String qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
+        this(pzmapXMLStream, dataSourceStream, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier
+                .charAt(0) : 0, ignoreFirstRecord, handleShortLines);
+    }
+
+    /**
+     * Constructor based on InputStream. Constructs a new LargeDataSet using the
+     * PZMAP XML file layout method. This is used for a DELIMITED text file.
+     * esacpe sequence reference:<br>
+     * \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param pzmapXMLStream -
+     *            Reference to the xml file holding the pzmap
+     * @param dataSourceStream -
+     *            text file datasource InputStream to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param ignoreFirstRecord -
+     *            skips the first line that contains data in the file
+     * @param handleShortLines -
+     *            Adds missing columns as empty's to the DataSet instead of
+     *            logging them as an error
+     * @exception Exception
+     */
+    public LargeDataSet(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
 
         this.fileType = DELIMITED_FILE;
         this.is = dataSourceStream;
@@ -133,8 +165,37 @@ public class LargeDataSet extends DataSet {
      *            of column headers will be added as empty's instead of
      *            producing an error
      * @exception Exception
+     * @deprecated use the char version
      */
     public LargeDataSet(final File dataSource, final String delimiter, final String qualifier, final boolean handleShortLines)
+            throws Exception {
+        this(dataSource, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0,
+                handleShortLines);
+    }
+
+    /**
+     * Constructs a new LargeDataSet using the first line of data found in the
+     * text file as the column names. This is used for a DELIMITED text file.
+     * esacpe sequence reference:<br>
+     * \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param dataSource -
+     *            text file datasource to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param handleShortLines -
+     *            when flaged as true, lines with less columns then the amount
+     *            of column headers will be added as empty's instead of
+     *            producing an error
+     * @exception Exception
+     */
+    public LargeDataSet(final File dataSource, final char delimiter, final char qualifier, final boolean handleShortLines)
             throws Exception {
         this(ParserUtils.createInputStream(dataSource), delimiter, qualifier, handleShortLines);
     }
@@ -160,9 +221,39 @@ public class LargeDataSet extends DataSet {
      *            of column headers will be added as empty's instead of
      *            producing an error
      * @exception Exception
+     * @deprecated use the char version
      */
     public LargeDataSet(final InputStream dataSource, final String delimiter, final String qualifier,
             final boolean handleShortLines) throws Exception {
+        this(dataSource, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0,
+                handleShortLines);
+    }
+
+    /**
+     * Constructs a new LargeDataSet using the first line of data found in the
+     * text file as the column names. This is used for a DELIMITED text file.
+     * esacpe sequence reference:<br>
+     * \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param dataSource -
+     *            text file datasource to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param handleShortLines -
+     *            when flaged as true, lines with less columns then the amount
+     *            of column headers will be added as empty's instead of
+     *            producing an error
+     * @exception Exception
+     */
+    public LargeDataSet(final InputStream dataSource, final char delimiter, final char qualifier, final boolean handleShortLines)
+            throws Exception {
+
         this.fileType = DELIMITED_FILE;
         setHandleShortLines(handleShortLines);
         this.is = dataSource;
@@ -342,8 +433,9 @@ public class LargeDataSet extends DataSet {
         /** loop through each line in the file */
         while ((line = br.readLine()) != null) {
             lineCount++;
+            String trimmed = line.trim();
             /** empty line skip past it */
-            if (!processingMultiLine && line.trim().length() == 0) {
+            if (!processingMultiLine && trimmed.length() == 0) {
                 continue;
             }
             // check to see if the user has elected to skip the first record
@@ -362,8 +454,8 @@ public class LargeDataSet extends DataSet {
             // any line breaks in the middle of the record, this will only
             // be checked if we have specified a delimiter
             // ********************************************************
-            final char[] chrArry = line.trim().toCharArray();
-            if (!processingMultiLine && delimiter != null && delimiter.trim().length() > 0) {
+            final char[] chrArry = trimmed.toCharArray();
+            if (!processingMultiLine && delimiter > 0) {
                 processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
             }
 
@@ -376,7 +468,7 @@ public class LargeDataSet extends DataSet {
                 // excel will escape these with another quote; here is some data
                 // "" This would indicate
                 // there is more to the multiline
-                if (line.trim().endsWith(qualifier) && !line.trim().endsWith(qualifier + qualifier)) {
+                if (trimmed.charAt(trimmed.length() - 1) == qualifier && !trimmed.endsWith("" + qualifier + qualifier)) {
                     // it is safe to assume we have reached the end of the line
                     // break
                     processingMultiLine = false;
@@ -401,7 +493,7 @@ public class LargeDataSet extends DataSet {
                                 // not a space, if this char is the delimiter,
                                 // then we have reached the end of
                                 // the record
-                                if (chrArry[i] == delimiter.charAt(0)) {
+                                if (chrArry[i] == delimiter) {
                                     // processingMultiLine = false;
                                     // fix put in, setting to false caused bug
                                     // when processing multiple multi-line
@@ -412,7 +504,7 @@ public class LargeDataSet extends DataSet {
                                 qualiFound = false;
                                 continue;
                             }
-                        } else if (chrArry[i] == qualifier.charAt(0)) {
+                        } else if (chrArry[i] == qualifier) {
                             qualiFound = true;
                         }
                     }

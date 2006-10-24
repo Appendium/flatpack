@@ -205,6 +205,7 @@ public class DataSet {
      *            Adds missing columns as empty's to the DataSet instead of
      *            logging them as an error
      * @exception Exception
+     * @deprecated use the char version
      */
     public DataSet(final Connection con, final File dataSource, final String dataDefinition, final String delimiter,
             final String qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
@@ -238,9 +239,43 @@ public class DataSet {
      *            Adds missing columns as empty's to the DataSet instead of
      *            logging them as an error
      * @exception Exception
+     * @deprecated qualifier and delimiters should only be char.
      */
     public DataSet(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final String delimiter,
             final String qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
+        this(con, dataSourceStream, dataDefinition, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier
+                .charAt(0) : 0, ignoreFirstRecord, handleShortLines);
+    }
+
+    /**
+     * New constructor based on InputStream. Constructs a new DataSet using the
+     * database table file layout method. This is used for a DELIMITED text
+     * file. esacpe sequence reference: \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param con -
+     *            Connection to database with DATAFILE and DATASTRUCTURE tables
+     * @param dataSourceStream -
+     *            text file datasource InputStream to read from
+     * @param dataDefinition -
+     *            Name of dataDefinition in the DATAFILE table DATAFILE_DESC
+     *            column
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param ignoreFirstRecord -
+     *            skips the first line that contains data in the file
+     * @param handleShortLines -
+     *            Adds missing columns as empty's to the DataSet instead of
+     *            logging them as an error
+     * @exception Exception
+     */
+    public DataSet(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
         super();
 
         this.handleShortLines = handleShortLines;
@@ -316,6 +351,7 @@ public class DataSet {
      *            Adds missing columns as empty's to the DataSet instead of
      *            logging them as an error
      * @exception Exception
+     * @deprecated use the char version
      */
     public DataSet(final File pzmapXML, final File dataSource, final String delimiter, final String qualifier,
             final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
@@ -346,9 +382,40 @@ public class DataSet {
      *            Adds missing columns as empty's to the DataSet instead of
      *            logging them as an error
      * @exception Exception
+     * @deprecated use the char version
      */
     public DataSet(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final String delimiter,
             final String qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
+        this(pzmapXMLStream, dataSourceStream, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier
+                .charAt(0) : 0, ignoreFirstRecord, handleShortLines);
+    }
+
+    /**
+     * New constructor based on InputStream. Constructs a new DataSet using the
+     * PZMAP XML file layout method. This is used for a DELIMITED text file.
+     * esacpe sequence reference: \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param pzmapXMLStream -
+     *            Reference to the xml file holding the pzmap
+     * @param dataSourceStream -
+     *            text file datasource InputStream to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param ignoreFirstRecord -
+     *            skips the first line that contains data in the file
+     * @param handleShortLines -
+     *            Adds missing columns as empty's to the DataSet instead of
+     *            logging them as an error
+     * @exception Exception
+     */
+    public DataSet(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
 
         this.handleShortLines = handleShortLines;
         columnMD = PZMapParser.parse(pzmapXMLStream);
@@ -376,8 +443,36 @@ public class DataSet {
      *            of column headers will be added as empty's instead of
      *            producing an error
      * @exception Exception
+     * @deprecated
      */
     public DataSet(final File dataSource, final String delimiter, final String qualifier, final boolean handleShortLines)
+            throws Exception {
+        this(dataSource, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0,
+                handleShortLines);
+    }
+
+    /**
+     * Constructs a new DataSet using the first line of data found in the text
+     * file as the column names. This is used for a DELIMITED text file. esacpe
+     * sequence reference: \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param dataSource -
+     *            text file datasource to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param handleShortLines -
+     *            when flaged as true, lines with less columns then the amount
+     *            of column headers will be added as empty's instead of
+     *            producing an error
+     * @exception Exception
+     */
+    public DataSet(final File dataSource, final char delimiter, final char qualifier, final boolean handleShortLines)
             throws Exception {
 
         this.handleShortLines = handleShortLines;
@@ -413,8 +508,36 @@ public class DataSet {
      *            of column headers will be added as empty's instead of
      *            producing an error
      * @exception Exception
+     * @deprecated
      */
     public DataSet(final InputStream dataSource, final String delimiter, final String qualifier, final boolean handleShortLines)
+            throws Exception {
+        this(dataSource, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0,
+                handleShortLines);
+    }
+
+    /**
+     * Constructs a new DataSet using the first line of data found in the text
+     * file as the column names. This is used for a DELIMITED text file. esacpe
+     * sequence reference: \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param dataSource -
+     *            text file InputStream to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param handleShortLines -
+     *            when flaged as true, lines with less columns then the amount
+     *            of column headers will be added as empty's instead of
+     *            producing an error
+     * @exception Exception
+     */
+    public DataSet(final InputStream dataSource, final char delimiter, final char qualifier, final boolean handleShortLines)
             throws Exception {
 
         this.handleShortLines = handleShortLines;
@@ -556,7 +679,7 @@ public class DataSet {
      * puts together the dataset for a DELIMITED file. This is used for PZ XML
      * mappings, and SQL table mappings
      */
-    private void doDelimitedFile(final InputStream dataSource, final String delimiter, final String qualifier,
+    private void doDelimitedFile(final InputStream dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord, final boolean createMDFromFile) throws Exception {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
@@ -606,7 +729,7 @@ public class DataSet {
                 // be checked if we have specified a delimiter
                 // ********************************************************
                 final char[] chrArry = line.trim().toCharArray();
-                if (!processingMultiLine && delimiter != null && delimiter.trim().length() > 0) {
+                if (!processingMultiLine && delimiter > 0) {
                     processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
                 }
 
@@ -619,7 +742,8 @@ public class DataSet {
                     // excel will escape these with another quote; here is some
                     // data "" This would indicate
                     // there is more to the multiline
-                    if (line.trim().endsWith(qualifier) && !line.trim().endsWith(qualifier + qualifier)) {
+                    String trimmed = line.trim();
+                    if (trimmed.charAt(trimmed.length() - 1) == qualifier && !trimmed.endsWith("" + qualifier + qualifier)) {
                         // it is safe to assume we have reached the end of the
                         // line break
                         processingMultiLine = false;
@@ -645,7 +769,7 @@ public class DataSet {
                                     // delimiter, then we have reached the end
                                     // of
                                     // the record
-                                    if (chrArry[i] == delimiter.charAt(0)) {
+                                    if (chrArry[i] == delimiter) {
                                         // processingMultiLine = false;
                                         // fix put in, setting to false caused
                                         // bug when processing multiple
@@ -657,7 +781,7 @@ public class DataSet {
                                     qualiFound = false;
                                     continue;
                                 }
-                            } else if (chrArry[i] == qualifier.charAt(0)) {
+                            } else if (chrArry[i] == qualifier) {
                                 qualiFound = true;
                             }
                         }
@@ -1186,8 +1310,11 @@ public class DataSet {
     }
 
     /**
-     * Erases the dataset early and releases memory for the JVM to reclaim, this invalidates the object.
-     * @deprecated You can still use it but truly you should keep the scope of the DataSet to a MINIMUM.
+     * Erases the dataset early and releases memory for the JVM to reclaim, this
+     * invalidates the object.
+     * 
+     * @deprecated You can still use it but truly you should keep the scope of
+     *             the DataSet to a MINIMUM.
      */
     public void freeMemory() {
         if (rows != null) {
