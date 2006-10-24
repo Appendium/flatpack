@@ -3,6 +3,7 @@ package net.sf.pzfilereader.parserutils;
 import java.util.List;
 
 import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.pzfilereader.utilities.UnitTestUtils;
 import junit.framework.TestCase;
 
 /**
@@ -10,39 +11,118 @@ import junit.framework.TestCase;
  * a List of Strings. Each element of the list represents a column created
  * by the parser from the delimited String. 
  * 
- * @author zepernick  
+ * @author Paul Zepernick  
  */
 public class ParserUtilsSplitLineTest extends TestCase{
-    final String[] delimitedDataNoBreaks = {"Column 1","Column 2", "Column 3", "Column 4", "Column 5"};
-    final String[] delimitedDataWithBreaks = {"Column 1","Column 2", "Column 3", "Column 4", "Column 5"};
+    private static final String[] DELIMITED_DATA_NO_BREAKS = {"Column 1","Column 2", "Column 3", "Column 4", "Column 5"};
+    private static final String[] DELIMITED_DATA_WITH_BREAKS = {"Column 1 \r\n\r\n Test After Break \r\n Another Break",
+                                                                "Column 2", 
+                                                                "Column 3 \r\n\r\n Test After Break", 
+                                                                "Column 4", 
+                                                                "Column 5 \r\n\r\n Test After Break\r\n Another Break"};
+    //TODO think of a situation that actually breaks the parse.  This still works because of the way it is coded
+    //to handle the excel CSV.  Excel CSV has some elements qualified and others not
+    private static final String DELIMITED_BAD_DATA = "\"column 1\",\"column 2 ,\"column3\"";
+    
+    //0 = delimiter
+    //1 = qualifier
+    private static final String[][] DELIM_QUAL_PAIR = {
+                                                        {",","\""},
+                                                        {"\t","\""},
+                                                        {"|","\""},
+                                                        {"_","\""},
+                                                        {",",null},
+                                                        {"|",null},
+                                                        {"\t",null},
+                                                      };
     
     /**
-     * Test CSV without any line breaks
+     * Test without any line breaks
      *
      */
-    public void testCSVNoLineBreaks(){
-        
-        final String delimiter = ",";
-        final String qualifier = "\"";
-        final StringBuffer txtToParse = new StringBuffer();
-        for (int i = 0; i < delimitedDataNoBreaks.length; i++){
-            if (i > 0){
-                txtToParse.append(delimiter);
+    public void testNoLineBreaks(){
+        //loop down all delimiter qualifier pairs to test
+        for (int i = 0; i < DELIM_QUAL_PAIR.length; i++){ 
+            final String d = DELIM_QUAL_PAIR[i][0];
+            final String q = DELIM_QUAL_PAIR[i][1];
+            
+            final String txtToParse;
+            if (q == null){
+                txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_NO_BREAKS, 
+                        d.charAt(0));
+            }else{
+                txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_NO_BREAKS, 
+                        d.charAt(0),
+                        q.charAt(0));
             }
-            txtToParse.append(qualifier + delimitedDataNoBreaks[i] + qualifier);
+            
+            final List splitLineResults = ParserUtils.splitLine(txtToParse.toString(), 
+                    d, q);
+            
+            
+            //check to make sure we have the same amount of elements which were expected
+            assertEquals("Did Not Get Amount Of Elements Expected (d = " + d + " q = " + q + ")",
+                    DELIMITED_DATA_NO_BREAKS.length, splitLineResults.size());
+            
+            //loop through each value and compare what came back
+            for (int j = 0 ; j < DELIMITED_DATA_NO_BREAKS.length; j ++){
+                assertEquals("Data Element Value Does Not Match (d = " + d + " q = " + q + ")",
+                        DELIMITED_DATA_NO_BREAKS[j], (String)splitLineResults.get(j));
+            }
         }
         
-        List splitLineResults = ParserUtils.splitLine(txtToParse.toString(), delimiter, qualifier);
         
+    }
+    
+    /**
+     * Test without any line breaks
+     *
+     */
+    public void testLineBreaks(){
+        //loop down all delimiter qualifier pairs to test
+        for (int i = 0; i < DELIM_QUAL_PAIR.length; i++){ 
+            final String d = DELIM_QUAL_PAIR[i][0];
+            final String q = DELIM_QUAL_PAIR[i][1];
+            
+            final String txtToParse;
+            if (DELIM_QUAL_PAIR[i][1] == null){
+                txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_WITH_BREAKS, 
+                        DELIM_QUAL_PAIR[i][0].charAt(0));
+            }else{
+                txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_WITH_BREAKS, 
+                        DELIM_QUAL_PAIR[i][0].charAt(0),
+                        DELIM_QUAL_PAIR[i][1].charAt(0));
+            }
         
-        //check to make sure we have the same amount of elements which were expected
-        assertEquals(delimitedDataNoBreaks.length, splitLineResults.size());
-        
-        //loop through each value and compare what came back
-        for (int i = 0 ; i < delimitedDataNoBreaks.length; i ++){
-            assertEquals(delimitedDataNoBreaks[i], (String)splitLineResults.get(i));
+            final List splitLineResults = ParserUtils.splitLine(txtToParse.toString(), 
+                    DELIM_QUAL_PAIR[i][0], DELIM_QUAL_PAIR[i][1]);
+            
+            
+            //check to make sure we have the same amount of elements which were expected
+            assertEquals("Did Not Get Amount Of Elements Expected (d = " + d + " q = " + q + ")",
+                    DELIMITED_DATA_WITH_BREAKS.length, splitLineResults.size());
+            
+            //loop through each value and compare what came back
+            for (int j = 0 ; j < DELIMITED_DATA_WITH_BREAKS.length; j ++){
+                assertEquals("Data Element Value Does Not Match (d = " + d + " q = " + q + ")",
+                        DELIMITED_DATA_WITH_BREAKS[j], (String)splitLineResults.get(j));
+            }
+            
         }
+    }
+    
+    /**
+     * Test to make sure we get the correct amount of elements for malformed data
+     * 
+     * @param args
+     */
+    public void testMalformedData(){
+        final List splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, 
+                ",", "\"");
         
+        
+        assertEquals("Expecting 2 Data Elements From The Malformed Data",
+                2, splitLineResults.size());
         
     }
     
