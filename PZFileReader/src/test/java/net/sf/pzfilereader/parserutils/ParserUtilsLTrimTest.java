@@ -22,7 +22,7 @@ import junit.framework.TestCase;
  *  
  * @author paul zepernick
  */
-public class LTrimTest extends TestCase{
+public class ParserUtilsLTrimTest extends TestCase{
     /**
      * Make sure all spaces are properly removed from the front of the String
      *
@@ -78,6 +78,6 @@ public class LTrimTest extends TestCase{
     }
     
     public static void main(final String[] args) {
-        junit.textui.TestRunner.run(LTrimTest.class);
+        junit.textui.TestRunner.run(ParserUtilsLTrimTest.class);
     }
 }
