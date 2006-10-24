@@ -7,6 +7,7 @@ package net.sf.pzfilereader.examples.exporttoexcel;
 
 import java.io.File;
 
+import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
@@ -26,7 +27,7 @@ public class DelimitedFileExportToExcel {
     }
 
     public static String getDefaultDataFile() {
-        return "PEOPLE-CommaDelimitedWithQualifierAndHeaderTrailer.txt";
+        return "PEOPLE-CommaDelimitedWithQualifier.txt";
     }
 
     public static String getDefaultMapping() {
@@ -49,11 +50,16 @@ public class DelimitedFileExportToExcel {
         ds.orderRows(orderby);
 
         if (ds.getErrors() != null && ds.getErrors().size() > 0) {
-            System.out.println("FOUND ERRORS IN FILE");
+            for (int i = 0; i < ds.getErrors().size(); i++){
+                final DataError de = (DataError)ds.getErrors().get(i);
+                System.out.println("Error Msg: " + de.getErrorDesc() + " Line: " + de.getLineNo());
+            }
         }
 
         // lets write this file out to excel :)
-        ds.writeToExcel(new File("MyExcelExport.xls"));
+        File xlFile = new File("MyExcelExport.xls");
+        ds.writeToExcel(xlFile);
+        System.out.println("Excel Workbook Written To: " + xlFile.getAbsolutePath());
 
         // clear out the DataSet object for the JVM to collect
         ds.freeMemory();
