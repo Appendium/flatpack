@@ -44,6 +44,17 @@ public final class ParserUtils {
     }
 
     /**
+     * @deprecated should only use the splitLine with a CHAR.
+     * @param line
+     * @param delimiter
+     * @param qualifier
+     * @return
+     */
+    public static List splitLine(String line, final String delimiter, final String qualifier) {
+        return splitLine(line, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0);
+    }
+
+    /**
      * Returns an ArrayList of items in a delimited string. If there is no
      * qualifier around the text, the qualifier parameter can be left null, or
      * empty. There should not be any line breaks in the string. Each line of
@@ -57,7 +68,7 @@ public final class ParserUtils {
      *            qualifier which is surrounding the text
      * @return ArrayList
      */
-    public static List splitLine(String line, final String delimiter, final String qualifier) {
+    public static List splitLine(String line, final char delimiter, final char qualifier) {
         final ArrayList list = new ArrayList();
         // String temp = "";
         boolean beginQualifier = false;
@@ -73,12 +84,13 @@ public final class ParserUtils {
             // line which has not yet been read
             // check to see if there is a text qualifier
             final char currentChar = line.charAt(i);
-            if (qualifier != null && qualifier.trim().length() > 0) {
-                if (line.substring(i, i + 1).equals(qualifier) && !beginQualifier && !beginNoQualifier) {
+            final String currentString = String.valueOf(currentChar);
+            if (qualifier > 0) {
+                if (currentChar == qualifier && !beginQualifier && !beginNoQualifier) {
                     // begining of a set of data
                     beginQualifier = true;
-                } else if (!beginQualifier && !beginNoQualifier && !line.substring(i, i + 1).equals(qualifier)
-                        && !lTrim(remainderOfLine).startsWith(qualifier)) {
+                } else if (!beginQualifier && !beginNoQualifier && currentChar != qualifier
+                        && lTrim(remainderOfLine).charAt(0) != qualifier) {
                     // try to account for empty space before qualifier starts
                     // we have not yet begun a qualifier and the char we are on
                     // is NOT
@@ -87,18 +99,18 @@ public final class ParserUtils {
                     // make sure that this is not just an empty column with no
                     // qualifiers. ie
                     // "data",,"data"
-                    if (line.substring(i, i + 1).equals(delimiter)) {
+                    if (currentChar == delimiter) {
                         list.add(sb.toString());
                         sb.delete(0, sb.length());
                         beginNoQualifier = false;
                         continue;// grab the next char
                     }
                     sb.append(currentChar);
-                } else if ((!beginNoQualifier) && line.substring(i, i + 1).equals(qualifier) && beginQualifier
-                        && (lTrim(line.substring(i + 1)).length() == 0
+                } else if (!beginNoQualifier && currentChar == qualifier && beginQualifier
+                        && (i == line.length() - 1 || lTrim(remainderOfLine.substring(1)).length() == 0
                         // this will be true on empty undelmited columns at the
                         // end of theline
-                        || lTrimKeepTabs(line.substring(i + 1)).substring(0, 1).equals(delimiter))) {
+                        || lTrimKeepTabs(remainderOfLine).charAt(1) == delimiter)) {
                     // end of a set of data that was qualified
                     list.add(sb.toString());
                     sb.delete(0, sb.length());
@@ -116,7 +128,7 @@ public final class ParserUtils {
                     } else {
                         i += offset;
                     }
-                } else if (beginNoQualifier && line.substring(i, i + 1).equals(delimiter)) {
+                } else if (beginNoQualifier && currentChar == delimiter) {
                     // check to see if we are done with an element that was not
                     // being qulified
                     list.add(sb.toString());
@@ -130,7 +142,7 @@ public final class ParserUtils {
 
             } else {
                 // not using a qualifier. Using a delimiter only
-                if (line.substring(i, i + 1).equals(delimiter)) {
+                if (currentChar == delimiter) {
                     list.add(sb.toString());
                     sb.delete(0, sb.length());
                 } else {
@@ -139,17 +151,21 @@ public final class ParserUtils {
             }
         }
 
+        // + this needs to be revisited...
+        String trimmed = sb.toString().trim();
         // remove the ending text qualifier if needed
-        if (qualifier != null && qualifier.trim().length() > 0 && sb.toString().trim().length() > 0) {
-            if (sb.toString().trim().substring(sb.toString().trim().length() - 1).equals(qualifier)) {
-                final String s = sb.toString().trim().substring(0, sb.toString().trim().length() - 1);
+        if (qualifier > 0 && trimmed.length() > 0) {
+            if (trimmed.charAt(trimmed.length() - 1) == qualifier) {
+                final String s = trimmed.substring(0, trimmed.length() - 1);
                 sb.delete(0, sb.length());
                 sb.append(s);
             }
         }
 
-        if (qualifier == null || qualifier.trim().length() == 0 || beginQualifier || beginNoQualifier
-                || line.trim().endsWith(delimiter)) {
+        String trimmed2 = line.trim();
+        int lengthLeft = trimmed2.length();
+        if (qualifier <= 0 || beginQualifier || beginNoQualifier || lengthLeft > 0
+                && trimmed2.charAt(lengthLeft - 1) == delimiter) {
             // also account for a delimiter with an empty column at the end that
             // was not qualified
             // check to see if we need to add the last column in..this will
@@ -173,7 +189,7 @@ public final class ParserUtils {
      * @return int
      */
 
-    public static int getDelimiterOffset(final String line, final int start, final String delimiter) {
+    public static int getDelimiterOffset(final String line, final int start, final char delimiter) {
         int idx = line.indexOf(delimiter, start);
         if (idx >= 0) {
             // idx++;
@@ -338,7 +354,7 @@ public final class ParserUtils {
                     continue;
                 }
 
-                lineData = splitLine(line, delimiter, qualifier);
+                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0));
                 for (int i = 0; i < lineData.size(); i++) {
                     final ColumnMetaData cmd = new ColumnMetaData();
                     cmd.setColName((String) lineData.get(i));
@@ -375,7 +391,7 @@ public final class ParserUtils {
      * @exception Exception
      * @return ArrayList - ColumnMetaData
      */
-    public static Map getColumnMDFromFile(final String line, final String delimiter, final String qualifier) throws Exception {
+    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier) throws Exception {
         List lineData = null;
         final List results = new ArrayList();
         final Map columnMD = new LinkedHashMap();
@@ -420,7 +436,7 @@ public final class ParserUtils {
                     continue;
                 }
 
-                lineData = splitLine(line, delimiter, qualifier);
+                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0));
                 for (int i = 0; i < lineData.size(); i++) {
                     final ColumnMetaData cmd = new ColumnMetaData();
                     cmd.setColName((String) lineData.get(i));
@@ -471,12 +487,28 @@ public final class ParserUtils {
      * @param qualifier -
      *            qualifier being used
      * @return boolean
+     * @deprecated use the char version
      */
     public static boolean isMultiLine(final char[] chrArry, final String delimiter, final String qualifier) {
+        return isMultiLine(chrArry, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0);
+    }
+
+    /**
+     * Determines if the given line is the first part of a multiline record
+     * 
+     * @param chrArry -
+     *            char data of the line
+     * @param delimiter -
+     *            delimiter being used
+     * @param qualifier -
+     *            qualifier being used
+     * @return boolean
+     */
+    public static boolean isMultiLine(final char[] chrArry, final char delimiter, final char qualifier) {
 
         // check if the last char is the qualifier, if so then this a good
         // chance it is not multiline
-        if (chrArry[chrArry.length - 1] != qualifier.charAt(0)) {
+        if (chrArry[chrArry.length - 1] != qualifier) {
             // could be a potential line break
             boolean qualiFound = false;
             for (int i = chrArry.length - 1; i >= 0; i--) {
@@ -490,13 +522,13 @@ public final class ParserUtils {
                         // not a space, if this char is the delimiter, then we
                         // have a line break
                         // in the record
-                        if (chrArry[i] == delimiter.charAt(0)) {
+                        if (chrArry[i] == delimiter) {
                             return true;
                         }
                         qualiFound = false;
                         continue;
                     }
-                } else if (chrArry[i] == delimiter.charAt(0)) {
+                } else if (chrArry[i] == delimiter) {
                     // if we have a delimiter followed by a qualifier, then we
                     // have moved on
                     // to a new element and this could not be multiline. start a
@@ -505,13 +537,13 @@ public final class ParserUtils {
                     for (int j = i - 1; j >= 0; j--) {
                         if (chrArry[j] == ' ') {
                             continue;
-                        } else if (chrArry[j] == qualifier.charAt(0)) {
+                        } else if (chrArry[j] == qualifier) {
                             return false;
                         }
                         break;
                     }
 
-                } else if (chrArry[i] == qualifier.charAt(0)) {
+                } else if (chrArry[i] == qualifier) {
                     qualiFound = true;
                 }
             }
@@ -529,7 +561,7 @@ public final class ParserUtils {
                     // the delimiter and qualifier
                     continue;
                 }
-                if (chrArry[i] == delimiter.charAt(0)) {
+                if (chrArry[i] == delimiter) {
                     return true;
                 }
                 break;
@@ -678,6 +710,7 @@ public final class ParserUtils {
 
     /**
      * Use this method to find the index of a column.
+     * 
      * @author Benoit Xhenseval
      * @param key
      * @param columnMD
@@ -759,9 +792,9 @@ public final class ParserUtils {
      * </p>
      * 
      * <pre>
-     *          StringUtils.padding(0, 'e')  = &quot;&quot;
-     *          StringUtils.padding(3, 'e')  = &quot;eee&quot;
-     *          StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
+     *               StringUtils.padding(0, 'e')  = &quot;&quot;
+     *               StringUtils.padding(3, 'e')  = &quot;eee&quot;
+     *               StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
      * </pre>
      * 
      * <p>
@@ -794,6 +827,7 @@ public final class ParserUtils {
 
     /**
      * Build a map of name/position based on a list of ColumnMetaData.
+     * 
      * @author Benoit Xhenseval
      * @param columns
      * @return a new Map
@@ -805,7 +839,8 @@ public final class ParserUtils {
             int idx = 0;
             for (final Iterator it = columns.iterator(); it.hasNext(); idx++) {
                 final ColumnMetaData meta = (ColumnMetaData) it.next();
-                //map.put(meta.getColName(), Integer.valueOf(idx)); breaks 1.4 compile
+                // map.put(meta.getColName(), Integer.valueOf(idx)); breaks 1.4
+                // compile
                 map.put(meta.getColName(), new Integer(idx));
             }
         }
