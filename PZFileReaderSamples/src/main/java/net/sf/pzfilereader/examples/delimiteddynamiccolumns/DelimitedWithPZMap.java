@@ -40,7 +40,7 @@ public class DelimitedWithPZMap {
         // ignore first record
         DataSet ds = null;
         OrderBy orderby = null;
-        ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
+        ds = new DataSet(new File(mapping), new File(data), ',', '"', true, false);
 
         // re order the data set by last name
         orderby = new OrderBy();
@@ -79,7 +79,5 @@ public class DelimitedWithPZMap {
             System.out.println("FOUND ERRORS IN FILE");
         }
 
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
     }
 }

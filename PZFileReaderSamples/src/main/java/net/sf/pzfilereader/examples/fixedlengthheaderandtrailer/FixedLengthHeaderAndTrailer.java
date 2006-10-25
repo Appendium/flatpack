@@ -78,8 +78,5 @@ public class FixedLengthHeaderAndTrailer {
             }
         }
 
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
-
     }
 }

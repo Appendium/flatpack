@@ -37,7 +37,7 @@ public class DelimitedMultiLine {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(data), ",", "\"", false);
+        ds = new DataSet(new File(data), ',', '"', false);
 
         colNames = ds.getColumns();
 
@@ -52,9 +52,6 @@ public class DelimitedMultiLine {
         if (ds.getErrors() != null && ds.getErrors().size() > 0) {
             System.out.println("FOUND ERRORS IN FILE");
         }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
 
     }
 }

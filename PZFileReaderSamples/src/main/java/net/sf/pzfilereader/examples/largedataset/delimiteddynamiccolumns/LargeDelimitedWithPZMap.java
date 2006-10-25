@@ -43,7 +43,7 @@ public class LargeDelimitedWithPZMap {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new LargeDataSet(pzmap, fileToParse, ",", "\"", true, false);
+        ds = new LargeDataSet(pzmap, fileToParse, ',', '"', true, false);
 
         colNames = ds.getColumns();
 

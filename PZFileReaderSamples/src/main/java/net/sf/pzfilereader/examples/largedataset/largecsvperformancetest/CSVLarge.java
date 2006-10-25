@@ -47,7 +47,7 @@ public class CSVLarge {
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-            ds = new LargeDataSet(new File(data), ",", "\"", false);
+            ds = new LargeDataSet(new File(data), ',', '"', false);
 
             final long timeStarted = System.currentTimeMillis();
             int totalCount = 0;
