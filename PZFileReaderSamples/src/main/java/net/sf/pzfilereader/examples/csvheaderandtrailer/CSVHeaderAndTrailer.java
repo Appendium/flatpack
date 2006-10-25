@@ -34,7 +34,7 @@ public class CSVHeaderAndTrailer {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        DataSet ds = new DataSet(mapFile, dataFile, ",", "\"", true, false);
+        DataSet ds = new DataSet(mapFile, dataFile, ',', '"', true, false); 
 
         while (ds.next()) {
 
@@ -66,8 +66,5 @@ public class CSVHeaderAndTrailer {
         if (ds.getErrors() != null && ds.getErrors().size() > 0) {
             System.out.println("FOUND ERRORS IN FILE");
         }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
     }
 }
