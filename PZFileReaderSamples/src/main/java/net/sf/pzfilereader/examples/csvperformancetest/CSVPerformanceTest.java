@@ -49,7 +49,7 @@ public class CSVPerformanceTest {
         // ignore first record
         System.out.println("Parsing....");
         long timeStarted = System.currentTimeMillis();
-        ds = new DataSet(new File(filename), ",", "\"", false);
+        ds = new DataSet(new File(filename), ',', '"', false);
         long timeFinished = System.currentTimeMillis();
 
         String timeMessage = "";
@@ -108,8 +108,6 @@ public class CSVPerformanceTest {
             }
         }
 
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
     }
 
     private static Map readSettings() throws Exception {
