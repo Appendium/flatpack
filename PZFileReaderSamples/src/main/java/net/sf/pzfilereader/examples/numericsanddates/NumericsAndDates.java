@@ -39,7 +39,7 @@ public class NumericsAndDates {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
+        ds = new DataSet(new File(mapping), new File(data), ',', '"', true, false);
 
         // demonstrates the casting abilities of PZFileReader
         while (ds.next()) {
@@ -49,9 +49,5 @@ public class NumericsAndDates {
             System.out.println("Received Dt: " + sdf.format(ds.getDate("LAST_RECV_DT")) + " (Date)");
             System.out.println("===========================================================================");
         }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
-
     }
 }

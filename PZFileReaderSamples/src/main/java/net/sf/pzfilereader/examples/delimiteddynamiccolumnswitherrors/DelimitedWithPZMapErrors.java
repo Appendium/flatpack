@@ -46,7 +46,7 @@ public class DelimitedWithPZMapErrors {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
+        ds = new DataSet(new File(mapping), new File(data), ',', '"', true, false);
 
         // re order the data set by last name
         orderby = new OrderBy();
@@ -90,9 +90,6 @@ public class DelimitedWithPZMapErrors {
 
             System.out.println("ERROR: " + dataError.getErrorDesc() + " LINE NUMBER: " + dataError.getLineNo());
         }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
 
     }
 }

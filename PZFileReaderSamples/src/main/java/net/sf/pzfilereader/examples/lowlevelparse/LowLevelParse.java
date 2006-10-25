@@ -52,7 +52,7 @@ public class LowLevelParse {
                 // text qualifier. The text qualifier is optional, it can be
                 // null
                 // or empty
-                elements = ParserUtils.splitLine(line, ",", "\"");
+                elements = ParserUtils.splitLine(line, ',', '"');
 
                 for (int i = 0; i < elements.size(); i++) {
                     System.out.println("Column " + i + ": " + (String) elements.get(i));

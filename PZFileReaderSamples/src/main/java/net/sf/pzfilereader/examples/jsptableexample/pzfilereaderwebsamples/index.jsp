@@ -26,8 +26,8 @@
 	  	//read in the file a
 	  	ds = new DataSet(mappingFile, //mapping file here
 	  					 txtFile, //text file that is being parsed
-	    				",", //how the file is delimited
-	  					"", //if the text is qualified, pass the qualifier here, otherwise leave empty
+	    				',', //how the file is delimited
+	  					0, //if the text is qualified, pass the qualifier here, otherwise leave empty
 	  					false,  //ignore the first row in the file if it contain column names
                         false); //don't auto add missing columns, log them as errors
 	  					
@@ -110,9 +110,6 @@
    			
    		<%
    			}
-            
-            //clear out the DataSet object for the JVM to collect
-            ds.freeMemory();
    		%>
    		
    	</table>

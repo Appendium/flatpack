@@ -41,7 +41,7 @@ public class DelimitedFileExportToExcel {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(mapping), new File(data), ",", "\"", true, false);
+        ds = new DataSet(new File(mapping), new File(data), ',', '"', true, false);
 
         // re order the data set by last name
         orderby = new OrderBy();
@@ -60,9 +60,6 @@ public class DelimitedFileExportToExcel {
         File xlFile = new File("MyExcelExport.xls");
         ds.writeToExcel(xlFile);
         System.out.println("Excel Workbook Written To: " + xlFile.getAbsolutePath());
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
 
     }
 }
