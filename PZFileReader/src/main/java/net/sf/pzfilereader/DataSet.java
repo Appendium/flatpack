@@ -390,6 +390,37 @@ public class DataSet {
                 .charAt(0) : 0, ignoreFirstRecord, handleShortLines);
     }
 
+    
+    /**
+     * Constructs a new DataSet using the PZMAP XML file layout method. This is
+     * used for a DELIMITED text file. esacpe sequence reference: \n newline
+     * <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param pzmapXML -
+     *            Reference to the xml file holding the pzmap
+     * @param dataSource -
+     *            text file datasource to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param ignoreFirstRecord -
+     *            skips the first line that contains data in the file
+     * @param handleShortLines -
+     *            Adds missing columns as empty's to the DataSet instead of
+     *            logging them as an error
+     * @exception Exception
+     */
+    public DataSet(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
+        this(ParserUtils.createInputStream(pzmapXML), ParserUtils.createInputStream(dataSource), delimiter, qualifier,
+                ignoreFirstRecord, handleShortLines);
+    }
+    
     /**
      * New constructor based on InputStream. Constructs a new DataSet using the
      * PZMAP XML file layout method. This is used for a DELIMITED text file.
