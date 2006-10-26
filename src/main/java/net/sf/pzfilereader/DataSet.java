@@ -1124,7 +1124,6 @@ public class DataSet {
             for (int i = 0; i < cmds.size(); i++) {
                 column = (ColumnMetaData) cmds.get(i);
                 array[i] = column.getColName();
-                System.out.println(i + "/ Columns... " + column.getColName());
             }
         }
 
