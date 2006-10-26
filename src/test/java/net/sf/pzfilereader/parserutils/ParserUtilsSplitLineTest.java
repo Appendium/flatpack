@@ -59,7 +59,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
     }
 
     /**
-     * Test without any line breaks
+     * Test with any line breaks
      * 
      */
     public void testLineBreaks() {
@@ -70,7 +70,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_WITH_BREAKS, d, q);
 
-            final List splitLineResults = ParserUtils.splitLine(txtToParse.toString(), d, q);
+            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q);
 
             // check to make sure we have the same amount of elements which were
             // expected
@@ -82,25 +82,51 @@ public class ParserUtilsSplitLineTest extends TestCase {
                 assertEquals("Data Element Value Does Not Match (d = " + d + " q = " + q + ")", DELIMITED_DATA_WITH_BREAKS[j],
                         (String) splitLineResults.get(j));
             }
-
         }
     }
 
     /**
      * Test to make sure we get the correct amount of elements for malformed
      * data
-     * 
-     * @param args
      */
     public void testMalformedData() {
         final List splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, ',', '\"');
 
         assertEquals("Expecting 2 Data Elements From The Malformed Data", 2, splitLineResults.size());
+    }
 
+    /**
+     * Test some extreme cases
+     */
+    public void testSomeExtremeCases() {
+        check("\"a,b,c\"", ',', '\"', new String[] { "a,b,c" });
+        check("\"a,b\",\"c\"", ',', '\"', new String[] { "a,b", "c" });
+        check("a,b,c", ',', '\"', new String[] { "a", "b", "c" });
+        check("  a,b,c", ',', '\"', new String[] { "a", "b", "c" });
+        check("  a,b,c", ',', '\"', new String[] { "a","b","c" });
+        
+        // what would you expect of these ones?
+        check("a\",b,c", ',', '\"', new String[] { "a", "b", "c" });
+        check("\"  a,b,c\"", ',', '\"', new String[] { "a,b,c" });
+        check("  a, b ,c ", ',', '\"', new String[] { "a","b","c" });
+
+        // Paul... please put some more whacky stuff here...
+
+    }
+
+    private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
+        final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier);
+
+        assertEquals(
+                "Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]",
+                expected.length, splitLineResults.size());
+
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals("expecting...", expected[i], splitLineResults.get(i));
+        }
     }
 
     public static void main(final String[] args) {
         junit.textui.TestRunner.run(ParserUtilsSplitLineTest.class);
     }
-
 }
