@@ -68,7 +68,8 @@ public class Examples implements Repeater {
         menu.addMenuItem("DelimitedMultiLine", "doDelimitedMultiLine", false);
         menu.addMenuItem("NumericsAndDates", "doNumericsAndDates", false);
         menu.addMenuItem("Ask for GC", "doGC", false);
-        
+        menu.addMenuItem("Test StringBuffer", "doStringBuffer", false);
+
         menu.addMenuItem("Who you gonna call?", "doCall", false);
         menu.displayMenu();
     }
@@ -82,69 +83,69 @@ public class Examples implements Repeater {
     public void doCSVHeaderAndTrailer() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", CSVHeaderAndTrailer.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", CSVHeaderAndTrailer.getDefaultDataFile());
-            CSVHeaderAndTrailer.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", CSVHeaderAndTrailer.getDefaultDataFile());
+            CSVHeaderAndTrailer.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void doCSVPerformanceTest() {
         try {
             final String mapping = ConsoleMenu.getString("CSV File ", "SampleCSV.csv");
             final boolean data = ConsoleMenu.getBoolean("Traverse the entire parsed file", true);
             final boolean verbose = ConsoleMenu.getBoolean("Verbose", false);
-            CSVPerformanceTest.call(mapping,verbose,data);
+            CSVPerformanceTest.call(mapping, verbose, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void doDelimitedWithPZMap() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", DelimitedWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", DelimitedWithPZMap.getDefaultDataFile());
-            DelimitedWithPZMap.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMap.getDefaultDataFile());
+            DelimitedWithPZMap.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void doDelimitedWithPZMapErrors() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", DelimitedWithPZMapErrors.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", DelimitedWithPZMapErrors.getDefaultDataFile());
-            DelimitedWithPZMapErrors.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMapErrors.getDefaultDataFile());
+            DelimitedWithPZMapErrors.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void doDelimitedFileExportToExcel() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", DelimitedFileExportToExcel.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", DelimitedFileExportToExcel.getDefaultDataFile());
-            DelimitedFileExportToExcel.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", DelimitedFileExportToExcel.getDefaultDataFile());
+            DelimitedFileExportToExcel.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void doFixedLengthWithPZMap() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", FixedLengthWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", FixedLengthWithPZMap.getDefaultDataFile());
-            FixedLengthWithPZMap.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", FixedLengthWithPZMap.getDefaultDataFile());
+            FixedLengthWithPZMap.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-        
+
     public void doFixedLengthHeaderAndTrailer() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", FixedLengthHeaderAndTrailer.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", FixedLengthHeaderAndTrailer.getDefaultDataFile());
-            FixedLengthHeaderAndTrailer.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", FixedLengthHeaderAndTrailer.getDefaultDataFile());
+            FixedLengthHeaderAndTrailer.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,19 +154,18 @@ public class Examples implements Repeater {
     public void doLargeDelimitedWithPZMap() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", LargeDelimitedWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", LargeDelimitedWithPZMap.getDefaultDataFile());
-            LargeDelimitedWithPZMap.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", LargeDelimitedWithPZMap.getDefaultDataFile());
+            LargeDelimitedWithPZMap.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    
     public void doLargeFixedLengthWithPZMap() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", LargeFixedLengthWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", LargeFixedLengthWithPZMap.getDefaultDataFile());
-            LargeFixedLengthWithPZMap.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", LargeFixedLengthWithPZMap.getDefaultDataFile());
+            LargeFixedLengthWithPZMap.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -177,7 +177,7 @@ public class Examples implements Repeater {
             final int rows = ConsoleMenu.getInt("Number of rows", 2000000);
             String filename = "LargeSampleCSV.csv";
             CSVTestFileCreator.createFile(cols, rows, filename);
-            
+
             System.out.println("Large file created");
 
             CSVLarge.call(filename);
@@ -185,10 +185,10 @@ public class Examples implements Repeater {
             e.printStackTrace();
         }
     }
-        
+
     public void doLowLevelParse() {
         try {
-            final String data = ConsoleMenu.getString(    "Data   ", LowLevelParse.getDefaultDataFile());
+            final String data = ConsoleMenu.getString("Data   ", LowLevelParse.getDefaultDataFile());
             LowLevelParse.call(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -197,7 +197,7 @@ public class Examples implements Repeater {
 
     public void doDelimitedMultiLine() {
         try {
-            final String data = ConsoleMenu.getString(    "Data   ", DelimitedMultiLine.getDefaultDataFile());
+            final String data = ConsoleMenu.getString("Data   ", DelimitedMultiLine.getDefaultDataFile());
             DelimitedMultiLine.call(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,8 +207,8 @@ public class Examples implements Repeater {
     public void doNumericsAndDates() {
         try {
             final String mapping = ConsoleMenu.getString("Mapping ", NumericsAndDates.getDefaultMapping());
-            final String data = ConsoleMenu.getString(    "Data   ", NumericsAndDates.getDefaultDataFile());
-            NumericsAndDates.call(mapping,data);
+            final String data = ConsoleMenu.getString("Data   ", NumericsAndDates.getDefaultDataFile());
+            NumericsAndDates.call(mapping, data);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -216,6 +216,35 @@ public class Examples implements Repeater {
 
     public void doGC() {
         System.gc();
+    }
+
+    public void doStringBuffer() {
+        final int repeat = ConsoleMenu.getInt("How many times?", 100000);
+        final int characters = ConsoleMenu.getInt("How many char?", 20);
+
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < repeat; i++) {
+            StringBuffer sb = new StringBuffer();
+            for (int u = 0; u < 1000; u++) {
+                sb.append("h");
+            }
+        }
+        long stop = System.currentTimeMillis();
+
+        System.out.println("Creating new SB " + (stop - start) + " ms.");
+
+        start = System.currentTimeMillis();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < repeat; i++) {
+            for (int u = 0; u < characters; u++) {
+                sb.append("h");
+            }
+            sb.delete(0, sb.length());
+        }
+        stop = System.currentTimeMillis();
+
+        System.out.println("Deleting existing SB " + (stop - start) + " ms.");
+
     }
 
 }
