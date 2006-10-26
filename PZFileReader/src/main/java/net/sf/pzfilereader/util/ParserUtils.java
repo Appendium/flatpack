@@ -84,7 +84,7 @@ public final class ParserUtils {
             // line which has not yet been read
             // check to see if there is a text qualifier
             final char currentChar = line.charAt(i);
-            final String currentString = String.valueOf(currentChar);
+//            final String currentString = String.valueOf(currentChar);
             if (qualifier > 0) {
                 if (currentChar == qualifier && !beginQualifier && !beginNoQualifier) {
                     // begining of a set of data
@@ -152,7 +152,7 @@ public final class ParserUtils {
         }
 
         // + this needs to be revisited...
-        String trimmed = sb.toString().trim();
+        final String trimmed = sb.toString().trim();
         // remove the ending text qualifier if needed
         if (qualifier > 0 && trimmed.length() > 0) {
             if (trimmed.charAt(trimmed.length() - 1) == qualifier) {
@@ -162,7 +162,7 @@ public final class ParserUtils {
             }
         }
 
-        String trimmed2 = line.trim();
+        final String trimmed2 = line.trim();
         int lengthLeft = trimmed2.length();
         if (qualifier <= 0 || beginQualifier || beginNoQualifier || lengthLeft > 0
                 && trimmed2.charAt(lengthLeft - 1) == delimiter) {
@@ -176,6 +176,8 @@ public final class ParserUtils {
 
         sb = null;
 
+        list.trimToSize();
+        
         return list;
     }
 
