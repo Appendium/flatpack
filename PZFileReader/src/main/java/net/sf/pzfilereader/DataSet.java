@@ -740,7 +740,8 @@ public class DataSet implements IDataSet {
             while ((line = br.readLine()) != null) {
                 lineCount++;
                 /** empty line skip past it */
-                if (!processingMultiLine && line.trim().length() == 0) {
+                String trimmed = line.trim();
+                if (!processingMultiLine && trimmed.length() == 0) {
                     continue;
                 }
 
@@ -759,7 +760,7 @@ public class DataSet implements IDataSet {
                 // any line breaks in the middle of the record, this will only
                 // be checked if we have specified a delimiter
                 // ********************************************************
-                final char[] chrArry = line.trim().toCharArray();
+                final char[] chrArry = trimmed.toCharArray();
                 if (!processingMultiLine && delimiter > 0) {
                     processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
                 }
@@ -767,26 +768,25 @@ public class DataSet implements IDataSet {
                 // check to see if we have reached the end of the linebreak in
                 // the record
 
-                if (processingMultiLine && lineData.trim().length() > 0) {
+                final String trimmedLineData = lineData.trim();
+                if (processingMultiLine && trimmedLineData.length() > 0) {
                     // need to do one last check here. it is possible that the "
                     // could be part of the data
                     // excel will escape these with another quote; here is some
                     // data "" This would indicate
                     // there is more to the multiline
-                    String trimmed = line.trim();
                     if (trimmed.charAt(trimmed.length() - 1) == qualifier && !trimmed.endsWith("" + qualifier + qualifier)) {
                         // it is safe to assume we have reached the end of the
                         // line break
                         processingMultiLine = false;
-                        if (lineData.trim().length() > 0) {
+                        if (trimmedLineData.length() > 0) { //+ would always be true surely....
                             lineData += "\r\n";
                         }
                         lineData += line;
                     } else {
-
                         // check to see if this is the last line of the record
                         // looking for a qualifier followed by a delimiter
-                        if (lineData.trim().length() > 0) {
+                        if (trimmedLineData.length() > 0) { //+ here again, this should always be true...
                             lineData += "\r\n";
                         }
                         lineData += line;
