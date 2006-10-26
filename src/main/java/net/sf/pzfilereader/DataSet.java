@@ -49,7 +49,7 @@ import net.sf.pzfilereader.xml.PZMapParser;
  * @version 2.0.1
  * @todo Ought to implement an interface for the access to data.
  */
-public class DataSet {
+public class DataSet implements IDataSet {
     /** Array to hold the rows and their values in the text file */
     private List rows = null;
 
@@ -906,27 +906,22 @@ public class DataSet {
         // row.setValue(ParserUtils.findColumn(columnName, cmds), value);
     }
 
-    /**
-     * Goes to the top of the data set. This will put the pointer one record
-     * before the first in the set. Next() will have to be called to get the
-     * first record after this call.
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#goTop()
      */
     public void goTop() {
         pointer = -1;
     }
 
-    /**
-     * Goes to the last record in the dataset
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#goBottom()
      */
     public void goBottom() {
         pointer = rows.size() - 1;
     }
 
-    /**
-     * Moves to the next record in the set. Returns true if move was a success,
-     * false if not
-     * 
-     * @return boolean
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#next()
      */
     public boolean next() {
         if (pointer < rows.size() && pointer + 1 != rows.size()) {
@@ -936,11 +931,8 @@ public class DataSet {
         return false;
     }
 
-    /**
-     * Moves back to the previous record in the set return true if move was a
-     * success, false if not
-     * 
-     * @return boolean
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#previous()
      */
     public boolean previous() {
         if (pointer <= 0) {
@@ -950,13 +942,8 @@ public class DataSet {
         return true;
     }
 
-    /**
-     * Returns the string value of a specified column
-     * 
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @return String
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
         final Row row = (Row) rows.get(pointer);
@@ -983,14 +970,8 @@ public class DataSet {
         return s;
     }
 
-    /**
-     * Returns the double value of a specified column
-     * 
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return double
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getDouble(java.lang.String)
      */
     public double getDouble(final String column) {
         final StringBuffer newString = new StringBuffer();
@@ -1023,14 +1004,8 @@ public class DataSet {
         return Double.parseDouble(newString.toString());
     }
 
-    /**
-     * Returns the interger value of a specified column
-     * 
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return double
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getInt(java.lang.String)
      */
     public int getInt(final String column) {
         final StringBuffer newString = new StringBuffer();
@@ -1063,15 +1038,8 @@ public class DataSet {
         return Integer.parseInt(newString.toString());
     }
 
-    /**
-     * Returns the date value of a specified column. This assumes the date is in
-     * yyyyMMdd. If your date is not in this format, see
-     * getDate(String,SimpleDateFormat)
-     * 
-     * @param column -
-     *            Name of the column
-     * @exception ParseException
-     * @return Date
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String)
      */
     public Date getDate(final String column) throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -1084,18 +1052,8 @@ public class DataSet {
         return sdf.parse(s);
     }
 
-    /**
-     * Returns the date value of a specified column. This should be used if the
-     * date is NOT in yyyyMMdd format. The SimpleDateFormat object will specify
-     * what kind of format the date is in.
-     * 
-     * @param column -
-     *            Name of the column
-     * @param sdf -
-     *            SimpleDateFormat of the date
-     * @exception ParseException
-     * @see java.text.SimpleDateFormat
-     * @return Date
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String, java.text.SimpleDateFormat)
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
         final Row row = (Row) rows.get(pointer);
@@ -1107,11 +1065,8 @@ public class DataSet {
         return sdf.parse(s);
     }
 
-    /**
-     * Returns a String array of column names in the DataSet. This will assume
-     * 'detail' <RECORD> ID.
-     * 
-     * @return String[]
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getColumns()
      */
     public String[] getColumns() {
         ColumnMetaData column = null;
@@ -1130,12 +1085,8 @@ public class DataSet {
         return array;
     }
 
-    /**
-     * Returns a String array of column names in the DataSet for a given
-     * <RECORD> id
-     * 
-     * @param recordID
-     * @return String[]
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getColumns(java.lang.String)
      */
     public String[] getColumns(final String recordID) {
         String[] array = null;
@@ -1152,22 +1103,15 @@ public class DataSet {
         return array;
     }
 
-    /**
-     * Returns the line number the pointer is on. These are the actual line
-     * numbers from the flat file, before any sorting.
-     * 
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return int
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getRowNo()
      */
     public int getRowNo() {
         return ((Row) rows.get(pointer)).getRowNumber();
     }
 
-    /**
-     * Returns A Collection Of DataErrors that happened during processing
-     * 
-     * @return Vector
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getErrors()
      */
     public List getErrors() {
         return errors;
@@ -1192,19 +1136,16 @@ public class DataSet {
         errors.add(de);
     }
 
-    /**
-     * Removes a row from the dataset. Once the row is removed the pointer will
-     * be sitting on the record previous to the deleted row.
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#remove()
      */
     public void remove() {
         rows.remove(pointer);
         pointer--;
     }
 
-    /**
-     * Returns the index the pointer is on for the array
-     * 
-     * @return int
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getIndex()
      */
     public int getIndex() {
         return pointer;
@@ -1240,21 +1181,15 @@ public class DataSet {
         return rowID.equals(recordID);
     }
 
-    /**
-     * Returns the total number of rows parsed in from the file
-     * 
-     * 
-     * @return int - Row Count
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getRowCount()
      */
     public int getRowCount() {
         return rows.size();
     }
 
-    /**
-     * Returns total number of records which contained a parse error in the
-     * file.
-     * 
-     * @return int - Record Error Count
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getErrorCount()
      */
     public int getErrorCount() {
         if (getErrors() != null) {
@@ -1264,14 +1199,8 @@ public class DataSet {
         return 0;
     }
 
-    /**
-     * Returns true or false as to whether or not the line number contains an
-     * error. The import will skip the line if it contains an error and it will
-     * not be processed
-     * 
-     * @param lineNo -
-     *            int line number
-     * @return boolean
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#isAnError(int)
      */
     public boolean isAnError(final int lineNo) {
         for (int i = 0; i < errors.size(); i++) {
@@ -1282,17 +1211,8 @@ public class DataSet {
         return false;
     }
 
-    /**
-     * Orders the data by column(s) specified. This will reposition the cursor
-     * to the top of the DataSet when executed. This is currently not supported
-     * when specying <RECORD> elements in the mapping. An exception will be
-     * thrown if this situation occurs
-     * 
-     * @param ob -
-     *            OrderBy object
-     * @exception Exception
-     * @see net.sf.pzfilereader.ordering.OrderBy
-     * @see net.sf.pzfilereader.ordering.OrderColumn
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#orderRows(net.sf.pzfilereader.ordering.OrderBy)
      */
     public void orderRows(final OrderBy ob) throws Exception {
         // PZ try to handle other <records> by sending them to
@@ -1404,6 +1324,9 @@ public class DataSet {
         this.columnMD = columnMD;
     }
 
+    /* (non-Javadoc)
+     * @see net.sf.pzfilereader.IDataSet#getRows()
+     */
     public List getRows() {
         return rows;
     }
