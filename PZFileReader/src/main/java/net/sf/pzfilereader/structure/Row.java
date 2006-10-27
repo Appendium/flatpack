@@ -46,10 +46,9 @@ public class Row {
         }
         cols.add(colValue);
     }
-    
+
     /**
-     * Appends the List of Strings to the existing columns
-     * in the row
+     * Appends the List of Strings to the existing columns in the row
      * 
      * @param columns -
      *            List of Strings to append to the row

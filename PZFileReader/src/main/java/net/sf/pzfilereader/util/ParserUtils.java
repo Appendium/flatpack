@@ -50,7 +50,7 @@ public final class ParserUtils {
      * @param qualifier
      * @return
      */
-    public static List splitLine(String line, final String delimiter, final String qualifier) {
+    public static List splitLine(final String line, final String delimiter, final String qualifier) {
         return splitLine(line, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0);
     }
 
@@ -84,7 +84,7 @@ public final class ParserUtils {
             // line which has not yet been read
             // check to see if there is a text qualifier
             final char currentChar = line.charAt(i);
-//            final String currentString = String.valueOf(currentChar);
+            // final String currentString = String.valueOf(currentChar);
             if (qualifier > 0) {
                 if (currentChar == qualifier && !beginQualifier && !beginNoQualifier) {
                     // begining of a set of data
@@ -154,10 +154,10 @@ public final class ParserUtils {
         // + this needs to be revisited...
         final String trimmed = sb.toString().trim();
         // remove the ending text qualifier if needed
-        //only if the last element was truly qualified
+        // only if the last element was truly qualified
         if (beginQualifier && qualifier > 0 && trimmed.length() > 0) {
             if (trimmed.charAt(trimmed.length() - 1) == qualifier) {
-               // System.out.println(">>>>>>>Triming Off Qualifier");
+                // System.out.println(">>>>>>>Triming Off Qualifier");
                 final String s = trimmed.substring(0, trimmed.length() - 1);
                 sb.delete(0, sb.length());
                 sb.append(s);
@@ -165,7 +165,7 @@ public final class ParserUtils {
         }
 
         final String trimmed2 = line.trim();
-        int lengthLeft = trimmed2.length();
+        final int lengthLeft = trimmed2.length();
         if (qualifier <= 0 || beginQualifier || beginNoQualifier || lengthLeft > 0
                 && trimmed2.charAt(lengthLeft - 1) == delimiter) {
             // also account for a delimiter with an empty column at the end that
@@ -179,7 +179,7 @@ public final class ParserUtils {
         sb = null;
 
         list.trimToSize();
-        
+
         return list;
     }
 
@@ -617,7 +617,7 @@ public final class ParserUtils {
      * @param line
      * @return List - ColumMetaData
      * @deprecated Moved to FixedWidthParserUtils.getCMDKey()
-     *      
+     * 
      */
     public static String getCMDKeyForFixedLengthFile(final Map columnMD, final String line) {
         if (columnMD.size() == 1) {
@@ -750,18 +750,20 @@ public final class ParserUtils {
      * @param file
      *            The file.
      * @return the InputStream.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
      */
     public static InputStream createInputStream(final File file) throws FileNotFoundException {
         if (file == null) {
             throw new IllegalArgumentException("null not allowed");
         }
-//        if (!file.exists()) {
-//            throw new FileNotFoundException("file does not exist " + file.getAbsolutePath());
-//        }
-//        if (!file.canRead()) {
-//            throw new FileNotFoundException("file cannot be read " + file.getAbsolutePath());
-//        }
+        // if (!file.exists()) {
+        // throw new FileNotFoundException("file does not exist " +
+        // file.getAbsolutePath());
+        // }
+        // if (!file.canRead()) {
+        // throw new FileNotFoundException("file cannot be read " +
+        // file.getAbsolutePath());
+        // }
         return new FileInputStream(file);
     }
 
@@ -797,9 +799,9 @@ public final class ParserUtils {
      * </p>
      * 
      * <pre>
-     *               StringUtils.padding(0, 'e')  = &quot;&quot;
-     *               StringUtils.padding(3, 'e')  = &quot;eee&quot;
-     *               StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
+     *                StringUtils.padding(0, 'e')  = &quot;&quot;
+     *                StringUtils.padding(3, 'e')  = &quot;eee&quot;
+     *                StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
      * </pre>
      * 
      * <p>

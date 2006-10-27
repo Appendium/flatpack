@@ -98,8 +98,7 @@ public class XMLRecordElement {
     }
 
     /**
-     * @return List
-     *          Collection of ColumnMetaData objects
+     * @return List Collection of ColumnMetaData objects
      * @see net.sf.pzfilereader.structure.ColumnMetaData
      */
     public List getColumns() {
@@ -117,6 +116,7 @@ public class XMLRecordElement {
 
     /**
      * Returns the index of the column name.
+     * 
      * @author Benoit Xhenseval
      * @param colName
      * @return -1 if the column name does not exist.

@@ -1,5 +1,34 @@
-/**
+/*
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
  * 
+ * Based in London, we are world leaders in the design and development 
+ * of bespoke applications for the securities financing markets.
+ * 
+ * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
+ *           ___  _     _           _   _          _
+ *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
+ *         | | | | '_ \| |/ _ \/ __| __| |   / _` | '_ \
+ *         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |
+ *          \___/|_.__// |\___|\___|\__|_____\__,_|_.__/
+ *                   |__/
+ *
+ *                     www.ObjectLab.co.uk
+ *
+ * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
+ * 
+ * Copyright 2006 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package net.sf.pzfilereader;
 
@@ -23,9 +52,9 @@ import net.sf.pzfilereader.util.ParserUtils;
  * 
  */
 public class DefaultDataSet implements IDataSet {
-    private List rows = new ArrayList();
+    private final List rows = new ArrayList();
 
-    private List errors = new ArrayList();
+    private final List errors = new ArrayList();
 
     /** Pointer for the current row in the array we are on */
     private int pointer = -1;
@@ -44,15 +73,15 @@ public class DefaultDataSet implements IDataSet {
 
     private Map columnMD;
 
-    public DefaultDataSet(Map columnMD2) {
+    public DefaultDataSet(final Map columnMD2) {
         this.columnMD = columnMD2;
     }
 
-    public void addRow(Row row) {
+    public void addRow(final Row row) {
         rows.add(row);
     }
 
-    public void addError(DataError dataError) {
+    public void addError(final DataError dataError) {
         errors.add(dataError);
     }
 
@@ -83,7 +112,7 @@ public class DefaultDataSet implements IDataSet {
      * 
      * @see net.sf.pzfilereader.IDataSet#getColumns(java.lang.String)
      */
-    public String[] getColumns(String recordID) {
+    public String[] getColumns(final String recordID) {
         String[] array = null;
 
         if (columnMD != null) {
@@ -103,7 +132,7 @@ public class DefaultDataSet implements IDataSet {
      * 
      * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String)
      */
-    public Date getDate(String column) throws ParseException {
+    public Date getDate(final String column) throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         final Row row = (Row) rows.get(pointer);
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
@@ -116,7 +145,7 @@ public class DefaultDataSet implements IDataSet {
      * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String,
      *      java.text.SimpleDateFormat)
      */
-    public Date getDate(String column, SimpleDateFormat sdf) throws ParseException {
+    public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
         final Row row = (Row) rows.get(pointer);
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
         return sdf.parse(s);
@@ -127,7 +156,7 @@ public class DefaultDataSet implements IDataSet {
      * 
      * @see net.sf.pzfilereader.IDataSet#getDouble(java.lang.String)
      */
-    public double getDouble(String column) {
+    public double getDouble(final String column) {
         final StringBuffer newString = new StringBuffer();
         final Row row = (Row) rows.get(pointer);
 
@@ -190,7 +219,7 @@ public class DefaultDataSet implements IDataSet {
      * 
      * @see net.sf.pzfilereader.IDataSet#getInt(java.lang.String)
      */
-    public int getInt(String column) {
+    public int getInt(final String column) {
         final StringBuffer newString = new StringBuffer();
         final Row row = (Row) rows.get(pointer);
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
@@ -249,7 +278,7 @@ public class DefaultDataSet implements IDataSet {
      * 
      * @see net.sf.pzfilereader.IDataSet#getString(java.lang.String)
      */
-    public String getString(String column) {
+    public String getString(final String column) {
         final Row row = (Row) rows.get(pointer);
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
 
@@ -294,7 +323,7 @@ public class DefaultDataSet implements IDataSet {
      * 
      * @see net.sf.pzfilereader.IDataSet#isAnError(int)
      */
-    public boolean isAnError(int lineNo) {
+    public boolean isAnError(final int lineNo) {
         for (int i = 0; i < errors.size(); i++) {
             if (((DataError) errors.get(i)).getLineNo() == lineNo && ((DataError) errors.get(i)).getErrorLevel() > 1) {
                 return true;
@@ -321,7 +350,7 @@ public class DefaultDataSet implements IDataSet {
      * 
      * @see net.sf.pzfilereader.IDataSet#orderRows(net.sf.pzfilereader.ordering.OrderBy)
      */
-    public void orderRows(OrderBy ob) throws Exception {
+    public void orderRows(final OrderBy ob) throws Exception {
         // PZ try to handle other <records> by sending them to
         // the bottom of the sort
         // if (columnMD.size() > 1) {
@@ -419,7 +448,7 @@ public class DefaultDataSet implements IDataSet {
         pointer--;
     }
 
-    void setColumnMD(Map columnMD) {
+    void setColumnMD(final Map columnMD) {
         this.columnMD = columnMD;
     }
 
