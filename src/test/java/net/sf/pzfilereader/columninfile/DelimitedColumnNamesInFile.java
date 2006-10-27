@@ -9,6 +9,9 @@ import java.io.File;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
 
@@ -60,8 +63,16 @@ public class DelimitedColumnNamesInFile {
 
     // used for Junit test
 
-    public DataSet getDsForTest() throws Exception {
-        return new DataSet(new File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",",
-                "\"", false);
+    public IDataSet getDsForTest() throws Exception {
+
+        final PZParser parser = DefaultPZParserFactory.getInstance().newDelimitedParser(
+                new File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+
+        return parser.parse();
+        
+        // return new DataSet(new
+        // File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"),
+        // ",",
+        // "\"", false);
     }
 }

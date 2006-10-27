@@ -6,9 +6,8 @@
  */
 package net.sf.pzfilereader.delim.tab;
 
-import net.sf.pzfilereader.DataSet;
-
 import junit.framework.TestCase;
+import net.sf.pzfilereader.IDataSet;
 
 /**
  * @author zepernick
@@ -23,7 +22,7 @@ public class TabDelimitedTest extends TestCase {
 
     // tests to make sure we have 0 errors
     public void testErrorCount() {
-        DataSet ds = null;
+        IDataSet ds = null;
 
         try {
             final TabDelimited testTab = new TabDelimited();
@@ -36,16 +35,13 @@ public class TabDelimitedTest extends TestCase {
         } catch (final Exception ex) {
             ex.printStackTrace();
         } finally {
-            if (ds != null) {
-                ds.freeMemory();
-            }
         }
     }
 
     // test to make sure we parsed the correct number
     // of rows in the file
     public void testRowCount() {
-        DataSet ds = null;
+        IDataSet ds = null;
 
         try {
             final TabDelimited testTab = new TabDelimited();
@@ -58,15 +54,12 @@ public class TabDelimitedTest extends TestCase {
         } catch (final Exception ex) {
             ex.printStackTrace();
         } finally {
-            if (ds != null) {
-                ds.freeMemory();
-            }
         }
     }
 
     // test to make sure we have the right number of column names from the file
     public void testColumnNameCount() {
-        DataSet ds = null;
+        IDataSet ds = null;
 
         try {
             final TabDelimited testTab = new TabDelimited();
@@ -79,9 +72,6 @@ public class TabDelimitedTest extends TestCase {
         } catch (final Exception ex) {
             ex.printStackTrace();
         } finally {
-            if (ds != null) {
-                ds.freeMemory();
-            }
         }
     }
 

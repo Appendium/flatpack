@@ -2,9 +2,9 @@ package net.sf.pzfilereader.parserutils;
 
 import java.util.List;
 
+import junit.framework.TestCase;
 import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.utilities.UnitTestUtils;
-import junit.framework.TestCase;
 
 /**
  * Test the functionality of the splitLine method. This method returns a List of
