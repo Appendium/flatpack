@@ -37,6 +37,7 @@ import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.ExcelTransformer;
+import net.sf.pzfilereader.util.FixedWidthParserUtils;
 import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.xml.PZMapParser;
@@ -653,7 +654,7 @@ public class DataSet implements IDataSet {
                     continue;
                 }
 
-                final String mdkey = ParserUtils.getCMDKeyForFixedLengthFile(columnMD, line);
+                final String mdkey = FixedWidthParserUtils.getCMDKey(columnMD, line);
                 final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
 
                 // Incorrect record length on line log the error. Line will not
@@ -676,19 +677,20 @@ public class DataSet implements IDataSet {
                     }
                 }
 
-                int recPosition = 1;
+                //int recPosition = 1;
                 final Row row = new Row();
                 row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
 
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, columnMD);
+                row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
                 // to limit the memory use
                 // Build the columns for the row
-                for (int i = 0; i < cmds.size(); i++) {
-                    final String tempValue = line.substring(recPosition - 1, recPosition
-                            + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
-                    recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
-                    row.addColumn(tempValue.trim());
-                }
+                //for (int i = 0; i < cmds.size(); i++) {
+                //    final String tempValue = line.substring(recPosition - 1, recPosition
+                //            + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
+                //    recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
+                //    row.addColumn(tempValue.trim());
+               // }
                 row.setRowNumber(lineCount);
                 // add the row to the array
                 rows.add(row);
