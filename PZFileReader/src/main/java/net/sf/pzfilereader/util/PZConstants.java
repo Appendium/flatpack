@@ -40,7 +40,7 @@ public final class PZConstants {
     public static final String DETAIL_ID = "detail";
 
     public static final String COL_IDX = "colIndex";
-    
+
     public static final String DELIMITED_FILE = "delimited";
 
     public static final String FIXEDLENGTH_FILE = "fixed";

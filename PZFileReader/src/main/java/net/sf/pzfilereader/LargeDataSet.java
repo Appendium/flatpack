@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.pzfilereader.ordering.OrderBy;
-import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.FixedWidthParserUtils;
 import net.sf.pzfilereader.util.PZConstants;
@@ -405,7 +404,7 @@ public class LargeDataSet extends DataSet {
      * also close out the readers used to read the file in.
      */
     public void freeMemory() {
-        //super.freeMemory();
+        // super.freeMemory();
 
         ParserUtils.closeReader(br);
         ParserUtils.closeReader(isr);
@@ -430,7 +429,7 @@ public class LargeDataSet extends DataSet {
         /** loop through each line in the file */
         while ((line = br.readLine()) != null) {
             lineCount++;
-            String trimmed = line.trim();
+            final String trimmed = line.trim();
             /** empty line skip past it */
             if (!processingMultiLine && trimmed.length() == 0) {
                 continue;
@@ -569,13 +568,14 @@ public class LargeDataSet extends DataSet {
 
     private boolean readNextFixedLen() throws Exception {
         String line = null;
-        //final int aLineCount = 0; // +++++++++++++++++++++++++++++++++ Paul
+        // final int aLineCount = 0; // +++++++++++++++++++++++++++++++++ Paul
         // this does not seem incremented afaLineCountt all...
-        //********************************************************************
-        //Good point, and it is being used to report line errors.  Looks like a bug.  
-        //Should be using lineCount
-        //PZ
-        
+        // ********************************************************************
+        // Good point, and it is being used to report line errors. Looks like a
+        // bug.
+        // Should be using lineCount
+        // PZ
+
         boolean readRecordOk = false;
 
         if (getRows() == null) {
@@ -621,19 +621,20 @@ public class LargeDataSet extends DataSet {
                 }
             }
 
-            //int recPosition = 1;
+            // int recPosition = 1;
             final Row row = new Row();
             row.setMdkey(mdkey.equals("detail") ? null : mdkey); // try to
             // limit the memory use
-            
+
             // Build the columns for the row
             row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
-            //for (int i = 0; i < cmds.size(); i++) {
-            //    final String tempValue = line.substring(recPosition - 1, recPosition
-            //            + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
-            //    recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
-            //    row.addColumn(tempValue.trim());
-           // }
+            // for (int i = 0; i < cmds.size(); i++) {
+            // final String tempValue = line.substring(recPosition - 1,
+            // recPosition
+            // + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
+            // recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
+            // row.addColumn(tempValue.trim());
+            // }
             row.setRowNumber(this.lineCount);
             // add the row to the array
             getRows().add(row);

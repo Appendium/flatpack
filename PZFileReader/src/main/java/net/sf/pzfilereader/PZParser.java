@@ -33,24 +33,24 @@
 package net.sf.pzfilereader;
 
 /**
- * PZParser is ready to parse the data and return an object that can then be traversed.
- * The default parser should NOT handle short lines, the user can change it prior to calling
- * parse.
+ * PZParser is ready to parse the data and return an object that can then be
+ * traversed. The default parser should NOT handle short lines, the user can
+ * change it prior to calling parse.
  * 
  * @author Benoit Xhenseval
  */
 public interface PZParser {
-  
+
     /**
      * Start the parsing
+     * 
      * @return the data set resulting from parsing
      */
     IDataSet parse();
 
     /**
-     * @return true, lines with less columns then the amount
-     *            of column headers will be added as empty's instead of
-     *            producing an error
+     * @return true, lines with less columns then the amount of column headers
+     *         will be added as empty's instead of producing an error
      */
     boolean isHandlingShortLines();
 

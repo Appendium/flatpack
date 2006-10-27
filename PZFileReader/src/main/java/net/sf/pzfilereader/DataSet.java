@@ -31,7 +31,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
@@ -391,7 +390,6 @@ public class DataSet implements IDataSet {
                 .charAt(0) : 0, ignoreFirstRecord, handleShortLines);
     }
 
-    
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is
      * used for a DELIMITED text file. esacpe sequence reference: \n newline
@@ -421,7 +419,7 @@ public class DataSet implements IDataSet {
         this(ParserUtils.createInputStream(pzmapXML), ParserUtils.createInputStream(dataSource), delimiter, qualifier,
                 ignoreFirstRecord, handleShortLines);
     }
-    
+
     /**
      * New constructor based on InputStream. Constructs a new DataSet using the
      * PZMAP XML file layout method. This is used for a DELIMITED text file.
@@ -677,7 +675,7 @@ public class DataSet implements IDataSet {
                     }
                 }
 
-                //int recPosition = 1;
+                // int recPosition = 1;
                 final Row row = new Row();
                 row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
 
@@ -685,12 +683,13 @@ public class DataSet implements IDataSet {
                 row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
                 // to limit the memory use
                 // Build the columns for the row
-                //for (int i = 0; i < cmds.size(); i++) {
-                //    final String tempValue = line.substring(recPosition - 1, recPosition
-                //            + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
-                //    recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
-                //    row.addColumn(tempValue.trim());
-               // }
+                // for (int i = 0; i < cmds.size(); i++) {
+                // final String tempValue = line.substring(recPosition - 1,
+                // recPosition
+                // + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
+                // recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
+                // row.addColumn(tempValue.trim());
+                // }
                 row.setRowNumber(lineCount);
                 // add the row to the array
                 rows.add(row);
@@ -742,7 +741,7 @@ public class DataSet implements IDataSet {
             while ((line = br.readLine()) != null) {
                 lineCount++;
                 /** empty line skip past it */
-                String trimmed = line.trim();
+                final String trimmed = line.trim();
                 if (!processingMultiLine && trimmed.length() == 0) {
                     continue;
                 }
@@ -781,14 +780,17 @@ public class DataSet implements IDataSet {
                         // it is safe to assume we have reached the end of the
                         // line break
                         processingMultiLine = false;
-                        if (trimmedLineData.length() > 0) { //+ would always be true surely....
+                        if (trimmedLineData.length() > 0) { // + would always be
+                                                            // true surely....
                             lineData += "\r\n";
                         }
                         lineData += line;
                     } else {
                         // check to see if this is the last line of the record
                         // looking for a qualifier followed by a delimiter
-                        if (trimmedLineData.length() > 0) { //+ here again, this should always be true...
+                        if (trimmedLineData.length() > 0) { // + here again,
+                                                            // this should
+                                                            // always be true...
                             lineData += "\r\n";
                         }
                         lineData += line;
@@ -908,21 +910,27 @@ public class DataSet implements IDataSet {
         // row.setValue(ParserUtils.findColumn(columnName, cmds), value);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#goTop()
      */
     public void goTop() {
         pointer = -1;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#goBottom()
      */
     public void goBottom() {
         pointer = rows.size() - 1;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#next()
      */
     public boolean next() {
@@ -933,7 +941,9 @@ public class DataSet implements IDataSet {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#previous()
      */
     public boolean previous() {
@@ -944,7 +954,9 @@ public class DataSet implements IDataSet {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
@@ -972,7 +984,9 @@ public class DataSet implements IDataSet {
         return s;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getDouble(java.lang.String)
      */
     public double getDouble(final String column) {
@@ -1006,7 +1020,9 @@ public class DataSet implements IDataSet {
         return Double.parseDouble(newString.toString());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getInt(java.lang.String)
      */
     public int getInt(final String column) {
@@ -1040,7 +1056,9 @@ public class DataSet implements IDataSet {
         return Integer.parseInt(newString.toString());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String)
      */
     public Date getDate(final String column) throws ParseException {
@@ -1054,8 +1072,11 @@ public class DataSet implements IDataSet {
         return sdf.parse(s);
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String, java.text.SimpleDateFormat)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String,
+     *      java.text.SimpleDateFormat)
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
         final Row row = (Row) rows.get(pointer);
@@ -1067,7 +1088,9 @@ public class DataSet implements IDataSet {
         return sdf.parse(s);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getColumns()
      */
     public String[] getColumns() {
@@ -1087,7 +1110,9 @@ public class DataSet implements IDataSet {
         return array;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getColumns(java.lang.String)
      */
     public String[] getColumns(final String recordID) {
@@ -1105,14 +1130,18 @@ public class DataSet implements IDataSet {
         return array;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getRowNo()
      */
     public int getRowNo() {
         return ((Row) rows.get(pointer)).getRowNumber();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getErrors()
      */
     public List getErrors() {
@@ -1138,7 +1167,9 @@ public class DataSet implements IDataSet {
         errors.add(de);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#remove()
      */
     public void remove() {
@@ -1146,7 +1177,9 @@ public class DataSet implements IDataSet {
         pointer--;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getIndex()
      */
     public int getIndex() {
@@ -1183,14 +1216,18 @@ public class DataSet implements IDataSet {
         return rowID.equals(recordID);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getRowCount()
      */
     public int getRowCount() {
         return rows.size();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getErrorCount()
      */
     public int getErrorCount() {
@@ -1201,7 +1238,9 @@ public class DataSet implements IDataSet {
         return 0;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#isAnError(int)
      */
     public boolean isAnError(final int lineNo) {
@@ -1213,7 +1252,9 @@ public class DataSet implements IDataSet {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#orderRows(net.sf.pzfilereader.ordering.OrderBy)
      */
     public void orderRows(final OrderBy ob) throws Exception {
@@ -1326,7 +1367,9 @@ public class DataSet implements IDataSet {
         this.columnMD = columnMD;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.sf.pzfilereader.IDataSet#getRows()
      */
     public List getRows() {

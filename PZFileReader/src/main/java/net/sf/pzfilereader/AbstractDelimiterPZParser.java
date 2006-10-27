@@ -1,5 +1,34 @@
-/**
+/*
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
  * 
+ * Based in London, we are world leaders in the design and development 
+ * of bespoke applications for the securities financing markets.
+ * 
+ * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
+ *           ___  _     _           _   _          _
+ *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
+ *         | | | | '_ \| |/ _ \/ __| __| |   / _` | '_ \
+ *         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |
+ *          \___/|_.__// |\___|\___|\__|_____\__,_|_.__/
+ *                   |__/
+ *
+ *                     www.ObjectLab.co.uk
+ *
+ * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
+ * 
+ * Copyright 2006 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package net.sf.pzfilereader;
 
@@ -26,22 +55,24 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
 
     private boolean ignoreFirstRecord = false;
 
-    public AbstractDelimiterPZParser(InputStream dataSourceStream, String dataDefinition, char delimiter, char qualifier,
-            boolean ignoreFirstRecord) {
+    public AbstractDelimiterPZParser(final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceStream, dataDefinition);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
         this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
-    public AbstractDelimiterPZParser(File dataSource, char delimiter, char qualifier, boolean ignoreFirstRecord) {
+    public AbstractDelimiterPZParser(final File dataSource, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
         super(dataSource);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
         this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
-    public AbstractDelimiterPZParser(InputStream dataSourceStream, char delimiter, char qualifier, boolean ignoreFirstRecord) {
+    public AbstractDelimiterPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
         super(dataSourceStream);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
@@ -51,13 +82,15 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
     public IDataSet doParse() {
         try {
             if (getDataSourceStream() != null) {
-                return doDelimitedFile(getDataSourceStream(), getDelimiter(), getQualifier(), isIgnoreFirstRecord(), shouldCreateMDFromFile());
+                return doDelimitedFile(getDataSourceStream(), getDelimiter(), getQualifier(), isIgnoreFirstRecord(),
+                        shouldCreateMDFromFile());
             } else {
                 InputStream stream = null;
                 try {
                     stream = ParserUtils.createInputStream(getDataSource());
-                    return doDelimitedFile(stream, getDelimiter(), getQualifier(), isIgnoreFirstRecord(), shouldCreateMDFromFile());
-                } catch (Exception e) {
+                    return doDelimitedFile(stream, getDelimiter(), getQualifier(), isIgnoreFirstRecord(),
+                            shouldCreateMDFromFile());
+                } catch (final Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 } finally {
@@ -66,23 +99,23 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
     }
-    
+
     protected abstract boolean shouldCreateMDFromFile();
 
     protected char getDelimiter() {
         return delimiter;
     }
 
-    protected void setDelimiter(char delimiter) {
+    protected void setDelimiter(final char delimiter) {
         this.delimiter = delimiter;
     }
 
@@ -90,7 +123,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         return ignoreFirstRecord;
     }
 
-    protected void setIgnoreFirstRecord(boolean ignoreFirstRecord) {
+    protected void setIgnoreFirstRecord(final boolean ignoreFirstRecord) {
         this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
@@ -98,7 +131,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         return qualifier;
     }
 
-    protected void setQualifier(char qualifier) {
+    protected void setQualifier(final char qualifier) {
         this.qualifier = qualifier;
     }
 
@@ -117,7 +150,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
 
         InputStreamReader isr = null;
         BufferedReader br = null;
-        DefaultDataSet ds = new DefaultDataSet(getColumnMD());
+        final DefaultDataSet ds = new DefaultDataSet(getColumnMD());
         try {
             // get the total column count
             // columnCount = columnMD.size();
@@ -136,7 +169,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             while ((line = br.readLine()) != null) {
                 lineCount++;
                 /** empty line skip past it */
-                String trimmed = line.trim();
+                final String trimmed = line.trim();
                 if (!processingMultiLine && trimmed.length() == 0) {
                     continue;
                 }
@@ -177,7 +210,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                         // line break
                         processingMultiLine = false;
                         if (trimmedLineData.length() > 0) { // + would always be
-                                                            // true surely....
+                            // true surely....
                             lineData += "\r\n";
                         }
                         lineData += line;
@@ -185,8 +218,8 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                         // check to see if this is the last line of the record
                         // looking for a qualifier followed by a delimiter
                         if (trimmedLineData.length() > 0) { // + here again,
-                                                            // this should
-                                                            // always be true...
+                            // this should
+                            // always be true...
                             lineData += "\r\n";
                         }
                         lineData += line;

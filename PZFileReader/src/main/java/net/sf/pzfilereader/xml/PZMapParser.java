@@ -75,20 +75,21 @@ public final class PZMapParser {
      * returns a Map containing Lists of ColumnMetaData.
      * 
      * @param xmlStream
-     * @return Map
-     *           <records> with their corrisponding 
-     * @throws IOException 
-     * @throws JDOMException 
+     * @return Map <records> with their corrisponding
+     * @throws IOException
+     * @throws JDOMException
      */
     public static Map parse(final InputStream xmlStream) throws JDOMException, IOException {
         final SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         // handle the ability to pull DTD from Jar if needed
         builder.setEntityResolver(new ResolveLocalDTD());
-        
-        //JDOM started to blow up on the parse if the system id param was not specified
-        //not sure why this started to happen now.  Was not making to EntityResolver to pull
-        //dtd out of the jar if needed
+
+        // JDOM started to blow up on the parse if the system id param was not
+        // specified
+        // not sure why this started to happen now. Was not making to
+        // EntityResolver to pull
+        // dtd out of the jar if needed
         final Document document = builder.build(xmlStream, "file:///");
 
         final Element root = document.getRootElement();
@@ -99,7 +100,7 @@ public final class PZMapParser {
         final Map mdIndex = new LinkedHashMap(); // retain the same order
         // specified in the mapping
         mdIndex.put(PZConstants.DETAIL_ID, columns); // always force detail
-                                                        // to the top of
+        // to the top of
         // the map no matter what
         mdIndex.put(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns));
 
@@ -113,7 +114,8 @@ public final class PZMapParser {
             // value we are using to mark columns specified outside of a
             // <RECORD> element
             if (xmlElement.getAttributeValue("id").equals(PZConstants.DETAIL_ID)) {
-                throw new IllegalArgumentException("The ID 'detail' on the <RECORD> element is reserved, please select another id");
+                throw new IllegalArgumentException(
+                        "The ID 'detail' on the <RECORD> element is reserved, please select another id");
             }
 
             columns = getColumnChildren(xmlElement);
