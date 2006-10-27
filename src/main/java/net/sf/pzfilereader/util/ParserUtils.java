@@ -615,6 +615,8 @@ public final class ParserUtils {
      * @param columnMD
      * @param line
      * @return List - ColumMetaData
+     * @deprecated Moved to FixedWidthParserUtils.getCMDKey()
+     *      
      */
     public static String getCMDKeyForFixedLengthFile(final Map columnMD, final String line) {
         if (columnMD.size() == 1) {
