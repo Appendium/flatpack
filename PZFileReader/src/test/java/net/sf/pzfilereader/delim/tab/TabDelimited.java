@@ -9,6 +9,9 @@ import java.io.File;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 
 /**
  * @author zepernick
@@ -62,7 +65,14 @@ public class TabDelimited {
 
     // used for Junit test
 
-    public DataSet getDsForTest() throws Exception {
-        return new DataSet(new File("src/test/java/net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
+    public IDataSet getDsForTest() throws Exception {
+        final PZParser parser = DefaultPZParserFactory.getInstance().newDelimitedParser(
+                new File("src/test/java/net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
+
+        parser.setHandlingShortLines(true);
+        
+        return parser.parse();
+
+//        return new DataSet(new File("src/test/java/net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
     }
 }
