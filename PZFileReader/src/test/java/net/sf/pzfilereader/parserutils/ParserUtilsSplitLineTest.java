@@ -106,9 +106,20 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("  a,b,c", ',', '\"', new String[] { "a","b","c" });
         
         // what would you expect of these ones?
-        check("a\",b,c", ',', '\"', new String[] { "a", "b", "c" });
+        
+        //+++++The parser allows qualified and unqualified elements to be contained
+        //on the same line.  so it should break the elements down like so
+        //1 = a" -->" is part of the data since the element did not start with a qualifier
+        //2 = b
+        //3 = c" --> same as #1
+        check("a\",b,c\"", ',', '\"', new String[] { "a\"", "b", "c\"" });
+        
+        
+        
         check("\"  a,b,c\"", ',', '\"', new String[] { "a,b,c" });
-        check("  a, b ,c ", ',', '\"', new String[] { "a","b","c" });
+        //check("  a, b ,c ", ',', '\"', new String[] { "a","b","c" });
+        //++++++I think this should probably generate this
+        check("  a, b ,c ", ',', '\"', new String[] { "a, b ,c" });
 
         // Paul... please put some more whacky stuff here...
 
