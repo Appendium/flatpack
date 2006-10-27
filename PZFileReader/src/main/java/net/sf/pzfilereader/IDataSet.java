@@ -219,4 +219,42 @@ public interface IDataSet {
 
     List getRows();
 
+    /**
+     * Sets data in the DataSet to lowercase
+     */
+    void setLowerCase();
+
+    /**
+     * Sets data in the DataSet to uppercase
+     */
+    void setUpperCase();
+
+    /**
+     * Checks to see if the row has the given <RECORD> id
+     * 
+     * @param recordID
+     * @return boolean
+     */
+    boolean isRecordID(final String recordID);
+
+    /**
+     * Sets the absolute position of the record pointer
+     * 
+     * @param localPointer -
+     *            int
+     * @exception IndexOutOfBoundsException
+     */
+    void absolute(final int localPointer);
+
+    /**
+     * Setting this to True will parse text as is and throw a
+     * NumberFormatException. Setting to false, which is the default, will
+     * remove any non numeric charcter from the field. The remaining numeric
+     * chars's will be returned. If it is an empty string,or there are no
+     * numeric chars, 0 will be returned for getInt() and getDouble()
+     * 
+     * @param strictNumericParse
+     *            The strictNumericParse to set.
+     */
+    void setStrictNumericParse(final boolean strictNumericParse);
 }

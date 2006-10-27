@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <classpath>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"></classpathentry>
-  <classpathentry excluding="" kind="src" path="src/main/java"></classpathentry>
-  <classpathentry output="target/test-classes" kind="src" path="src/test/java"></classpathentry>
-  <classpathentry path="MAVEN_REPO/junit/jars/junit-3.8.2.jar" kind="var"></classpathentry>
-  <classpathentry path="MAVEN_REPO/jdom/jars/jdom-1.0.jar" kind="var"></classpathentry>
-  <classpathentry path="MAVEN_REPO/jexcelapi/jars/jxl-2.4.2.jar" kind="var"></classpathentry>
-  <classpathentry kind="output" path="target/classes"></classpathentry>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="src/main/java" kind="src"/>
+	<classpathentry path="src/test/java" output="target/test-classes" kind="src"/>
+	<classpathentry path="MAVEN_REPO/junit/jars/junit-3.8.2.jar" kind="var"/>
+	<classpathentry path="ECLIPSE_HOME/plugins/org.eclipse.hyades.test.tools.core_4.2.1.v200607310100/common.runner.jar" kind="var"/>
+	<classpathentry path="ECLIPSE_HOME/plugins/org.eclipse.hyades.test.tools.core_4.2.1.v200607310100/java.runner.jar" kind="var"/>
+	<classpathentry path="MAVEN_REPO/jdom/jars/jdom-1.0.jar" kind="var"/>
+	<classpathentry path="MAVEN_REPO/jexcelapi/jars/jxl-2.4.2.jar" kind="var"/>
+	<classpathentry path="target/classes" kind="output"/>
 </classpath>

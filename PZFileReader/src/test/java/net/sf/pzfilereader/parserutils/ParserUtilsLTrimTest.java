@@ -14,8 +14,8 @@
  */
 package net.sf.pzfilereader.parserutils;
 
-import net.sf.pzfilereader.util.ParserUtils;
 import junit.framework.TestCase;
+import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * Tests the functionality of the left trim in the ParserUtils

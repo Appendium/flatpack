@@ -137,7 +137,7 @@ public interface PZParserFactory {
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
      */
-    PZParser newParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition,
+    PZParser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition,
             final char delimiter, final char qualifier, final boolean ignoreFirstRecord);
 
     /**
@@ -160,7 +160,7 @@ public interface PZParserFactory {
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
      */
-    PZParser newParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
+    PZParser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord);
 
     /**
@@ -187,7 +187,7 @@ public interface PZParserFactory {
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
      */
-    PZParser newParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
+    PZParser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord);
 
     /**
@@ -206,7 +206,7 @@ public interface PZParserFactory {
      * @param qualifier -
      *            Char text is qualified by
      */
-    PZParser newParser(final File dataSource, final char delimiter, final char qualifier);
+    PZParser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier);
 
     /**
      * Constructs a new DataSet using the first line of data found in the text
@@ -227,5 +227,5 @@ public interface PZParserFactory {
      * @param qualifier -
      *            Char text is qualified by
      */
-    PZParser newParser(final InputStream dataSource, final char delimiter, final char qualifier);
+    PZParser newDelimitedParser(final InputStream dataSource, final char delimiter, final char qualifier);
 }
