@@ -581,9 +581,8 @@ public final class ParserUtils {
      * 
      * @param columnMD
      * @return Map
-     * @exception Exception
      */
-    public static Map calculateRecordLengths(final Map columnMD) throws Exception {
+    public static Map calculateRecordLengths(final Map columnMD) {
         final Map recordLengths = new HashMap();
         List cmds = null;
 
@@ -751,19 +750,19 @@ public final class ParserUtils {
      * @param file
      *            The file.
      * @return the InputStream.
-     * @throws Exception
+     * @throws FileNotFoundException 
      */
-    public static InputStream createInputStream(final File file) throws Exception {
+    public static InputStream createInputStream(final File file) throws FileNotFoundException {
         if (file == null) {
             throw new IllegalArgumentException("null not allowed");
         }
-        if (!file.exists()) {
-            throw new FileNotFoundException("file does not exist " + file.getAbsolutePath());
-        }
-        if (!file.canRead()) {
-            throw new FileNotFoundException("file cannot be read " + file.getAbsolutePath());
-        }
-        return new FileInputStream(file.getAbsolutePath());
+//        if (!file.exists()) {
+//            throw new FileNotFoundException("file does not exist " + file.getAbsolutePath());
+//        }
+//        if (!file.canRead()) {
+//            throw new FileNotFoundException("file cannot be read " + file.getAbsolutePath());
+//        }
+        return new FileInputStream(file);
     }
 
     /**
