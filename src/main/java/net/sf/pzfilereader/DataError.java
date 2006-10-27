@@ -33,9 +33,7 @@ public class DataError {
      */
     private int errorLevel = 0;
 
-    
-    
-    public DataError(String errorDesc, int lineNo, int errorLevel) {
+    public DataError(final String errorDesc, final int lineNo, final int errorLevel) {
         this.errorDesc = errorDesc;
         this.lineNo = lineNo;
         this.errorLevel = errorLevel;
@@ -43,7 +41,7 @@ public class DataError {
 
     /**
      * @deprecated should use the ctor with fields
-     *
+     * 
      */
     public DataError() {
     }
@@ -80,7 +78,7 @@ public class DataError {
      * 
      * @param errorDesc
      *            The errorDesc to set
-     * @deprecated the DataError should be immutable (i.e. no Set method) 
+     * @deprecated the DataError should be immutable (i.e. no Set method)
      */
     public void setErrorDesc(final String errorDesc) {
         this.errorDesc = errorDesc;
@@ -91,7 +89,7 @@ public class DataError {
      * 
      * @param errorLevel
      *            The errorLevel to set
-     * @deprecated the DataError should be immutable (i.e. no Set method) 
+     * @deprecated the DataError should be immutable (i.e. no Set method)
      */
     public void setErrorLevel(final int errorLevel) {
         this.errorLevel = errorLevel;
@@ -102,7 +100,7 @@ public class DataError {
      * 
      * @param lineNo
      *            The lineNo to set
-     * @deprecated the DataError should be immutable (i.e. no Set method) 
+     * @deprecated the DataError should be immutable (i.e. no Set method)
      */
     public void setLineNo(final int lineNo) {
         this.lineNo = lineNo;

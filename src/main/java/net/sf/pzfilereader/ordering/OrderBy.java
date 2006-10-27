@@ -66,10 +66,11 @@ public class OrderBy implements Comparator {
             final String mdkey1 = row1.getMdkey() == null ? PZConstants.DETAIL_ID : row1.getMdkey();
 
             // shift all non detail records to the bottom of the DataSet
-            if (!mdkey0.equals(PZConstants.DETAIL_ID) && !mdkey1.equals(PZConstants.DETAIL_ID)){
-                //keep headers / trailers in the same order at the bottom of the DataSet
+            if (!mdkey0.equals(PZConstants.DETAIL_ID) && !mdkey1.equals(PZConstants.DETAIL_ID)) {
+                // keep headers / trailers in the same order at the bottom of
+                // the DataSet
                 return 0;
-            }else if (!mdkey0.equals(PZConstants.DETAIL_ID)) {
+            } else if (!mdkey0.equals(PZConstants.DETAIL_ID)) {
                 return 1;
             } else if (!mdkey1.equals(PZConstants.DETAIL_ID)) {
                 return 0;

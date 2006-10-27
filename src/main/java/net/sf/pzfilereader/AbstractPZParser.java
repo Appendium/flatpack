@@ -1,5 +1,34 @@
-/**
+/*
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
  * 
+ * Based in London, we are world leaders in the design and development 
+ * of bespoke applications for the securities financing markets.
+ * 
+ * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
+ *           ___  _     _           _   _          _
+ *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
+ *         | | | | '_ \| |/ _ \/ __| __| |   / _` | '_ \
+ *         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |
+ *          \___/|_.__// |\___|\___|\__|_____\__,_|_.__/
+ *                   |__/
+ *
+ *                     www.ObjectLab.co.uk
+ *
+ * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
+ * 
+ * Copyright 2006 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package net.sf.pzfilereader;
 
@@ -27,20 +56,20 @@ public abstract class AbstractPZParser implements PZParser {
 
     private File dataSource = null;
 
-    protected AbstractPZParser(File dataSource) {
+    protected AbstractPZParser(final File dataSource) {
         this.dataSource = dataSource;
     }
 
-    protected AbstractPZParser(InputStream dataSourceStream) {
+    protected AbstractPZParser(final InputStream dataSourceStream) {
         this.dataSourceStream = dataSourceStream;
     }
 
-    protected AbstractPZParser(File dataSource, String dataDefinition) {
+    protected AbstractPZParser(final File dataSource, final String dataDefinition) {
         this.dataSource = dataSource;
         this.dataDefinition = dataDefinition;
     }
 
-    protected AbstractPZParser(InputStream dataSourceStream, String dataDefinition) {
+    protected AbstractPZParser(final InputStream dataSourceStream, final String dataDefinition) {
         this.dataSourceStream = dataSourceStream;
         this.dataDefinition = dataDefinition;
     }
@@ -59,7 +88,7 @@ public abstract class AbstractPZParser implements PZParser {
      * 
      * @see net.sf.pzfilereader.PZParser#setHandlingShortLines(boolean)
      */
-    public void setHandlingShortLines(boolean handleShortLines) {
+    public void setHandlingShortLines(final boolean handleShortLines) {
         this.handlingShortLines = handleShortLines;
     }
 
@@ -89,7 +118,7 @@ public abstract class AbstractPZParser implements PZParser {
         return initialised;
     }
 
-    protected void setInitialised(boolean initialised) {
+    protected void setInitialised(final boolean initialised) {
         this.initialised = initialised;
     }
 
@@ -97,7 +126,7 @@ public abstract class AbstractPZParser implements PZParser {
         return dataDefinition;
     }
 
-    protected void setDataDefinition(String dataDefinition) {
+    protected void setDataDefinition(final String dataDefinition) {
         this.dataDefinition = dataDefinition;
     }
 
@@ -105,7 +134,7 @@ public abstract class AbstractPZParser implements PZParser {
         return dataSource;
     }
 
-    protected void setDataSource(File dataSource) {
+    protected void setDataSource(final File dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -113,7 +142,7 @@ public abstract class AbstractPZParser implements PZParser {
         return dataSourceStream;
     }
 
-    protected void setDataSourceStream(InputStream dataSourceStream) {
+    protected void setDataSourceStream(final InputStream dataSourceStream) {
         this.dataSourceStream = dataSourceStream;
     }
 
@@ -133,8 +162,8 @@ public abstract class AbstractPZParser implements PZParser {
      *            int errorLevel 1,2,3 1=warning 2=error 3= severe error
      */
     protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel) {
-        final DataError de = new DataError(errorDesc,lineNo,errorLevel);
+        final DataError de = new DataError(errorDesc, lineNo, errorLevel);
         ds.addError(de);
     }
-    
+
 }

@@ -41,39 +41,36 @@ import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.xml.XMLRecordElement;
 
 /**
- * Collection of parser utilities related to the parsing of
- * fixed width files.
+ * Collection of parser utilities related to the parsing of fixed width files.
  * 
  * @author paul zepernick
  */
 public class FixedWidthParserUtils {
-    private FixedWidthParserUtils(){        
+    private FixedWidthParserUtils() {
     }
-    
+
     /**
      * Splits up a fixed width line of text
      * 
      * @param columnMetaData
-     *          Collection of ColumnMetaData to parse the line
+     *            Collection of ColumnMetaData to parse the line
      * @param lineToParse
-     *          Line of text to be parsed against the ColumnMetaData
-     * @return List
-     *          Collection of Strings.  Each element representing a column
+     *            Line of text to be parsed against the ColumnMetaData
+     * @return List Collection of Strings. Each element representing a column
      */
-    public static List splitFixedText(final List columnMetaData, final String lineToParse){
+    public static List splitFixedText(final List columnMetaData, final String lineToParse) {
         final List splitResult = new ArrayList();
         int recPosition = 1;
         for (int i = 0; i < columnMetaData.size(); i++) {
-            final ColumnMetaData colMetaDataObj = (ColumnMetaData)columnMetaData.get(i);
-            final String tempValue = lineToParse.substring(recPosition - 1, recPosition
-                    + colMetaDataObj.getColLength() - 1);
+            final ColumnMetaData colMetaDataObj = (ColumnMetaData) columnMetaData.get(i);
+            final String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);
             recPosition += colMetaDataObj.getColLength();
             splitResult.add(tempValue.trim());
-        }   
-        
+        }
+
         return splitResult;
     }
-    
+
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
      * correct MetaData per the mapping file and the data contained on the line
