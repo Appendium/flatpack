@@ -154,8 +154,10 @@ public final class ParserUtils {
         // + this needs to be revisited...
         final String trimmed = sb.toString().trim();
         // remove the ending text qualifier if needed
-        if (qualifier > 0 && trimmed.length() > 0) {
+        //only if the last element was truly qualified
+        if (beginQualifier && qualifier > 0 && trimmed.length() > 0) {
             if (trimmed.charAt(trimmed.length() - 1) == qualifier) {
+                System.out.println(">>>>>>>Triming Off Qualifier");
                 final String s = trimmed.substring(0, trimmed.length() - 1);
                 sb.delete(0, sb.length());
                 sb.append(s);
