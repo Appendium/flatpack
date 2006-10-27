@@ -98,7 +98,9 @@ public class XMLRecordElement {
     }
 
     /**
-     * @return Returns the columns.
+     * @return List
+     *          Collection of ColumnMetaData objects
+     * @see net.sf.pzfilereader.structure.ColumnMetaData
      */
     public List getColumns() {
         return columns;
