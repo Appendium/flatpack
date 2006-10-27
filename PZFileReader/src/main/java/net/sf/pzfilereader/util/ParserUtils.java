@@ -157,7 +157,7 @@ public final class ParserUtils {
         //only if the last element was truly qualified
         if (beginQualifier && qualifier > 0 && trimmed.length() > 0) {
             if (trimmed.charAt(trimmed.length() - 1) == qualifier) {
-                System.out.println(">>>>>>>Triming Off Qualifier");
+               // System.out.println(">>>>>>>Triming Off Qualifier");
                 final String s = trimmed.substring(0, trimmed.length() - 1);
                 sb.delete(0, sb.length());
                 sb.append(s);
