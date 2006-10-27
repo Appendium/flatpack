@@ -15,6 +15,7 @@
 package net.sf.pzfilereader.xml;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,6 +30,7 @@ import net.sf.pzfilereader.util.ParserUtils;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 /**
@@ -75,9 +77,10 @@ public final class PZMapParser {
      * @param xmlStream
      * @return Map
      *           <records> with their corrisponding 
-     * @throws Exception
+     * @throws IOException 
+     * @throws JDOMException 
      */
-    public static Map parse(final InputStream xmlStream) throws Exception {
+    public static Map parse(final InputStream xmlStream) throws JDOMException, IOException {
         final SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         // handle the ability to pull DTD from Jar if needed
@@ -110,7 +113,7 @@ public final class PZMapParser {
             // value we are using to mark columns specified outside of a
             // <RECORD> element
             if (xmlElement.getAttributeValue("id").equals(PZConstants.DETAIL_ID)) {
-                throw new Exception("The ID 'detail' on the <RECORD> element is reserved, please select another id");
+                throw new IllegalArgumentException("The ID 'detail' on the <RECORD> element is reserved, please select another id");
             }
 
             columns = getColumnChildren(xmlElement);
@@ -145,7 +148,7 @@ public final class PZMapParser {
     }
 
     // helper to retrieve the "COLUMN" elements from the given parent
-    private static List getColumnChildren(final Element parent) throws Exception {
+    private static List getColumnChildren(final Element parent) {
         final List columnResults = new ArrayList();
         final Iterator xmlChildren = parent.getChildren("COLUMN").iterator();
 
@@ -155,7 +158,7 @@ public final class PZMapParser {
 
             // make sure the name attribute is present on the column
             if (xmlColumn.getAttributeValue("name") == null) {
-                throw new Exception("Name attribute is required on the column tag!");
+                throw new IllegalArgumentException("Name attribute is required on the column tag!");
             }
 
             cmd.setColName(xmlColumn.getAttributeValue("name"));
@@ -165,7 +168,7 @@ public final class PZMapParser {
                 try {
                     cmd.setColLength(Integer.parseInt(xmlColumn.getAttributeValue("length")));
                 } catch (final Exception ex) {
-                    throw new Exception("LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: "
+                    throw new IllegalArgumentException("LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: "
                             + xmlColumn.getAttributeValue("length"));
                 }
             }

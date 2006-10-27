@@ -59,7 +59,7 @@ public interface PZParserFactory {
      *            Name of dataDefinition in the DATAFILE table DATAFILE_DESC
      *            column
      */
-    PZParser newParser(final Connection con, final File dataSource, final String dataDefinition);
+    PZParser newFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition);
 
     /**
      * Constructs a new DataSet using the database table file layout method.
@@ -76,7 +76,7 @@ public interface PZParserFactory {
      *            Name of dataDefinition in the DATAFILE table DATAFILE_DESC
      *            column
      */
-    PZParser newParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition);
+    PZParser newFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition);
 
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is
@@ -87,7 +87,7 @@ public interface PZParserFactory {
      * @param dataSource -
      *            Delimited file to read from
      */
-    PZParser newParser(final File pzmapXML, final File dataSource);
+    PZParser newFixedLengthParser(final File pzmapXML, final File dataSource);
 
     /**
      * New constructor based on InputStream. Constructs a new DataSet using the
@@ -102,7 +102,7 @@ public interface PZParserFactory {
      *            Delimited file InputStream to read from, user must close them
      *            after use.
      */
-    PZParser newParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream);
+    PZParser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream);
 
     //
     //
