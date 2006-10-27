@@ -25,6 +25,8 @@ import java.util.Map;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.structure.Row;
+import net.sf.pzfilereader.util.FixedWidthParserUtils;
+import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.xml.PZMapParser;
 
@@ -36,11 +38,6 @@ import net.sf.pzfilereader.xml.PZMapParser;
  * goTop(), goBottom(), remove(), getIndex(), absolute(), orderRows()
  */
 public class LargeDataSet extends DataSet {
-
-    private static final String DELIMITED_FILE = "delimited";
-
-    private static final String FIXEDLENGTH_FILE = "fixed";
-
     private String fileType; // file type being parsed
 
     private BufferedReader br = null; // reader used to read the file
@@ -132,7 +129,7 @@ public class LargeDataSet extends DataSet {
     public LargeDataSet(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord, final boolean handleShortLines) throws Exception {
 
-        this.fileType = DELIMITED_FILE;
+        this.fileType = PZConstants.DELIMITED_FILE;
         this.is = dataSourceStream;
         this.isr = new InputStreamReader(is);
         this.br = new BufferedReader(this.isr);
@@ -254,7 +251,7 @@ public class LargeDataSet extends DataSet {
     public LargeDataSet(final InputStream dataSource, final char delimiter, final char qualifier, final boolean handleShortLines)
             throws Exception {
 
-        this.fileType = DELIMITED_FILE;
+        this.fileType = PZConstants.DELIMITED_FILE;
         setHandleShortLines(handleShortLines);
         this.is = dataSource;
         this.isr = new InputStreamReader(is);
@@ -280,7 +277,7 @@ public class LargeDataSet extends DataSet {
      */
     public LargeDataSet(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final boolean handleShortLines)
             throws Exception {
-        this.fileType = FIXEDLENGTH_FILE;
+        this.fileType = PZConstants.FIXEDLENGTH_FILE;
         this.is = dataSourceStream;
         this.isr = new InputStreamReader(is);
         this.br = new BufferedReader(this.isr);
@@ -297,7 +294,7 @@ public class LargeDataSet extends DataSet {
      */
     public boolean next() {
         try {
-            if (this.fileType.equals(DELIMITED_FILE)) {
+            if (this.fileType.equals(PZConstants.DELIMITED_FILE)) {
                 return readNextDelimited();
             }
 
@@ -408,7 +405,7 @@ public class LargeDataSet extends DataSet {
      * also close out the readers used to read the file in.
      */
     public void freeMemory() {
-        super.freeMemory();
+        //super.freeMemory();
 
         ParserUtils.closeReader(br);
         ParserUtils.closeReader(isr);
@@ -572,8 +569,13 @@ public class LargeDataSet extends DataSet {
 
     private boolean readNextFixedLen() throws Exception {
         String line = null;
-        final int aLineCount = 0; // +++++++++++++++++++++++++++++++++ Paul
-        // this does not seem incremented at all...
+        //final int aLineCount = 0; // +++++++++++++++++++++++++++++++++ Paul
+        // this does not seem incremented afaLineCountt all...
+        //********************************************************************
+        //Good point, and it is being used to report line errors.  Looks like a bug.  
+        //Should be using lineCount
+        //PZ
+        
         boolean readRecordOk = false;
 
         if (getRows() == null) {
@@ -596,7 +598,7 @@ public class LargeDataSet extends DataSet {
                 continue;
             }
 
-            final String mdkey = ParserUtils.getCMDKeyForFixedLengthFile(getColumnMD(), line);
+            final String mdkey = FixedWidthParserUtils.getCMDKey(getColumnMD(), line);
             final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
             final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
 
@@ -604,7 +606,7 @@ public class LargeDataSet extends DataSet {
             // included in the
             // dataset
             if (line.length() > recordLength) {
-                addError("LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, aLineCount, 2);
+                addError("LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, this.lineCount, 2);
                 continue;
             } else if (line.length() < recordLength) {
                 if (isHandleShortLines()) {
@@ -612,25 +614,27 @@ public class LargeDataSet extends DataSet {
                     line += ParserUtils.padding(recordLength - line.length(), ' ');
 
                     // log a warning
-                    addError("PADDED LINE TO CORRECT RECORD LENGTH", aLineCount, 1);
+                    addError("PADDED LINE TO CORRECT RECORD LENGTH", this.lineCount, 1);
                 } else {
-                    addError("LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, aLineCount, 2);
+                    addError("LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, this.lineCount, 2);
                     continue;
                 }
             }
 
-            int recPosition = 1;
+            //int recPosition = 1;
             final Row row = new Row();
             row.setMdkey(mdkey.equals("detail") ? null : mdkey); // try to
             // limit the memory use
+            
             // Build the columns for the row
-            for (int i = 0; i < cmds.size(); i++) {
-                final String tempValue = line.substring(recPosition - 1, recPosition
-                        + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
-                recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
-                row.addColumn(tempValue.trim());
-            }
-            row.setRowNumber(aLineCount);
+            row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
+            //for (int i = 0; i < cmds.size(); i++) {
+            //    final String tempValue = line.substring(recPosition - 1, recPosition
+            //            + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
+            //    recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
+            //    row.addColumn(tempValue.trim());
+           // }
+            row.setRowNumber(this.lineCount);
             // add the row to the array
             getRows().add(row);
 
