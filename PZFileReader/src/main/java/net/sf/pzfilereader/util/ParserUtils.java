@@ -1,16 +1,16 @@
 /*
  Copyright 2006 Paul Zepernick
 
- Licensed under the Apache License, Version 2.0 (the "License"); 
- you may not use this file except in compliance with the License. 
- You may obtain a copy of the License at 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
- http://www.apache.org/licenses/LICENSE-2.0 
+ http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software distributed 
- under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
- CONDITIONS OF ANY KIND, either express or implied. See the License for 
- the specific language governing permissions and limitations under the License.  
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ CONDITIONS OF ANY KIND, either express or implied. See the License for
+ the specific language governing permissions and limitations under the License.
  */
 package net.sf.pzfilereader.util;
 
@@ -60,9 +60,9 @@ public final class ParserUtils {
      * empty. There should not be any line breaks in the string. Each line of
      * the file should be passed in individually.
      * Elements which are not qualified will have leading and trailing white
-     * space removed.  This includes unqualified elements, which may be 
+     * space removed.  This includes unqualified elements, which may be
      * contained in an unqualified parse: "data",  data  ,"data"
-     * 
+     *
      * @param line -
      *            String of data to be parsed
      * @param delimiter -
@@ -73,7 +73,6 @@ public final class ParserUtils {
      */
     public static List splitLine(String line, final char delimiter, final char qualifier) {
         final ArrayList list = new ArrayList();
-        // String temp = "";
         boolean beginQualifier = false;
         // this will be used for delimted files that have some items qualified
         // and some items dont
@@ -87,7 +86,6 @@ public final class ParserUtils {
             // line which has not yet been read
             // check to see if there is a text qualifier
             final char currentChar = line.charAt(i);
-            // final String currentString = String.valueOf(currentChar);
             if (qualifier > 0) {
                 if (currentChar == qualifier && !beginQualifier && !beginNoQualifier) {
                     // begining of a set of data
@@ -96,12 +94,10 @@ public final class ParserUtils {
                         && lTrim(remainderOfLine).charAt(0) != qualifier) {
                     // try to account for empty space before qualifier starts
                     // we have not yet begun a qualifier and the char we are on
-                    // is NOT
-                    // a qualifier. Start reading data
+                    // is NOT a qualifier. Start reading data
                     beginNoQualifier = true;
                     // make sure that this is not just an empty column with no
-                    // qualifiers. ie
-                    // "data",,"data"
+                    // qualifiers. ie "data",,"data"
                     if (currentChar == delimiter) {
                         list.add(sb.toString());
                         sb.delete(0, sb.length());
@@ -119,8 +115,7 @@ public final class ParserUtils {
                     sb.delete(0, sb.length());
                     beginQualifier = false;
                     // add to "i" so we can get past the qualifier, otherwise it
-                    // is read into a set
-                    // of data which
+                    // is read into a set of data which
                     // may not be qualified. Find out how many spaces to the
                     // delimiter
                     final int offset = getDelimiterOffset(line, i, delimiter) - 1;
@@ -133,9 +128,9 @@ public final class ParserUtils {
                     }
                 } else if (beginNoQualifier && currentChar == delimiter) {
                     // check to see if we are done with an element that was not
-                    // being qulified
-                    //remove the space from the front and back of unqualified 
-                    //elements
+                    // being qualified
+                    // remove the space from the front and back of unqualified
+                    // elements
                     list.add(lTrim(sb.toString().trim()));
                     sb.delete(0, sb.length());
                     beginNoQualifier = false;
@@ -148,7 +143,7 @@ public final class ParserUtils {
             } else {
                 // not using a qualifier. Using a delimiter only
                 if (currentChar == delimiter) {
-                    //remove the space from the front and back of unqualified 
+                    //remove the space from the front and back of unqualified
                     //elements
                     list.add(lTrim(sb.toString().trim()));
                     sb.delete(0, sb.length());
@@ -193,42 +188,23 @@ public final class ParserUtils {
     /**
      * reads from the specified point in the line and returns how many chars to
      * the specified delimter
-     * 
+     *
      * @param line
      * @param start
      * @param delimiter
      * @return int
      */
-
     public static int getDelimiterOffset(final String line, final int start, final char delimiter) {
         int idx = line.indexOf(delimiter, start);
         if (idx >= 0) {
-            // idx++;
-            // idx-=start;
             idx -= start - 1;
         }
         return idx;
-
-        // int offset = 0;
-        // for (int i = start; i < line.length(); i++) {
-        // offset++;
-        // if (line.substring(i, i + 1).equals(delimiter)) {
-        // if (offset != idx) {
-        // System.out.println("String [" + line + "] start:" + start + "(" +
-        // line.charAt(start) + ") delim ["
-        // + delimiter + "] length:" + delimiter.length() + " Old:" + offset + "
-        // new:" + idx);
-        // }
-        //
-        // return offset;
-        // }
-        // }
-        // return -1;
     }
 
     /**
      * Removes empty space from the begining of a string
-     * 
+     *
      * @param value -
      *            to be trimmed
      * @return String
@@ -246,27 +222,11 @@ public final class ParserUtils {
         }
 
         return trimmed;
-        //        
-        //        
-        // final StringBuffer returnVal = new StringBuffer();
-        // boolean gotAChar = false;
-        //
-        // for (int i = 0; i < value.length(); i++) {
-        // if (value.substring(i, i + 1).trim().length() == 0 && !gotAChar) {
-        // continue;
-        // } else {
-        // gotAChar = true;
-        // returnVal.append(value.substring(i, i + 1));
-        // }
-        // }
-        //
-        // return returnVal.toString();
-        //
     }
 
     /**
      * Removes empty space from the begining of a string, except for tabs
-     * 
+     *
      * @param value -
      *            to be trimmed
      * @return String
@@ -284,26 +244,11 @@ public final class ParserUtils {
         }
 
         return trimmed;
-        // final StringBuffer returnVal = new StringBuffer();
-        // boolean gotAChar = false;
-        //
-        // for (int i = 0; i < value.length(); i++) {
-        // if (!value.substring(i, i + 1).equals("\t") && value.substring(i, i +
-        // 1).trim().length() == 0 && !gotAChar) {
-        // continue;
-        // } else {
-        // gotAChar = true;
-        // returnVal.append(value.substring(i, i + 1));
-        // }
-        // }
-        //
-        // return returnVal.toString();
-
     }
 
     /**
      * Removes a single string character from a given string
-     * 
+     *
      * @param character -
      *            string char
      * @param theString -
@@ -320,23 +265,13 @@ public final class ParserUtils {
         }
 
         return s.toString();
-        // final StringBuffer s = new StringBuffer();
-        // for (int i = 0; i < theString.length(); i++) {
-        // if (theString.substring(i, i + 1).equalsIgnoreCase(character)) {
-        // continue;
-        // }
-        // s.append(theString.substring(i, i + 1));
-        // }
-        //
-        // return s.toString();
-
     }
 
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited
      * files. The first line of the file which contains data will be used as the
      * column names
-     * 
+     *
      * @param theStream
      * @param delimiter
      * @param qualifier
@@ -357,8 +292,6 @@ public final class ParserUtils {
         try {
             isr = new InputStreamReader(theStream);
             br = new BufferedReader(isr);
-            // fr = new FileReader(theFile);
-            // br = new BufferedReader(fr);
 
             while ((line = br.readLine()) != null) {
                 if (line.trim().length() == 0) {
@@ -395,7 +328,7 @@ public final class ParserUtils {
      * Returns a list of ColumnMetaData objects. This is for use with delimited
      * files. The first line of the file which contains data will be used as the
      * column names
-     * 
+     *
      * @param line
      * @param delimiter
      * @param qualifier
@@ -424,7 +357,7 @@ public final class ParserUtils {
      * Returns a list of ColumnMetaData objects. This is for use with delimited
      * files. The first line of the file which contains data will be used as the
      * column names
-     * 
+     *
      * @param theFile
      * @param delimiter
      * @param qualifier
@@ -490,7 +423,7 @@ public final class ParserUtils {
 
     /**
      * Determines if the given line is the first part of a multiline record
-     * 
+     *
      * @param chrArry -
      *            char data of the line
      * @param delimiter -
@@ -506,7 +439,7 @@ public final class ParserUtils {
 
     /**
      * Determines if the given line is the first part of a multiline record
-     * 
+     *
      * @param chrArry -
      *            char data of the line
      * @param delimiter -
@@ -531,8 +464,7 @@ public final class ParserUtils {
                         continue;
                     } else {
                         // not a space, if this char is the delimiter, then we
-                        // have a line break
-                        // in the record
+                        // have a line break in the record
                         if (chrArry[i] == delimiter) {
                             return true;
                         }
@@ -541,9 +473,8 @@ public final class ParserUtils {
                     }
                 } else if (chrArry[i] == delimiter) {
                     // if we have a delimiter followed by a qualifier, then we
-                    // have moved on
-                    // to a new element and this could not be multiline. start a
-                    // new loop here in case there is
+                    // have moved on to a new element and this could not be multiline.
+                    // start a new loop here in case there is
                     // space between the delimiter and qualifier
                     for (int j = i - 1; j >= 0; j--) {
                         if (chrArry[j] == ' ') {
@@ -585,7 +516,7 @@ public final class ParserUtils {
     /**
      * Returns a map with the MD id's and their record lengths. This is used for
      * fixed length parsing
-     * 
+     *
      * @param columnMD
      * @return Map
      */
@@ -618,13 +549,13 @@ public final class ParserUtils {
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
      * correct MetaData per the mapping file and the data contained on the line
-     * 
-     * 
+     *
+     *
      * @param columnMD
      * @param line
      * @return List - ColumMetaData
      * @deprecated Moved to FixedWidthParserUtils.getCMDKey()
-     * 
+     *
      */
     public static String getCMDKeyForFixedLengthFile(final Map columnMD, final String line) {
         if (columnMD.size() == 1) {
@@ -666,8 +597,8 @@ public final class ParserUtils {
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
      * correct MetaData per the mapping file and the data contained on the line
-     * 
-     * 
+     *
+     *
      * @param columnMD
      * @param lineElements
      * @return List - ColumMetaData
@@ -707,7 +638,7 @@ public final class ParserUtils {
 
     /**
      * Returns a list of ColumMetaData objects for the given key
-     * 
+     *
      * @param key
      * @param columnMD
      * @return List
@@ -722,7 +653,7 @@ public final class ParserUtils {
 
     /**
      * Use this method to find the index of a column.
-     * 
+     *
      * @author Benoit Xhenseval
      * @param key
      * @param columnMD
@@ -753,7 +684,7 @@ public final class ParserUtils {
 
     /**
      * Create an InputStream based on a File.
-     * 
+     *
      * @param file
      *            The file.
      * @return the InputStream.
@@ -763,22 +694,14 @@ public final class ParserUtils {
         if (file == null) {
             throw new IllegalArgumentException("null not allowed");
         }
-        // if (!file.exists()) {
-        // throw new FileNotFoundException("file does not exist " +
-        // file.getAbsolutePath());
-        // }
-        // if (!file.canRead()) {
-        // throw new FileNotFoundException("file cannot be read " +
-        // file.getAbsolutePath());
-        // }
         return new FileInputStream(file);
     }
 
     /**
      * Closes the given reader
-     * 
+     *
      * @param reader
-     * 
+     *
      */
     public static void closeReader(final Reader reader) {
         try {
@@ -789,9 +712,9 @@ public final class ParserUtils {
 
     /**
      * Closes the given reader
-     * 
+     *
      * @param reader
-     * 
+     *
      */
     public static void closeReader(final InputStream reader) {
         try {
@@ -804,13 +727,13 @@ public final class ParserUtils {
      * <p>
      * Returns padding using the specified delimiter repeated to a given length.
      * </p>
-     * 
+     *
      * <pre>
      *                StringUtils.padding(0, 'e')  = &quot;&quot;
      *                StringUtils.padding(3, 'e')  = &quot;eee&quot;
      *                StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
      * </pre>
-     * 
+     *
      * <p>
      * Note: this method doesn't not support padding with <a
      * href="http://www.unicode.org/glossary/#supplementary_character">Unicode
@@ -818,7 +741,7 @@ public final class ParserUtils {
      * to be represented. If you are needing to support full I18N of your
      * applications consider using {@link #repeat(String, int)} instead.
      * </p>
-     * 
+     *
      * @param repeat
      *            number of times to repeat delim
      * @param padChar
@@ -841,7 +764,7 @@ public final class ParserUtils {
 
     /**
      * Build a map of name/position based on a list of ColumnMetaData.
-     * 
+     *
      * @author Benoit Xhenseval
      * @param columns
      * @return a new Map
@@ -853,8 +776,6 @@ public final class ParserUtils {
             int idx = 0;
             for (final Iterator it = columns.iterator(); it.hasNext(); idx++) {
                 final ColumnMetaData meta = (ColumnMetaData) it.next();
-                // map.put(meta.getColName(), Integer.valueOf(idx)); breaks 1.4
-                // compile
                 map.put(meta.getColName(), new Integer(idx));
             }
         }
