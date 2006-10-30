@@ -131,7 +131,9 @@ public final class ParserUtils {
                 } else if (beginNoQualifier && currentChar == delimiter) {
                     // check to see if we are done with an element that was not
                     // being qulified
-                    list.add(sb.toString());
+                    //remove the space from the front and back of unqualified 
+                    //elements
+                    list.add(lTrim(sb.toString().trim()));
                     sb.delete(0, sb.length());
                     beginNoQualifier = false;
                 } else if (beginNoQualifier || beginQualifier) {
@@ -143,7 +145,9 @@ public final class ParserUtils {
             } else {
                 // not using a qualifier. Using a delimiter only
                 if (currentChar == delimiter) {
-                    list.add(sb.toString());
+                    //remove the space from the front and back of unqualified 
+                    //elements
+                    list.add(lTrim(sb.toString().trim()));
                     sb.delete(0, sb.length());
                 } else {
                     sb.append(currentChar);
@@ -173,7 +177,7 @@ public final class ParserUtils {
             // check to see if we need to add the last column in..this will
             // happen on empty columns
             // add the last column
-            list.add(sb.toString());
+            list.add(beginNoQualifier ? lTrim(sb.toString().trim()) : sb.toString());
         }
 
         sb = null;
