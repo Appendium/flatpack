@@ -123,7 +123,9 @@ public class ParserUtilsSplitLineTest extends TestCase {
         //TODO - I believe this should be producing 2 elements.  As soon as their is a 
         //delimter followed by a qualifier a new element shoudl be created
         //+++Any thoughts Benoit?
-        check("\"a, b,\"c\"", ',', '\"', new String[] {"a, b", "c"});
+        check("\"a, b,\"c\"", ',', '\"', new String[] {"a, b,\"c"});
+        check("\"\",,,,\"last one\"", ',', '\"', new String[] {"","","","","last one"});
+        check("\"first\",\"second\",", ',', '\"', new String[] {"first","second",""});
 
     }
 
