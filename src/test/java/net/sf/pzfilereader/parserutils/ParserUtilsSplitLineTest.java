@@ -113,15 +113,17 @@ public class ParserUtilsSplitLineTest extends TestCase {
         //2 = b
         //3 = c" --> same as #1
         check("a\",b,c\"", ',', '\"', new String[] { "a\"", "b", "c\"" });
-        
-        
-        
-        check("\"  a,b,c\"", ',', '\"', new String[] { "a,b,c" });
-        //check("  a, b ,c ", ',', '\"', new String[] { "a","b","c" });
-        //++++++I think this should probably generate this
-        check("  a, b ,c ", ',', '\"', new String[] { "a, b ,c" });
+        //should not trim leading space inside of a qualified element       
+        check("\"  a,b,c\"", ',', '\"', new String[] { "  a,b,c" });
+        check("  a, b ,c ", ',', '\"', new String[] { "a","b","c" });
 
         // Paul... please put some more whacky stuff here...
+        check("\"a\",     b  ,    \"c\"", ',', '\"', new String[] {"a","b","c"});
+        //check malformed data
+        //TODO - I believe this should be producing 2 elements.  As soon as their is a 
+        //delimter followed by a qualifier a new element shoudl be created
+        //+++Any thoughts Benoit?
+        check("\"a, b,\"c\"", ',', '\"', new String[] {"a, b", "c"});
 
     }
 
