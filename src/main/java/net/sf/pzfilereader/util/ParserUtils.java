@@ -59,6 +59,9 @@ public final class ParserUtils {
      * qualifier around the text, the qualifier parameter can be left null, or
      * empty. There should not be any line breaks in the string. Each line of
      * the file should be passed in individually.
+     * Elements which are not qualified will have leading and trailing white
+     * space removed.  This includes unqualified elements, which may be 
+     * contained in an unqualified parse: "data",  data  ,"data"
      * 
      * @param line -
      *            String of data to be parsed
