@@ -46,8 +46,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             // check to make sure we have the same amount of elements which were
             // expected
-            assertEquals("Did Not Get Amount Of Elements Expected (d = [" + d + "] q = [" + q + "] txt [" + txtToParse + "])",
-                    DELIMITED_DATA_NO_BREAKS.length, splitLineResults.size());
+            assertEquals("Expected size (d = [" + d + "] q = [" + (q != 0 ? String.valueOf(q) : "") + "] txt [" + txtToParse
+                    + "])", DELIMITED_DATA_NO_BREAKS.length, splitLineResults.size());
 
             // loop through each value and compare what came back
             for (int j = 0; j < DELIMITED_DATA_NO_BREAKS.length; j++) {
@@ -103,21 +103,26 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("\"a,b\",\"c\"", ',', '\"', new String[] { "a,b", "c" });
         check("a,b,c", ',', '\"', new String[] { "a", "b", "c" });
         check("  a,b,c", ',', '\"', new String[] { "a", "b", "c" });
-        check("  a,b,c", ',', '\"', new String[] { "a","b","c" });
-        
+        check("  a,b,c", ',', '\"', new String[] { "a", "b", "c" });
+
+        // example typically from Excel.
+        check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\"', new String[] { "test1", "test2", "0.00",
+                "another, element here", "lastone" });
+
         // what would you expect of these ones?
-        
-        //+++++The parser allows qualified and unqualified elements to be contained
-        //on the same line.  so it should break the elements down like so
-        //1 = a" -->" is part of the data since the element did not start with a qualifier
-        //2 = b
-        //3 = c" --> same as #1
+
+        // +++++The parser allows qualified and unqualified elements to be
+        // contained
+        // on the same line. so it should break the elements down like so
+        // 1 = a" -->" is part of the data since the element did not start with
+        // a qualifier
+        // 2 = b
+        // 3 = c" --> same as #1
+        // a",b,c"
         check("a\",b,c\"", ',', '\"', new String[] { "a\"", "b", "c\"" });
         //should not trim leading space inside of a qualified element       
         check("\"  a,b,c\"", ',', '\"', new String[] { "  a,b,c" });
         check("  a, b ,c ", ',', '\"', new String[] { "a","b","c" });
-
-        // Paul... please put some more whacky stuff here...
         check("\"a\",     b  ,    \"c\"", ',', '\"', new String[] {"a","b","c"});
         //check malformed data
         //TODO - I believe this should be producing 2 elements.  As soon as their is a 
@@ -126,6 +131,37 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("\"a, b,\"c\"", ',', '\"', new String[] {"a, b,\"c"});
         check("\"\",,,,\"last one\"", ',', '\"', new String[] {"","","","","last one"});
         check("\"first\",\"second\",", ',', '\"', new String[] {"first","second",""});
+
+    }
+
+    /**
+     * Test some extreme cases
+     */
+    public void testSomeExtremeCases2() {
+        check("\"a,b,c\"", ',', '\'', new String[] { "\"a", "b", "c\"" });
+        check("\"a,b\",\"c\"", ',', '\'', new String[] { "\"a", "b\"", "\"c\"" });
+        check("a,b,c", ',', '\'', new String[] { "a", "b", "c" });
+        check("  a,b,c", ',', '\'', new String[] { "a", "b", "c" });
+        check("  a,b,c", ',', '\'', new String[] { "a", "b", "c" });
+
+        // example typically from Excel.
+        check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\'', new String[] { "\"test1\"", "test2",
+                "\"0.00\"", "\"another", "element here\"", "lastone" });
+
+        // what would you expect of these ones?
+
+        // +++++The parser allows qualified and unqualified elements to be
+        // contained
+        // on the same line. so it should break the elements down like so
+        // 1 = a" -->" is part of the data since the element did not start with
+        // a qualifier
+        // 2 = b
+        // 3 = c" --> same as #1
+        // a",b,c"
+        check("a\",b,c\"", ',', '\'', new String[] { "a\"", "b", "c\"" });
+
+        check("\"  a,b,c\"", ',', '\'', new String[] { "\"  a", "b", "c\"" });
+        check("  a, b ,c ", ',', '\'', new String[] { "a", "b", "c" });
 
     }
 
