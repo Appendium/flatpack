@@ -8,6 +8,9 @@ package net.sf.pzfilereader.examples.fixedlengthdynamiccolumns;
 import java.io.File;
 
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 
 /**
  * @author zepernick
@@ -32,12 +35,11 @@ public class FixedLengthWithPZMap {
     }
 
     public static void call(String mapping, String data) throws Exception {
-        DataSet ds = null;
-        String[] colNames = null;
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newFixedLengthParser(
+                new File(mapping), new File(data));
+        final IDataSet ds = pzparser.parse();
 
-        ds = new DataSet(new File(mapping), new File(data), false);
-
-        colNames = ds.getColumns();
+        final String[] colNames = ds.getColumns();
 
         while (ds.next()) {
             for (int i = 0; i < colNames.length; i++) {

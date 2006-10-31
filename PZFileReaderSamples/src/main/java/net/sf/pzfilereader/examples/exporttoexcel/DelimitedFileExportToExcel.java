@@ -9,8 +9,12 @@ import java.io.File;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
+import net.sf.pzfilereader.util.ExcelTransformer;
 
 /**
  * @author zepernick
@@ -35,16 +39,15 @@ public class DelimitedFileExportToExcel {
     }
 
     public static void call(String mapping, String data) throws Exception {
-        DataSet ds = null;
-        OrderBy orderby = null;
-
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(mapping), new File(data), ',', '"', true, false);
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(mapping), 
+                new File(data), ',', '"', true);
+        final IDataSet ds = pzparser.parse();
 
         // re order the data set by last name
-        orderby = new OrderBy();
+        final OrderBy orderby = new OrderBy();
         orderby.addOrderColumn(new OrderColumn("CITY", false));
         orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
         ds.orderRows(orderby);
@@ -56,9 +59,10 @@ public class DelimitedFileExportToExcel {
             }
         }
 
-        // lets write this file out to excel :)
+        // lets write this file out to excel
         File xlFile = new File("MyExcelExport.xls");
-        ds.writeToExcel(xlFile);
+        final ExcelTransformer xlTransformer = new ExcelTransformer(ds, xlFile);
+        xlTransformer.writeExcelFile();
         System.out.println("Excel Workbook Written To: " + xlFile.getAbsolutePath());
 
     }

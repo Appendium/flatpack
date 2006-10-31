@@ -10,6 +10,9 @@ import java.util.Iterator;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 
 /**
  * @author zepernick
@@ -34,11 +37,11 @@ public class FixedLengthHeaderAndTrailer {
     }
 
     public static void call(String mapping, String data) throws Exception {
-        DataSet ds = null;
         Iterator errors = null;
         DataError dataError = null;
-
-        ds = new DataSet(new File(mapping), new File(data), false);
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newFixedLengthParser(new File(mapping),
+                new File(data));
+        final IDataSet ds = pzparser.parse();
 
         while (ds.next()) {
 

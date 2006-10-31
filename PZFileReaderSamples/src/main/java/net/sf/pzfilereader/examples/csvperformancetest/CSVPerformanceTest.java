@@ -8,6 +8,9 @@ import java.util.Map;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 
 /*
  * Created on Dec 1, 2005
@@ -42,16 +45,17 @@ public class CSVPerformanceTest {
     }
 
     public static void call(String filename, boolean verbose, boolean traverse) throws Exception, InterruptedException {
-        DataSet ds = null;
         String[] colNames = null;
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
         System.out.println("Parsing....");
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(filename), 
+                ',', '"');
         long timeStarted = System.currentTimeMillis();
-        ds = new DataSet(new File(filename), ',', '"', false);
+        final IDataSet ds = pzparser.parse();
         long timeFinished = System.currentTimeMillis();
-
+        
         String timeMessage = "";
 
         if (timeFinished - timeStarted < 1000) {

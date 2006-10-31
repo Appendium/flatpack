@@ -9,7 +9,6 @@
     
   </head>
   <%
-  	DataSet ds = null;
 	OrderBy order = null;
 	try{  
   
@@ -23,13 +22,10 @@
 	   	mappingFile  = new File (appDirectory + "/PEOPLE.pzmap.xml");
 	   	txtFile = new File (appDirectory + "/PEOPLE.txt");
 	   	
-	  	//read in the file a
-	  	ds = new DataSet(mappingFile, //mapping file here
-	  					 txtFile, //text file that is being parsed
-	    				',', //how the file is delimited
-	  					0, //if the text is qualified, pass the qualifier here, otherwise leave empty
-	  					false,  //ignore the first row in the file if it contain column names
-                        false); //don't auto add missing columns, log them as errors
+	  	//read in the file
+	  	final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(mappingFile, 
+	  					txtFile, ',', 0, false)	;
+	  	final IDataSet ds = pzparser.parse();
 	  					
 	  					
 	  //check to see if there is a paramter in the request that is telling us what column to sort by
