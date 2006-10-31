@@ -4,6 +4,7 @@
 package net.sf.pzfilereader.util;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,11 +22,13 @@ public class RegExParser {
      * third a null field.
      */
     public static final String CSV_PATTERN = "\"(.*?)\",|(\\w+),|\"(.*?)\"|(\\w+),|,";
+    public static final String CSV_PATTERN2 = "([^\"]+?),|\"(.*?)\",|(\\w+),|\"(.*?)\"|(\\w+)";
+
     public static final String ORIGINAL_CSV_PATTERN = "\"([^\"]+?)\",?|([^,]+),?|,";
 
     // public static final String CSV_PATTERN = "\"([^\"]+?)\",?|([^,]+),?|,";
 
-//    private static Pattern csvRE = Pattern.compile(CSV_PATTERN);
+    // private static Pattern csvRE = Pattern.compile(CSV_PATTERN);
 
     public static List splitLine(String line, final char delimiter, char qualifier) {
         StringBuilder patternBuilder = new StringBuilder();
@@ -68,11 +71,21 @@ public class RegExParser {
 
         String pat = patternBuilder.toString();
 
+        pat = CSV_PATTERN2;
+        
         System.out.println(pat);
+        System.out.println("Input: [" + line + "]");
 
         Pattern pattern = Pattern.compile(pat);
 
-        return parse(pattern, line, String.valueOf(delimiter), String.valueOf(qualifier));
+        List l = parse(pattern, line, String.valueOf(delimiter), String.valueOf(qualifier));
+
+        int u = 1;
+        for (Iterator i = l.iterator(); i.hasNext(); u++) {
+            System.out.println(u + "/" + l.size() + " -- [" + i.next() + "]");
+        }
+
+        return l;
     }
 
     private static String escapeIfRequired(final char c) {
@@ -104,6 +117,9 @@ public class RegExParser {
             if (match.startsWith(qualifier)) { // assume also ends with
                 match = match.substring(1, match.length() - 1);
             }
+            
+            match = match.trim();
+            
             if (match.length() == 0)
                 match = null;
             list.add(match);

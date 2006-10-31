@@ -102,7 +102,9 @@ public class RegExParserTest extends TestCase {
     public void testSomeExtremeCases() {
         check("\"a,b,c\"", ',', '\"', new String[] { "a,b,c" });
         check("\"a,b\",\"c\"", ',', '\"', new String[] { "a,b", "c" });
+        check("\"a , b\",\"c\"", ',', '\"', new String[] { "a , b", "c" });
         check("a,b,c", ',', '\"', new String[] { "a", "b", "c" });
+        check("a b,c", ',', '\"', new String[] { "a b", "c" });
         check("  a,b,c", ',', '\"', new String[] { "a", "b", "c" });
         check("  a,b,c", ',', '\"', new String[] { "a", "b", "c" });
 
@@ -127,7 +129,7 @@ public class RegExParserTest extends TestCase {
     }
 
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
-        final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier);
+        final List splitLineResults = RegExParser.splitLine(txtToParse, delim, qualifier);
 
         assertEquals(
                 "Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]",
