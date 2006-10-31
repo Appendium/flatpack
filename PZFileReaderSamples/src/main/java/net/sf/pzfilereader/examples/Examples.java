@@ -252,11 +252,11 @@ public class Examples implements Repeater {
 
     public void doTestParsers() {
         final int repeat = ConsoleMenu.getInt("How many times?", 1000);
-        final int characters = ConsoleMenu.getInt("How many columns?", 100);
+        final int numberOfCols = ConsoleMenu.getInt("How many columns?", 100);
         final boolean qualif = ConsoleMenu.getBoolean("With qualifier?", true);
 
         StringBuilder aRow = new StringBuilder();
-        for (int i = 0; i < characters; i++) {
+        for (int i = 0; i < numberOfCols; i++) {
             if (qualif) {
                 aRow.append("\"");
             }
@@ -277,13 +277,20 @@ public class Examples implements Repeater {
         System.out.println("ParserUtil " + (stop - start) + " ms.");
 
         start = System.currentTimeMillis();
-        StringBuffer sb = new StringBuffer();
         for (int i = 0; i < repeat; i++) {
-            BXParser.splitLine(line, ',', '\"');
+            BXParser.splitLine(line, ',', '\"', numberOfCols);
         }
         stop = System.currentTimeMillis();
 
         System.out.println("BXParser " + (stop - start) + " ms.");
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < repeat; i++) {
+            BXParser.splitLineWithBuf(line, ',', '\"', numberOfCols);
+        }
+        stop = System.currentTimeMillis();
+
+        System.out.println("BXParser with buf " + (stop - start) + " ms.");
 
     }
 
