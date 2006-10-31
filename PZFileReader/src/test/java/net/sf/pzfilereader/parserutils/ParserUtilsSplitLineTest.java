@@ -128,7 +128,9 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("\"first\",\"second\",", ',', '\"', new String[] { "first", "second", null });
         check("\"  a,b,c\"", ',', '\"', new String[] { "  a,b,c" });
         check("\"  a,b,c\",d", ',', '\"', new String[] { "  a,b,c", "d" });
-        check("\"a, b,\"\"c\"", ',', '\"', new String[] { "a, b,\"c" });
+        //++++looks like both quotes should be returned in the result here.  
+        //let me know if I am wrong. pz
+        check("\"a, b,\"\"c\"", ',', '\"', new String[] { "a, b,\"\"c" });
     }
 
     /**
