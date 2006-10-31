@@ -1,0 +1,114 @@
+<document>
+  <properties>
+    <title>Parsing Examples</title>
+  </properties>
+  <head>
+    <meta name="description"
+	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	/>
+
+    <meta name="keywords" content="CSV, Fixed length file parser" />
+    <meta name="Subject" content="Date Calculators" />
+    <meta name="Copyright" content="ObjectLab Financial Ltd" />
+    <meta name="Language" content="English" />
+    <meta name="Designer" content="ObjectLab Financial Ltd" />
+    <meta name="Distribution" content="Global" />
+    <meta name="robots" content="ALL"/>
+    <meta name="Revisit-After" content="20 Days" />
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="Parsing Examples">
+    
+    <p>We thought that a few explicit examples would be good...The idea is to make our parsing extremely robust and flexible.</p>
+    
+    <subsection name="Delimiter Parsing">
+    <p>Our library is very flexible and lets you define both the delimiter character and the qualifier.  The qualifier is character that <strong>may</strong>
+    surround your element.  Typically this would be a " in Excel, but Excel may <strong>not</strong> surround every element with it. Here are some examples:</p>
+    
+    <table>
+    	<tr><th>Delimiter</th><th>Qualifier</th><th>Input</th><th>Output</th></tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>"</td>
+    	  <td>a,b,c</td>
+    	  <td>3 elements: "a" "b" "c"</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>"</td>
+    	  <td>"a,b,c"</td>
+    	  <td>1 element: "a,b,c"</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>"</td>
+    	  <td>"a,b","c"</td>
+    	  <td>2 elements: "a,b" "c"</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>"</td>
+    	  <td>  a,b,c</td>
+    	  <td>3 elements: "a" "b" "c"</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>"</td>
+    	  <td>a",b,c"</td>
+    	  <td>1 element: a",b,c"</td>
+    	</tr>    	
+    	<tr>
+    	  <td>,</td>
+    	  <td>"</td>
+    	  <td>"test1",test2,"0.00","another, element here",lastone</td>
+    	  <td>5 elements: "test1" "test2" "0.00" "another, element here" "lastone"</td>
+    	</tr>
+
+    	<tr>
+    	  <td>,</td>
+    	  <td>'</td>
+    	  <td>a,b,c</td>
+    	  <td>3 elements: "a" "b" "c"</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>'</td>
+    	  <td>"a,b,c"</td>
+    	  <td>3 elements: ""a" "b" "c""</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>'</td>
+    	  <td>"a,b","c"</td>
+    	  <td>2 elements: ""a,b"" ""c""</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>'</td>
+    	  <td>  a,b,c</td>
+    	  <td>3 elements: "a" "b" "c"</td>
+    	</tr>
+    	<tr>
+    	  <td>,</td>
+    	  <td>'</td>
+    	  <td>a",b,c"</td>
+    	  <td>3 elements: "a"" "b" "c""</td>
+    	</tr>    	
+    	<tr>
+    	  <td>,</td>
+    	  <td>'</td>
+    	  <td>"test1",test2,"0.00","another, element here",lastone</td>
+    	  <td>6 elements: ""test1"" "test2" ""0.00"" ""another" "element here\"" "lastone"</td>
+    	</tr>
+    </table>
+    
+    </subsection>
+    
+    <subsection name="Fixed Width Parsing">
+    </subsection>
+    
+    </section>
+
+  </body>
+</document>

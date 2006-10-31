@@ -13,6 +13,8 @@
             href="multiproject/pzfilereader/index.html" />
          <item name="Documentation"
             href="documentation/index.html" />
+         <item name="Examples"
+            href="parsing.html" />
          <item name="History"
             href="history.html" />
          <item name="Features"
