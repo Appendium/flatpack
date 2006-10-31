@@ -9,6 +9,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 
 /**
  * @author zepernick
@@ -32,15 +35,15 @@ public class NumericsAndDates {
     }
 
     public static void call(String mapping, String data) throws Exception {
-        DataSet ds = null;
         // wll provide a clean format for printing the date to the screen
         final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(mapping), new File(data), ',', '"', true, false);
-
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(mapping), 
+                new File(data), ',', '\"', true);
+        final IDataSet ds = pzparser.parse();
         // demonstrates the casting abilities of PZFileReader
         while (ds.next()) {
             System.out.println("Item Desc: " + ds.getString("ITEM_DESC") + " (String)");

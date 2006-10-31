@@ -10,6 +10,9 @@ import java.util.Iterator;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
 
@@ -36,25 +39,19 @@ public class DelimitedWithPZMapErrors {
     }
 
     public static void call(String mapping, String data) throws Exception {
-
-        DataSet ds = null;
-        String[] colNames = null;
-        OrderBy orderby = null;
-        Iterator errors = null;
-        DataError dataError = null;
-
-        // delimited by a comma
+         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(mapping), new File(data), ',', '"', true, false);
-
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), 
+                ',', '"', true);
+        final IDataSet ds = pzparser.parse();
         // re order the data set by last name
-        orderby = new OrderBy();
+        final OrderBy orderby = new OrderBy();
         orderby.addOrderColumn(new OrderColumn("CITY", false));
         orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
         ds.orderRows(orderby);
 
-        colNames = ds.getColumns();
+        final String[] colNames = ds.getColumns();
 
         while (ds.next()) {
             
@@ -83,10 +80,9 @@ public class DelimitedWithPZMapErrors {
         }
 
         System.out.println(">>>>>>ERRORS!!!");
-        errors = ds.getErrors().iterator();
-
+        final Iterator errors = ds.getErrors().iterator();
         while (errors.hasNext()) {
-            dataError = (DataError) errors.next();
+            final DataError dataError = (DataError) errors.next();
 
             System.out.println("ERROR: " + dataError.getErrorDesc() + " LINE NUMBER: " + dataError.getLineNo());
         }

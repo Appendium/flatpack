@@ -8,6 +8,9 @@ package net.sf.pzfilereader.examples.multilinedelimitedrecord;
 import java.io.File;
 
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 
 /**
  * @author zepernick
@@ -32,14 +35,14 @@ public class DelimitedMultiLine {
     }
 
     public static void call(String data) throws Exception {
-        DataSet ds = null;
-        String[] colNames = null;
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File(data), ',', '"', false);
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(data),
+                ',', '\"');
+        final IDataSet ds = pzparser.parse();
 
-        colNames = ds.getColumns();
+        final String[] colNames = ds.getColumns();
 
         while (ds.next()) {
             for (int i = 0; i < colNames.length; i++) {
