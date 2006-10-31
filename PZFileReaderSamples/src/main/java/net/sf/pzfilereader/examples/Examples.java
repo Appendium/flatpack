@@ -19,6 +19,8 @@ import net.sf.pzfilereader.examples.largedataset.largecsvperformancetest.CSVLarg
 import net.sf.pzfilereader.examples.lowlevelparse.LowLevelParse;
 import net.sf.pzfilereader.examples.multilinedelimitedrecord.DelimitedMultiLine;
 import net.sf.pzfilereader.examples.numericsanddates.NumericsAndDates;
+import net.sf.pzfilereader.util.BXParser;
+import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author Benoit Xhenseval
@@ -69,6 +71,7 @@ public class Examples implements Repeater {
         menu.addMenuItem("NumericsAndDates", "doNumericsAndDates", false);
         menu.addMenuItem("Ask for GC", "doGC", false);
         menu.addMenuItem("Test StringBuffer", "doStringBuffer", false);
+        menu.addMenuItem("Test Parsers", "doTestParsers", false);
 
         menu.addMenuItem("Who you gonna call?", "doCall", false);
         menu.displayMenu();
@@ -244,6 +247,43 @@ public class Examples implements Repeater {
         stop = System.currentTimeMillis();
 
         System.out.println("Deleting existing SB " + (stop - start) + " ms.");
+
+    }
+
+    public void doTestParsers() {
+        final int repeat = ConsoleMenu.getInt("How many times?", 1000);
+        final int characters = ConsoleMenu.getInt("How many columns?", 100);
+        final boolean qualif = ConsoleMenu.getBoolean("With qualifier?", true);
+
+        StringBuilder aRow = new StringBuilder();
+        for (int i = 0; i < characters; i++) {
+            if (qualif) {
+                aRow.append("\"");
+            }
+            aRow.append("Column ").append(i);
+            if (qualif) {
+                aRow.append("\"");
+            }
+        }
+
+        final String line = aRow.toString();
+
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < repeat; i++) {
+            ParserUtils.splitLine(line, ',', '\"');
+        }
+        long stop = System.currentTimeMillis();
+
+        System.out.println("ParserUtil " + (stop - start) + " ms.");
+
+        start = System.currentTimeMillis();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < repeat; i++) {
+            BXParser.splitLine(line, ',', '\"');
+        }
+        stop = System.currentTimeMillis();
+
+        System.out.println("BXParser " + (stop - start) + " ms.");
 
     }
 
