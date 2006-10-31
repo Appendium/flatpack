@@ -25,7 +25,7 @@ public class BXParser {
         int size = trimmedLine.length();
 
         if (size == 0) {
-            list.add(null);
+            list.add("");
             return list;
         }
 
@@ -56,9 +56,7 @@ public class BXParser {
 
                     trimmed = trimmed.replaceAll(doubleQualifier, String.valueOf(qualifier));
 
-                    if (trimmed.length() == 1 && trimmed.charAt(0) == delimiter) {
-                        list.add(null);
-                    } else if (trimmed.length() == 1 && trimmed.charAt(0) == qualifier) {
+                    if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
                         list.add("");
                     } else {
                         list.add(trimmed);
@@ -102,7 +100,7 @@ public class BXParser {
                 list.add(str.trim());
             }
         } else if (trimmedLine.charAt(size - 1) == delimiter) {
-            list.add(null);
+            list.add("");
         }
 
         return list;
