@@ -44,7 +44,7 @@ public class BXParserTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_NO_BREAKS, d, q);
 
-            final List splitLineResults = BXParser.splitLine(txtToParse, d, q);
+            final List splitLineResults = BXParser.splitLineWithBuf(txtToParse, d, q, 10);
 
             // check to make sure we have the same amount of elements which were
             // expected
@@ -64,7 +64,7 @@ public class BXParserTest extends TestCase {
      * Test with any line breaks
      * 
      */
-    public void NOtestLineBreaks() {
+    public void testLineBreaks() {
         // loop down all delimiter qualifier pairs to test
         for (int i = 0; i < DELIM_QUAL_PAIR.length; i++) {
             final char d = DELIM_QUAL_PAIR[i][0];
@@ -72,7 +72,7 @@ public class BXParserTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_WITH_BREAKS, d, q);
 
-            final List splitLineResults = BXParser.splitLine(txtToParse, d, q);
+            final List splitLineResults = BXParser.splitLineWithBuf(txtToParse, d, q, 10);
 
             // check to make sure we have the same amount of elements which were
             // expected
@@ -92,7 +92,7 @@ public class BXParserTest extends TestCase {
      * data
      */
     public void testMalformedData() {
-        final List splitLineResults = BXParser.splitLine(DELIMITED_BAD_DATA, ',', '\"');
+        final List splitLineResults = BXParser.splitLineWithBuf(DELIMITED_BAD_DATA, ',', '\"', 10);
 
         assertEquals("Expecting 2 Data Elements From The Malformed Data", 2, splitLineResults.size());
     }
@@ -134,7 +134,7 @@ public class BXParserTest extends TestCase {
     }
 
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
-        final List splitLineResults = BXParser.splitLine(txtToParse, delim, qualifier);
+        final List splitLineResults = BXParser.splitLineWithBuf(txtToParse, delim, qualifier, 10);
 
         assertEquals(
                 "Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]",
