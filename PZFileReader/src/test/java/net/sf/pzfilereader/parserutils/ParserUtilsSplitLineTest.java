@@ -99,6 +99,15 @@ public class ParserUtilsSplitLineTest extends TestCase {
      * Test some extreme cases
      */
     public void testSomeExtremeCases() {
+        // back to Basic...
+        check(null, ',', '\"', new String[] {});
+        check("a", ',', '\"', new String[] { "a" });
+        check(",", ',', '\"', new String[] { null, null });
+        check(",,", ',', '\"', new String[] { null, null, null });
+        check(",a,", ',', '\"', new String[] { null, "a", null });
+
+        //
+        
         check("\"a,b,c\"", ',', '\"', new String[] { "a,b,c" });
         check("\"a,b\",\"c\"", ',', '\"', new String[] { "a,b", "c" });
         check("a,b,c", ',', '\"', new String[] { "a", "b", "c" });
