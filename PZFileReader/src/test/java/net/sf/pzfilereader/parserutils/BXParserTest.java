@@ -103,12 +103,12 @@ public class BXParserTest extends TestCase {
     public void testSomeExtremeCases() {
         check(null, ',', '\"', new String[] {});
         check("a", ',', '\"', new String[] { "a" });
-        check("", ',', '\"', new String[] { null });
-        check(" ", ',', '\"', new String[] { null });
-        check("    ", ',', '\"', new String[] { null });
-        check(",", ',', '\"', new String[] { null, null });
-        check(",,", ',', '\"', new String[] { null, null, null });
-        check(",a,", ',', '\"', new String[] { null, "a", null });
+        check("", ',', '\"', new String[] { "" });
+        check(" ", ',', '\"', new String[] { "" });
+        check("    ", ',', '\"', new String[] { "" });
+        check(",", ',', '\"', new String[] { "", "" });
+        check(",,", ',', '\"', new String[] { "", "", "" });
+        check(",a,", ',', '\"', new String[] { "", "a", "" });
 
         check("\"a,b,c\"", ',', '\"', new String[] { "a,b,c" });
         check("\"a,b\",\"c\"", ',', '\"', new String[] { "a,b", "c" });
@@ -126,8 +126,8 @@ public class BXParserTest extends TestCase {
         check("  a, b ,c ", ',', '\"', new String[] { "a", "b", "c" });
         check("\"a\",     b  ,    \"c\"", ',', '\"', new String[] { "a", "b", "c" });
 
-        check("\"\",,,,\"last one\"", ',', '\"', new String[] { "", null, null, null, "last one" });
-        check("\"first\",\"second\",", ',', '\"', new String[] { "first", "second", null });
+        check("\"\",,,,\"last one\"", ',', '\"', new String[] { "", "", "", "", "last one" });
+        check("\"first\",\"second\",", ',', '\"', new String[] { "first", "second", "" });
         check("\"  a,b,c\"", ',', '\"', new String[] { "  a,b,c" });
         check("\"  a,b,c\",d", ',', '\"', new String[] { "  a,b,c", "d" });
         check("\"a, b,\"\"c\"", ',', '\"', new String[] { "a, b,\"c" });
