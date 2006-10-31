@@ -73,6 +73,14 @@ public final class ParserUtils {
      */
     public static List splitLine(String line, final char delimiter, final char qualifier) {
         final ArrayList list = new ArrayList();
+        
+        if (line == null) {
+            return list;
+        } else if (line.trim().length() == 0){
+            list.add(null);
+            return list;
+        }
+        
         boolean beginQualifier = false;
         // this will be used for delimted files that have some items qualified
         // and some items dont
@@ -99,7 +107,8 @@ public final class ParserUtils {
                     // make sure that this is not just an empty column with no
                     // qualifiers. ie "data",,"data"
                     if (currentChar == delimiter) {
-                        list.add(sb.toString());
+                        //list.add(sb.toString());
+                        list.add(null);
                         sb.delete(0, sb.length());
                         beginNoQualifier = false;
                         continue;// grab the next char
@@ -175,7 +184,8 @@ public final class ParserUtils {
             // check to see if we need to add the last column in..this will
             // happen on empty columns
             // add the last column
-            list.add(beginNoQualifier ? lTrim(sb.toString().trim()) : sb.toString());
+            list.add(!beginQualifier ? lTrim(trimToNull(sb.toString())) : sb.toString());
+            //list.add(null);
         }
 
         sb = null;
@@ -210,6 +220,10 @@ public final class ParserUtils {
      * @return String
      */
     public static String lTrim(final String value) {
+        if (value == null) {
+            return null;
+        }
+        
         String trimmed = value;
         int offset = 0;
         final int maxLength = value.length();
@@ -232,6 +246,10 @@ public final class ParserUtils {
      * @return String
      */
     public static String lTrimKeepTabs(final String value) {
+        if (value == null) {
+            return null;
+        }
+        
         String trimmed = value;
         int offset = 0;
         final int maxLength = value.length();
@@ -244,6 +262,25 @@ public final class ParserUtils {
         }
 
         return trimmed;
+    }
+    
+    /**
+     * Will return a null if the String is empty returns the 
+     * trimmed string otherwise.
+     * 
+     * @param value 
+     *          to be trimmed
+     * @return String
+     */
+    public static String trimToNull(final String value) {
+        if (value == null) {
+            return null;
+        }
+        
+        final String ret = value.trim();
+        
+        return ret.length() == 0 ? null : ret;
+        
     }
 
     /**
