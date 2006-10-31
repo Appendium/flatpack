@@ -102,6 +102,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
         // back to Basic...
         check(null, ',', '\"', new String[] {});
         check("a", ',', '\"', new String[] { "a" });
+        check("", ',', '\"', new String[] { null });
         check(",", ',', '\"', new String[] { null, null });
         check(",,", ',', '\"', new String[] { null, null, null });
         check(",a,", ',', '\"', new String[] { null, "a", null });
