@@ -7,7 +7,9 @@ package net.sf.pzfilereader.examples.csvheaderandtrailer;
 
 import java.io.File;
 
-import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.PZParser;
 
 /**
  * @author zepernick
@@ -29,13 +31,14 @@ public class CSVHeaderAndTrailer {
     }
 
     public static void call(final String mapping, final String data) throws Exception {
-        File mapFile = new File(mapping);
-        File dataFile = new File(data);
+        final File mapFile = new File(mapping);
+        final File dataFile = new File(data);
         // delimited by a comma
         // text qualified by double quotes
-        // ignore first record
-        DataSet ds = new DataSet(mapFile, dataFile, ',', '"', true, false); 
-
+        // ignore first record 
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(mapFile, dataFile, 
+                ',', '\"', true);
+        final IDataSet ds = pzparser.parse();
         while (ds.next()) {
 
             if (ds.isRecordID("header")) {
