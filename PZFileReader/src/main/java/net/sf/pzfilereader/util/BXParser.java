@@ -124,6 +124,14 @@ public class BXParser {
             list.add("");
             return list;
         }
+        
+        if (qualifier == 0){
+            final String[] split = line.split("\\" + delimiter);
+            for (int i = 0 ; i < split.length; i ++) {
+                list.add(split[i]);
+            }
+            return list;
+        }
 
         boolean insideQualifier = false;
         char previousChar = 0;
