@@ -822,7 +822,12 @@ public final class ParserUtils {
     /**
      * Removes chars from the String that could not 
      * be parsed into a Long value
-     * 
+     *
+     *      StringUtils.stripNonLongChars("1000.25") = "1000"
+     *
+     * Method will truncate everything to the right of the decimal
+     * place when encountered.
+     *  
      * @param value
      * @return String
      */
@@ -831,9 +836,6 @@ public final class ParserUtils {
         
         for (int i = 0; i < value.length(); i++) {
             final char c = value.charAt(i);
-            //TODO may want to revist this logic and what exactly should
-            //happen in this method for the following value 1000.10
-            //in the current version (2.2) it would become 100010
             if (c == '.') {
                 //stop if we hit a decimal point
                 break;
