@@ -818,4 +818,54 @@ public final class ParserUtils {
         }
         return map;
     }
+    
+    /**
+     * Removes chars from the String that could not 
+     * be parsed into a Long value
+     * 
+     * @param value
+     * @return String
+     */
+    public static String stripNonLongChars(String value){
+        final char[] charString = value.toCharArray();
+        final StringBuffer newString = new StringBuffer();
+        
+        for (int i = 0; i < charString.length; i++) {
+            if (charString[i] >= '0' && charString[i] <= '9' || charString[i] == '-') {
+                newString.append(charString[i]);
+            }
+        }
+        // check to make sure we do not have a single length string with
+        // just a minus sign
+        if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("-"))) {
+            newString.append("0");
+        }
+        
+        return newString.toString();
+    }
+    
+    /**
+     * Removes chars from the String that could not 
+     * be parsed into a Double value
+     * 
+     * @param value
+     * @return String
+     */
+    public static String stripNonDoubleChars(String value){
+        final char[] charString = value.toCharArray();
+        final StringBuffer newString = new StringBuffer();
+        
+        for (int i = 0; i < charString.length; i++) {
+            if (charString[i] >= '0' && charString[i] <= '9' || charString[i] == '-'
+                    || charString[i] == '.') {
+                newString.append(charString[i]);
+            }
+        }
+        if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("."))
+                || (newString.length() == 1 && newString.toString().equals("-"))) {
+            newString.append("0");
+        }
+        
+        return newString.toString();
+    }
 }
