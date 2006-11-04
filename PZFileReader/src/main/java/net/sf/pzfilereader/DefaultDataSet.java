@@ -163,19 +163,7 @@ public class DefaultDataSet implements IDataSet {
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
 
         if (!strictNumericParse) {
-            if (s.trim().length() == 0) {
-                return 0;
-            }
-            for (int i = 0; i < s.length(); i++) {
-                final char c = s.charAt(i);
-                if (c >= '0' && c <= '9' || c == '.' || c == '-') {
-                    newString.append(c);
-                }
-            }
-            if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("."))
-                    || (newString.length() == 1 && newString.toString().equals("-"))) {
-                newString.append("0");
-            }
+            newString.append(ParserUtils.stripNonDoubleChars(s));
         } else {
             newString.append(s);
         }
@@ -225,20 +213,7 @@ public class DefaultDataSet implements IDataSet {
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
 
         if (!strictNumericParse) {
-            if (s.trim().length() == 0) {
-                return 0;
-            }
-            for (int i = 0; i < s.length(); i++) {
-                final char c = s.charAt(i);
-                if (c >= '0' && c <= '9' || c == '-') {
-                    newString.append(c);
-                }
-            }
-            // check to make sure we do not have a single length string with
-            // just a minus sign
-            if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("-"))) {
-                newString.append("0");
-            }
+            newString.append(ParserUtils.stripNonLongChars(s));
         } else {
             newString.append(s);
         }
