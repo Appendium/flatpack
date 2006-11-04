@@ -826,19 +826,21 @@ public final class ParserUtils {
      * @param value
      * @return String
      */
-    public static String stripNonLongChars(String value){
-        final char[] charString = value.toCharArray();
+    public static String stripNonLongChars(final String value) {
         final StringBuffer newString = new StringBuffer();
         
-        for (int i = 0; i < charString.length; i++) {
-            if (charString[i] >= '0' && charString[i] <= '9' || charString[i] == '-') {
-                newString.append(charString[i]);
+        for (int i = 0; i < value.length(); i++) {
+            final char c = value.charAt(i);
+            if (c >= '0' && c <= '9' || c == '-') {
+                newString.append(c);
             }
         }
         // check to make sure we do not have a single length string with
         // just a minus sign
-        if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("-"))) {
-            newString.append("0");
+        final int sLen = newString.length();
+        final String s = newString.toString();
+        if (sLen == 0 || (sLen == 1 && s.equals("-"))) {
+           return "0";
         }
         
         return newString.toString();
@@ -851,19 +853,20 @@ public final class ParserUtils {
      * @param value
      * @return String
      */
-    public static String stripNonDoubleChars(String value){
-        final char[] charString = value.toCharArray();
+    public static String stripNonDoubleChars(final String value) {
         final StringBuffer newString = new StringBuffer();
         
-        for (int i = 0; i < charString.length; i++) {
-            if (charString[i] >= '0' && charString[i] <= '9' || charString[i] == '-'
-                    || charString[i] == '.') {
-                newString.append(charString[i]);
+        for (int i = 0; i < value.length(); i++) {
+            final char c = value.charAt(i);
+            if (c >= '0' && c <= '9' || c == '-'
+                    || c == '.') {
+                newString.append(c);
             }
         }
-        if (newString.length() == 0 || (newString.length() == 1 && newString.toString().equals("."))
-                || (newString.length() == 1 && newString.toString().equals("-"))) {
-            newString.append("0");
+        final int sLen = newString.length();
+        final String s = newString.toString();
+        if (sLen == 0 || (sLen == 1 && s.equals(".")) || (sLen == 1 && s.equals("-"))) {
+            return "0";
         }
         
         return newString.toString();
