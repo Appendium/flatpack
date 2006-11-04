@@ -831,7 +831,13 @@ public final class ParserUtils {
         
         for (int i = 0; i < value.length(); i++) {
             final char c = value.charAt(i);
-            if (c >= '0' && c <= '9' || c == '-') {
+            //TODO may want to revist this logic and what exactly should
+            //happen in this method for the following value 1000.10
+            //in the current version (2.2) it would become 100010
+            if (c == '.') {
+                //stop if we hit a decimal point
+                break;
+            } else if (c >= '0' && c <= '9' || c == '-') {
                 newString.append(c);
             }
         }
