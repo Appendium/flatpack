@@ -38,8 +38,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.FixedWidthParserUtils;
@@ -110,6 +112,13 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
         final DefaultDataSet ds = new DefaultDataSet(getColumnMD());
 
         try {
+            //gather the conversion properties
+            final Properties pzConvertProps = new Properties();
+            final URL url = getClass().getClassLoader().getResource("pzconvert.properties");
+            pzConvertProps.load(url.openStream());
+            ds.setPZConvertProps(pzConvertProps);
+            
+            
             final Map recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
 
             // Read in the flat file

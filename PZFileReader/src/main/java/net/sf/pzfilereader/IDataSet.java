@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 
 import net.sf.pzfilereader.ordering.OrderBy;
 
@@ -128,6 +129,20 @@ public interface IDataSet {
      * @return Date
      */
     Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException;
+    
+    
+    /**
+     *  Returns the value of the column with the type of object
+     *  specified
+     *  
+     * @param column
+     *             Name of the column
+     * @param classToConvertTo
+     *              Class type to convert to
+     * @return Object
+     *             Value of the column in the specified object
+     */
+    Object getObject(final String column, final Class classToConvertTo); 
 
     /**
      * Returns a String array of column names in the DataSet. This will assume
@@ -257,4 +272,14 @@ public interface IDataSet {
      *            The strictNumericParse to set.
      */
     void setStrictNumericParse(final boolean strictNumericParse);
+    
+    /**
+     * Sets the properties from the pzconvert.properties file.
+     * This file specifies the PZConverter implementation to use
+     * for a particular class
+     * 
+     * @param props
+     *          Property mapping for String to Object conversion
+     */
+    void setPZConvertProps(Properties props);
 }

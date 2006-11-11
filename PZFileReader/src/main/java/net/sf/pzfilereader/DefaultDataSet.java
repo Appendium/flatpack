@@ -40,7 +40,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 
+import net.sf.pzfilereader.converter.PZConvertException;
+import net.sf.pzfilereader.converter.PZConverter;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.structure.Row;
@@ -55,6 +58,8 @@ public class DefaultDataSet implements IDataSet {
     private final List rows = new ArrayList();
 
     private final List errors = new ArrayList();
+    
+    private Properties pzConvertProps = null;
 
     /** Pointer for the current row in the array we are on */
     private int pointer = -1;
@@ -169,6 +174,24 @@ public class DefaultDataSet implements IDataSet {
         }
 
         return Double.parseDouble(newString.toString());
+    }
+    
+    
+    public Object getObject(String column, Class classToConvertTo) {
+        final String sConverter = pzConvertProps.getProperty(classToConvertTo.getName());
+        if (sConverter == null) {
+            throw new PZConvertException (classToConvertTo.getName() + " is not registered in pzconvert.properties");
+        }
+        try{
+            final Row row = (Row) rows.get(pointer);
+            final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+            final PZConverter pzconverter = (PZConverter)Class.forName(sConverter).newInstance();
+           
+            return pzconverter.convertValue(s);
+            
+        } catch (Exception ex) {
+            throw new PZConvertException (ex);
+        }
     }
 
     /*
@@ -421,6 +444,10 @@ public class DefaultDataSet implements IDataSet {
     public void remove() {
         rows.remove(pointer);
         pointer--;
+    }
+    
+    public void setPZConvertProps(Properties props) {
+        this.pzConvertProps = props;
     }
 
     void setColumnMD(final Map columnMD) {
