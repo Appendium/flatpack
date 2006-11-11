@@ -8,6 +8,8 @@
   </properties>
   <body>
     <release version="2.3.0" date="in svn" description="Move to Maven and Subversion">
+    	<action dev="zepernick" type="add">added getObject(String column, Class toConvert) method.  PZFileReader will ship with 
+    	default classes to handle conversions.  Custom conversions can be easily added by adding to the pzconvert.properties</action>
 	    <action dev="zepernick" type="add">Unqualified elements have leading and trailing whitespace removed in a delimited parse</action>
 	    <action dev="zepernick" type="add">Ability to issue an OrderBy On DataSet's containing record mapping elements</action>
     	<action dev="benoitx" type="add">Move build to Maven 1.1.x and generate the entire website from the build.</action>
