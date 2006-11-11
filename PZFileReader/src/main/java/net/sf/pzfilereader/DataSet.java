@@ -31,6 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
@@ -1382,5 +1383,18 @@ public class DataSet implements IDataSet {
 
     public void setErrors(final List errors) {
         this.errors = errors;
+    }
+    
+    public Object getObject(String column, Class classToConvertTo) {
+        // TODO May have to do something here if we plan on keeping
+        //this around for the next version.  I believe this will 
+        //be leaving
+        return null;
+    }
+    
+    public void setPZConvertProps(Properties props) {
+        // TODO May have to do something here if we plan on keeping
+        //this around for the next version.  I believe this will 
+        //be leaving
     }
 }
