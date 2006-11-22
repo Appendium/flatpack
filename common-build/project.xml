@@ -89,18 +89,17 @@
    <!-- any mailing lists for the project -->
    <mailingLists>
       <mailingList>
-         <name>PZFileReader Announcements</name>
+         <name>PZFileReader Announcements (via ObjectLab Kit list)</name>
          <subscribe>
-            http://lists.sourceforge.net/lists/listinfo/pzfilereader-announce
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-announce
          </subscribe>
          <unsubscribe>
-            http://lists.sourceforge.net/lists/listinfo/pzfilereader-announce
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-announce
          </unsubscribe>
          <post/>
          <archive>
-            http://sourceforge.net/mailarchive/forum.php?forum=pzfilereader-announce
+            http://sourceforge.net/mailarchive/forum.php?forum=objectlabkit-announce
          </archive>
-
       </mailingList>
       <mailingList>
          <name>PZFileReader User</name>
