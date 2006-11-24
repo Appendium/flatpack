@@ -144,9 +144,8 @@ public final class PZMapParser {
         try {
             return attribute.getIntValue();
         } catch (final Exception ex) {
+            return 0;
         }
-
-        return 0;
     }
 
     // helper to retrieve the "COLUMN" elements from the given parent
