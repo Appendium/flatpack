@@ -45,7 +45,7 @@ import net.sf.pzfilereader.xml.XMLRecordElement;
  * 
  * @author paul zepernick
  */
-public class FixedWidthParserUtils {
+public final class FixedWidthParserUtils {
     private FixedWidthParserUtils() {
     }
 
