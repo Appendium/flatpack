@@ -23,15 +23,15 @@ package net.sf.pzfilereader;
 public class DataError {
 
     /** Description of error. */
-    private String errorDesc = null;
+    private String errorDesc;
 
     /** line number in file error occured on. */
-    private int lineNo = 0;
+    private int lineNo;
 
     /**
      * Severity of the error 1 = Warning 2 = Moderate 3 = Severe.
      */
-    private int errorLevel = 0;
+    private int errorLevel;
 
     public DataError(final String errorDesc, final int lineNo, final int errorLevel) {
         this.errorDesc = errorDesc;
