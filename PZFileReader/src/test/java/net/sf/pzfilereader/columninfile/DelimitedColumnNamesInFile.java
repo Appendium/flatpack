@@ -8,7 +8,6 @@ package net.sf.pzfilereader.columninfile;
 import java.io.File;
 
 import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
 import net.sf.pzfilereader.IDataSet;
 import net.sf.pzfilereader.PZParser;
@@ -23,14 +22,14 @@ import net.sf.pzfilereader.ordering.OrderColumn;
  */
 public class DelimitedColumnNamesInFile {
     public static void main(final String[] args) throws Exception {
-        DataSet ds = null;
         String[] colNames = null;
         OrderBy orderby = null;
 
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        ds = new DataSet(new File("net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ",", "\"", false);
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File("net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+        final IDataSet ds = pzparser.parse();
 
         // re order the data set by last name
         orderby = new OrderBy();
@@ -55,9 +54,6 @@ public class DelimitedColumnNamesInFile {
                 System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());
             }
         }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
 
     }
 

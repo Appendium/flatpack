@@ -8,7 +8,6 @@ package net.sf.pzfilereader.delim.tab;
 import java.io.File;
 
 import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
 import net.sf.pzfilereader.IDataSet;
 import net.sf.pzfilereader.PZParser;
@@ -21,7 +20,6 @@ import net.sf.pzfilereader.PZParser;
  */
 public class TabDelimited {
     public static void main(final String[] args) throws Exception {
-        DataSet ds = null;
         String[] colNames = null;
         File tmpFile = null;
 
@@ -29,9 +27,8 @@ public class TabDelimited {
         // text qualified by double quotes
         // ignore first record
         tmpFile = new File("net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt");
-        System.out.println("tmp file path: " + tmpFile);
-        // ds = new DataSet(new FileInputStream(tmpFile),"\t","",true);
-        ds = new DataSet(tmpFile, "\t", "\"", true);
+        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(tmpFile, '\t', '\"');
+        final IDataSet ds = pzparser.parse();
 
         // re order the data set by last name
         /*
@@ -57,9 +54,6 @@ public class TabDelimited {
                 System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());
             }
         }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
 
     }
 
