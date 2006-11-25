@@ -272,8 +272,13 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 // end record line break logic
                 // ********************************************************************
 
+                //TODO
+                //seems like we may want to try doing something like this.  I have my reservations because
+                //it is possible that we don't get a "detail" id and this might generate NPE
+                //is it going to create too much overhead to do a null check here as well???
+                //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
                 // column values
-                final List columns = ParserUtils.splitLine(lineData, delimiter, qualifier);
+                final List columns = ParserUtils.splitLine(lineData, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
                 lineData = "";
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
