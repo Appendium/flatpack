@@ -178,20 +178,9 @@ public class DefaultDataSet implements IDataSet {
     
     
     public Object getObject(String column, Class classToConvertTo) {
-        final String sConverter = pzConvertProps.getProperty(classToConvertTo.getName());
-        if (sConverter == null) {
-            throw new PZConvertException (classToConvertTo.getName() + " is not registered in pzconvert.properties");
-        }
-        try{
-            final Row row = (Row) rows.get(pointer);
-            final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
-            final PZConverter pzconverter = (PZConverter)Class.forName(sConverter).newInstance();
-           
-            return pzconverter.convertValue(s);
-            
-        } catch (Exception ex) {
-            throw new PZConvertException (ex);
-        }
+        final Row row = (Row) rows.get(pointer);
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+        return ParserUtils.runPzConverter(pzConvertProps, s, classToConvertTo);
     }
 
     /*

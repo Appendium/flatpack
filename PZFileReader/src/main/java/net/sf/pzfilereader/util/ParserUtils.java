@@ -19,9 +19,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,7 +31,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 
+import net.sf.pzfilereader.converter.PZConvertException;
+import net.sf.pzfilereader.converter.PZConverter;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.xml.XMLRecordElement;
 
@@ -878,5 +883,51 @@ public final class ParserUtils {
         }
         
         return newString.toString();
+    }
+    
+    /**
+     * Retrieves the conversion table for use with the getObject()
+     * method in IDataSet
+     * 
+     * @throws IOException
+     * @return Properties
+     *              Properties contained in the pzconvert.properties file
+     */
+    public static Properties loadConvertProperties() throws IOException{
+        final Properties pzConvertProps = new Properties();
+        final URL url = ParserUtils.class.getClassLoader().getResource("pzconvert.properties");
+        pzConvertProps.load(url.openStream());
+        
+        return pzConvertProps;        
+    }
+    
+    /**
+     * Converts a String value to the appropriate Object via
+     * the correct net.sf.pzfilereader.converter.PZConverter implementation
+     * 
+     * @param classXref
+     *             Properties holding class cross reference
+     * @param value
+     *             Value to be converted to the Object
+     * @param typeToReturn
+     *             Type of object to be returned
+     * @throws PZConvertExeption
+     * @return Object
+     */
+    public static Object runPzConverter(final Properties classXref, final String value, final Class typeToReturn) {
+        final String sConverter = classXref.getProperty(typeToReturn.getName());
+        if (sConverter == null) {
+            throw new PZConvertException (typeToReturn.getName() + " is not registered in pzconvert.properties");
+        }
+        try {
+            final PZConverter pzconverter = (PZConverter)Class.forName(sConverter).newInstance();
+            return pzconverter.convertValue(value);
+        } catch(IllegalAccessException ex) {
+            throw new PZConvertException(ex);
+        } catch(InstantiationException ex) {
+            throw new PZConvertException(ex);
+        } catch(ClassNotFoundException ex) {
+            throw new PZConvertException(ex);
+        }
     }
 }
