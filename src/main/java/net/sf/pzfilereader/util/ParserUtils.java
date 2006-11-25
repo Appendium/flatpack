@@ -1,16 +1,34 @@
 /*
- Copyright 2006 Paul Zepernick
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software distributed
- under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
- CONDITIONS OF ANY KIND, either express or implied. See the License for
- the specific language governing permissions and limitations under the License.
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
+ * 
+ * Based in London, we are world leaders in the design and development 
+ * of bespoke applications for the securities financing markets.
+ * 
+ * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
+ *           ___  _     _           _   _          _
+ *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
+ *         | | | | '_ \| |/ _ \/ __| __| |   / _` | '_ \
+ *         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |
+ *          \___/|_.__// |\___|\___|\__|_____\__,_|_.__/
+ *                   |__/
+ *
+ *                     www.ObjectLab.co.uk
+ *
+ * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
+ * 
+ * Copyright 2006 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package net.sf.pzfilereader.util;
 
@@ -39,10 +57,12 @@ import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.xml.XMLRecordElement;
 
 /**
- * @author zepernick Static utilities that are used to perform parsing in the
+ *  Static utilities that are used to perform parsing in the
  *         DataSet class These can also be used for low level parsing, if not
  *         wishing to use the DataSet class.
- * @version 2.0
+ *         
+ * @author Paul Zepernick
+ * @author Benoit Xhenseval
  */
 public final class ParserUtils {
     private ParserUtils() {
@@ -53,10 +73,11 @@ public final class ParserUtils {
      * @param line
      * @param delimiter
      * @param qualifier
-     * @return
+     * @return List
      */
     public static List splitLine(final String line, final String delimiter, final String qualifier) {
-        return splitLine(line, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0);
+        return splitLine(line, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0, 
+                PZConstants.SPLITLINE_SIZE_INIT);
     }
 
     /**
@@ -67,135 +88,108 @@ public final class ParserUtils {
      * Elements which are not qualified will have leading and trailing white
      * space removed.  This includes unqualified elements, which may be
      * contained in an unqualified parse: "data",  data  ,"data"
+     * 
+     * Special thanks to Benoit for contributing this much improved speedy parser :0)
      *
+     * @author Benoit Xhenseval
      * @param line -
      *            String of data to be parsed
      * @param delimiter -
      *            Delimiter seperating each element
      * @param qualifier -
      *            qualifier which is surrounding the text
-     * @return ArrayList
+     * @param initialSize -
+     *            intial capacity of the List size
+     * @return List
      */
-    public static List splitLine(String line, final char delimiter, final char qualifier) {
-        final ArrayList list = new ArrayList();
-        
-        if (line == null) {
+    public static List splitLine(String line, final char delimiter, final char qualifier, int initialSize) {
+        List list = new ArrayList(initialSize);
+
+        if (delimiter == 0) {
+            list.add(line);
             return list;
-        } else if (line.trim().length() == 0){
-            list.add(null);
+        } else if (line == null) {
             return list;
         }
-        
-        boolean beginQualifier = false;
-        // this will be used for delimted files that have some items qualified
-        // and some items dont
-        boolean beginNoQualifier = false;
-        StringBuffer sb = new StringBuffer();
 
-        // trim hard leading spaces at the begining of the line
-        line = lTrim(line);
-        for (int i = 0; i < line.length(); i++) {
-            final String remainderOfLine = line.substring(i); // data of the
-            // line which has not yet been read
-            // check to see if there is a text qualifier
-            final char currentChar = line.charAt(i);
-            if (qualifier > 0) {
-                if (currentChar == qualifier && !beginQualifier && !beginNoQualifier) {
-                    // begining of a set of data
-                    beginQualifier = true;
-                } else if (!beginQualifier && !beginNoQualifier && currentChar != qualifier
-                        && lTrim(remainderOfLine).charAt(0) != qualifier) {
-                    // try to account for empty space before qualifier starts
-                    // we have not yet begun a qualifier and the char we are on
-                    // is NOT a qualifier. Start reading data
-                    beginNoQualifier = true;
-                    // make sure that this is not just an empty column with no
-                    // qualifiers. ie "data",,"data"
-                    if (currentChar == delimiter) {
-                        //list.add(sb.toString());
-                        list.add(null);
-                        sb.delete(0, sb.length());
-                        beginNoQualifier = false;
-                        continue;// grab the next char
+        final String trimmedLine = line.trim();
+        int size = trimmedLine.length();
+
+        if (size == 0) {
+            list.add("");
+            return list;
+        }
+
+        boolean insideQualifier = false;
+        char previousChar = 0;
+        int startBlock = 0;
+        int endBlock = 0;
+        boolean blockWasInQualifier = false;
+
+        final String doubleQualifier = String.valueOf(qualifier) + String.valueOf(qualifier);
+        for (int i = 0; i < size; i++) {
+
+            final char currentChar = trimmedLine.charAt(i);
+            if (currentChar != delimiter && currentChar != qualifier) {
+                previousChar = currentChar;
+                endBlock = i + 1;
+                continue;
+            }
+
+            if (currentChar == delimiter) {
+                // we've found the delimiter (eg ,)
+                if (!insideQualifier) {
+                    String trimmed = trimmedLine.substring(startBlock, endBlock > startBlock ? endBlock : startBlock + 1);
+                    if (!blockWasInQualifier) {
+                        trimmed = trimmed.trim();
+                        trimmed = trimmed.replaceAll(doubleQualifier, String.valueOf(qualifier));
                     }
-                    sb.append(currentChar);
-                } else if (!beginNoQualifier && currentChar == qualifier && beginQualifier
-                        && (i == line.length() - 1 || lTrim(remainderOfLine.substring(1)).length() == 0
-                        // this will be true on empty undelmited columns at the
-                        // end of theline
-                        || lTrimKeepTabs(remainderOfLine).charAt(1) == delimiter)) {
-                    // end of a set of data that was qualified
-                    list.add(sb.toString());
-                    sb.delete(0, sb.length());
-                    beginQualifier = false;
-                    // add to "i" so we can get past the qualifier, otherwise it
-                    // is read into a set of data which
-                    // may not be qualified. Find out how many spaces to the
-                    // delimiter
-                    final int offset = getDelimiterOffset(line, i, delimiter) - 1;
-                    // subtract 1 since i is going to get incremented again at
-                    // the top of the loop
-                    if (offset < 1) {
-                        i++;
+
+                    if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
+                        list.add("");
                     } else {
-                        i += offset;
+                        list.add(trimmed);
                     }
-                } else if (beginNoQualifier && currentChar == delimiter) {
-                    // check to see if we are done with an element that was not
-                    // being qualified
-                    // remove the space from the front and back of unqualified
-                    // elements
-                    list.add(lTrim(sb.toString().trim()));
-                    sb.delete(0, sb.length());
-                    beginNoQualifier = false;
-                } else if (beginNoQualifier || beginQualifier) {
-                    // getting data in a NO qualifier element or qualified
-                    // element
-                    sb.append(currentChar);
+                    blockWasInQualifier = false;
+                    startBlock = i + 1;
                 }
-
-            } else {
-                // not using a qualifier. Using a delimiter only
-                if (currentChar == delimiter) {
-                    //remove the space from the front and back of unqualified
-                    //elements
-                    list.add(lTrim(sb.toString().trim()));
-                    sb.delete(0, sb.length());
+            } else if (currentChar == qualifier) {
+                if (!insideQualifier && previousChar != qualifier) {
+                    if (previousChar == delimiter || previousChar == 0 || previousChar == ' ') {
+                        insideQualifier = true;
+                        startBlock = i + 1;
+                    } else {
+                        endBlock = i + 1;
+                    }
                 } else {
-                    sb.append(currentChar);
+                    insideQualifier = false;
+                    blockWasInQualifier = true;
+                    endBlock = i;
+                    // last column (e.g. finishes with ")
+                    if (i == size - 1) {
+                        list.add(trimmedLine.substring(startBlock, size - 1));
+                        startBlock = i + 1;
+                    }
                 }
             }
+            previousChar = currentChar;
         }
 
-        // + this needs to be revisited...
-        final String trimmed = sb.toString().trim();
-        // remove the ending text qualifier if needed
-        // only if the last element was truly qualified
-        if (beginQualifier && qualifier > 0 && trimmed.length() > 0) {
-            if (trimmed.charAt(trimmed.length() - 1) == qualifier) {
-                // System.out.println(">>>>>>>Triming Off Qualifier");
-                final String s = trimmed.substring(0, trimmed.length() - 1);
-                sb.delete(0, sb.length());
-                sb.append(s);
+        if (startBlock < size) {
+            String str = trimmedLine.substring(startBlock, size);
+            str = str.replaceAll(doubleQualifier, String.valueOf(qualifier));
+            if (blockWasInQualifier) {
+                if (str.charAt(str.length() - 1) == qualifier) {
+                    list.add(str.substring(0, str.length() - 1));
+                } else {
+                    list.add(str);
+                }
+            } else {
+                list.add(str.trim());
             }
+        } else if (trimmedLine.charAt(size - 1) == delimiter) {
+            list.add("");
         }
-
-        final String trimmed2 = line.trim();
-        final int lengthLeft = trimmed2.length();
-        if (qualifier <= 0 || beginQualifier || beginNoQualifier || lengthLeft > 0
-                && trimmed2.charAt(lengthLeft - 1) == delimiter) {
-            // also account for a delimiter with an empty column at the end that
-            // was not qualified
-            // check to see if we need to add the last column in..this will
-            // happen on empty columns
-            // add the last column
-            list.add(!beginQualifier ? lTrim(trimToNull(sb.toString())) : sb.toString());
-            //list.add(null);
-        }
-
-        sb = null;
-
-        list.trimToSize();
 
         return list;
     }
@@ -340,7 +334,7 @@ public final class ParserUtils {
                     continue;
                 }
 
-                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0));
+                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), PZConstants.SPLITLINE_SIZE_INIT);
                 for (int i = 0; i < lineData.size(); i++) {
                     final ColumnMetaData cmd = new ColumnMetaData();
                     cmd.setColName((String) lineData.get(i));
@@ -382,7 +376,7 @@ public final class ParserUtils {
         final List results = new ArrayList();
         final Map columnMD = new LinkedHashMap();
 
-        lineData = splitLine(line, delimiter, qualifier);
+        lineData = splitLine(line, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
         for (int i = 0; i < lineData.size(); i++) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName((String) lineData.get(i));
@@ -422,7 +416,7 @@ public final class ParserUtils {
                     continue;
                 }
 
-                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0));
+                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), PZConstants.SPLITLINE_SIZE_INIT);
                 for (int i = 0; i < lineData.size(); i++) {
                     final ColumnMetaData cmd = new ColumnMetaData();
                     cmd.setColName((String) lineData.get(i));
@@ -663,7 +657,7 @@ public final class ParserUtils {
             final XMLRecordElement recordXMLElement = (XMLRecordElement) columnMD.get(key);
 
             if (recordXMLElement.getElementNumber() > lineElements.size()) {
-                // make sure our substring is not going to fail
+                // make sure the element referenced in the mapping exists
                 continue;
             }
             final String lineElement = (String) lineElements.get(recordXMLElement.getElementNumber() - 1);
@@ -930,4 +924,110 @@ public final class ParserUtils {
             throw new PZConvertException(ex);
         }
     }
+    
+   
+    //LEAVE AS A REFERENCE FOR POSSIBLE LATER USE
+   /* public static List splitLineWithBuf(String line, final char delimiter, char qualifier, int initialSize) {
+        List list = new ArrayList(initialSize);
+
+        if (delimiter == 0) {
+            list.add(line);
+            return list;
+        } else if (line == null) {
+            return list;
+        }
+
+        final String trimmedLine = line.trim();
+        int size = trimmedLine.length();
+
+        if (size == 0) {
+            list.add("");
+            return list;
+        }
+
+        boolean insideQualifier = false;
+        char previousChar = 0;
+        boolean blockWasInQualifier = false;
+        StringBuffer buf = new StringBuffer(32);
+
+        // final String doubleQualifier = String.valueOf(qualifier) +
+        // String.valueOf(qualifier);
+        for (int i = 0; i < size; i++) {
+            final char currentChar = trimmedLine.charAt(i);
+            if (currentChar != delimiter && currentChar != qualifier) {
+                previousChar = currentChar;
+                if (' ' != currentChar || insideQualifier || buf.length() > 0) {
+                    buf.append(currentChar);
+                }
+                continue;
+            }
+
+            if (currentChar == delimiter) {
+                // we've found the delimiter (eg ,)
+                if (!insideQualifier) {
+                    // String trimmed = trimmedLine.substring(startBlock,
+                    // endBlock > startBlock ? endBlock : startBlock + 1);
+                    String trimmed = buf.toString();
+                    if (!blockWasInQualifier) {
+                        trimmed = trimmed.trim();
+                        // trimmed = trimmed.replaceAll(doubleQualifier,
+                        // String.valueOf(qualifier));
+                    }
+
+                    if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
+                        list.add("");
+                    } else {
+                        list.add(trimmed);
+                    }
+                    blockWasInQualifier = false;
+                    buf.delete(0, buf.length());
+                } else if (buf.length() != 1 || buf.charAt(0) != qualifier) {
+                    buf.append(currentChar);
+                } else {
+                    buf.delete(0, buf.length());
+                    insideQualifier = false;
+                    list.add("");
+                }
+            } else if (currentChar == qualifier) {
+                if (!insideQualifier && previousChar != qualifier) {
+                    if (previousChar == delimiter || previousChar == 0 || previousChar == ' ') {
+                        insideQualifier = true;
+                        int l = buf.length();
+                        if (l > 0) {
+                            buf.delete(0, l); // just entered a
+                            // qualifier, remove
+                            // whatever was
+                        }
+                    } else {
+                        buf.append(currentChar);
+                    }
+                } else {
+                    insideQualifier = false;
+                    blockWasInQualifier = true;
+                    if (previousChar == qualifier) {
+                        buf.append(qualifier);
+                        insideQualifier = true;
+                        previousChar = 0;
+                        continue;
+                    }
+                    // last column (e.g. finishes with ")
+                    if (i == size - 1) {
+                        // list.add(trimmedLine.substring(startBlock, size -
+                        // 1));
+                        list.add(buf.toString());
+                        buf.delete(0, buf.length());
+                    }
+                }
+            }
+            previousChar = currentChar;
+        }
+
+        if (buf.length() > 0) {
+            list.add(buf.toString().trim());
+        } else if (trimmedLine.charAt(size - 1) == delimiter) {
+            list.add("");
+        }
+
+        return list;
+    }*/
 }
