@@ -42,7 +42,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_NO_BREAKS, d, q);
 
-            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q);
+            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10);
 
             // check to make sure we have the same amount of elements which were
             // expected
@@ -70,7 +70,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_WITH_BREAKS, d, q);
 
-            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q);
+            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10);
 
             // check to make sure we have the same amount of elements which were
             // expected
@@ -90,7 +90,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
      * data
      */
     public void testMalformedData() {
-        final List splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, ',', '\"');
+        final List splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, ',', '\"', 10);
 
         assertEquals("Expecting 2 Data Elements From The Malformed Data", 2, splitLineResults.size());
     }
@@ -101,12 +101,12 @@ public class ParserUtilsSplitLineTest extends TestCase {
     public void testSomeExtremeCases() {
         check(null, ',', '\"', new String[] {});
         check("a", ',', '\"', new String[] { "a" });
-        check("", ',', '\"', new String[] { null });
-        check(" ", ',', '\"', new String[] { null });
-        check("    ", ',', '\"', new String[] { null });
-        check(",", ',', '\"', new String[] { null, null });
-        check(",,", ',', '\"', new String[] { null, null, null });
-        check(",a,", ',', '\"', new String[] { null, "a", null });
+        check("", ',', '\"', new String[] { "" });
+        check(" ", ',', '\"', new String[] { "" });
+        check("    ", ',', '\"', new String[] { "" });
+        check(",", ',', '\"', new String[] { "", "" });
+        check(",,", ',', '\"', new String[] { "", "", "" });
+        check(",a,", ',', '\"', new String[] { "", "a", "" });
 
         check("\"a,b,c\"", ',', '\"', new String[] { "a,b,c" });
         check("\"a,b\",\"c\"", ',', '\"', new String[] { "a,b", "c" });
@@ -119,53 +119,27 @@ public class ParserUtilsSplitLineTest extends TestCase {
         // example typically from Excel.
         check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\"', new String[] { "test1", "test2", "0.00",
                 "another, element here", "lastone" });
+        
+        check("\"FRED\",\"ZNAME\",\"Text Qualifier \" and seperator, in string\",\"ELYRIA\",\"OH\",\"\"", ',', '\"', 
+                new String[] {"FRED", "ZNAME", "Text Qualifier \" and seperator, in string", "ELYRIA", "OH", ""});
 
         check("a\",b,c\"", ',', '\"', new String[] { "a\"", "b", "c\"" });
         check("  a, b ,c ", ',', '\"', new String[] { "a", "b", "c" });
         check("\"a\",     b  ,    \"c\"", ',', '\"', new String[] { "a", "b", "c" });
 
-        check("\"\",,,,\"last one\"", ',', '\"', new String[] { "", null, null, null, "last one" });
-        check("\"first\",\"second\",", ',', '\"', new String[] { "first", "second", null });
+        check("\"\",,,,\"last one\"", ',', '\"', new String[] { "", "", "", "", "last one" });
+        check("\"first\",\"second\",", ',', '\"', new String[] { "first", "second", "" });
         check("\"  a,b,c\"", ',', '\"', new String[] { "  a,b,c" });
         check("\"  a,b,c\",d", ',', '\"', new String[] { "  a,b,c", "d" });
-        //++++looks like both quotes should be returned in the result here.  
-        //let me know if I am wrong. pz
-        check("\"a, b,\"\"c\"", ',', '\"', new String[] { "a, b,\"\"c" });
-    }
-
-    /**
-     * Test some extreme cases
-     */
-    public void testSomeExtremeCases2() {
-        check("\"a,b,c\"", ',', '\'', new String[] { "\"a", "b", "c\"" });
-        check("\"a,b\",\"c\"", ',', '\'', new String[] { "\"a", "b\"", "\"c\"" });
-        check("a,b,c", ',', '\'', new String[] { "a", "b", "c" });
-        check("  a,b,c", ',', '\'', new String[] { "a", "b", "c" });
-        check("  a,b,c", ',', '\'', new String[] { "a", "b", "c" });
-
-        // example typically from Excel.
-        check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\'', new String[] { "\"test1\"", "test2",
-                "\"0.00\"", "\"another", "element here\"", "lastone" });
-
-        // what would you expect of these ones?
-
-        // +++++The parser allows qualified and unqualified elements to be
-        // contained
-        // on the same line. so it should break the elements down like so
-        // 1 = a" -->" is part of the data since the element did not start with
-        // a qualifier
-        // 2 = b
-        // 3 = c" --> same as #1
-        // a",b,c"
-        check("a\",b,c\"", ',', '\'', new String[] { "a\"", "b", "c\"" });
-
-        check("\"  a,b,c\"", ',', '\'', new String[] { "\"  a", "b", "c\"" });
-        check("  a, b ,c ", ',', '\'', new String[] { "a", "b", "c" });
-
+        check("\"a, b,\"\"c\"", ',', '\"', new String[] { "a, b,\"c" });
+        
+        check("one two three", ' ', '\u0000', new String[] {"one", "two", "three"});
+        check("\"one\" \"two\" three", ' ', '\"', new String[] {"one", "two", "three"});
+        check("\"one\"  \"two\"  three", ' ', '\"', new String[] {"one", "", "two", "", "three"});
     }
 
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
-        final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier);
+        final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier, 10);
 
         assertEquals(
                 "Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]",
@@ -175,7 +149,6 @@ public class ParserUtilsSplitLineTest extends TestCase {
             assertEquals("expecting...", expected[i], splitLineResults.get(i));
         }
     }
-
     public static void main(final String[] args) {
         junit.textui.TestRunner.run(ParserUtilsSplitLineTest.class);
     }
