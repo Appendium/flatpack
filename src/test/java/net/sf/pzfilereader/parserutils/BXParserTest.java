@@ -4,8 +4,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import net.sf.pzfilereader.util.BXParser;
-import net.sf.pzfilereader.util.ParserUtils;
-import net.sf.pzfilereader.util.RegExParser;
 import net.sf.pzfilereader.utilities.UnitTestUtils;
 
 /**
@@ -131,6 +129,10 @@ public class BXParserTest extends TestCase {
         check("\"  a,b,c\"", ',', '\"', new String[] { "  a,b,c" });
         check("\"  a,b,c\",d", ',', '\"', new String[] { "  a,b,c", "d" });
         check("\"a, b,\"\"c\"", ',', '\"', new String[] { "a, b,\"c" });
+        
+        check("one two three", ' ', '\u0000', new String[] {"one", "two", "three"});
+        check("\"one\" \"two\" three", ' ', '\"', new String[] {"one", "two", "three"});
+        check("\"one\"  \"two\"  three", ' ', '\"', new String[] {"one", "", "two", "", "three"});
     }
 
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
