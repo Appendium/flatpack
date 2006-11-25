@@ -155,11 +155,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         final DefaultDataSet ds = new DefaultDataSet(getColumnMD());
         try {
             //gather the conversion properties
-            final Properties pzConvertProps = new Properties();
-            final URL url = getClass().getClassLoader().getResource("pzconvert.properties");
-            pzConvertProps.load(url.openStream());
-            ds.setPZConvertProps(pzConvertProps);
-            
+            ds.setPZConvertProps(ParserUtils.loadConvertProperties());
             
             // get the total column count
             // columnCount = columnMD.size();
