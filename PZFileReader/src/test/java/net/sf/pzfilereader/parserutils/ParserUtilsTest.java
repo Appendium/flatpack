@@ -1,6 +1,9 @@
 package net.sf.pzfilereader.parserutils;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Properties;
 
 import net.sf.pzfilereader.util.ParserUtils;
 import junit.framework.TestCase;
@@ -43,6 +46,14 @@ public class ParserUtilsTest extends TestCase{
      private void checkLongStrip(final String txtToStrip, final String expected) {
          final String stripRes = ParserUtils.stripNonLongChars(txtToStrip);
          assertEquals("expecting...", stripRes, expected);
+     }
+     
+     public void testPZConverter() throws IOException{
+         final Properties convertProps = ParserUtils.loadConvertProperties();
+         
+         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Double.class), new Double("5.00"));
+         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Integer.class), new Integer("5"));
+         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.3556", BigDecimal.class), new BigDecimal("5.3556"));
      }
     
     
