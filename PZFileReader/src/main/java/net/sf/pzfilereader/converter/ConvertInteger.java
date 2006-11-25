@@ -33,40 +33,24 @@
 
 package net.sf.pzfilereader.converter;
 
+import net.sf.pzfilereader.util.ParserUtils;
+
 /**
- * Exception thrown when a conversion error occurs
- * 
+ * Returns a Integer
+ * Non numeric chars are removed from the string
+ * before converting
+ *  
  * @author Paul Zepernick
  */
-public class PZConvertException extends RuntimeException{
-    private static final long serialVersionUID = 1L;
+public class ConvertInteger implements PZConverter {
 
-    /**
+    /*
+     * (non-Javadoc)
      * 
+     * @see net.sf.pzfilereader.converter#convertValue(java.lang.String)
      */
-    public PZConvertException() {
+    public Object convertValue(String valueToConvert) {
+        return new Integer(ParserUtils.stripNonLongChars(valueToConvert));
     }
 
-    /**
-     * @param message
-     */
-    public PZConvertException(final String message) {
-        super(message);
-    }
-
-    /**
-     * @param cause
-     */
-    public PZConvertException(final Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * @param message
-     * @param cause
-     */
-    public PZConvertException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
-    
 }
