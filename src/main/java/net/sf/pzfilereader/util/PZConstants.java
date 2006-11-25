@@ -44,6 +44,8 @@ public final class PZConstants {
     public static final String DELIMITED_FILE = "delimited";
 
     public static final String FIXEDLENGTH_FILE = "fixed";
+    
+    public static final int SPLITLINE_SIZE_INIT = 10;
 
     private PZConstants() {
 
