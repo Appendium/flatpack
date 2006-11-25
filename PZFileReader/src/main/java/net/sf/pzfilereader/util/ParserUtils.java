@@ -130,6 +130,7 @@ public final class ParserUtils {
         for (int i = 0; i < size; i++) {
 
             final char currentChar = trimmedLine.charAt(i);
+            //System.out.println(currentChar);
             if (currentChar != delimiter && currentChar != qualifier) {
                 previousChar = currentChar;
                 endBlock = i + 1;
@@ -161,6 +162,15 @@ public final class ParserUtils {
                     } else {
                         endBlock = i + 1;
                     }
+                }
+                //TODO
+                //this is probably a pretty costly check, maybe Benoit will have a better idea of how
+                //to handle
+                else if (i + 1 < size && delimiter != ' ' && 
+                        lTrimKeepTabs(trimmedLine.substring(i + 1)).charAt(0) != delimiter) {
+                    previousChar = currentChar;
+                    endBlock = i + 1;
+                    continue;
                 } else {
                     insideQualifier = false;
                     blockWasInQualifier = true;
