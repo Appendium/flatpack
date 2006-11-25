@@ -113,12 +113,8 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
 
         try {
             //gather the conversion properties
-            final Properties pzConvertProps = new Properties();
-            final URL url = getClass().getClassLoader().getResource("pzconvert.properties");
-            pzConvertProps.load(url.openStream());
-            ds.setPZConvertProps(pzConvertProps);
-            
-            
+            ds.setPZConvertProps(ParserUtils.loadConvertProperties());
+
             final Map recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
 
             // Read in the flat file
