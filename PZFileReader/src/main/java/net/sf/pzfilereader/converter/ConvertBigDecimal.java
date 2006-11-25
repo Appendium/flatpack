@@ -5,8 +5,11 @@ import java.math.BigDecimal;
 import net.sf.pzfilereader.util.ParserUtils;
 
 /**
- * Returns a BigInt
- * @author zepernick
+ * Returns a BigDecimal
+ * Non numeric chars are removed from the string
+ * before converting
+ *  
+ * @author Paul Zepernick
  */
 public class ConvertBigDecimal implements PZConverter{
     /*
