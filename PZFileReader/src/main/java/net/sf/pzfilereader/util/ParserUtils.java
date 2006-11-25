@@ -285,7 +285,7 @@ public final class ParserUtils {
     /**
      * Removes a single string character from a given string
      *
-     * @param character -
+     * @param theChar -
      *            string char
      * @param theString -
      *            string to search
