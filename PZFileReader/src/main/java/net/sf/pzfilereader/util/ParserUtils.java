@@ -143,6 +143,8 @@ public final class ParserUtils {
                     String trimmed = trimmedLine.substring(startBlock, endBlock > startBlock ? endBlock : startBlock + 1);
                     if (!blockWasInQualifier) {
                         trimmed = trimmed.trim();
+                    } else {
+                        //need to run the qualifier replace when it was in qualifier
                         trimmed = trimmed.replaceAll(doubleQualifier, String.valueOf(qualifier));
                     }
 
@@ -163,11 +165,13 @@ public final class ParserUtils {
                         endBlock = i + 1;
                     }
                 }
-                //TODO
-                //this is probably a pretty costly check, maybe Benoit will have a better idea of how
-                //to handle
+                //try to first look ahead 1 char.  If we have a match on the delimiter it will drop to the else
+                //otherwise do one last check to make sure there is no space between the delimiter and
+                //the qualifer.  This looks a little sloppy, but I am trying to avoid the left trim, and substring if
+                //possible.  
                 else if (i + 1 < size && delimiter != ' ' && 
-                        lTrimKeepTabs(trimmedLine.substring(i + 1)).charAt(0) != delimiter) {
+                        ((trimmedLine.charAt(i + 1) != ' ' &&  trimmedLine.charAt(i + 1) != delimiter) ||
+                        lTrimKeepTabs(trimmedLine.substring(i + 1)).charAt(0) != delimiter)) {
                     previousChar = currentChar;
                     endBlock = i + 1;
                     continue;
@@ -177,7 +181,9 @@ public final class ParserUtils {
                     endBlock = i;
                     // last column (e.g. finishes with ")
                     if (i == size - 1) {
-                        list.add(trimmedLine.substring(startBlock, size - 1));
+                        String str = trimmedLine.substring(startBlock, size - 1);
+                        str = str.replaceAll(doubleQualifier, String.valueOf(qualifier));
+                        list.add(str);
                         startBlock = i + 1;
                     }
                 }
