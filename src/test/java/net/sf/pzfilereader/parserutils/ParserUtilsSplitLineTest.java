@@ -140,6 +140,37 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("\"one\"  \"two\"  three", ' ', '\"', new String[] {"one", "", "two", "", "three"});
     }
 
+    /**
+     * Test some extreme cases
+     */
+    public void testSomeExtremeCases2() {
+        check("\"a,b,c\"", ',', '\'', new String[] { "\"a", "b", "c\"" });
+        check("\"a,b\",\"c\"", ',', '\'', new String[] { "\"a", "b\"", "\"c\"" });
+        check("a,b,c", ',', '\'', new String[] { "a", "b", "c" });
+        check("  a,b,c", ',', '\'', new String[] { "a", "b", "c" });
+        check("  a,b,c", ',', '\'', new String[] { "a", "b", "c" });
+
+        // example typically from Excel.
+        check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\'', new String[] { "\"test1\"", "test2",
+                "\"0.00\"", "\"another", "element here\"", "lastone" });
+
+        // what would you expect of these ones?
+
+        // +++++The parser allows qualified and unqualified elements to be
+        // contained
+        // on the same line. so it should break the elements down like so
+        // 1 = a" -->" is part of the data since the element did not start with
+        // a qualifier
+        // 2 = b
+        // 3 = c" --> same as #1
+        // a",b,c"
+        check("a\",b,c\"", ',', '\'', new String[] { "a\"", "b", "c\"" });
+
+        check("\"  a,b,c\"", ',', '\'', new String[] { "\"  a", "b", "c\"" });
+        check("  a, b ,c ", ',', '\'', new String[] { "a", "b", "c" });
+
+    }
+
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
         final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier, 10);
 
