@@ -92,14 +92,14 @@ public abstract class AbstractPZParser implements PZParser {
         this.handlingShortLines = handleShortLines;
     }
 
-    public final IDataSet parse() {
+    public final DataSet parse() {
         if (!initialised) {
             init();
         }
         return doParse();
     }
 
-    protected abstract IDataSet doParse();
+    protected abstract DataSet doParse();
 
     protected abstract void init();
 
