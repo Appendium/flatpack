@@ -9,7 +9,7 @@ import java.io.File;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
@@ -29,7 +29,7 @@ public class DelimitedColumnNamesInFile {
         // text qualified by double quotes
         // ignore first record
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File("net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
         orderby = new OrderBy();
@@ -59,7 +59,7 @@ public class DelimitedColumnNamesInFile {
 
     // used for Junit test
 
-    public IDataSet getDsForTest() throws Exception {
+    public DataSet getDsForTest() throws Exception {
 
         final PZParser parser = DefaultPZParserFactory.getInstance().newDelimitedParser(
                 new File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');

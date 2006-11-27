@@ -7,7 +7,7 @@
 package net.sf.pzfilereader.columninfile;
 
 import junit.framework.TestCase;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 
 /**
  * @author zepernick
@@ -22,7 +22,7 @@ public class DelimitedColumnNamesInFileTest extends TestCase {
 
     // tests to make sure we have 0 errors
     public void testErrorCount() {
-        IDataSet ds = null;
+        DataSet ds = null;
 
         try {
             final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
@@ -41,7 +41,7 @@ public class DelimitedColumnNamesInFileTest extends TestCase {
     // test to make sure we parsed the correct number
     // of rows in the file
     public void testRowCount() {
-        IDataSet ds = null;
+        DataSet ds = null;
 
         try {
             final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();
@@ -59,7 +59,7 @@ public class DelimitedColumnNamesInFileTest extends TestCase {
 
     // test to make sure we have the right number of column names from the file
     public void testColumnNameCount() {
-        IDataSet ds = null;
+        DataSet ds = null;
 
         try {
             final DelimitedColumnNamesInFile testDelimted = new DelimitedColumnNamesInFile();

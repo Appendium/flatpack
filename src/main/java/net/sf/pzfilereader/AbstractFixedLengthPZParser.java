@@ -70,7 +70,7 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
         super(dataSourceStream);
     }
 
-    public IDataSet doParse() {
+    public DataSet doParse() {
         try {
             if (getDataSourceStream() != null) {
                 return doFixedLengthFile(getDataSourceStream());
@@ -105,7 +105,7 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
      * puts together the dataset for fixed length file. This is used for PZ XML
      * mappings, and SQL table mappings
      */
-    private IDataSet doFixedLengthFile(final InputStream dataSource) throws IOException {
+    private DataSet doFixedLengthFile(final InputStream dataSource) throws IOException {
         InputStreamReader isr = null;
         BufferedReader br = null;
 

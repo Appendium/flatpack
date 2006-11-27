@@ -54,7 +54,7 @@ import net.sf.pzfilereader.util.ParserUtils;
  * @author xhensevb
  * 
  */
-public class DefaultDataSet implements IDataSet {
+public class DefaultDataSet implements DataSet {
     private final List rows = new ArrayList();
 
     private final List errors = new ArrayList();

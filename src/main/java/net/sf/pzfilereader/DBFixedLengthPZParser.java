@@ -124,7 +124,7 @@ public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
         }
     }
 
-    public IDataSet doParse() {
+    public DataSet doParse() {
         return null;
     }
 }

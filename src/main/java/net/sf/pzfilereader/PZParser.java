@@ -46,7 +46,7 @@ public interface PZParser {
      * 
      * @return the data set resulting from parsing
      */
-    IDataSet parse();
+    DataSet parse();
 
     /**
      * @return true, lines with less columns then the amount of column headers

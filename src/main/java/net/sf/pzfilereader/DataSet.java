@@ -40,7 +40,7 @@ import java.util.Properties;
 
 import net.sf.pzfilereader.ordering.OrderBy;
 
-public interface IDataSet {
+public interface DataSet {
 
     /**
      * Goes to the top of the data set. This will put the pointer one record

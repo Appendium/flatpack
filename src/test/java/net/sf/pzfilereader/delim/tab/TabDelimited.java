@@ -9,7 +9,7 @@ import java.io.File;
 
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 
 /**
@@ -28,7 +28,7 @@ public class TabDelimited {
         // ignore first record
         tmpFile = new File("net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt");
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(tmpFile, '\t', '\"');
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
         /*
@@ -59,7 +59,7 @@ public class TabDelimited {
 
     // used for Junit test
 
-    public IDataSet getDsForTest() throws Exception {
+    public DataSet getDsForTest() throws Exception {
         final PZParser parser = DefaultPZParserFactory.getInstance().newDelimitedParser(
                 new File("src/test/java/net/sf/pzfilereader/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
 
