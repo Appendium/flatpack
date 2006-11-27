@@ -169,6 +169,8 @@ public final class ParserUtils {
                 //otherwise do one last check to make sure there is no space between the delimiter and
                 //the qualifer.  This looks a little sloppy, but I am trying to avoid the left trim, and substring if
                 //possible.  
+                // "a","b","c" should not call the lTrimKeepTabs
+                // "a",  "b",  "c" will use the lTrimKeepTabs to remove the space between the delimiter and qualifer
                 else if (i + 1 < size && delimiter != ' ' && 
                         ((trimmedLine.charAt(i + 1) != ' ' &&  trimmedLine.charAt(i + 1) != delimiter) ||
                         lTrimKeepTabs(trimmedLine.substring(i + 1)).charAt(0) != delimiter)) {
