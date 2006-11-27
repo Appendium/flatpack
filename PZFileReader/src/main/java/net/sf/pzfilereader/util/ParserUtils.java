@@ -164,20 +164,29 @@ public final class ParserUtils {
                     } else {
                         endBlock = i + 1;
                     }
-                }
-                //try to first look ahead 1 char.  If we have a match on the delimiter it will drop to the else
-                //otherwise do one last check to make sure there is no space between the delimiter and
-                //the qualifer.  This looks a little sloppy, but I am trying to avoid the left trim, and substring if
-                //possible.  
-                // "a","b","c" should not call the lTrimKeepTabs
-                // "a",  "b",  "c" will use the lTrimKeepTabs to remove the space between the delimiter and qualifer
-                else if (i + 1 < size && delimiter != ' ' && 
-                        ((trimmedLine.charAt(i + 1) != ' ' &&  trimmedLine.charAt(i + 1) != delimiter) ||
-                        lTrimKeepTabs(trimmedLine.substring(i + 1)).charAt(0) != delimiter)) {
-                    previousChar = currentChar;
-                    endBlock = i + 1;
-                    continue;
                 } else {
+                    if (i + 1 < size && delimiter != ' ') {
+                        //this is used to allow unescaped qualifiers to be contained within the element
+                        //do not run this check is a space is being used as a delimiter
+                        //we don't want to trim the delimiter off
+                        //loop until we find a char that is not a space, or we reach the end of the line.
+                        int start = i + 1;
+                        char charToCheck = trimmedLine.charAt(start);
+                        while (charToCheck == ' ') {
+                            start ++;
+                            if (start == size) {
+                                break;
+                            }
+                            charToCheck = trimmedLine.charAt(start); 
+                        }                        
+                        
+                        if (charToCheck != delimiter) {
+                            previousChar = currentChar;
+                            endBlock = i + 1;
+                            continue;
+                        }
+                        
+                    }
                     insideQualifier = false;
                     blockWasInQualifier = true;
                     endBlock = i;
