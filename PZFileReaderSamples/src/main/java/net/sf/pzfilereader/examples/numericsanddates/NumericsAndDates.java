@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 
 /**
@@ -43,7 +43,7 @@ public class NumericsAndDates {
         // ignore first record
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(mapping), 
                 new File(data), ',', '\"', true);
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
         // demonstrates the casting abilities of PZFileReader
         while (ds.next()) {
             System.out.println("Item Desc: " + ds.getString("ITEM_DESC") + " (String)");

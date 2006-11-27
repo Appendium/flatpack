@@ -10,7 +10,7 @@ import java.io.File;
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
@@ -44,7 +44,7 @@ public class DelimitedFileExportToExcel {
         // ignore first record
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(mapping), 
                 new File(data), ',', '"', true);
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
         final OrderBy orderby = new OrderBy();

@@ -9,7 +9,7 @@ import java.io.File;
 
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 
 /**
@@ -40,7 +40,7 @@ public class DelimitedMultiLine {
         // ignore first record
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(data),
                 ',', '\"');
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
 
         final String[] colNames = ds.getColumns();
 

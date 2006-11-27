@@ -9,7 +9,7 @@ import java.util.Map;
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 
 /*
@@ -53,7 +53,7 @@ public class CSVPerformanceTest {
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(filename), 
                 ',', '"');
         long timeStarted = System.currentTimeMillis();
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
         long timeFinished = System.currentTimeMillis();
         
         String timeMessage = "";
