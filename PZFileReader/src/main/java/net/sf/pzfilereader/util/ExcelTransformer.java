@@ -22,7 +22,7 @@ import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 
 /**
  * @author Paul Zepernick
@@ -31,7 +31,7 @@ import net.sf.pzfilereader.IDataSet;
  */
 public class ExcelTransformer {
 
-    private IDataSet ds;
+    private DataSet ds;
 
     private File xlsFile;
 
@@ -43,7 +43,7 @@ public class ExcelTransformer {
      * @param xlsFile
      *            Excel file to be created
      */
-    public ExcelTransformer(final IDataSet ds, final File xlsFile) {
+    public ExcelTransformer(final DataSet ds, final File xlsFile) {
         this.ds = ds;
         this.xlsFile = xlsFile;
     }

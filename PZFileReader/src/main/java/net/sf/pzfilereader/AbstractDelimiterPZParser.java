@@ -81,7 +81,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
-    public IDataSet doParse() {
+    public DataSet doParse() {
         try {
             if (getDataSourceStream() != null) {
                 return doDelimitedFile(getDataSourceStream(), getDelimiter(), getQualifier(), isIgnoreFirstRecord(),
@@ -144,7 +144,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
      * puts together the dataset for a DELIMITED file. This is used for PZ XML
      * mappings, and SQL table mappings
      */
-    private IDataSet doDelimitedFile(final InputStream dataSource, final char delimiter, final char qualifier,
+    private DataSet doDelimitedFile(final InputStream dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord, final boolean createMDFromFile) throws IOException, Exception {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
