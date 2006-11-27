@@ -11,7 +11,7 @@ import java.util.Iterator;
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 
 /**
@@ -41,7 +41,7 @@ public class FixedLengthHeaderAndTrailer {
         DataError dataError = null;
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newFixedLengthParser(new File(mapping),
                 new File(data));
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
 
         while (ds.next()) {
 

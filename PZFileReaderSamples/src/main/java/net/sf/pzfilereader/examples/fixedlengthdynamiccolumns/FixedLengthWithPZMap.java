@@ -9,7 +9,7 @@ import java.io.File;
 
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 
 /**
@@ -37,7 +37,7 @@ public class FixedLengthWithPZMap {
     public static void call(String mapping, String data) throws Exception {
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newFixedLengthParser(
                 new File(mapping), new File(data));
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
 
         final String[] colNames = ds.getColumns();
 

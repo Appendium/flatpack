@@ -8,7 +8,7 @@ package net.sf.pzfilereader.examples.csvheaderandtrailer;
 import java.io.File;
 
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.IDataSet;
+import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 
 /**
@@ -38,7 +38,7 @@ public class CSVHeaderAndTrailer {
         // ignore first record 
         final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(mapFile, dataFile, 
                 ',', '\"', true);
-        final IDataSet ds = pzparser.parse();
+        final DataSet ds = pzparser.parse();
         while (ds.next()) {
 
             if (ds.isRecordID("header")) {

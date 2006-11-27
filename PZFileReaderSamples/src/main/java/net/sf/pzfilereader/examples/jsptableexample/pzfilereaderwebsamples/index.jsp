@@ -9,39 +9,39 @@
     
   </head>
   <%
-	OrderBy order = null;
-	try{  
-  
-	   	File mappingFile = null;
-	   	File txtFile = null;
-	   	String appDirectory = null;
-	   	
-	   	//find out where this application is installed
-	   	appDirectory = getServletContext().getRealPath("");
-	   	
-	   	mappingFile  = new File (appDirectory + "/PEOPLE.pzmap.xml");
-	   	txtFile = new File (appDirectory + "/PEOPLE.txt");
-	   	
-	  	//read in the file
-	  	final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(mappingFile, 
-	  					txtFile, ',', 0, false)	;
-	  	final IDataSet ds = pzparser.parse();
-	  					
-	  					
-	  //check to see if there is a paramter in the request that is telling us what column to sort by
-	  if (request.getParameter("orderby") != null && 
-	  		request.getParameter("orderby").trim().length() > 0){	
-	  		
-				//sort the file by what was passed in the request	  		
-	  			order = new OrderBy();
-	  			order.addOrderColumn(new OrderColumn(request.getParameter("orderby"),false)); //set boolean to true for DESC sort
-	  			ds.orderRows(order);
-	  		
-	  }
-	  					
-	  }catch(Exception ex){
-		out.println("Error: " + ex);	  
-	  }
+  	OrderBy order = null;
+  	try{  
+    
+  	   	File mappingFile = null;
+  	   	File txtFile = null;
+  	   	String appDirectory = null;
+  	   	
+  	   	//find out where this application is installed
+  	   	appDirectory = getServletContext().getRealPath("");
+  	   	
+  	   	mappingFile  = new File (appDirectory + "/PEOPLE.pzmap.xml");
+  	   	txtFile = new File (appDirectory + "/PEOPLE.txt");
+  	   	
+  	  	//read in the file
+  	  	final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(mappingFile, 
+  	  			txtFile, ',', 0, false)	;
+  	  	final DataSet ds = pzparser.parse();
+  	  			
+  	  			
+  	  //check to see if there is a paramter in the request that is telling us what column to sort by
+  	  if (request.getParameter("orderby") != null && 
+  	  		request.getParameter("orderby").trim().length() > 0){	
+  	  		
+  		//sort the file by what was passed in the request	  		
+  	  	order = new OrderBy();
+  	  	order.addOrderColumn(new OrderColumn(request.getParameter("orderby"),false)); //set boolean to true for DESC sort
+  	  	ds.orderRows(order);
+  	  		
+  	  }
+  	  			
+  	  }catch(Exception ex){
+  		out.println("Error: " + ex);	  
+  	  }
   %>
   <body>
    	<table border="1">
