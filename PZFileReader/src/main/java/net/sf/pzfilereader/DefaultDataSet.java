@@ -439,8 +439,27 @@ public class DefaultDataSet implements DataSet {
         this.pzConvertProps = props;
     }
 
-    void setColumnMD(final Map columnMD) {
+    protected void setColumnMD(final Map columnMD) {
         this.columnMD = columnMD;
     }
+    
+    /**
+     * Returns the column meta data assoicated with 
+     * this DataSet
+     * 
+     * @return Map
+     */
+    protected Map getColumnMD() {
+        return this.columnMD;
+    }
+
+    /**
+     * @param pointer the pointer to set
+     */
+    protected void setPointer(int pointer) {
+        this.pointer = pointer;
+    }
+    
+    
 
 }
