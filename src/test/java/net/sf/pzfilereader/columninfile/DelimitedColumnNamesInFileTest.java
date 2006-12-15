@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package net.sf.pzfilereader.columninfile;
+package net.sf.pzfilereader.columninfile; 
 
 import junit.framework.TestCase;
 import net.sf.pzfilereader.DataSet;
@@ -49,7 +49,7 @@ public class DelimitedColumnNamesInFileTest extends TestCase {
             ds = testDelimted.getDsForTest();
 
             // check that we parsed in the right amount of rows
-            assertEquals(6, ds.getRows().size());
+            assertEquals(6, ds.getRowCount());
 
         } catch (final Exception ex) {
             ex.printStackTrace();
