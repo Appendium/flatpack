@@ -42,7 +42,8 @@ package net.sf.pzfilereader;
 public interface PZParser {
 
     /**
-     * Start the parsing
+     * Start the parsing.  Will return "null" if the
+     * parse fails and the DataSet cannot be created
      * 
      * @return the data set resulting from parsing
      */
