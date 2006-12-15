@@ -398,7 +398,7 @@ public final class ParserUtils {
      * @exception Exception
      * @return ArrayList - ColumnMetaData
      */
-    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier) throws Exception {
+    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier)  {
         List lineData = null;
         final List results = new ArrayList();
         final Map columnMD = new LinkedHashMap();
@@ -424,10 +424,12 @@ public final class ParserUtils {
      * @param theFile
      * @param delimiter
      * @param qualifier
-     * @exception Exception
+     * @exception FileNotFoundException
+     * @exception IOException
      * @return ArrayList - ColumnMetaData
      */
-    public static List getColumnMDFromFile(final File theFile, final String delimiter, final String qualifier) throws Exception {
+    public static List getColumnMDFromFile(final File theFile, final String delimiter, 
+            final String qualifier) throws IOException{
         BufferedReader br = null;
         FileReader fr = null;
         String line = null;
