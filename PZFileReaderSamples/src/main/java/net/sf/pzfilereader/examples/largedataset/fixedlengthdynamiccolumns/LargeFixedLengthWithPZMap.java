@@ -6,7 +6,10 @@ package net.sf.pzfilereader.examples.largedataset.fixedlengthdynamiccolumns;
  */
 
 import java.io.File;
-import java.io.FileInputStream;
+
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.brparse.BuffReaderFixedPZParser;
+import net.sf.pzfilereader.brparse.BuffReaderPZParseFactory;
 
 
 /**
@@ -31,24 +34,26 @@ public class LargeFixedLengthWithPZMap {
     }
 
     public static void call(String mapping, String data) throws Exception {
-        System.out.println("Not Currently Available...Check back later.");
-      /*  LargeDataSet ds = null;
         String[] colNames = null;
-
-        ds = new LargeDataSet(new FileInputStream(new File(mapping)), new FileInputStream(new File(data)), false);
-
-        colNames = ds.getColumns();
-
-        while (ds.next()) {
-            for (int i = 0; i < colNames.length; i++) {
-                System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+        BuffReaderFixedPZParser pzparse = null;
+        try {
+            pzparse = (BuffReaderFixedPZParser)BuffReaderPZParseFactory.getInstance().newFixedLengthParser(new File(mapping), 
+                    new File(data));
+    
+            final DataSet ds = pzparse.parse();
+            colNames = ds.getColumns();
+    
+            while (ds.next()) {
+                for (int i = 0; i < colNames.length; i++) {
+                    System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+                }
+    
+                System.out.println("===========================================================================");
             }
-
-            System.out.println("===========================================================================");
+            
+        } finally {
+            pzparse.close();
         }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();*/
 
     }
 }
