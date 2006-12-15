@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.LargeDataSet;
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.brparse.BuffReaderDelimPZParser;
+import net.sf.pzfilereader.brparse.BuffReaderPZParseFactory;
 
 /*
  * Created on Dec 1, 2005
@@ -40,15 +42,17 @@ public class CSVLarge {
     }
 
     public static void call(String data) throws Exception {
-        LargeDataSet ds = null;
+        BuffReaderDelimPZParser pzparse = null;
         try {
 
 
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-            ds = new LargeDataSet(new File(data), ',', '"', false);
-
+            pzparse = (BuffReaderDelimPZParser)BuffReaderPZParseFactory.getInstance().newDelimitedParser(new File(data), 
+                     ',', '"');
+    
+            final DataSet ds = pzparse.parse();
             final long timeStarted = System.currentTimeMillis();
             int totalCount = 0;
             int tmpCount = 0;
@@ -80,11 +84,10 @@ public class CSVLarge {
                     System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());
                 }
             }
-
-            // clear out the DataSet object for the JVM to collect
-            ds.freeMemory();
         } catch (final Exception ex) {
             ex.printStackTrace();
+        } finally {
+            pzparse.close();
         }
 
     }

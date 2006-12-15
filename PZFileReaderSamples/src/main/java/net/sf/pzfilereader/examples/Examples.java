@@ -19,7 +19,7 @@ import net.sf.pzfilereader.examples.largedataset.largecsvperformancetest.CSVLarg
 import net.sf.pzfilereader.examples.lowlevelparse.LowLevelParse;
 import net.sf.pzfilereader.examples.multilinedelimitedrecord.DelimitedMultiLine;
 import net.sf.pzfilereader.examples.numericsanddates.NumericsAndDates;
-import net.sf.pzfilereader.util.BXParser;
+import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
 /**
@@ -71,7 +71,7 @@ public class Examples implements Repeater {
         menu.addMenuItem("NumericsAndDates", "doNumericsAndDates", false);
         menu.addMenuItem("Ask for GC", "doGC", false);
         menu.addMenuItem("Test StringBuffer", "doStringBuffer", false);
-        menu.addMenuItem("Test Parsers", "doTestParsers", false);
+        menu.addMenuItem("Test Delim Parser Perform", "doTestParsers", false);
 
         menu.addMenuItem("Who you gonna call?", "doCall", false);
         menu.displayMenu();
@@ -251,7 +251,7 @@ public class Examples implements Repeater {
     }
 
     public void doTestParsers() {
-        final int repeat = ConsoleMenu.getInt("How many times?", 1000);
+        final int repeat = ConsoleMenu.getInt("How many Rows?", 1000);
         final int numberOfCols = ConsoleMenu.getInt("How many columns?", 100);
         final boolean qualif = ConsoleMenu.getBoolean("With qualifier?", true);
 
@@ -270,27 +270,11 @@ public class Examples implements Repeater {
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < repeat; i++) {
-            ParserUtils.splitLine(line, ',', '\"');
+            ParserUtils.splitLine(line, ',', '\"', PZConstants.SPLITLINE_SIZE_INIT);
         }
         long stop = System.currentTimeMillis();
 
         System.out.println("ParserUtil " + (stop - start) + " ms.");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < repeat; i++) {
-            BXParser.splitLine(line, ',', '\"', numberOfCols);
-        }
-        stop = System.currentTimeMillis();
-
-        System.out.println("BXParser " + (stop - start) + " ms.");
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < repeat; i++) {
-            BXParser.splitLineWithBuf(line, ',', '\"', numberOfCols);
-        }
-        stop = System.currentTimeMillis();
-
-        System.out.println("BXParser with buf " + (stop - start) + " ms.");
 
     }
 

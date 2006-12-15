@@ -8,7 +8,6 @@ package net.sf.pzfilereader.examples.largedataset.fixedlengthdynamiccolumns;
 import java.io.File;
 import java.io.FileInputStream;
 
-import net.sf.pzfilereader.LargeDataSet;
 
 /**
  * @author zepernick
@@ -32,7 +31,8 @@ public class LargeFixedLengthWithPZMap {
     }
 
     public static void call(String mapping, String data) throws Exception {
-        LargeDataSet ds = null;
+        System.out.println("Not Currently Available...Check back later.");
+      /*  LargeDataSet ds = null;
         String[] colNames = null;
 
         ds = new LargeDataSet(new FileInputStream(new File(mapping)), new FileInputStream(new File(data)), false);
@@ -48,7 +48,7 @@ public class LargeFixedLengthWithPZMap {
         }
 
         // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
+        ds.freeMemory();*/
 
     }
 }
