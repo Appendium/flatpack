@@ -8,7 +8,9 @@ package net.sf.pzfilereader.examples.largedataset.delimiteddynamiccolumns;
 import java.io.File;
 import java.io.FileInputStream;
 
-import net.sf.pzfilereader.LargeDataSet;
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.brparse.BuffReaderDelimPZParser;
+import net.sf.pzfilereader.brparse.BuffReaderPZParseFactory;
 
 /**
  * @author zepernick
@@ -33,34 +35,41 @@ public class LargeDelimitedWithPZMap {
     }
 
     public static void call(String mapping, String data) throws Exception {
-        LargeDataSet ds = null;
         String[] colNames = null;
         FileInputStream pzmap = null;
         FileInputStream fileToParse = null;
-
-        pzmap = new FileInputStream(new File(mapping));
-        fileToParse = new FileInputStream(new File(data));
-        // delimited by a comma
-        // text qualified by double quotes
-        // ignore first record
-        ds = new LargeDataSet(pzmap, fileToParse, ',', '"', true, false);
-
-        colNames = ds.getColumns();
-
-        while (ds.next()) {
-            for (int i = 0; i < colNames.length; i++) {
-                System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+        BuffReaderDelimPZParser pzparse = null;
+        try {
+            pzmap = new FileInputStream(new File(mapping));
+            fileToParse = new FileInputStream(new File(data));
+            // delimited by a comma
+            // text qualified by double quotes
+            // ignore first record
+            
+            pzparse = (BuffReaderDelimPZParser)BuffReaderPZParseFactory.getInstance().newDelimitedParser(pzmap, 
+                    fileToParse, ',', '"', true);
+    
+            final DataSet ds = pzparse.parse();
+    
+            colNames = ds.getColumns();
+    
+            while (ds.next()) {
+                for (int i = 0; i < colNames.length; i++) {
+                    System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+                }
+    
+                System.out.println("===========================================================================");
             }
-
-            System.out.println("===========================================================================");
+    
+            if (ds.getErrors() != null && ds.getErrors().size() > 0) {
+                System.out.println("FOUND ERRORS IN FILE");
+            }
+            
+        } finally {
+            // free up the file readers
+            pzparse.close();
+            
         }
-
-        if (ds.getErrors() != null && ds.getErrors().size() > 0) {
-            System.out.println("FOUND ERRORS IN FILE");
-        }
-
-        // clear out the DataSet object for the JVM to collect
-        ds.freeMemory();
 
     }
 }
