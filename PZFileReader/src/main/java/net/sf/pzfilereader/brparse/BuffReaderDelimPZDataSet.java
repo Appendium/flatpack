@@ -34,7 +34,7 @@ public class BuffReaderDelimPZDataSet extends DefaultDataSet{
                 setColumnMD(new LinkedHashMap(brpzparser.getColumnMD()));
             }   
             
-            getRows().clear();
+            clearRows();
             addRow(r);
             
             setPointer(0);

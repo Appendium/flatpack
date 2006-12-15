@@ -254,15 +254,6 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getRows()
-     */
-    public List getRows() {
-        return rows;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see net.sf.pzfilereader.IDataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
@@ -460,6 +451,12 @@ public class DefaultDataSet implements DataSet {
         this.pointer = pointer;
     }
     
-    
+    /**
+     * Clears all of the in memory rows of the DataSet
+     *
+     */
+    protected void clearRows() {
+        rows.clear();
+    }
 
 }
