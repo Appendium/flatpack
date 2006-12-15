@@ -15,6 +15,9 @@
 package net.sf.pzfilereader.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -22,18 +25,28 @@ import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import net.sf.pzfilereader.DataSet;
 
 /**
- * @author Paul Zepernick
+ * Converts a DataSet object into an excel spreadsheet.
  * 
- * Converts a DataSet object into an excel spreadsheet
+ * Only detail records will be contained in the export.
+ * Header / Trailer records defined by <record> tags in the 
+ * pzmap will be ignored on the export.
+ * 
+ * @author Paul Zepernick
  */
 public class ExcelTransformer {
 
     private DataSet ds;
 
     private File xlsFile;
+    
+    private String[] exportOnlyColumns;
+    
+    private String[] excludeFromExportColumns;
+    
 
     /**
      * Constructs a new Excel transformer
@@ -51,14 +64,20 @@ public class ExcelTransformer {
     /**
      * Writes the Excel file to disk
      * 
-     * @throws Exception
+     * @throws IOException
+     * @thorws WriteException
      */
-    public void writeExcelFile() throws Exception {
+    public void writeExcelFile() throws IOException, WriteException {
         WritableWorkbook excelWrkBook = null;
         int curDsPointer = 0;
 
         try {
             final String[] columnNames = ds.getColumns();
+            final List exportOnlyColumnsList = exportOnlyColumns != null ? 
+                    Arrays.asList(exportOnlyColumns) : null;
+                    
+            final List excludeFromExportColumnsList = excludeFromExportColumns != null ? 
+                    Arrays.asList(excludeFromExportColumns) : null;
             // get the current position of the DataSet. We have to go to the top
             // to do this write,
             // and we will put the pionter back where it was after we are done
@@ -72,16 +91,46 @@ public class ExcelTransformer {
             final WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10, WritableFont.NO_BOLD);
             // write the column headings in the spreadsheet
             WritableCellFormat cellFormat = new WritableCellFormat(times10ptBold);
+            int colOffset = 0;
             for (int i = 0; i < columnNames.length; i++) {
-                final Label xlsTextLbl = new Label(i, 0, columnNames[i], cellFormat);
+                if (exportOnlyColumnsList != null) {
+                    if (!exportOnlyColumnsList.contains(columnNames[i])) {
+                        colOffset ++;
+                        continue;
+                    }
+                } else if (excludeFromExportColumnsList != null) {
+                    if (excludeFromExportColumnsList.contains(columnNames[i])) {
+                        colOffset ++;
+                        continue;
+                    }
+                }         
+                
+                final Label xlsTextLbl = new Label(i - colOffset, 0, columnNames[i], cellFormat);
                 wrkSheet.addCell(xlsTextLbl);
             }
 
             cellFormat = new WritableCellFormat(times10pt);
             int row = 1;
             while (ds.next()) {
+                if (!ds.isRecordID(PZConstants.DETAIL_ID)) {
+                    continue;
+                }
+                
+                colOffset = 0;
                 for (int i = 0; i < columnNames.length; i++) {
-                    final Label xlsTextLbl = new Label(i, row, ds.getString(columnNames[i]), cellFormat);
+                    if (exportOnlyColumnsList != null) {
+                        if (!exportOnlyColumnsList.contains(columnNames[i])) {
+                            colOffset ++;
+                            continue;
+                        }
+                    } else if (excludeFromExportColumnsList != null) {
+                        if (excludeFromExportColumnsList.contains(columnNames[i])) {
+                            colOffset ++;
+                            continue;
+                        }
+                    }                    
+                    
+                    final Label xlsTextLbl = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
                     wrkSheet.addCell(xlsTextLbl);
                 }
 
@@ -99,6 +148,30 @@ public class ExcelTransformer {
             }
         }
 
+    }
+    
+    
+    /**
+     * The columns names contained in the array will be igored if
+     * setExportOnlyColumns() is called.  
+     * 
+     * Any columns names contained in this list will be excluded from
+     * the export in Excel.
+     * 
+     * @param excludeFromExportColumns the excludeFromExportColumns to set
+     */
+    public void setExcludeFromExportColumns(String[] excludeFromExportColumns) {
+        this.excludeFromExportColumns = excludeFromExportColumns;
+    }
+
+    /**
+     * When set, only columns contained in the String[] will
+     * be exported out to Excel.
+     * 
+     * @param exportOnlyColumns the exportOnlyColumns to set
+     */
+    public void setExportOnlyColumns(String[] exportOnlyColumns) {
+        this.exportOnlyColumns = exportOnlyColumns;
     }
 
 }
