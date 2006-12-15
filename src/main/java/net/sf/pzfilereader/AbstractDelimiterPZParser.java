@@ -56,6 +56,8 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
     private char qualifier = 0;
 
     private boolean ignoreFirstRecord = false;
+    
+    private int lineCount = 0;
 
     public AbstractDelimiterPZParser(final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
@@ -83,6 +85,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
 
     public DataSet doParse() {
         try {
+            lineCount = 0;
             if (getDataSourceStream() != null) {
                 return doDelimitedFile(getDataSourceStream(), getDelimiter(), getQualifier(), isIgnoreFirstRecord(),
                         shouldCreateMDFromFile());
@@ -137,6 +140,10 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         this.qualifier = qualifier;
     }
 
+    protected int getLineCount() {
+        return lineCount;
+    }
+    
     /*
      * This is the new version of doDelimitedFile using InputStrem instead of
      * File. This is more flexible especially it is working with WebStart.
@@ -145,7 +152,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
      * mappings, and SQL table mappings
      */
     private DataSet doDelimitedFile(final InputStream dataSource, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord, final boolean createMDFromFile) throws IOException, Exception {
+            final boolean ignoreFirstRecord, final boolean createMDFromFile) throws IOException {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
         }
@@ -160,25 +167,13 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             // get the total column count
             // columnCount = columnMD.size();
 
-            /** Read in the flat file */
-            // fr = new FileReader(dataSource.getAbsolutePath());
             isr = new InputStreamReader(dataSource);
             br = new BufferedReader(isr);
 
             boolean processedFirst = false;
-            boolean processingMultiLine = false;
-            int lineCount = 0;
-            String lineData = "";
             /** loop through each line in the file */
             String line = null;
-            while ((line = br.readLine()) != null) {
-                lineCount++;
-                /** empty line skip past it */
-                final String trimmed = line.trim();
-                if (!processingMultiLine && trimmed.length() == 0) {
-                    continue;
-                }
-
+            while ((line = fetchNextRecord(br, qualifier, delimiter)) != null) {
                 // check to see if the user has elected to skip the first record
                 if (!processedFirst && ignoreFirstRecord) {
                     processedFirst = true;
@@ -190,96 +185,13 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                     continue;
                 }
 
-                // ********************************************************
-                // new functionality as of 2.1.0 check to see if we have
-                // any line breaks in the middle of the record, this will only
-                // be checked if we have specified a delimiter
-                // ********************************************************
-                final char[] chrArry = trimmed.toCharArray();
-                if (!processingMultiLine && delimiter > 0) {
-                    processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
-                }
-
-                // check to see if we have reached the end of the linebreak in
-                // the record
-
-                final String trimmedLineData = lineData.trim();
-                if (processingMultiLine && trimmedLineData.length() > 0) {
-                    // need to do one last check here. it is possible that the "
-                    // could be part of the data
-                    // excel will escape these with another quote; here is some
-                    // data "" This would indicate
-                    // there is more to the multiline
-                    if (trimmed.charAt(trimmed.length() - 1) == qualifier && !trimmed.endsWith("" + qualifier + qualifier)) {
-                        // it is safe to assume we have reached the end of the
-                        // line break
-                        processingMultiLine = false;
-                        if (trimmedLineData.length() > 0) { // + would always be
-                            // true surely....
-                            lineData += "\r\n";
-                        }
-                        lineData += line;
-                    } else {
-                        // check to see if this is the last line of the record
-                        // looking for a qualifier followed by a delimiter
-                        if (trimmedLineData.length() > 0) { // + here again,
-                            // this should
-                            // always be true...
-                            lineData += "\r\n";
-                        }
-                        lineData += line;
-                        boolean qualiFound = false;
-                        for (int i = 0; i < chrArry.length; i++) {
-                            if (qualiFound) {
-                                if (chrArry[i] == ' ') {
-                                    continue;
-                                } else {
-                                    // not a space, if this char is the
-                                    // delimiter, then we have reached the end
-                                    // of
-                                    // the record
-                                    if (chrArry[i] == delimiter) {
-                                        // processingMultiLine = false;
-                                        // fix put in, setting to false caused
-                                        // bug when processing multiple
-                                        // multi-line
-                                        // columns on the same record
-                                        processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
-                                        break;
-                                    }
-                                    qualiFound = false;
-                                    continue;
-                                }
-                            } else if (chrArry[i] == qualifier) {
-                                qualiFound = true;
-                            }
-                        }
-                        // check to see if we are still in multi line mode, if
-                        // so grab the next line
-                        if (processingMultiLine) {
-                            continue;
-                        }
-                    }
-                } else {
-                    // throw the line into lineData var.
-                    lineData += line;
-                    if (processingMultiLine) {
-                        continue; // if we are working on a multiline rec, get
-                        // the data on the next line
-                    }
-                }
-                // ********************************************************************
-                // end record line break logic
-                // ********************************************************************
-
-                //TODO
+                 //TODO
                 //seems like we may want to try doing something like this.  I have my reservations because
                 //it is possible that we don't get a "detail" id and this might generate NPE
                 //is it going to create too much overhead to do a null check here as well???
                 //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
                 // column values
-                final List columns = ParserUtils.splitLine(lineData, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
-                lineData = "";
+                final List columns = ParserUtils.splitLine(line, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
                 final int columnCount = cmds.size();
@@ -324,5 +236,120 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             }
         }
         return ds;
+    }
+    
+    /**
+     * Reads a record from a delimited file.  This will account for records which
+     * could span multiple lines.  
+     * NULL will be returned when the end of the file is reached
+     * 
+     * @param br
+     *          Open reader being used to read through the file
+     * @return String
+     *          Record from delimited file
+     *          
+     */
+    protected String fetchNextRecord(final BufferedReader br, final char qualifier,
+            final char delimiter) throws IOException{
+        String line = null;
+        String lineData = "";
+        boolean processingMultiLine = false;
+        
+        while ((line = br.readLine()) != null) {
+            lineCount++;
+            /** empty line skip past it */
+            final String trimmed = line.trim();
+            if (!processingMultiLine && trimmed.length() == 0) {
+                continue;
+            }
+
+            // ********************************************************
+            // new functionality as of 2.1.0 check to see if we have
+            // any line breaks in the middle of the record, this will only
+            // be checked if we have specified a delimiter
+            // ********************************************************
+            final char[] chrArry = trimmed.toCharArray();
+            if (!processingMultiLine && delimiter > 0) {
+                processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
+            }
+
+            // check to see if we have reached the end of the linebreak in
+            // the record
+
+            final String trimmedLineData = lineData.trim();
+            if (processingMultiLine && trimmedLineData.length() > 0) {
+                // need to do one last check here. it is possible that the "
+                // could be part of the data
+                // excel will escape these with another quote; here is some
+                // data "" This would indicate
+                // there is more to the multiline
+                if (trimmed.charAt(trimmed.length() - 1) == qualifier && !trimmed.endsWith("" + qualifier + qualifier)) {
+                    // it is safe to assume we have reached the end of the
+                    // line break
+                    processingMultiLine = false;
+                    if (trimmedLineData.length() > 0) { // + would always be
+                        // true surely....
+                        lineData += "\r\n";
+                    }
+                    lineData += line;
+                } else {
+                    // check to see if this is the last line of the record
+                    // looking for a qualifier followed by a delimiter
+                    if (trimmedLineData.length() > 0) { // + here again,
+                        // this should
+                        // always be true...
+                        lineData += "\r\n";
+                    }
+                    lineData += line;
+                    boolean qualiFound = false;
+                    for (int i = 0; i < chrArry.length; i++) {
+                        if (qualiFound) {
+                            if (chrArry[i] == ' ') {
+                                continue;
+                            } else {
+                                // not a space, if this char is the
+                                // delimiter, then we have reached the end
+                                // of
+                                // the record
+                                if (chrArry[i] == delimiter) {
+                                    // processingMultiLine = false;
+                                    // fix put in, setting to false caused
+                                    // bug when processing multiple
+                                    // multi-line
+                                    // columns on the same record
+                                    processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
+                                    break;
+                                }
+                                qualiFound = false;
+                                continue;
+                            }
+                        } else if (chrArry[i] == qualifier) {
+                            qualiFound = true;
+                        }
+                    }
+                    // check to see if we are still in multi line mode, if
+                    // so grab the next line
+                    if (processingMultiLine) {
+                        continue;
+                    }
+                }
+            } else {
+                // throw the line into lineData var.
+                lineData += line;
+                if (processingMultiLine) {
+                    continue; // if we are working on a multiline rec, get
+                    // the data on the next line
+                }
+            }
+            
+            break;
+        }
+        
+        if (line == null && lineData.length() == 0) {
+            //eof
+            return null;
+        }
+        
+        return lineData;
     }
 }
