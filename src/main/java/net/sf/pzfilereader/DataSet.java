@@ -231,7 +231,6 @@ public interface DataSet {
      */
     void orderRows(final OrderBy ob) throws Exception;
 
-    List getRows();
 
     /**
      * Sets data in the DataSet to lowercase
