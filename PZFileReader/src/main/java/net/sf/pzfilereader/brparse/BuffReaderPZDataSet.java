@@ -37,6 +37,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.sf.pzfilereader.DefaultDataSet;
+import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.Row;
 
 public class BuffReaderPZDataSet extends DefaultDataSet{
@@ -100,4 +101,63 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
        
         return false;
     }
+    
+    /**
+     * Not Supported!
+     * @return boolean
+     */
+    public boolean previous() {
+        throw new UnsupportedOperationException("previous() is Not Implemented");
+    }
+    
+    
+    /**
+     * Not Supported! 
+     * @param ob - OrderBy object
+     * @exception Exception
+     * @see com.pz.reader.ordering.OrderBy
+     * @see com.pz.reader.ordering.OrderColumn
+     */
+    public void orderRows(OrderBy ob) throws Exception{
+        throw new UnsupportedOperationException("orderRows() is Not Implemented"); 
+    }
+    
+    /**
+     * Not Supported!
+     * @param localPointer - int
+     * @exception IndexOutOfBoundsException
+     */
+    public void absolute(int localPointer) {
+        throw new UnsupportedOperationException("absolute() is Not Implemented"); 
+    }
+    
+    /**
+     *Not Supported!
+     */
+    public void remove() {
+        throw new UnsupportedOperationException("remove() is Not Implemented");
+    }
+
+    /**
+     * Not Supported!
+     * @return int
+     */
+    public int getIndex() {
+        throw new UnsupportedOperationException("getIndex() is Not Implemented");
+    }
+    
+    /**
+     * Not Supported!
+     */
+    public void goBottom() {
+        throw new UnsupportedOperationException("goBottom() is Not Implemented");
+    }
+    
+    /**
+     * Not Supported!
+     */
+    public void goTop() {
+        throw new UnsupportedOperationException("goTop() is Not Implemented");
+    }
+
 }
