@@ -9,14 +9,14 @@
   <body>
     <release version="2.3.0" date="in svn" description="Move to Maven and Subversion">
     	<action dev="zepernick" type="change">Removed ParserUtils.getColumnMDFromFile(InputStream, String, String) this method
-    	was depricated in 2.2</action>
+    	was deprecated in 2.2</action>
     	<action dev="zepernick" type="change">Removed setters and default constructor from DataError.  Error properties 
     	are set through the new constructor.</action>
-		<action dev="zepernick" type="add">added the ability to limit the column which are exported to Excel in the ExcelTransformer class</action>
+	<action dev="zepernick" type="add">added the ability to limit the column which are exported to Excel in the ExcelTransformer class</action>
     	<action dev="zepernick" type="add">added getObject(String column, Class toConvert) method.  PZFileReader will ship with 
     	default classes to handle conversions.  Custom conversions can be easily added by adding to the pzconvert.properties</action>
-	    <action dev="zepernick" type="add">Unqualified elements have leading and trailing whitespace removed in a delimited parse</action>
-	    <action dev="zepernick" type="add">Ability to issue an OrderBy On DataSet's containing record mapping elements</action>
+	<action dev="zepernick" type="add">Unqualified elements have leading and trailing whitespace removed in a delimited parse</action>
+	<action dev="zepernick" type="add">Ability to issue an OrderBy On DataSet's containing record mapping elements</action>
     	<action dev="benoitx" type="add">Move build to Maven 1.1.x and generate the entire website from the build.</action>
     	<action dev="benoitx" type="fix">Modify code following warning by Findbugs, checkstyle and PMD.</action>
     	<action dev="marchy" type="add">Move to Subversion.</action>
@@ -79,7 +79,7 @@
 	http://sourceforge.net/projects/jexcelapi. The jxl.jar has been included in the download for your convience and must be on the classpath if using this
 	new method --> writeToExcel(File) in the DataSet class
       </action>
-      <action dev="zepernick" type="add">Changed examples to work with 2.1.0.  Some examples still refered to depricated constructors from 2.0.0 which have
+      <action dev="zepernick" type="add">Changed examples to work with 2.1.0.  Some examples still refered to deprecated constructors from 2.0.0 which have
 	been removed in this version.
       </action>
       <action dev="zepernick" type="add">Added 2 new examples to demonstrate the export to Excel and the parsing of multiline records.
