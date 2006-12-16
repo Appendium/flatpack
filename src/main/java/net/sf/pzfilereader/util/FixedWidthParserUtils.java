@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.xml.XMLRecordElement;
@@ -86,16 +87,16 @@ public final class FixedWidthParserUtils {
             // detail id
             return PZConstants.DETAIL_ID;
         }
-        final Iterator keys = columnMD.keySet().iterator();
+        final Iterator mapEntries = columnMD.entrySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
-        while (keys.hasNext()) {
-            final String key = (String) keys.next();
-            if (key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
+        while (mapEntries.hasNext()) {
+            final Entry entry = (Entry) mapEntries.next();
+            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
-            final XMLRecordElement recordXMLElement = (XMLRecordElement) columnMD.get(key);
+            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
 
             if (recordXMLElement.getEndPositition() > line.length()) {
                 // make sure our substring is not going to fail
@@ -107,7 +108,7 @@ public final class FixedWidthParserUtils {
             final int subto = recordXMLElement.getEndPositition();
             if (line.substring(subfrm, subto).equals(recordXMLElement.getIndicator())) {
                 // we found the MD object we want to return
-                return key;
+                return (String)entry.getKey();
             }
 
         }

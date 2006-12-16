@@ -1,16 +1,34 @@
 /*
- Copyright 2006 Paul Zepernick
-
- Licensed under the Apache License, Version 2.0 (the "License"); 
- you may not use this file except in compliance with the License. 
- You may obtain a copy of the License at 
-
- http://www.apache.org/licenses/LICENSE-2.0 
-
- Unless required by applicable law or agreed to in writing, software distributed 
- under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
- CONDITIONS OF ANY KIND, either express or implied. See the License for 
- the specific language governing permissions and limitations under the License.  
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
+ * 
+ * Based in London, we are world leaders in the design and development 
+ * of bespoke applications for the securities financing markets.
+ * 
+ * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
+ *           ___  _     _           _   _          _
+ *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
+ *         | | | | '_ \| |/ _ \/ __| __| |   / _` | '_ \
+ *         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |
+ *          \___/|_.__// |\___|\___|\__|_____\__,_|_.__/
+ *                   |__/
+ *
+ *                     www.ObjectLab.co.uk
+ *
+ * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
+ * 
+ * Copyright 2006 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package net.sf.pzfilereader.xml;
 
@@ -22,6 +40,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.util.PZConstants;
@@ -188,17 +207,19 @@ public final class PZMapParser {
     public static void setDebug(final boolean b) {
         showDebug = b;
     }
-
+    
+    //TODO convert to logger instead of system out
     private static void showDebug(final Map xmlResults) {
-        final Iterator mapIt = xmlResults.keySet().iterator();
+        final Iterator mapIt = xmlResults.entrySet().iterator();
         while (mapIt.hasNext()) {
             XMLRecordElement xmlrecEle = null;
-            final String recordID = (String) mapIt.next();
+            final Entry entry = (Entry)mapIt.next();
+            final String recordID = (String) entry.getKey();
             Iterator columns = null;
             if (recordID.equals(PZConstants.DETAIL_ID)) {
-                columns = ((List) xmlResults.get(recordID)).iterator();
+                columns = ((List) entry.getValue()).iterator();
             } else {
-                xmlrecEle = (XMLRecordElement) xmlResults.get(recordID);
+                xmlrecEle = (XMLRecordElement) entry.getValue();
                 columns = xmlrecEle.getColumns().iterator();
             }
 
