@@ -102,7 +102,7 @@ public final class ParserUtils {
      *            intial capacity of the List size
      * @return List
      */
-    public static List splitLine(String line, final char delimiter, final char qualifier, int initialSize) {
+    public static List splitLine(final String line, final char delimiter, final char qualifier, int initialSize) {
         List list = new ArrayList(initialSize);
 
         if (delimiter == 0) {
@@ -130,7 +130,6 @@ public final class ParserUtils {
         for (int i = 0; i < size; i++) {
 
             final char currentChar = trimmedLine.charAt(i);
-            //System.out.println(currentChar);
             if (currentChar != delimiter && currentChar != qualifier) {
                 previousChar = currentChar;
                 endBlock = i + 1;
@@ -728,17 +727,10 @@ public final class ParserUtils {
     public static int getColumnIndex(final String key, final Map columnMD, final String colName) {
         int idx = -1;
         if (key != null && !key.equals(PZConstants.DETAIL_ID) && !key.equals(PZConstants.COL_IDX)) {
-            // if ("header".equals(key)) {
-            // System.out.println("Columsn====header == "+ ((XMLRecordElement)
-            // columnMD.get(key)).getColumns());
-            // }
             idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(colName);
         } else if (key == null || key.equals(PZConstants.DETAIL_ID)) {
             final Map map = (Map) columnMD.get(PZConstants.COL_IDX);
-            // System.out.println("Map == " + map);
-            // System.out.println("look for == " + colName);
             idx = ((Integer) map.get(colName)).intValue();
-            // System.out.println("-------------> " + idx);
         }
 
         if (idx < 0) {
@@ -770,8 +762,11 @@ public final class ParserUtils {
      */
     public static void closeReader(final Reader reader) {
         try {
-            reader.close();
-        } catch (final Exception ignore) {
+            if (reader != null) {
+                reader.close();
+            }
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -783,8 +778,11 @@ public final class ParserUtils {
      */
     public static void closeReader(final InputStream reader) {
         try {
-            reader.close();
-        } catch (final Exception ignore) {
+            if (reader != null) {
+                reader.close();
+            }
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 

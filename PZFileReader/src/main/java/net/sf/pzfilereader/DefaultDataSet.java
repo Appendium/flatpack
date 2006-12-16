@@ -42,8 +42,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import net.sf.pzfilereader.converter.PZConvertException;
-import net.sf.pzfilereader.converter.PZConverter;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.structure.Row;

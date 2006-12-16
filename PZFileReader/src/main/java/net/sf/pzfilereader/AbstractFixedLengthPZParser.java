@@ -38,10 +38,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.FixedWidthParserUtils;
