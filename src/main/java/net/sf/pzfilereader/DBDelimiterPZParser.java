@@ -35,13 +35,9 @@ package net.sf.pzfilereader;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
@@ -60,45 +56,14 @@ public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
     }
 
     protected void init() {
-        ResultSet rs = null;
-        PreparedStatement stmt = null;
-
         try {
-            final String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
-                    + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO " 
-                    + "WHERE DATAFILE.DATAFILE_DESC = ? "
-                    + "ORDER BY DATASTRUCTURE_COL_ORDER";
-
-            stmt = con.prepareStatement(sql); // always use PreparedStatement
-            stmt.setString(1, getDataDefinition());
-            // as the DB can do clever things.
-            rs = stmt.executeQuery();
-
-            int recPosition = 1;
-            final List cmds = new ArrayList();
-            // put array of columns together. These will be used to put together
-            // the dataset when reading in the file
-            while (rs.next()) {
-
-                final ColumnMetaData column = new ColumnMetaData();
-                column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
-                column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
-                column.setStartPosition(recPosition);
-                column.setEndPosition(recPosition + (rs.getInt("DATASTRUCTURE_LENGTH") - 1));
-                recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
-
-                cmds.add(column);
-            }
-
+            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
             addToColumnMD(PZConstants.DETAIL_ID, cmds);
             addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
             }
-
-            // read in the fixed length file and construct the DataSet object
-            // doFixedLengthFile(dataSourceStream);
             setInitialised(true);
         } catch (final SQLException e) {
             // TODO Auto-generated catch block
@@ -106,19 +71,7 @@ public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
         } catch (final FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (final SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+        } 
     }
 
     protected boolean shouldCreateMDFromFile() {

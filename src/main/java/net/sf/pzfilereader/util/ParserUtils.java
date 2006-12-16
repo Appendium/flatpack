@@ -42,6 +42,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -330,62 +334,6 @@ public final class ParserUtils {
         return s.toString();
     }
 
-    /**
-     * Returns a list of ColumnMetaData objects. This is for use with delimited
-     * files. The first line of the file which contains data will be used as the
-     * column names
-     *
-     * @param theStream
-     * @param delimiter
-     * @param qualifier
-     * @exception Exception
-     * @return Map - ColumnMetaData
-     * @deprecated see getColumMDFromFile(String, String, String)
-     */
-    public static Map getColumnMDFromFile(final InputStream theStream, final String delimiter, final String qualifier)
-            throws Exception {
-        InputStreamReader isr = null;
-        BufferedReader br = null;
-        // FileReader fr = null;
-        String line = null;
-        List lineData = null;
-        final List results = new ArrayList();
-        final Map columnMD = new LinkedHashMap();
-
-        try {
-            isr = new InputStreamReader(theStream);
-            br = new BufferedReader(isr);
-
-            while ((line = br.readLine()) != null) {
-                if (line.trim().length() == 0) {
-                    continue;
-                }
-
-                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), PZConstants.SPLITLINE_SIZE_INIT);
-                for (int i = 0; i < lineData.size(); i++) {
-                    final ColumnMetaData cmd = new ColumnMetaData();
-                    cmd.setColName((String) lineData.get(i));
-                    results.add(cmd);
-                }
-                break;
-            }
-        } finally {
-            if (lineData != null) {
-                lineData.clear();
-            }
-            if (br != null) {
-                br.close();
-            }
-            if (isr != null) {
-                isr.close();
-            }
-        }
-
-        columnMD.put(PZConstants.DETAIL_ID, results);
-        columnMD.put(PZConstants.COL_IDX, buidColumnIndexMap(results));
-
-        return columnMD;
-    }
 
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited
@@ -593,7 +541,7 @@ public final class ParserUtils {
         while (columnMDIt.hasNext()) {
             final Entry entry = (Entry) columnMDIt.next();
             if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
-                cmds = (List) entry.getValue();
+                cmds = (List) columnMD.get(PZConstants.DETAIL_ID);
             } else {
                 cmds = ((XMLRecordElement) entry.getValue()).getColumns();
             }
@@ -918,6 +866,58 @@ public final class ParserUtils {
         } catch(ClassNotFoundException ex) {
             throw new PZConvertException(ex);
         }
+    }
+    
+    /**
+     * Returns a definition of pz column metadata from a given
+     * pz datastructure held in an SQL database
+     * 
+     * @param con
+     *          Database connection containing the Datafile and Datastructure
+     *          tables
+     * @param dataDefinition
+     *          Name of the data definition stored in the Datafile table
+     * @return List
+     */
+    public static List buildMDFromSQLTable(final Connection con, final String dataDefinition) throws SQLException{
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        final List cmds = new ArrayList();
+        try {
+            final String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
+                + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO " 
+                + "WHERE DATAFILE.DATAFILE_DESC = ? "
+                + "ORDER BY DATASTRUCTURE_COL_ORDER";
+    
+            stmt = con.prepareStatement(sql); // always use PreparedStatement
+            // as the DB can do clever things.
+            stmt.setString(1, dataDefinition);
+            rs = stmt.executeQuery();
+    
+            int recPosition = 1;
+            // put array of columns together. These will be used to put together
+            // the dataset when reading in the file
+            while (rs.next()) {
+    
+                final ColumnMetaData column = new ColumnMetaData();
+                column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
+                column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
+                column.setStartPosition(recPosition);
+                column.setEndPosition(recPosition + (rs.getInt("DATASTRUCTURE_LENGTH") - 1));
+                recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
+    
+                cmds.add(column);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+        
+        return cmds;
     }
     
    
