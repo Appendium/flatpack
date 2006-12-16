@@ -35,28 +35,29 @@ package net.sf.pzfilereader.brparse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import net.sf.pzfilereader.DefaultDataSet;
 import net.sf.pzfilereader.structure.Row;
 
 public class BuffReaderPZDataSet extends DefaultDataSet{
-    private BuffReaderDelimPZParser brDelimPzParser;
+    private final BuffReaderDelimPZParser brDelimPzParser;
     
-    private BuffReaderFixedPZParser brFixedPzParser;
+    private final BuffReaderFixedPZParser brFixedPzParser;
     
     public BuffReaderPZDataSet(final Map columnMD2, BuffReaderDelimPZParser brDelimPzParser) {
         super(columnMD2);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
-        this.brDelimPzParser = brDelimPzParser;        
+        this.brDelimPzParser = brDelimPzParser;
+        this.brFixedPzParser = null;
     }
     
     public BuffReaderPZDataSet(final Map columnMD2, BuffReaderFixedPZParser brFixedPzParser) {
         super(columnMD2);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
-        this.brFixedPzParser = brFixedPzParser;        
+        this.brFixedPzParser = brFixedPzParser;     
+        this.brDelimPzParser = null;
     }
     
     public boolean next() {
