@@ -71,7 +71,7 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    protected void init() throws InitialisationException {
+    protected void init() {
         try {
             if (pzmapXMLStream != null) {
                 setColumnMD(PZMapParser.parse(pzmapXMLStream));
