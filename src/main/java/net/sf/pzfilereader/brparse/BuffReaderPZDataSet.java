@@ -65,9 +65,9 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
             Row r = null;
             
             if (brDelimPzParser != null) {
-                brDelimPzParser.buildRow(this);
+               r = brDelimPzParser.buildRow(this);
             } else if (brFixedPzParser != null) {
-                brFixedPzParser.buildRow(this);
+               r = brFixedPzParser.buildRow(this);
             } else {
                 //this should not happen, throw exception
                 throw new RuntimeException("No parser available to fetch row");
