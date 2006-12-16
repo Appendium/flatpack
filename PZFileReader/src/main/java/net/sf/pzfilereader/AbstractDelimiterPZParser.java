@@ -38,9 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.List;
-import java.util.Properties;
 
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.PZConstants;
@@ -87,14 +85,12 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         try {
             lineCount = 0;
             if (getDataSourceStream() != null) {
-                return doDelimitedFile(getDataSourceStream(), getDelimiter(), getQualifier(), isIgnoreFirstRecord(),
-                        shouldCreateMDFromFile());
+                return doDelimitedFile(getDataSourceStream(),  shouldCreateMDFromFile());
             } else {
                 InputStream stream = null;
                 try {
                     stream = ParserUtils.createInputStream(getDataSource());
-                    return doDelimitedFile(stream, getDelimiter(), getQualifier(), isIgnoreFirstRecord(),
-                            shouldCreateMDFromFile());
+                    return doDelimitedFile(stream, shouldCreateMDFromFile());
                 } catch (final Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -151,8 +147,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
      * puts together the dataset for a DELIMITED file. This is used for PZ XML
      * mappings, and SQL table mappings
      */
-    private DataSet doDelimitedFile(final InputStream dataSource, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord, final boolean createMDFromFile) throws IOException {
+    private DataSet doDelimitedFile(final InputStream dataSource, final boolean createMDFromFile) throws IOException {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
         }
@@ -173,9 +168,9 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             boolean processedFirst = false;
             /** loop through each line in the file */
             String line = null;
-            while ((line = fetchNextRecord(br, qualifier, delimiter)) != null) {
+            while ((line = fetchNextRecord(br, getQualifier(), getDelimiter())) != null) {
                 // check to see if the user has elected to skip the first record
-                if (!processedFirst && ignoreFirstRecord) {
+                if (!processedFirst && isIgnoreFirstRecord()) {
                     processedFirst = true;
                     continue;
                 } else if (!processedFirst && createMDFromFile) {
@@ -191,7 +186,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 //is it going to create too much overhead to do a null check here as well???
                 //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
                 // column values
-                final List columns = ParserUtils.splitLine(line, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
+                final List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), PZConstants.SPLITLINE_SIZE_INIT);
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
                 final int columnCount = cmds.size();
@@ -245,21 +240,26 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
      * 
      * @param br
      *          Open reader being used to read through the file
+     * @param qual
+     *          Qualifier being used for parse
+     * @parma delim
+     *          Delimiter being used for parse
      * @return String
      *          Record from delimited file
      *          
      */
-    protected String fetchNextRecord(final BufferedReader br, final char qualifier,
-            final char delimiter) throws IOException{
+    protected String fetchNextRecord(final BufferedReader br, final char qual,
+            final char delim) throws IOException{
         String line = null;
         String lineData = "";
         boolean processingMultiLine = false;
         
         while ((line = br.readLine()) != null) {
             lineCount++;
-            /** empty line skip past it */
             final String trimmed = line.trim();
             if (!processingMultiLine && trimmed.length() == 0) {
+                //empty line skip past it, as long as it 
+                //is not part of the multiline
                 continue;
             }
 
@@ -269,8 +269,8 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             // be checked if we have specified a delimiter
             // ********************************************************
             final char[] chrArry = trimmed.toCharArray();
-            if (!processingMultiLine && delimiter > 0) {
-                processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
+            if (!processingMultiLine && delim > 0) {
+                processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
             }
 
             // check to see if we have reached the end of the linebreak in
@@ -283,24 +283,15 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 // excel will escape these with another quote; here is some
                 // data "" This would indicate
                 // there is more to the multiline
-                if (trimmed.charAt(trimmed.length() - 1) == qualifier && !trimmed.endsWith("" + qualifier + qualifier)) {
+                if (trimmed.charAt(trimmed.length() - 1) == qual && !trimmed.endsWith("" + qual + qual)) {
                     // it is safe to assume we have reached the end of the
                     // line break
                     processingMultiLine = false;
-                    if (trimmedLineData.length() > 0) { // + would always be
-                        // true surely....
-                        lineData += "\r\n";
-                    }
-                    lineData += line;
+                    lineData += "\r\n" + line;
                 } else {
                     // check to see if this is the last line of the record
                     // looking for a qualifier followed by a delimiter
-                    if (trimmedLineData.length() > 0) { // + here again,
-                        // this should
-                        // always be true...
-                        lineData += "\r\n";
-                    }
-                    lineData += line;
+                    lineData += "\r\n" + line;
                     boolean qualiFound = false;
                     for (int i = 0; i < chrArry.length; i++) {
                         if (qualiFound) {
@@ -311,19 +302,19 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                                 // delimiter, then we have reached the end
                                 // of
                                 // the record
-                                if (chrArry[i] == delimiter) {
+                                if (chrArry[i] == delim) {
                                     // processingMultiLine = false;
                                     // fix put in, setting to false caused
                                     // bug when processing multiple
                                     // multi-line
                                     // columns on the same record
-                                    processingMultiLine = ParserUtils.isMultiLine(chrArry, delimiter, qualifier);
+                                    processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
                                     break;
                                 }
                                 qualiFound = false;
                                 continue;
                             }
-                        } else if (chrArry[i] == qualifier) {
+                        } else if (chrArry[i] == qual) {
                             qualiFound = true;
                         }
                     }
