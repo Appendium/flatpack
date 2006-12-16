@@ -91,22 +91,16 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 try {
                     stream = ParserUtils.createInputStream(getDataSource());
                     return doDelimitedFile(stream, shouldCreateMDFromFile());
-                } catch (final Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
                 } finally {
                     if (stream != null) {
                         stream.close();
                     }
                 }
             }
-        } catch (final FileNotFoundException e) {
-            // TODO Auto-generated catch block
+        } catch (final IOException e) {
+            // TODO add logger
             e.printStackTrace();
-        } catch (final Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } 
         return null;
     }
 

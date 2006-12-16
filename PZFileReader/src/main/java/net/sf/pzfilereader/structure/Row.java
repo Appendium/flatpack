@@ -29,10 +29,19 @@ public class Row {
     private List cols;
 
     /** Row number in flat file */
-    private int rowNumber = 0;
+    private int rowNumber;
 
     /** key to the MD for this row, null will indicate it is "detail" MD */
     private String mdkey;
+    
+    /**
+     * Constructs a new Row
+     *
+     */
+    public Row() {
+        mdkey = null;
+        cols = new ArrayList();
+    }
 
     /**
      * Adds a column to a row
@@ -41,9 +50,6 @@ public class Row {
      *            String value to add to the row
      */
     public void addColumn(final String colValue) {
-        if (cols == null) {
-            cols = new ArrayList();
-        }
         cols.add(colValue);
     }
 
