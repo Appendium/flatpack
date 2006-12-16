@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import net.sf.pzfilereader.converter.PZConvertException;
 import net.sf.pzfilereader.converter.PZConverter;
@@ -588,13 +589,13 @@ public final class ParserUtils {
         final Map recordLengths = new HashMap();
         List cmds = null;
 
-        final Iterator columnMDIt = columnMD.keySet().iterator();
+        final Iterator columnMDIt = columnMD.entrySet().iterator();
         while (columnMDIt.hasNext()) {
-            final String key = (String) columnMDIt.next();
-            if (key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
-                cmds = (List) columnMD.get(PZConstants.DETAIL_ID);
+            final Entry entry = (Entry) columnMDIt.next();
+            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
+                cmds = (List) entry.getValue();
             } else {
-                cmds = ((XMLRecordElement) columnMD.get(key)).getColumns();
+                cmds = ((XMLRecordElement) entry.getValue()).getColumns();
             }
 
             int recordLength = 0;
@@ -602,7 +603,7 @@ public final class ParserUtils {
                 recordLength += ((ColumnMetaData) cmds.get(i)).getColLength();
             }
 
-            recordLengths.put(key, new Integer(recordLength));
+            recordLengths.put(entry.getKey(), new Integer(recordLength));
 
         }
 
@@ -622,40 +623,7 @@ public final class ParserUtils {
      *
      */
     public static String getCMDKeyForFixedLengthFile(final Map columnMD, final String line) {
-        if (columnMD.size() == 1) {
-            // no <RECORD> elments were specifed for this parse, just return the
-            // detail id
-            return PZConstants.DETAIL_ID;
-        }
-        final Iterator keys = columnMD.keySet().iterator();
-        // loop through the XMLRecordElement objects and see if we need a
-        // different MD object
-        while (keys.hasNext()) {
-            final String key = (String) keys.next();
-            if (key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
-                continue; // skip this key will be assumed if none of the
-                // others match
-            }
-            final XMLRecordElement recordXMLElement = (XMLRecordElement) columnMD.get(key);
-
-            if (recordXMLElement.getEndPositition() > line.length()) {
-                // make sure our substring is not going to fail
-                continue;
-            }
-            final int subfrm = recordXMLElement.getStartPosition() - 1; // convert
-            // to 0
-            // based
-            final int subto = recordXMLElement.getEndPositition();
-            if (line.substring(subfrm, subto).equals(recordXMLElement.getIndicator())) {
-                // we found the MD object we want to return
-                return key;
-            }
-
-        }
-
-        // must be a detail line
-        return PZConstants.DETAIL_ID;
-
+        return FixedWidthParserUtils.getCMDKey(columnMD, line);
     }
 
     /**
@@ -673,16 +641,16 @@ public final class ParserUtils {
             // detail id
             return PZConstants.DETAIL_ID;
         }
-        final Iterator keys = columnMD.keySet().iterator();
+        final Iterator mapEntries = columnMD.entrySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
-        while (keys.hasNext()) {
-            final String key = (String) keys.next();
-            if (key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
+        while (mapEntries.hasNext()) {
+            final Entry entry = (Entry) mapEntries.next();
+            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
-            final XMLRecordElement recordXMLElement = (XMLRecordElement) columnMD.get(key);
+            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
 
             if (recordXMLElement.getElementNumber() > lineElements.size()) {
                 // make sure the element referenced in the mapping exists
@@ -691,7 +659,7 @@ public final class ParserUtils {
             final String lineElement = (String) lineElements.get(recordXMLElement.getElementNumber() - 1);
             if (lineElement.equals(recordXMLElement.getIndicator())) {
                 // we found the MD object we want to return
-                return key;
+                return (String)entry.getKey();
             }
 
         }

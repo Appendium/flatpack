@@ -1,22 +1,42 @@
 /*
- Copyright 2006 Paul Zepernick
-
- Licensed under the Apache License, Version 2.0 (the "License"); 
- you may not use this file except in compliance with the License. 
- You may obtain a copy of the License at 
-
- http://www.apache.org/licenses/LICENSE-2.0 
-
- Unless required by applicable law or agreed to in writing, software distributed 
- under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
- CONDITIONS OF ANY KIND, either express or implied. See the License for 
- the specific language governing permissions and limitations under the License.  
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
+ * 
+ * Based in London, we are world leaders in the design and development 
+ * of bespoke applications for the securities financing markets.
+ * 
+ * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
+ *           ___  _     _           _   _          _
+ *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
+ *         | | | | '_ \| |/ _ \/ __| __| |   / _` | '_ \
+ *         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |
+ *          \___/|_.__// |\___|\___|\__|_____\__,_|_.__/
+ *                   |__/
+ *
+ *                     www.ObjectLab.co.uk
+ *
+ * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
+ * 
+ * Copyright 2006 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package net.sf.pzfilereader.ordering;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.PZConstants;
@@ -30,7 +50,9 @@ import net.sf.pzfilereader.util.ParserUtils;
  * 
  * @version 2.0
  */
-public class OrderBy implements Comparator {
+public class OrderBy implements Comparator, Serializable {
+    private static final long serialVersionUID = 5622406168247149895L;
+
     /** collection of order elements to sort by */
     private final ArrayList orderbys = new ArrayList();
 
@@ -77,8 +99,10 @@ public class OrderBy implements Comparator {
 
             // convert to one type of case so the comparator does not take case
             // into account when sorting
-            final Comparable comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
-            final Comparable comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
+            final Comparable comp0 = row0.getValue(ParserUtils.findColumn(
+                    oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
+            final Comparable comp1 = row1.getValue(ParserUtils.findColumn(
+                    oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
 
             // multiply by the sort indicator to get a ASC or DESC result
             result = comp0.compareTo(comp1) * oc.getSortIndicator();

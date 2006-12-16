@@ -65,10 +65,12 @@ public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
 
         try {
             final String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
-                    + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO " + "WHERE DATAFILE.DATAFILE_DESC = '"
-                    + getDataDefinition() + "' " + "ORDER BY DATASTRUCTURE_COL_ORDER";
+                    + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO " 
+                    + "WHERE DATAFILE.DATAFILE_DESC = ? "
+                    + "ORDER BY DATASTRUCTURE_COL_ORDER";
 
             stmt = con.prepareStatement(sql); // always use PreparedStatement
+            stmt.setString(1, getDataDefinition());
             // as the DB can do clever things.
             rs = stmt.executeQuery();
 
