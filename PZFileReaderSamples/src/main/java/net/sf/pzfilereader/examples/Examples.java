@@ -255,7 +255,7 @@ public class Examples implements Repeater {
         final int numberOfCols = ConsoleMenu.getInt("How many columns?", 100);
         final boolean qualif = ConsoleMenu.getBoolean("With qualifier?", true);
 
-        StringBuilder aRow = new StringBuilder();
+        StringBuffer aRow = new StringBuffer();
         for (int i = 0; i < numberOfCols; i++) {
             if (qualif) {
                 aRow.append("\"");
