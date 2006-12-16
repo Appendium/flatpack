@@ -60,7 +60,7 @@ public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
         this.pzmapXML = pzmapXML;
     }
 
-    protected void init() throws InitialisationException {
+    protected void init() {
         try {
             if (pzmapXMLStream != null) {
                 setColumnMD(PZMapParser.parse(pzmapXMLStream));
