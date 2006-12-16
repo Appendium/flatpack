@@ -6,7 +6,9 @@ package net.sf.pzfilereader.examples.delimiteddynamiccolumns;
  */
 
 import java.io.File;
+import java.util.Iterator;
 
+import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
 import net.sf.pzfilereader.DataSet;
@@ -80,7 +82,13 @@ public class DelimitedWithPZMap {
         }
 
         if (ds.getErrors() != null && ds.getErrors().size() > 0) {
-            System.out.println("FOUND ERRORS IN FILE");
+            System.out.println("<<<<FOUND ERRORS IN FILE>>>>");
+            final Iterator pzerrors = ds.getErrors().iterator();
+            while (pzerrors.hasNext()) {
+                final DataError error = (DataError)pzerrors.next();
+                System.out.println("Error Msg: " + error.getErrorDesc() + " line no: " + error.getLineNo());
+            }
+            
         }
 
     }
