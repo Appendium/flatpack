@@ -49,13 +49,13 @@ import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
 public class BuffReaderFixedPZParser extends FixedLengthPZParser{
-    private BufferedReader br;
+    private BufferedReader br = null;
     
     private InputStreamReader isr;
     
     private int lineCount = 0;
     
-    private Map recordLengths;
+    private Map recordLengths = null;
     
     public BuffReaderFixedPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
         super(pzmapXMLStream, dataSourceStream);
