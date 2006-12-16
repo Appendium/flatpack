@@ -8,6 +8,8 @@
   </properties>
   <body>
     <release version="2.3.0" date="in svn" description="Move to Maven and Subversion">
+    	<action dev="zepernick" type="change">Removed setters and default constructor from DataError.  Error properties 
+    	are set through the new constructor.</action>
 		<action dev="zepernick" type="add">added the ability to limit the column which are exported to Excel in the ExcelTransformer class</action>
     	<action dev="zepernick" type="add">added getObject(String column, Class toConvert) method.  PZFileReader will ship with 
     	default classes to handle conversions.  Custom conversions can be easily added by adding to the pzconvert.properties</action>
