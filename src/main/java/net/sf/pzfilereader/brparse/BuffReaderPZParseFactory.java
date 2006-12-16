@@ -63,14 +63,14 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
      * Not supported at this time.
      */
     public PZParser newFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition) {
-        throw new RuntimeException("Not supported...");
+        throw new UnsupportedOperationException("Not supported...");
     }
 
     /**
      * Not supported at this time.
      */
     public PZParser newFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
-        throw new RuntimeException("Not supported...");
+        throw new UnsupportedOperationException("Not supported...");
     }
 
     /*
@@ -98,7 +98,7 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
      */
     public PZParser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition,
             final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
-        throw new RuntimeException("Not supported...");
+        throw new UnsupportedOperationException("Not supported...");
     }
 
     /*
