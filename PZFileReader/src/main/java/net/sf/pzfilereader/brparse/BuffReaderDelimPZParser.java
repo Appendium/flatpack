@@ -57,12 +57,12 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
 
     public BuffReaderDelimPZParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
-        super(dataSource, delimiter, qualifier, ignoreFirstRecord);
+        super(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
     public BuffReaderDelimPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+        super(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
     public BuffReaderDelimPZParser(final File dataSource, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
