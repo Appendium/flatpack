@@ -182,7 +182,9 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
     }
     
     /**
-     * Returns the meta data describing the columns
+     * Returns the meta data describing the columns.
+     * This exposes this method to the DataSet which
+     * it could not otherwise see because it is protected.
      */
     public Map getColumnMD() {
         return super.getColumnMD();
