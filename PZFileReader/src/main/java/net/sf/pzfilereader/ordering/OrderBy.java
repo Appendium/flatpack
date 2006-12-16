@@ -57,6 +57,7 @@ public class OrderBy implements Comparator {
     public int compare(final Object arg0, final Object arg1) {
         final Row row0 = (Row) arg0;
         final Row row1 = (Row) arg1;
+        int result = 0;
 
         for (int i = 0; i < orderbys.size(); i++) {
             final OrderColumn oc = (OrderColumn) orderbys.get(i);
@@ -70,10 +71,8 @@ public class OrderBy implements Comparator {
                 // keep headers / trailers in the same order at the bottom of
                 // the DataSet
                 return 0;
-            } else if (!mdkey0.equals(PZConstants.DETAIL_ID)) {
-                return 1;
-            } else if (!mdkey1.equals(PZConstants.DETAIL_ID)) {
-                return 0;
+            } else if (!mdkey0.equals(PZConstants.DETAIL_ID) || !mdkey1.equals(PZConstants.DETAIL_ID)) {
+                return !mdkey0.equals(PZConstants.DETAIL_ID) ? 1 : 0;
             }
 
             // convert to one type of case so the comparator does not take case
@@ -81,25 +80,17 @@ public class OrderBy implements Comparator {
             final Comparable comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
             final Comparable comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase();
 
-            // + BX will never be equal to null.
-            // if (comp0 == null) {
-            // comp0 = new String("");
-            // }
-            // if (comp1 == null) {
-            // comp1 = new String("");
-            // }
-
             // multiply by the sort indicator to get a ASC or DESC result
-            final int result = comp0.compareTo(comp1) * oc.getSortIndicator();
+            result = comp0.compareTo(comp1) * oc.getSortIndicator();
 
             // if it is = 0 then the primary sort is done, and it can start the
             // secondary sorts
             if (result != 0) {
-                return result;
+                break;
             }
         }
 
-        return 0;
+        return result;
     }
 
     /**
