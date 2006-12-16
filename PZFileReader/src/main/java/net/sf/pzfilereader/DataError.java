@@ -39,11 +39,11 @@ package net.sf.pzfilereader;
  * @version 2.0
  */
 public class DataError {
-    final private String errorDesc;
+    private final String errorDesc;
 
-    final private int lineNo;
+    private final int lineNo;
 
-    final private int errorLevel;
+    private final int errorLevel;
 
     /**
      * 
