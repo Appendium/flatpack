@@ -44,7 +44,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
     
     private final BuffReaderFixedPZParser brFixedPzParser;
     
-    public BuffReaderPZDataSet(final Map columnMD2, BuffReaderDelimPZParser brDelimPzParser) {
+    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
         super(columnMD2);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
@@ -52,7 +52,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
         this.brFixedPzParser = null;
     }
     
-    public BuffReaderPZDataSet(final Map columnMD2, BuffReaderFixedPZParser brFixedPzParser) {
+    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderFixedPZParser brFixedPzParser) {
         super(columnMD2);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
@@ -93,7 +93,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
             
             return true;
             
-        } catch(IOException ex) {
+        } catch(final IOException ex) {
             //TODO real logging here
             ex.printStackTrace();
         }
