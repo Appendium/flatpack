@@ -280,4 +280,15 @@ public interface DataSet {
      *          Property mapping for String to Object conversion
      */
     void setPZConvertProps(Properties props);
+    
+    /**
+     * Changes the value of the given column only for the 
+     * given row which the pointer is currently sitting on. 
+     * 
+     * @param column
+     *          Column name to set the value for
+     * @param value
+     *          Value to change the column to
+     */
+    void setValue(final String column, final String value);
 }
