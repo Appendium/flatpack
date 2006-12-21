@@ -275,6 +275,14 @@ public class DefaultDataSet implements DataSet {
         // return value as how it is in the file
         return s;
     }
+    
+    
+    public void setValue(String column, String value) {
+        final Row row = (Row) rows.get(pointer);
+        final int colIndex = ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column);
+        
+        row.setValue(colIndex, value);
+    }
 
     /*
      * (non-Javadoc)
