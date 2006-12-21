@@ -159,5 +159,12 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
     public void goTop() {
         throw new UnsupportedOperationException("goTop() is Not Implemented");
     }
+    
+    /**
+     * Not Supported!
+     */
+    public void setValue(String column, String value) {
+        throw new UnsupportedOperationException("setValue() is Not Implemented");
+    }
 
 }
