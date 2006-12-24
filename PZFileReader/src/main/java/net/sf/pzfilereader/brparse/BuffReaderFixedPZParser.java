@@ -40,6 +40,9 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultDataSet;
 import net.sf.pzfilereader.FixedLengthPZParser;
@@ -56,6 +59,8 @@ public class BuffReaderFixedPZParser extends FixedLengthPZParser{
     private int lineCount = 0;
     
     private Map recordLengths = null;
+    
+    private final Logger logger = LoggerFactory.getLogger(BuffReaderFixedPZParser.class); 
     
     public BuffReaderFixedPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
         super(pzmapXMLStream, dataSourceStream);
@@ -84,7 +89,7 @@ public class BuffReaderFixedPZParser extends FixedLengthPZParser{
             return ds;
         
         } catch(IOException ex) {
-            ex.printStackTrace();
+            logger.error("error accessing/creating inputstream", ex);
         }
         
         return null;

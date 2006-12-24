@@ -61,7 +61,9 @@ public final class ResolveLocalDTD implements EntityResolver {
             if (resource != null) {
                 return new InputSource(resource.openStream());
             } else {
-                throw new RuntimeException("could not load dtd resource from jar!!");
+                //should probably not happen, this may indicate that the dtd has been
+                //removed from the jar for some reason
+                throw new IOException("could not load dtd resource from jar!!");
             }
         }
 

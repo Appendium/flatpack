@@ -36,6 +36,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.pzfilereader.DefaultDataSet;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.Row;
@@ -44,6 +47,8 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
     private final BuffReaderDelimPZParser brDelimPzParser;
     
     private final BuffReaderFixedPZParser brFixedPzParser;
+    
+    private final Logger logger = LoggerFactory.getLogger(BuffReaderPZDataSet.class);
     
     public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
         super(columnMD2);
@@ -95,8 +100,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
             return true;
             
         } catch(final IOException ex) {
-            //TODO real logging here
-            ex.printStackTrace();
+            logger.error("error building Row on next()", ex);
         }
        
         return false;

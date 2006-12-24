@@ -51,6 +51,8 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author zepernick
@@ -59,7 +61,8 @@ import org.jdom.input.SAXBuilder;
  */
 public final class PZMapParser {
     private static boolean showDebug = false;
-
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(PZMapParser.class);
     /**
      * Constructor
      * 
@@ -223,15 +226,15 @@ public final class PZMapParser {
                 columns = xmlrecEle.getColumns().iterator();
             }
 
-            System.out.println(">>>>Column MD Id: " + recordID);
+            LOGGER.debug(">>>>Column MD Id: " + recordID);
             if (xmlrecEle != null) {
-                System.out.println("Start Position: " + xmlrecEle.getStartPosition() + " " + "End Position: "
+                LOGGER.debug("Start Position: " + xmlrecEle.getStartPosition() + " " + "End Position: "
                         + xmlrecEle.getEndPositition() + " " + "Element Number: " + xmlrecEle.getElementNumber() + " "
                         + "Indicator: " + xmlrecEle.getIndicator());
             }
             while (columns.hasNext()) {
                 final ColumnMetaData cmd = (ColumnMetaData) columns.next();
-                System.out.println("          Column Name: " + cmd.getColName() + " LENGTH: " + cmd.getColLength());
+                LOGGER.debug("Column Name: " + cmd.getColName() + " LENGTH: " + cmd.getColLength());
 
             }
         }
