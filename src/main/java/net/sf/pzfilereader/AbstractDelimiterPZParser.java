@@ -39,6 +39,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
@@ -55,7 +58,9 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
     private boolean ignoreFirstRecord = false;
     
     private int lineCount = 0;
-
+   
+    private final Logger logger = LoggerFactory.getLogger(AbstractDelimiterPZParser.class);
+    
     public AbstractDelimiterPZParser(final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceStream, dataDefinition);
@@ -97,8 +102,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 }
             }
         } catch (final IOException e) {
-            // TODO add logger
-            e.printStackTrace();
+            logger.error("error accessing/creating inputstream", e);
         } 
         return null;
     }

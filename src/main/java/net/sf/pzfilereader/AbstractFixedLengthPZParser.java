@@ -34,12 +34,14 @@ package net.sf.pzfilereader;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.FixedWidthParserUtils;
@@ -51,7 +53,8 @@ import net.sf.pzfilereader.util.ParserUtils;
  * 
  */
 public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
-
+    private final Logger logger = LoggerFactory.getLogger(AbstractFixedLengthPZParser.class);
+    
     protected AbstractFixedLengthPZParser(final File dataSource, final String dataDefinition) {
         super(dataSource, dataDefinition);
     }
@@ -77,21 +80,14 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
                 stream = ParserUtils.createInputStream(getDataSource());
                 try {
                     return doFixedLengthFile(stream);
-                } catch (final Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
                 } finally {
                     if (stream != null) {
                         stream.close();
                     }
                 }
             }
-        } catch (final FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (final Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (final IOException e) {
+            logger.error("error accessing/creating inputstream", e);
         }
         return null;
     }

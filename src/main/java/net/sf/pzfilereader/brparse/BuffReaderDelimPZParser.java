@@ -40,6 +40,9 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultDataSet;
 import net.sf.pzfilereader.DelimiterPZParser;
@@ -49,8 +52,12 @@ import net.sf.pzfilereader.util.ParserUtils;
 
 public class BuffReaderDelimPZParser extends DelimiterPZParser {    
     private BufferedReader br;
+    
     private InputStreamReader isr;
+    
     private boolean processedFirst = false;
+    
+    private final Logger logger = LoggerFactory.getLogger(BuffReaderDelimPZParser.class);
 
     public BuffReaderDelimPZParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
@@ -88,7 +95,7 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
             return ds;
         
         } catch(IOException ex) {
-            ex.printStackTrace();
+            logger.error("error accessing/creating inputstream", ex);
         }
         
         return null;
