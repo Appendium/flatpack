@@ -7,12 +7,9 @@ package net.sf.pzfilereader.examples.delimitedcolumnnamesinfile;
 
 import java.io.File;
 
-import com.sun.jmx.snmp.defaults.DefaultPaths;
-
 import net.sf.pzfilereader.DataError;
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
