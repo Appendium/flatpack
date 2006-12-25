@@ -72,22 +72,27 @@
     <section name="How do I use it?">
     <p>Basic Steps</p>
     <ol>
-        <li>Construct DataSet() with a File, a InputStream or a Reader (soon)</li>
+    	<li>Obtain a PZParser from a parser factory (DefaultPZParserFactory) witha  File, InputStream, or a reader(coming soon)</li>
+    	<li>Set additional PZParser options, PZParser.setAnOption()</li>
+        <li>Obtain a DataSet PZParser.parse()</li>
     	<li>Call DataSet.next() to advance record pointer</li>
     	<li>Process columns; DataSet.getString("colname"), getInt("colname"), getDouble("colname"), getDate("colname"), etc</li>
         <li>Check for parse errors; DataSet.getErrors()</li>
-    	<li>Release memory early; DataSet.freeMemory()</li>
     </ol>
     
-    <subsection name="Reading Delimited File">
+    <subsection name="Reading Delimited File With Column Mapping">
     
     <div class="source"><pre>
-        //construct DataSet
-        DataSet ds = new DataSet(new File("ColumnMappings.pzmap.xml"), //xml mapping file
-            new File("delimitedfile.txt"), //text file to parse
-            ",", //delimiter
-            "\"", //text qualifier (can be null or empty)
-            true); //pad out missing columns (we mapped 5 columns but only 3 were there)
+    	//Obtain the proper parser for your needs
+    	PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(
+                new File("map.pzmap.xml"), //xml column mapping
+                new File("DataFile.txt"),  //txt file to parse
+                ',', //delimiter
+                '"', //text qualfier
+                false); //ignore the first record (may need to be done if first record contain column names)
+                
+        //obtain DataSet
+        DataSet ds = pzparser.parse();
             
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
@@ -95,13 +100,37 @@
     </pre></div>
       
     </subsection>
+    
+    <subsection name="Reading Delimited File Column Names In First Record Of File">
+    
+    <div class="source"><pre>
+    	//Obtain the proper parser for your needs
+    	PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(
+                new File("DataFile.txt"),  //txt file to parse
+                ',', //delimiter
+                '"'); //text qualifier
+                
+        //obtain DataSet
+        DataSet ds = pzparser.parse();
+            
+        while (ds.next()){ //loop through file
+            ds.getString("mycolumnName");
+        }
+    </pre></div>
+      
+    </subsection>
+    
 
     <subsection name="Reading Fixed Width File">
     
     <div class="source"><pre>
-        //construct DataSet
-        DataSet ds = new DataSet(new File("PEOPLE-FixedLength.pzmap.xml"), //xml mapping file
-            new File("PEOPLE-FixedLength.txt")); //text file to parse
+	    //Obtain the proper parser for your needs	
+        PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(
+        		new File("map.pzmap.xml"), //fixed with column map
+                new File("DataFile.txt"));  //txt file to parse
+                
+        //obtain DataSet
+        DataSet ds = pzparser.parse();
             
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
