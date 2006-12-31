@@ -165,6 +165,17 @@ public class BuffReaderFixedPZParser extends FixedLengthPZParser{
         }
     }
     
+    //try to clean up the file handles automatically if
+    //the close was not called
+    protected void finalize() throws Throwable {
+        try {
+            close();
+        } catch (IOException ex) {
+            logger.warn("Problem trying to auto close file handles...", ex);
+        } finally {
+            super.finalize();
+        }
+    }
     
     /**
      * Returns the meta data describing the columns

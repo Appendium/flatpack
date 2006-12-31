@@ -179,9 +179,23 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
     public void close() throws IOException{
         if (br != null) {
             br.close();
+            br = null;
         }
         if (isr != null) {
             isr.close();
+            isr = null;
+        }
+    }
+    
+    //try to clean up the file handles automatically if
+    //the close was not called
+    protected void finalize() throws Throwable {
+        try {
+            close();
+        } catch (IOException ex) {
+            logger.warn("Problem trying to auto close file handles...", ex);
+        } finally {
+            super.finalize();
         }
     }
     
