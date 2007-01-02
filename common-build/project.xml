@@ -27,7 +27,7 @@
    xsi:schemaLocation="http://maven.apache.org/POM/3.0.0 http://maven.apache.org/maven-v3_0_0.xsd">
    <pomVersion>3</pomVersion>
    <groupId>net.sf.pzfilereader</groupId>
-   <currentVersion>2.3.0</currentVersion>
+   <currentVersion>3.0.0</currentVersion>
    <organization>
       <name>ObjectLab Financial Ltd</name>
       <url>http://www.objectlab.co.uk</url>
@@ -163,7 +163,7 @@
    <build>
       <!-- We need to put here something other when we release it or I'll receive the emails from
          everyone who tries to use the project... -->
-      <nagEmailAddress>kit@objectlab.co.uk</nagEmailAddress>
+      <nagEmailAddress>pzepernick@gmail.com</nagEmailAddress>
       <defaultGoal>pz:build</defaultGoal>
    </build>
 
@@ -184,9 +184,9 @@
 
    <versions>
       <version>
-         <id>2.3.0</id>
-         <name>2.3.0</name>
-         <tag>2.3.0</tag>
+         <id>3.0.0</id>
+         <name>3.0.0</name>
+         <tag>3.0.0</tag>
       </version>
       <version>
          <id>2.2.0</id>
