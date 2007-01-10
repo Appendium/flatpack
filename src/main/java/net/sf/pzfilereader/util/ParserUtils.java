@@ -645,7 +645,10 @@ public final class ParserUtils {
             idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(colName);
         } else if (key == null || key.equals(PZConstants.DETAIL_ID)) {
             final Map map = (Map) columnMD.get(PZConstants.COL_IDX);
-            idx = ((Integer) map.get(colName)).intValue();
+            final Integer i = (Integer) map.get(colName);
+            if (i != null) { //happens when the col name does not exist in the mapping
+                idx = i.intValue();
+            }
         }
 
         if (idx < 0) {
