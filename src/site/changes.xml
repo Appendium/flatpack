@@ -7,7 +7,8 @@
     <title>Changes</title>
   </properties>
   <body>
-    <release version="2.3.0" date="in svn" description="Move to Maven and Subversion">
+    <release version="3.0.0" date="in svn" description="Move to Maven and Subversion">
+    	<action dev="zepernick" type="change">DataSet.getDate() will now return a null on empty Strings</action>
     	<action dev="zepernick" type="change">Removed ParserUtils.getColumnMDFromFile(InputStream, String, String) this method
     	was deprecated in 2.2</action>
     	<action dev="zepernick" type="change">Removed setters and default constructor from DataError.  Error properties 
