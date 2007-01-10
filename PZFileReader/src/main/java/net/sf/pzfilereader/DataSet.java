@@ -107,6 +107,8 @@ public interface DataSet {
      * yyyyMMdd. If your date is not in this format, see
      * getDate(String,SimpleDateFormat)
      * 
+     * Will return "null" on empty Strings
+     * 
      * @param column -
      *            Name of the column
      * @exception ParseException
@@ -118,6 +120,8 @@ public interface DataSet {
      * Returns the date value of a specified column. This should be used if the
      * date is NOT in yyyyMMdd format. The SimpleDateFormat object will specify
      * what kind of format the date is in.
+     * 
+     * Will return "null" on empty Strings
      * 
      * @param column -
      *            Name of the column
