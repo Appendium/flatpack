@@ -136,10 +136,7 @@ public class DefaultDataSet implements DataSet {
      * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String)
      */
     public Date getDate(final String column) throws ParseException {
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
-        return sdf.parse(s);
+        return getDate(column, new SimpleDateFormat("yyyyMMdd"));
     }
 
     /*
@@ -151,6 +148,10 @@ public class DefaultDataSet implements DataSet {
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
         final Row row = (Row) rows.get(pointer);
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+        if (s.trim().equals("")) {
+            //don't do the parse on empties
+            return null;
+        }
         return sdf.parse(s);
     }
 
