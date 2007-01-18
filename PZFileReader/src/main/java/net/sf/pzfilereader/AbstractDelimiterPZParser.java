@@ -248,7 +248,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
     protected String fetchNextRecord(final BufferedReader br, final char qual,
             final char delim) throws IOException{
         String line = null;
-        String lineData = "";
+        StringBuffer lineData = new StringBuffer();
         boolean processingMultiLine = false;
         
         while ((line = br.readLine()) != null) {
@@ -273,7 +273,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             // check to see if we have reached the end of the linebreak in
             // the record
 
-            final String trimmedLineData = lineData.trim();
+            final String trimmedLineData = lineData.toString().trim();
             if (processingMultiLine && trimmedLineData.length() > 0) {
                 // need to do one last check here. it is possible that the "
                 // could be part of the data
@@ -284,11 +284,11 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                     // it is safe to assume we have reached the end of the
                     // line break
                     processingMultiLine = false;
-                    lineData += "\r\n" + line;
+                    lineData.append("\r\n").append(line);
                 } else {
                     // check to see if this is the last line of the record
                     // looking for a qualifier followed by a delimiter
-                    lineData += "\r\n" + line;
+                    lineData.append("\r\n").append(line);
                     boolean qualiFound = false;
                     for (int i = 0; i < chrArry.length; i++) {
                         if (qualiFound) {
@@ -323,7 +323,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 }
             } else {
                 // throw the line into lineData var.
-                lineData += line;
+                lineData.append(line);
                 if (processingMultiLine) {
                     continue; // if we are working on a multiline rec, get
                     // the data on the next line
@@ -338,6 +338,6 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             return null;
         }
         
-        return lineData;
+        return lineData.toString();
     }
 }
