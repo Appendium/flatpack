@@ -149,6 +149,27 @@
       
     </subsection>
 
+    <subsection name="Using SLF4J With PZFileReader">
+    
+    <div class="source"><pre>
+		Slf4j is utilized to capture logging information that occurred during a parse. 
+		By default, this information will be logged to the console.  SLF supports the following loggers; log4j, jcl, nop, and jdk1.4.  
+		Please go to http://www.slf4j.org to download the proper jar for your logging preference.  Here is a typical SLF4j setup:
+
+		SLF-api-XXX.jar + SLF-MyLoggerPreference.jar + MyLogger.jar (lo4j.jar for example) 
+
+		Here are the steps that would need to be taken for log4j:
+
+		1.	Install log4j.jar
+		2.	Setup log4j.properties or log4j.xml
+		3.	Install SLF-api-XXX.jar
+		4.	Install SLF-log4j12-XXX.jar
+
+    </pre></div>
+      
+    </subsection>
+
+
     </section>
 
   </body>
