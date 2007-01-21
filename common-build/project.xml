@@ -127,6 +127,19 @@
             http://sourceforge.net/mailarchive/forum.php?forum=pzfilereader-svn
          </archive>
       </mailingList>
+      <mailingList>
+         <name>News about ObjectLab's projects (Alerts online)</name>
+         <subscribe>
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-news
+         </subscribe>
+         <unsubscribe>
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-news
+         </unsubscribe>
+         <post/>
+         <archive>
+            http://sourceforge.net/mailarchive/forum.php?forum=objectlabkit-news
+         </archive>
+      </mailingList>
    </mailingLists>
 
    <dependencies>
