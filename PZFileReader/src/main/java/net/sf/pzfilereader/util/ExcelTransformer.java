@@ -91,18 +91,13 @@ public class ExcelTransformer {
             WritableCellFormat cellFormat = new WritableCellFormat(times10ptBold);
             int colOffset = 0;
             for (int i = 0; i < columnNames.length; i++) {
-                if (exportOnlyColumnsList != null) {
-                    if (!exportOnlyColumnsList.contains(columnNames[i])) {
-                        colOffset ++;
-                        continue;
-                    }
-                } else if (excludeFromExportColumnsList != null) {
-                    if (excludeFromExportColumnsList.contains(columnNames[i])) {
-                        colOffset ++;
-                        continue;
-                    }
-                }         
-                
+                if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])) {
+                    colOffset ++;
+                    continue;
+                }else if (excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
+                    colOffset ++;
+                    continue;
+                }
                 final Label xlsTextLbl = new Label(i - colOffset, 0, columnNames[i], cellFormat);
                 wrkSheet.addCell(xlsTextLbl);
             }
@@ -116,16 +111,12 @@ public class ExcelTransformer {
                 
                 colOffset = 0;
                 for (int i = 0; i < columnNames.length; i++) {
-                    if (exportOnlyColumnsList != null) {
-                        if (!exportOnlyColumnsList.contains(columnNames[i])) {
-                            colOffset ++;
-                            continue;
-                        }
-                    } else if (excludeFromExportColumnsList != null) {
-                        if (excludeFromExportColumnsList.contains(columnNames[i])) {
-                            colOffset ++;
-                            continue;
-                        }
+                    if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])) {
+                        colOffset ++;
+                        continue;
+                    } else if (excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
+                        colOffset ++;
+                        continue;
                     }                    
                     
                     final Label xlsTextLbl = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
