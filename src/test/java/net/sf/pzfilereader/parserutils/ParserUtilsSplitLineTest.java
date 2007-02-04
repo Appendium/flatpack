@@ -138,6 +138,9 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("one two three", ' ', '\u0000', new String[] {"one", "two", "three"});
         check("\"one\" \"two\" three", ' ', '\"', new String[] {"one", "two", "three"});
         check("\"one\"  \"two\"  three", ' ', '\"', new String[] {"one", "", "two", "", "three"});
+        
+        check (" , , ", ',', '"', new String[] {"","",""});
+        check (" \t \t ", '\t', '"', new String[] {"","",""});
     }
 
     /**
