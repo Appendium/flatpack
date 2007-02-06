@@ -46,6 +46,8 @@ public final class PZConstants {
     public static final String FIXEDLENGTH_FILE = "fixed";
     
     public static final int SPLITLINE_SIZE_INIT = 10;
+    
+    public static final char NO_QUALIFIER = '\0';
 
     private PZConstants() {
 
