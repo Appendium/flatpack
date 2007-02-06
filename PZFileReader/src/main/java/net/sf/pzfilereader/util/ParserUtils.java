@@ -115,8 +115,16 @@ public final class ParserUtils {
         } else if (line == null) {
             return list;
         }
-
-        final String trimmedLine = line.trim();
+        
+        String trimmedLine;
+        if (delimiter == '\t' || delimiter == ' ') {
+            //skip the trim for these delimiters, doing the trim will mess up the parse
+            //on empty records which contain just the delimiter
+            trimmedLine = line;
+        } else {
+            trimmedLine = line.trim();
+        }
+        
         int size = trimmedLine.length();
 
         if (size == 0) {
