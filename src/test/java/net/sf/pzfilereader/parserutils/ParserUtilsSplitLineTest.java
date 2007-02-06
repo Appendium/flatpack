@@ -3,6 +3,7 @@ package net.sf.pzfilereader.parserutils;
 import java.util.List;
 
 import junit.framework.TestCase;
+import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.utilities.UnitTestUtils;
 
@@ -140,7 +141,12 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("\"one\"  \"two\"  three", ' ', '\"', new String[] {"one", "", "two", "", "three"});
         
         check (" , , ", ',', '"', new String[] {"","",""});
+        check (" , , ", ',', PZConstants.NO_QUALIFIER, new String[] {"","",""});
         check (" \t \t ", '\t', '"', new String[] {"","",""});
+        check (" \t \t ", '\t', PZConstants.NO_QUALIFIER, new String[] {"","",""});
+        check ("  ", ' ', '"', new String[] {"","",""});
+        check ("  ", ' ', PZConstants.NO_QUALIFIER, new String[] {"","",""});
+        
     }
 
     /**
