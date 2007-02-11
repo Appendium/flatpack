@@ -15,6 +15,9 @@ It is available immediately for download via SourceForge or the Maven Central
 Repository (both Maven 1 and Maven 2). The homepage has some very 
 quick examples.
 
+Alternatively, you can point your Maven 2 to this repository:
+http://objectlabkit.sourceforge.net/m2-repo
+
 The library is small, lightweight and does not force you to adopt a
 framework.
 
