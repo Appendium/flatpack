@@ -43,12 +43,12 @@
    <siteAddress>pzfilereader.sourceforge.net</siteAddress>
    <siteDirectory/>
    <repository>
-      <url>http://svn.sourceforge.net/pzfilereader</url>
+      <url>http://pzfilereader.svn.sourceforge.net/pzfilereader</url>
       <connection>
-         scm:svn:https://svn.sourceforge.net/svnroot/pzfilereader/trunk
+         scm:svn:https://pzfilereader.svn.sourceforge.net/svnroot/pzfilereader/trunk
       </connection>
       <developerConnection>
-         scm:svn:https://svn.sourceforge.net/svnroot/pzfilereader/trunk
+         scm:svn:https://pzfilereader.svn.sourceforge.net/svnroot/pzfilereader/trunk
       </developerConnection>
    </repository>
    <developers>
