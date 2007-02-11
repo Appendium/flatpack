@@ -20,6 +20,11 @@
   </head>
   <body>
     <!-- The body of the document contains a number of sections -->
+    <section name="StatSVN News">
+    <p>Get the RSS feed of the news <a href="news.rss"><img src="images/rss.png"></img></a></p>
+    <p>Feb 11, 2007: PZFileReader 3.0.0 is released, new interfaces (not backward compatible) but great performance improvements (order of magnitude).</p>
+    </section>
+
     <section name="PZFileReader Introduction">
 
     <p>PZFileReader came out of the frustration of having to mix file parsing logic with business logic.</p>

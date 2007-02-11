@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rss version="1.0">
+  <channel>
+    <title>PZFileReader News</title>
+    <link>http://pzfilereader.sourceforge.net</link>
+    <description>PZFileReader News</description>
+    <language>en-us</language>
+    <copyright>Copyright 2007 PZFileReader Sourceforge Development Group &amp; ObjectLab</copyright>
+	
+    <item>
+	<title>PZFileReader 3.0.0 is released.</title>
+	<description><![CDATA[
+<p>This is a major release with new interfaces and massive performance gains (orders of magnitude).</p>
+	]]></description>
+	</item>
+	
+  </channel>
+</rss>
