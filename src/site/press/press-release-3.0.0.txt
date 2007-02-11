@@ -7,27 +7,28 @@ to configure formats.
 http://pzfilereader.sourceforge.net
 
 This is a major release with re-designed interfaces and performance gains
-of, in some cases, SEVERAL order of magnitude.
+of, in some cases, SEVERAL order of magnitude. Unfortunately, this release
+is not backward compatible.
 
 PZFileReader is released under the business friendly Apache License v2.0.
-
-It is available immediately for download via SourceForge or the Maven Central
-Repository (both Maven 1 and Maven 2). The homepage has some very 
-quick examples.
-
-Alternatively, you can point your Maven 2 to this repository:
-http://objectlabkit.sourceforge.net/m2-repo
 
 The library is small, lightweight and does not force you to adopt a
 framework.
 
 The implementation is useful to any business that deal with flat files.
+Not only it can parse very quickly some CSV or any-user defined delimiter,
+this library can parse FIXED LENGTH files.
+
 The library allow you to define an XML mapping (or in a database) of
 the format of your file. Once this is done, the parsed data can be accessed
 via a simple name lookup mechanism.
 
 It is our aim to publish at some point some well know file formats for
-your immediate use.
+your immediate use. Please contribute if you have some standard files...
+
+It is available for download via SourceForge or the Maven Central
+Repository (both Maven 1 and Maven 2). The homepage has some very 
+quick examples.
 
 ObjectLab is not new to the open-source community having used numerous OS 
 projects, It has recently launched the ObjectLab Kit family, including:
