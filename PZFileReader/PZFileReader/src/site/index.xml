@@ -1,0 +1,29 @@
+<document>
+  <properties>
+    <author email="Kit@objectlab.co.uk">Benoit Xhenseval</author>
+    <title>PZFileReader Into</title>
+  </properties>
+  <head>
+    <meta name="description"
+	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	/>
+
+    <meta name="keywords" content="CSV, Fixed length file parser" />
+    <meta name="Subject" content="Fixed Length parser" />
+    <meta name="Copyright" content="ObjectLab Financial Ltd" />
+    <meta name="Language" content="English" />
+    <meta name="Designer" content="ObjectLab Financial Ltd" />
+    <meta name="Distribution" content="Global" />
+    <meta name="robots" content="ALL"/>
+    <meta name="Revisit-After" content="20 Days" />
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="PZFileReader Introduction">
+
+    <p>Check out the <a href="apidocs/index.html">UML diagrams here</a></p>
+    <p>Also look at the <a href="maven-reports.html">Project Reports</a> menu on the left for project specific items, unit tests, QA etc.</p>
+    </section>
+
+  </body>
+</document>

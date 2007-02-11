@@ -1,0 +1,273 @@
+<document>
+  <properties>
+    <author email="Kit@objectlab.co.uk">Benoit Xhenseval</author>
+    <title>PZFileReader Into</title>
+  </properties>
+  <head>
+    <meta name="description"
+	content="PZFIle Reader Apache 2.0 license."
+	/>
+
+    <meta name="keywords"
+        content="CSV, Fixed length file parser" />
+    <meta name="Subject" content="Fixed Length parser" />
+    <meta name="Copyright" content="ObjectLab Financial Ltd" />
+    <meta name="Language" content="English" />
+    <meta name="Designer" content="ObjectLab Financial Ltd" />
+    <meta name="Distribution" content="Global" />
+    <meta name="robots" content="ALL"/>
+    <meta name="Revisit-After" content="20 Days" />
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="PZFileReader Examples">
+
+    <p>Check out the <a href="apidocs/index.html">UML diagrams here</a></p>
+    <p>Also look at the <a href="maven-reports.html">Project Reports</a> menu on the left for project specific items, unit tests, QA etc.</p>
+    
+    <subsection name="The Examples">
+    <p>All examples are in the com.pz.reader.examples sub-directories. There is an application to run these, com.px.reader.examples.Examples but
+    the easiest way is to run the <code>run-examples.bat</code> in the target directory after build via Maven:</p>
+    
+    <div class="code"><pre>
+Menu Options
+    1) CSVTestFileCreator                                 8) FixedLengthHeaderAndTrailer
+    2) CSVHeaderAndTrailer                                9) LargeDelimitedWithPZMap
+    3) CSVPerformanceTest                                 10) LargeFixedLengthWithPZMap
+    4) DelimitedWithPZMap                                 11) CSVLarge
+    5) DelimitedWithPZMapErrors                           12) LowLevelParse
+    6) DelimitedFileExportToExcel                         13) DelimitedMultiLine
+    7) FixedLengthWithPZMap                               14) NumericsAndDates
+   15) Who you gonna call?                                0) Exit
+Enter your choice: (default:-1)
+</pre></div>
+    <ol>
+    <li>...createsamplecsv.<a href="#CSVTestFileCreator">CSVTestFileCreator</a>.java Create sample CSV</li>
+    <li>...csvheaderandtrailer.<a href="#CSVHeaderAndTrailer">CSVHeaderAndTrailer</a>.java This shows the ability to parse header and trailer records out of a file.</li>
+    <li>...csvperformancetest.<a href="#CSVPerformanceTest">CSVPerformanceTest</a>.java </li>
+    <li>...delimitedcolumnnamesinfile.<a href="#DelimitedColumnNamesInFile">DelimitedColumnNamesInFile</a>.java</li>
+    <li>...delimiteddynamiccolumns.<a href="#DelimitedWithPZMap">DelimitedWithPZMap</a>.java</li>
+    <li>...delimiteddynamiccolumnswitherrors.<a href="#DelimitedWithPZMapErrors">DelimitedWithPZMapErrors</a>.java</li>
+    <li>...exporttoexcel.<a href="#DelimitedFileExportToExcel">DelimitedFileExportToExcel</a>.java</li>
+    <li>...fixedlengthdynamiccolumns.<a href="#FixedLengthWithPZMap">FixedLengthWithPZMap</a>.java</li>
+    <li>...fixedlengthheaderandtrailer.<a href="#FixedLengthHeaderAndTrailer">FixedLengthHeaderAndTrailer</a>.java</li>
+    <li>...largedataset.delimiteddynamiccolumns.<a href="#DelimitedWithPZMap2">DelimitedWithPZMap</a>.java</li>
+    <li>...largedataset.fixedlengthdynamiccolumns.<a href="#FixedLengthWithPZMap2">FixedLengthWithPZMap</a>.java</li>
+    <li>...largedataset.largecsvperformancetest.<a href="#CSVLarge">CSVLarge</a>.java</li>
+    <li>...lowlevelparse.<a href="#LowLevelParse">LowLevelParse</a>.java</li>
+    <li>...multilinedelimitedrecord.<a href="#DelimitedMultiLine">DelimitedMultiLine</a>.java</li>
+    <li>...numericsanddates.<a href="#NumericsAndDates">NumericsAndDates</a>.java</li>
+    </ol>
+    </subsection>
+    
+    <subsection name="CSVTestFileCreator"><a name="CSVTestFileCreator"/>
+<div clas="code"><pre>    
+This utility can be used to create a sample CSV file for testing the parser.  In the 
+ExecuterSample.bat file, there are 2 parameters.  
+
+param1 = # cols to make | param2 = #rows to make
+
+The following line would create a csv file with 10 columns and 100000 rows:
+</pre></div>
+    </subsection>
+
+
+    <subsection name="CSVHeaderAndTrailer"><a name="CSVHeaderAndTrailer"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This shows the ability to parse header and trailer records out of a file.
+</pre></div>
+</subsection>
+
+<subsection name="CSVPerformanceTest"><a name="CSVPerformanceTest"/>
+<div clas="code"><pre>    
+File Type:  Must Be A CSV file
+
+This is meant to be a performance test.  The sample file contains 10 columns and 100,000 rows.
+
+Performance Tests
+------------------------------
+    Machine Specs:  P4 1.7 GHZ 256MB RAM  | Parse Time: 45-48 secs.
+    Machine Specs:  P4 2.9 GHZ 1 GB RAM  | Parse Time: 23-25 secs.
+
+Feel free to post additional performance tests in the SF forums :)
+
+There is a settings.properties file in this directory.  This file has 2 different options:
+
+verbose - can be set to true/false.  If set to true, the data in the file will be ran to the screen
+after the parse.  There is a 2 second pause before data start to get spit to the screen.  This is 
+to allow the user to see the total time it took to parse the file.
+
+csvFile - set this to the path of the CSV file to be read in.  Feel free to test this against your own
+CSV files.
+
+This particular example uses the first record in the file for the column names.  
+
+Depending on the size of the file being parsed, the -Xmx parameter may need to be adjusted.  This
+is the max memory setting for the JVM to use.  This parameter is set in the ExecuteSample.bat file
+and is currently set to 128mb.  This needs to be adjusted if OutOfMemory errors occur.  
+</pre></div>
+</subsection>
+
+<subsection name="DelimitedColumnNamesInFile"><a name="DelimitedColumnNamesInFile"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This sample uses the column names which are contained in the CSV file instead
+of relying on a mapping to tell the parser what the column names are.
+
+This sample also re-orders the file by CITY ASC, LASTNAME DESC
+
+There have also been " 's and , 's added to the text on one of the records
+to show the parsing abilities of the API.
+</pre></div>
+</subsection>
+
+<subsection name="DelimitedWithPZMap"><a name="DelimitedWithPZMap"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This sample dynamically reads the column names from the DataSet and evaluates 
+the values of each column.  Making use of the getColumns() method.
+
+This sample also re-orders the file by CITY ASC, LASTNAME DESC
+
+There have also been " 's and , 's added to the text on one of the records
+to show the parsing abilities of the API.
+</pre></div>
+</subsection>
+
+<subsection name="DelimitedWithPZMapErrors"><a name="DelimitedWithPZMapErrors"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This sample contains errors in the PEOPLE-CommaDelimitedWithQualifier.txt
+2 Lines in the file contain more columns then we have declared in the 
+PEOPLE-Delimited.pzmap.xml
+This demonstrates how to check for errors that happened while reading the file.
+
+This sample dynamically reads the column names from the DataSet and evaluates 
+the values of each column.  Making use of the getColumns() method.
+
+This sample also re-orders the file by CITY ASC, LASTNAME DESC
+
+There have also been " 's and , 's added to the text on one of the records
+to show the parsing abilities of the API.
+</pre></div>
+</subsection>
+
+<subsection name="DelimitedFileExportToExcel"><a name="DelimitedFileExportToExcel"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This sample re-orders the file by CITY ASC, LASTNAME DESC and exports to "MyExcelExport.xls"
+
+There have also been " 's and , 's added to the text on one of the records
+to show the parsing abilities of the API.
+</pre></div>
+</subsection>
+
+<subsection name="FixedLengthWithPZMap"><a name="FixedLengthWithPZMap"/>
+<div clas="code"><pre>    
+File Type:  Fixed Width Text
+
+This sample dynamically reads the column names from the DataSet and evaluates 
+the values of each column.  Making use of the getColumns() method.
+
+This sample also re-orders the file by CITY ASC, LASTNAME DESC
+</pre></div>
+</subsection>
+
+<subsection name="FixedLengthHeaderAndTrailer"><a name="FixedLengthHeaderAndTrailer"/>
+<div clas="code"><pre>    
+File Type:  Fixed Width Text
+
+This sample dynamically reads the column names from the DataSet and evaluates 
+the values of each column.  Making use of the getColumns() method.
+
+This sample also re-orders the file by CITY ASC, LASTNAME DESC
+</pre></div>
+</subsection>
+
+<subsection name="DelimitedWithPZMap"><a name="DelimitedWithPZMap2"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This sample dynamically reads the column names from the LargeDataSet and evaluates 
+the values of each column.  Making use of the getColumns() method.
+
+There have also been " 's and , 's added to the text on one of the records
+to show the parsing abilities of the API.
+</pre></div>
+</subsection>
+
+<subsection name="FixedLengthWithPZMap"><a name="FixedLengthWithPZMap2"/>
+<div clas="code"><pre>    
+File Type:  Fixed Width Text
+
+This sample dynamically reads the column names from the DataSet and evaluates 
+the values of each column.  Making use of the getColumns() method.
+
+This sample also re-orders the file by CITY ASC, LASTNAME DESC
+</pre></div>
+</subsection>
+
+<subsection name="CSVLarge"><a name="CSVLarge"/>
+<div clas="code"><pre>    
+File Type:  Must Be A CSV file
+
+This is meant to be a performance test for large files.  This will make use of the new LargeDataSet class introduced
+in 2.2.  A println will be run to the screen for every 2500 records parsed and looped through in the file.
+
+This class differs from the DataSet class where the file is no longer read into memory.  
+
+There is a settings.properties file in this directory. 
+
+csvFile - set this to the path of the CSV file to be read in.  Feel free to test this against your own
+CSV files.
+
+This particular example uses the first record in the file for the column names.  
+
+Depending on the size of the file being parsed, the -Xmx parameter may need to be adjusted.  This
+is the max memory setting for the JVM to use.  This parameter is set in the ExecuteSample.bat file
+and is currently set to 128mb.  This needs to be adjusted if OutOfMemory errors occur.  
+</pre></div>
+</subsection>
+
+<subsection name="LowLevelParse"><a name="LowLevelParse"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This demonstrates how to perform lower level parsing.  The DataSet
+class is bypassed alltogether and a buffered reader is used instead.
+This sample makes use of parsing utilities which are provided through
+the ParserUtils class.
+</pre></div>
+</subsection>
+
+<subsection name="DelimitedMultiLine"><a name="DelimitedMultiLine"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This sample dynamically reads the column names from the DataSet and evaluates 
+the values of each column.  Making use of the getColumns() method.
+
+This sample also re-orders the file by CITY ASC, LASTNAME DESC
+
+There have also been " 's and , 's added to the text on one of the records
+to show the parsing abilities of the API.
+</pre></div>
+</subsection>
+
+<subsection name="NumericsAndDates"><a name="NumericsAndDates"/>
+<div clas="code"><pre>    
+File Type:  Comma Delimted With Text Qualified By "'s
+
+This sample demonstrates how values can be pulled out as Strings,double's,int's,
+and Date's from the file.
+</pre></div>
+</subsection>
+</section>
+  </body>
+</document>

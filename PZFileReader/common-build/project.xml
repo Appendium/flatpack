@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   /*  
+   * ========================================================================
+   * $Id: project.xml 209 2006-10-12 10:17:42Z benoitx $
+   * 
+   * Copyright 2006 the original author or authors.
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+   * use this file except in compliance with the License. You may obtain a copy of
+   * the License at
+   *
+   * http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+   * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+   * License for the specific language governing permissions and limitations under
+   * the License.
+   * ========================================================================
+   */
+-->
+
+<project xmlns="http://maven.apache.org/POM/3.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/3.0.0 http://maven.apache.org/maven-v3_0_0.xsd">
+   <pomVersion>3</pomVersion>
+   <groupId>net.sf.pzfilereader</groupId>
+   <currentVersion>3.0.0</currentVersion>
+   <organization>
+      <name>ObjectLab Financial Ltd</name>
+      <url>http://www.objectlab.co.uk</url>
+      <logo>
+         http://www.objectlab.co.uk/images/objectlab-web-noblue.gif
+      </logo>
+   </organization>
+   <inceptionYear>2006</inceptionYear>
+   <url>http://pzfilereader.sourceforge.net</url>
+   <issueTrackingUrl>
+         http://www.sourceforge.net/tracker/?group_id=127761
+   </issueTrackingUrl>
+   <siteAddress>pzfilereader.sourceforge.net</siteAddress>
+   <siteDirectory/>
+   <repository>
+      <url>http://pzfilereader.svn.sourceforge.net/pzfilereader</url>
+      <connection>
+         scm:svn:https://pzfilereader.svn.sourceforge.net/svnroot/pzfilereader/trunk
+      </connection>
+      <developerConnection>
+         scm:svn:https://pzfilereader.svn.sourceforge.net/svnroot/pzfilereader/trunk
+      </developerConnection>
+   </repository>
+   <developers>
+      <developer>
+         <name>Paul Zepernick</name>
+         <id>zepernick</id>
+         <email>zepernick at users.sourceforge.net</email>
+         <organization>Paul Zepernick</organization>
+         <url>http://www.mysite.com</url>
+         <timezone>0</timezone>
+         <roles>
+            <role>Founder</role>
+            <role>Java Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <name>Benoit Xhenseval</name>
+         <id>benoitx</id>
+         <email>kit AT objectlab DOT co dOt uk</email>
+         <organization>ObjectLab Financial Ltd</organization>
+         <roles>
+            <role>Developer</role>
+         </roles>
+         <url>http://www.xhenseval.com</url>
+         <timezone>+0</timezone>
+      </developer>
+      <developer>
+         <name>Marcin Jekot</name>
+         <id>marchy</id>
+         <email>marcin at jekot DOt net</email>
+         <organization>ObjectLab Financial Ltd</organization>
+         <roles>
+            <role>Subversion mig</role>
+         </roles>
+         <timezone>+0</timezone>
+      </developer>
+   </developers>
+   <!-- any mailing lists for the project -->
+   <mailingLists>
+      <mailingList>
+         <name>PZFileReader Announcements (via ObjectLab Kit list)</name>
+         <subscribe>
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-announce
+         </subscribe>
+         <unsubscribe>
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-announce
+         </unsubscribe>
+         <post/>
+         <archive>
+            http://sourceforge.net/mailarchive/forum.php?forum=objectlabkit-announce
+         </archive>
+      </mailingList>
+      <mailingList>
+         <name>PZFileReader User</name>
+         <subscribe>
+            http://lists.sourceforge.net/lists/listinfo/pzfilereader-user
+         </subscribe>
+         <unsubscribe>
+            http://lists.sourceforge.net/lists/listinfo/pzfilereader-user
+         </unsubscribe>
+         <post>pzfilereader-user@lists.sourceforge.net</post>
+         <archive>
+            http://sourceforge.net/mailarchive/forum.php?forum=pzfilereader-user
+         </archive>
+      </mailingList>
+      <mailingList>
+         <name>PZFileReader Developers (SVN checkins)</name>
+         <subscribe>
+            http://lists.sourceforge.net/lists/listinfo/pzfilereader-svn
+         </subscribe>
+         <unsubscribe>
+            http://lists.sourceforge.net/lists/listinfo/pzfilereader-svn
+         </unsubscribe>
+         <post/>
+         <archive>
+            http://sourceforge.net/mailarchive/forum.php?forum=pzfilereader-svn
+         </archive>
+      </mailingList>
+      <mailingList>
+         <name>News about ObjectLab's projects (Alerts online)</name>
+         <subscribe>
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-news
+         </subscribe>
+         <unsubscribe>
+            http://lists.sourceforge.net/lists/listinfo/objectlabkit-news
+         </unsubscribe>
+         <post/>
+         <archive>
+            http://sourceforge.net/mailarchive/forum.php?forum=objectlabkit-news
+         </archive>
+      </mailingList>
+   </mailingLists>
+
+   <dependencies>
+      <dependency>
+         <groupId>jdom</groupId>
+         <artifactId>jdom</artifactId>
+         <version>1.0</version>
+         <type>jar</type>
+         <url>http://www.jdom.org</url>
+      </dependency>
+      <dependency>
+         <groupId>jexcelapi</groupId>
+         <artifactId>jxl</artifactId>
+         <version>2.4.2</version>
+         <type>jar</type>
+         <url>http://sourceforge.net/projects/jexcelapi</url>
+      </dependency>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>1.1.0-RC1</version>
+         <type>jar</type>
+         <url>http://www.slf4j.org</url>
+      </dependency>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-simple</artifactId>
+         <version>1.1.0-RC1</version>
+         <type>jar</type>
+         <url>http://www.slf4j.org</url>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <!-- We need to put here something other when we release it or I'll receive the emails from
+         everyone who tries to use the project... -->
+      <nagEmailAddress>pzepernick@gmail.com</nagEmailAddress>
+      <defaultGoal>pz:build</defaultGoal>
+   </build>
+
+   <reports>
+      <report>maven-checkstyle-plugin</report>
+      <report>maven-findbugs-plugin</report>
+      <report>maven-pmd-plugin</report>
+      <report>maven-simian-plugin</report>
+      <report>maven-cobertura-plugin</report>
+      <report>maven-qalab-plugin</report>
+      <report>maven-ydoc-plugin</report>
+      <report>maven-jdepend-plugin</report>
+      <report>maven-faq-plugin</report>
+      <report>maven-junit-report-plugin</report>
+      <report>maven-jxr-plugin</report>
+      <report>maven-tasklist-plugin</report>
+   </reports>
+
+   <versions>
+      <version>
+         <id>3.0.0</id>
+         <name>3.0.0</name>
+         <tag>3.0.0</tag>
+      </version>
+      <version>
+         <id>2.2.0</id>
+         <name>2.2.0</name>
+         <tag>v2.2.0</tag>
+      </version>
+   </versions>
+</project>
+

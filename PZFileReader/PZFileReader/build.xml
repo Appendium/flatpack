@@ -1,0 +1,89 @@
+<project name="PZFileReader" default="docs" basedir=".">
+    <description>
+        Disto Build Script For pzFileReader
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="./src/main/java"/>
+  <property name="build" location="build"/>
+  <!--set this to the target of the build-->	
+  <property name="dist"  location="c:/pzFileReader/distro"/>
+  <property name="include" value="include"/>
+  <property name="version" value="3.0.0"/>
+
+  <target name="init">
+  	<!--Wipe the source dir to clean old files if needed-->
+  	<delete dir="${dist}/source"/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+    <mkdir dir="${dist}/JavaDocs"/>
+    <mkdir dir="${dist}/source"/>
+  	<mkdir dir="${dist}/lib"/>
+  	<mkdir dir="JavaDocs"/>
+  	
+    <copy todir="${dist}/source">
+      <fileset dir="${src}" includes="**/*.java" excludes="**/test/**" />
+    </copy>
+    <copy todir="${dist}/lib">
+      <fileset dir="${include}" includes="**/*.jar"/>
+    </copy>
+  	
+  </target>
+	
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" excludes="**/test/**" destdir="${build}">
+    	  <classpath>
+    	       <fileset dir="${include}">
+    	           <include name="**/*.jar"/>
+    	       </fileset>
+    	  </classpath>
+    </javac>
+  	<!--copy the DTD into the build dir so that it will get into the jar-->
+    <copy todir="${build}">
+      <fileset dir="${src}" includes="**/*.dtd" />
+    </copy>
+  </target>
+	
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/pzFileReader${version}.jar" basedir="${build}"/>
+  	<delete dir="${build}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" depends="dist" >
+    <!--<delete dir="${build}"/>-->
+  </target>
+	
+  <target name="docs" depends="clean">
+   <!-- create javadocs -->
+	 <javadoc packagenames="net.sf.pzfilereader.*"
+	           sourcepath="${dist}/source"
+	           defaultexcludes="yes"
+	           destdir="JavaDocs"
+	           author="true"
+	           version="true"
+	           use="true"
+	           windowtitle="pzFileReader Documentation Version: ${version}">
+	 </javadoc>
+    <copy todir="${dist}/JavaDocs">
+      <fileset dir="JavaDocs" includes="**/*"/>
+    </copy>
+  </target>
+
+  <!--THIS IS A STAND ALONE TARGET WHICH DOES NOT GET EXECUTED WITH THE REST OF THE SCRIPT-->	
+  <target name="cleanDistroDir"
+        description="Removes Distro Dir..Should be run for a clean build" >
+    <delete dir="${dist}/JavaDocs"/>
+    <delete dir="${dist}/source"/>
+    <delete dir="${dist}/lib"/>
+  	
+  </target>
+	
+</project>

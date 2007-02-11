@@ -1,0 +1,12 @@
+<!--
+   /*  
+   * ========================================================================
+   * ObjectLab Financial Ltd, proud sponsor of The Kit.
+   * ========================================================================
+   */
+-->
+<FindBugsFilter>
+   <Match classregex="net.*">
+      <BugCode name="EI,EI2" />
+   </Match>
+</FindBugsFilter>

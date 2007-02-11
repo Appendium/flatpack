@@ -1,0 +1,69 @@
+<document>
+  <properties>
+    <title>Features</title>
+  </properties>
+  <head>
+    <meta name="description"
+	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	/>
+
+    <meta name="keywords" content="CSV, Fixed length file parser" />
+    <meta name="Subject" content="Date Calculators" />
+    <meta name="Copyright" content="ObjectLab Financial Ltd" />
+    <meta name="Language" content="English" />
+    <meta name="Designer" content="ObjectLab Financial Ltd" />
+    <meta name="Distribution" content="Global" />
+    <meta name="robots" content="ALL"/>
+    <meta name="Revisit-After" content="20 Days" />
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="Features">
+
+	<ul>
+	
+<li>Ability to parse any delimited or fixed length file. Columns in the files are mapped through an XML document or a database table. The data can then be pulled out of the columns by referencing the column names provided in the mappings. </li>
+ 
+<li>Allows the mapping and parsing of header and trailer records. There is no limit to how many different header / trailers you can have in a file, each header / trailer type is given a unique id which can be checked for while looping through the parse results. </li>
+ 
+<li>Parser can handle records in delimited files which span multiple lines: 
+ 
+<br/>ie. element, element, "element with line break  
+<br/>more element data  
+<br/>more element data  
+<br/>more element data"  
+<br/>start next rec here  </li>
+ 
+<li>Implements a special class, LargeDataSet, which handles large text files. This will read large files with very low memory usage. This class should be used for file sizes > 100mb. </li>
+ 
+<li>Delimited files which have the first record containing the columns names, can be parsed using the column names in the file. </li>
+ 
+<li>The delimited parser has been tested thoroughly with Excel CSV. Qualifiers and delimiters are allowed in the text elements, with the exception that a qualifier can not be followed by a delimiter inside the text element. </li>
+ 
+<li>Ability to resort the file before looping through it. Just like an ORDER BY on an SQL statement.  </li>
+ 
+<li>Handles truncated lines of data if needed (optional feature). ie. Not enough elements, or fixed length line is shorter then the what is in the mapping file. Missing columns are filled in with empties. </li>
+ 
+<li>Ability to automatically convert all data in the file to upper or lower case. </li>
+ 
+<li>Retrieve columns as Strings, Dates, Doubles, or Ints. By default, when calling getDouble() or getInt(), the parser will remove any non numeric characters to prevent exceptions. This is helps when dealing with files that contain; dollar signs, commas, etc. Strict parsing can be turned on if this is not desired. </li>
+ 
+<li>Ability to jump to the top or bottom of the file, go to an absolute position, next or previous row. </li>
+ 
+<li>Rows can be removed from the file while processing. This only removes them out of memory and does not remove them from the actual file. </li>
+ 
+<li>Column values can be changed. This is only done in memory and does not change the actual file.  </li>
+ 
+<li>Error messages of errors which occurred during parsing are collected in a list. Rows which contained parsing errors are excluded when returning the data which is in the file. This list of errors can also be added to while processing the data in the file. It can be used to report all errors that happened during file processing. </li>
+ 
+<li>Delimiter parser is provided in a utility class. This can be used to parse a String of text, for users who wish to do their own low level parsing. </li>
+ 
+<li>Using mapping files to associate column names to positions in the text file provides an easy way to update a layout when there is a change without breaking the code. This is especially helpful when a new column is inserted in the middle of a file, and normally there would be a lot of substring to change :(	</li>
+	</ul>
+
+
+    
+    </section>
+
+  </body>
+</document>

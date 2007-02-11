@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<!--
+   /*  
+   * ========================================================================
+   * ObjectLab Financial Ltd, proud sponsor of PZFileReader.
+   * ========================================================================
+   */
+-->
+
+<project xmlns:j="jelly:core" xmlns:core="jelly:core"
+   xmlns:maven="jelly:maven" xmlns:ant="jelly:ant"
+   xmlns:define="jelly:define" xmlns:doc="doc" xmlns:util="jelly:util"
+   xmlns:log="jelly:log">
+
+   <goal name="pz:build" prereqs="jar:install" />
+   <goal name="pz:rebuild" prereqs="clean,pz:build" />
+</project>

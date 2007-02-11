@@ -1,0 +1,5 @@
+This dir contains build & runtime dependent files
+
+jdom.jar - required
+junit.jar - optional used for unit testing
+jxl.jar - optional used for excel integration
