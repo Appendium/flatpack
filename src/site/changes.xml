@@ -7,7 +7,12 @@
     <title>Changes</title>
   </properties>
   <body>
-    <release version="3.0.0" date="in svn" description="Move to Maven and Subversion">
+	<release version="3.1.0" date="in svn" description="Move to Maven and Subversion">
+		<action dev="zepernick" type="change">Feature Request 1566626.  Added setIgnoreExtraColumns() method to the PZParser.
+		Added the ability to ignore extra columns/bytes	from delimited & fixed width files.  Data is truncated when it goes 
+		outside of the column definition.</action>
+	</release>
+    <release version="3.0.0" date="2007-02-11" description="Move to Maven and Subversion">
 	    <action dev="zepernick" type="change">Added new dependency, SLF4j.  This is used to log parsing issues. SLF4j is a facade
 	    to the following loggers; log4j, jcl, nop, and jdk 1.4.  See 3.0 User Doc for further instruction.</action>
     	<action dev="zepernick" type="change">DataSet.getDate() will now return a null on empty Strings</action>
