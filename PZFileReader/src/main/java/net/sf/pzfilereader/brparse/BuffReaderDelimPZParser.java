@@ -133,7 +133,7 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
             //is it going to create too much overhead to do a null check here as well???
             //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
             // column values
-            final List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), PZConstants.SPLITLINE_SIZE_INIT);
+            List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), PZConstants.SPLITLINE_SIZE_INIT);
             final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
             final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
             final int columnCount = cmds.size();
@@ -142,9 +142,16 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
             // Incorrect record length on line log the error. Line
             // will not be included in the dataset
             if (columns.size() > columnCount) {
-                // log the error
-                addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2);
-                continue;
+                if (isIgnoreExtraColumns()) {
+                    //user has choosen to ignore the fact that we have too many columns in the data from
+                    //what the mapping has described.  sublist the array to remove un-needed columns
+                    columns = columns.subList(0, columnCount);
+                    addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
+                } else {
+                    //log the error
+                    addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2);
+                    continue;
+                }                
             } else if (columns.size() < columnCount) {
                 if (isHandlingShortLines()) {
                     // We can pad this line out

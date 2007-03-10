@@ -62,4 +62,20 @@ public interface PZParser {
      *            producing an error
      */
     void setHandlingShortLines(final boolean handleShortLines);
+    
+    /**
+     * 
+     * @return true, detail lines with a length or column count > the mapping
+     *         definition will be truncated and the reader will NOT register these
+     *         lines as erros in the DataError collection.
+     */
+    boolean isIgnoreExtraColumns();
+    
+    /**
+     * 
+     * @param ignoreExtraColumns when true, detail lines with a length or column 
+     *         count > the mapping definition will be truncated and the reader 
+     *         will NOT register these lines as erros in the DataError collection.
+     */
+    void setIgnoreExtraColumns(final boolean ignoreExtraColumns);
 }

@@ -129,12 +129,19 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
                 final String mdkey = FixedWidthParserUtils.getCMDKey(getColumnMD(), line);
                 final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
 
-                // Incorrect record length on line log the error. Line will not
-                // be included in the
-                // dataset
                 if (line.length() > recordLength) {
-                    addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2);
-                    continue;
+                    // Incorrect record length on line log the error. Line will not
+                    // be included in the
+                    // dataset
+                    if (isIgnoreExtraColumns()) {
+                        //user has choosen to ignore the fact that we have too many bytes in the fixed
+                        //width file.  Truncate the line to the correct length
+                        line = line.substring(0, recordLength);
+                        addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
+                    } else {
+                        addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2);
+                        continue;
+                    }
                 } else if (line.length() < recordLength) {
                     if (isHandlingShortLines()) {
                         // We can pad this line out

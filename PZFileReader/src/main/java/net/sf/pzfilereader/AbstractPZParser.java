@@ -38,12 +38,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author xhensevb
+ * @author xhensevb 
  * 
  */
 public abstract class AbstractPZParser implements PZParser {
 
     private boolean handlingShortLines = false;
+    
+    private boolean ignoreExtraColumns = false;
 
     private boolean initialised = false;
 
@@ -90,6 +92,14 @@ public abstract class AbstractPZParser implements PZParser {
      */
     public void setHandlingShortLines(final boolean handleShortLines) {
         this.handlingShortLines = handleShortLines;
+    }
+    
+    public boolean isIgnoreExtraColumns() {
+        return ignoreExtraColumns;
+    }
+    
+    public void setIgnoreExtraColumns(boolean ignoreExtraColumns) {
+        this.ignoreExtraColumns = ignoreExtraColumns;        
     }
 
     public final DataSet parse() {
