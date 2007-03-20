@@ -8,6 +8,7 @@
   </properties>
   <body>
 	<release version="3.1.0" date="in svn" description="Move to Maven and Subversion">
+		<action dev="zepernick" type="fix">Stopped column lookup from being case sensitive</action>
 		<action dev="zepernick" type="change">Feature Request 1566626.  Added setIgnoreExtraColumns() method to the PZParser.
 		Added the ability to ignore extra columns/bytes	from delimited & fixed width files.  Data is truncated when it goes 
 		outside of the column definition.</action>
