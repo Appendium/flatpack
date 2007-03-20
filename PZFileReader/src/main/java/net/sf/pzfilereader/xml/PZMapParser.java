@@ -35,6 +35,8 @@ package net.sf.pzfilereader.xml;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -73,26 +75,7 @@ public final class PZMapParser {
     }
 
     /**
-     * Reads the XMLDocument for a PZMap file. Parses the XML file, and returns
-     * a List of ColumnMetaData.
-     * 
-     * @param xmlFile
-     *            XML file
-     * @return List of ColumnMetaData
-     * @throws Exception
-     * @deprecated
-     */
-    public static Map parse(final File xmlFile) throws Exception {
-        final InputStream xmlStream = ParserUtils.createInputStream(xmlFile);
-        Map mdIndex = parse(xmlStream);
-        if (mdIndex == null) {
-            mdIndex = new LinkedHashMap();
-        }
-        return mdIndex;
-    }
-
-    /**
-     * TODO New method based on InputStream. Reads the XMLDocument for a PZMap
+     * Method based on InputStream. Reads the XMLDocument for a PZMap
      * file from an InputStream, WebStart combatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
      * 
@@ -100,8 +83,31 @@ public final class PZMapParser {
      * @return Map <records> with their corrisponding
      * @throws IOException
      * @throws JDOMException
+     * @deprecated please use parse(Reader)
      */
     public static Map parse(final InputStream xmlStream) throws JDOMException, IOException {
+        InputStreamReader isr = null;
+        try {
+            isr = new InputStreamReader(xmlStream);
+            return parse(isr);
+        } finally {
+            if (isr != null) {
+                isr.close();
+            }
+        }
+    }
+
+    /**
+     * New method based on Reader. Reads the XMLDocument for a PZMap
+     * file from an InputStream, WebStart combatible. Parses the XML file, and
+     * returns a Map containing Lists of ColumnMetaData.
+     * 
+     * @param xmlStreamReader
+     * @return Map <records> with their corrisponding
+     * @throws IOException
+     * @throws JDOMException
+     */
+    public static Map parse(final Reader xmlStreamReader) throws JDOMException, IOException {
         final SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         // handle the ability to pull DTD from Jar if needed
@@ -112,7 +118,7 @@ public final class PZMapParser {
         // not sure why this started to happen now. Was not making to
         // EntityResolver to pull
         // dtd out of the jar if needed
-        final Document document = builder.build(xmlStream, "file:///");
+        final Document document = builder.build(xmlStreamReader, "file:///");
 
         final Element root = document.getRootElement();
 
