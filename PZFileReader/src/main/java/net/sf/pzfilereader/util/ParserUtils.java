@@ -50,6 +50,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
@@ -650,10 +651,11 @@ public final class ParserUtils {
     public static int getColumnIndex(final String key, final Map columnMD, final String colName) {
         int idx = -1;
         if (key != null && !key.equals(PZConstants.DETAIL_ID) && !key.equals(PZConstants.COL_IDX)) {
-            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(colName);
+            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(colName.toLowerCase(
+                    Locale.getDefault()));
         } else if (key == null || key.equals(PZConstants.DETAIL_ID)) {
             final Map map = (Map) columnMD.get(PZConstants.COL_IDX);
-            final Integer i = (Integer) map.get(colName);
+            final Integer i = (Integer) map.get(colName.toLowerCase(Locale.getDefault()));
             if (i != null) { //happens when the col name does not exist in the mapping
                 idx = i.intValue();
             }
@@ -765,7 +767,8 @@ public final class ParserUtils {
             int idx = 0;
             for (final Iterator it = columns.iterator(); it.hasNext(); idx++) {
                 final ColumnMetaData meta = (ColumnMetaData) it.next();
-                map.put(meta.getColName(), new Integer(idx));
+                map.put(meta.getColName().toLowerCase(
+                        Locale.getDefault()), new Integer(idx));
             }
         }
         return map;
