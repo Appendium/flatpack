@@ -32,10 +32,13 @@
  */
 package net.sf.pzfilereader.xml;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -108,6 +111,21 @@ public final class PZMapParser {
      * @throws JDOMException
      */
     public static Map parse(final Reader xmlStreamReader) throws JDOMException, IOException {
+        //use for debug when JDOM complains about the xml
+        /* final BufferedReader br = new BufferedReader(xmlStreamReader);
+        final FileWriter fw = new FileWriter("c:/test.pz");
+        final PrintWriter out = new PrintWriter(fw);
+        String line = null;
+        while ((line = br.readLine()) != null) {
+            out.println(line);
+        }
+        out.flush();
+        fw.close();
+        br.close();*/
+        
+        if (xmlStreamReader == null) {
+            throw new NullPointerException("XML Reader Is Not Allowed To Be Null...");
+        }
         final SAXBuilder builder = new SAXBuilder();
         builder.setValidation(true);
         // handle the ability to pull DTD from Jar if needed
