@@ -33,8 +33,11 @@
 package net.sf.pzfilereader;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.xml.PZMapParser;
@@ -49,42 +52,89 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
     private InputStream pzmapXMLStream = null;
 
     private File pzmapXML = null;
+   
+    private Reader pzmapReader;
+    
+    //this InputStream and file can be removed after support for 
+    //file and inputstream is removed from the parserfactory.  The
+    //methods have been deprecated..pz
+    private InputStream dataSourceStream = null;
+    
+    private File dataSource = null;
+   
 
     public DelimiterPZParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
-        super(dataSource, delimiter, qualifier, ignoreFirstRecord);
+        super(null, delimiter, qualifier, ignoreFirstRecord);
         this.pzmapXML = pzmapXML;
+        this.dataSource = dataSource;
     }
 
     public DelimiterPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+        super(null, delimiter, qualifier, ignoreFirstRecord);
         this.pzmapXMLStream = pzmapXMLStream;
+        this.dataSourceStream = dataSourceStream;
     }
 
     public DelimiterPZParser(final File dataSource, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
-        super(dataSource, delimiter, qualifier, ignoreFirstRecord);
+        super(null, delimiter, qualifier, ignoreFirstRecord);
+        this.dataSource = dataSource;
     }
 
     public DelimiterPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
-        super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+        super(null, delimiter, qualifier, ignoreFirstRecord);
+        this.dataSourceStream = dataSourceStream;
+    }
+    
+    public DelimiterPZParser(final Reader dataSourceReader, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
+        super(dataSourceReader, delimiter, qualifier, ignoreFirstRecord);
+    }
+    
+    public DelimiterPZParser(final Reader dataSourceReader, final Reader pzmapReader, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
+        super(dataSourceReader, delimiter, qualifier, ignoreFirstRecord);
+        this.pzmapReader = pzmapReader;
     }
 
     protected void init() {
         try {
-            if (pzmapXMLStream != null) {
-                setColumnMD(PZMapParser.parse(pzmapXMLStream));
-            } else if (pzmapXML != null) {
-                final InputStream stream = ParserUtils.createInputStream(pzmapXML);
+            //check to see if the user is using a File or InputStream.  This is 
+            //here for backwards compatability
+            if (dataSourceStream != null) {
+                final Reader r = new InputStreamReader(dataSourceStream);
+                setDataSourceReader(r);
+                addToCloseReaderList(r);
+            } else if (dataSource != null){
+                final Reader r = new FileReader(dataSource);
+                setDataSourceReader(r);
+                addToCloseReaderList(r);
+            }
+            
+            
+            boolean closeMapReader = false;
+            if (pzmapXML != null) {
+                this.pzmapReader = new FileReader(pzmapXML);
+                closeMapReader = true;
+            } else if (pzmapXMLStream != null) {
+                this.pzmapReader = new InputStreamReader(pzmapXMLStream);
+                closeMapReader = true;
+            }
+            
+            if (this.pzmapReader != null) {
                 try {
-                    setColumnMD(PZMapParser.parse(stream));
+                    setColumnMD(PZMapParser.parse(this.pzmapReader));
                 } finally {
-                    if (stream != null) {
-                        stream.close();
+                    if (closeMapReader) {
+                        //only close the reader if it is one we created
+                        //otherwise we will let the user handle it
+                        this.pzmapReader.close();
                     }
                 }
             }
+            
             setInitialised(true);
         } catch (final JDOMException e) {
             throw new InitialisationException(e);
@@ -94,6 +144,6 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
     }
 
     protected boolean shouldCreateMDFromFile() {
-        return pzmapXML == null && pzmapXMLStream == null;
+        return pzmapReader == null;
     }
 }

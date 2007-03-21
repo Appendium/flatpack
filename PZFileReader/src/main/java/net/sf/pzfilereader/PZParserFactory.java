@@ -34,6 +34,7 @@ package net.sf.pzfilereader;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 
 /**
@@ -58,6 +59,9 @@ public interface PZParserFactory {
      * @param dataDefinition -
      *            Name of dataDefinition in the DATAFILE table DATAFILE_DESC
      *            column
+     * @deprecated Please use the newFixedLengthParser(Connection, Reader, String).  The File can be
+     *            wrapped in a "new FileReader(File)"
+     * @return PZParser
      */
     PZParser newFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition);
 
@@ -75,6 +79,9 @@ public interface PZParserFactory {
      * @param dataDefinition -
      *            Name of dataDefinition in the DATAFILE table DATAFILE_DESC
      *            column
+     * @deprecated Please use the newFixedLengthParser(Connection, Reader, String).  The InputStream can be
+     *            wrapped in a "new InputStreamReader(InputStream)"
+     * @return PZParser
      */
     PZParser newFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition);
 
@@ -86,6 +93,9 @@ public interface PZParserFactory {
      *            Reference to the xml file holding the pzmap
      * @param dataSource -
      *            Delimited file to read from
+     * @deprecated Please use the newFixedLengthParser(Reader, Reader).  The File can be
+     *            wrapped in a "new FileReader(InputStream)"
+     * @return PZParser
      */
     PZParser newFixedLengthParser(final File pzmapXML, final File dataSource);
 
@@ -101,8 +111,45 @@ public interface PZParserFactory {
      * @param dataSourceStream -
      *            Delimited file InputStream to read from, user must close them
      *            after use.
+     * @deprecated Please use the newFixedLengthParser(Reader, Reader).  The InputStream can be
+     *            wrapped in a "new InputStreamReader(InputStream)"
+     * @return PZParser
      */
     PZParser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream);
+    
+    /**
+     * Constructs a new DataSet using the database table file layout method.
+     * This is used for a FIXED LENGTH text file.
+     * 
+     * The user is responsible for closing the DB connection.
+     * 
+     * @param con -
+     *            Connection to database with DATAFILE and DATASTRUCTURE tables,
+     *            user is responsible for closing it.
+     * @param dataSource -
+     *            Fixed length file to read from
+     * @param dataDefinition -
+     *            Name of dataDefinition in the DATAFILE table DATAFILE_DESC
+     *            column
+     * @return PZParser
+     */
+    PZParser newFixedLengthParser(final Connection con, final Reader dataSource, final String dataDefinition);
+    
+    /**
+     * New constructor based on Reader. Constructs a new DataSet using the
+     * PZMAP XML file layout method. This is used for a FIXED LENGTH text file.
+     * 
+     * The user is responsible for closing the Readers.
+     * 
+     * @param pzmapXMLStream -
+     *            Reference to the xml Reader holding the pzmap, user
+     *            must close them after use.
+     * @param dataSource -
+     *            Delimited file Reader to read from, user must close them
+     *            after use.
+     * @return PZParser
+     */
+    PZParser newFixedLengthParser(final Reader pzmapXMLStream, final Reader dataSource);
 
     //
     //
@@ -111,7 +158,7 @@ public interface PZParserFactory {
     //
 
     /**
-     * New constructor based on InputStream. Constructs a new DataSet using the
+     * Constructs a new DataSet using the
      * database table file layout method. This is used for a DELIMITED text
      * file. esacpe sequence reference: \n newline <br>
      * \t tab <br>
@@ -124,7 +171,7 @@ public interface PZParserFactory {
      * @param con -
      *            Connection to database with DATAFILE and DATASTRUCTURE tables,
      *            user must close it when done.
-     * @param dataSourceStream -
+     * @param dataSource -
      *            text file datasource InputStream to read from, user must close
      *            it when done.
      * @param dataDefinition -
@@ -136,8 +183,42 @@ public interface PZParserFactory {
      *            Char text is qualified by
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
+     * @deprecated Please use the newDelimitedParser(Connection, Reader, String, char, char, boolean).  
+     *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
+     * @return PZParser
      */
-    PZParser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition,
+    PZParser newDelimitedParser(final Connection con, final InputStream dataSource, final String dataDefinition,
+            final char delimiter, final char qualifier, final boolean ignoreFirstRecord);
+    
+    /**
+     * New constructor based on Reader. Constructs a new DataSet using the
+     * database table file layout method. This is used for a DELIMITED text
+     * file. esacpe sequence reference: \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * The user is responsible for closing the DB connection and InputStream.
+     * 
+     * @param con -
+     *            Connection to database with DATAFILE and DATASTRUCTURE tables,
+     *            user must close it when done.
+     * @param dataSource -
+     *            text file datasource InputStream to read from, user must close
+     *            it when done.
+     * @param dataDefinition -
+     *            Name of dataDefinition in the DATAFILE table DATAFILE_DESC
+     *            column
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param ignoreFirstRecord -
+     *            skips the first line that contains data in the file
+     * @return PZParser
+     */
+    PZParser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition,
             final char delimiter, final char qualifier, final boolean ignoreFirstRecord);
 
     /**
@@ -159,10 +240,38 @@ public interface PZParserFactory {
      *            Char text is qualified by
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
+     * @deprecated Please use the newDelimitedParser(Reader, Reader, String, char, char, boolean).  
+     *            The File can be wrapped in a "new FileReader(File)"
+     * @return PZParser
      */
     PZParser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord);
 
+    /**
+     * Constructs a new DataSet using the PZMAP XML file layout method. This is
+     * used for a DELIMITED text file. esacpe sequence reference: \n newline
+     * <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param pzmapXML -
+     *            Reference to the xml file holding the pzmap
+     * @param dataSource -
+     *            text file datasource to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @param ignoreFirstRecord -
+     *            skips the first line that contains data in the file
+     * @return PZParser
+     */
+    PZParser newDelimitedParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord);
+    
+    
     /**
      * New constructor based on InputStream. Constructs a new DataSet using the
      * PZMAP XML file layout method. This is used for a DELIMITED text file.
@@ -186,6 +295,9 @@ public interface PZParserFactory {
      *            Char text is qualified by
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
+     * @deprecated Please use the newDelimitedParser(Reader, Reader, String, char, char, boolean).  
+     *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
+     * @return PZParser
      */
     PZParser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord);
@@ -205,8 +317,30 @@ public interface PZParserFactory {
      *            Char the file is delimited By
      * @param qualifier -
      *            Char text is qualified by
+     * @deprecated Please use the newDelimitedParser(Reader, char, char, boolean).  
+     *            The InputStream can be wrapped in a "new FileReader(File)"
+     * @return PZParser
      */
     PZParser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier);
+    
+    /**
+     * Constructs a new DataSet using the first line of data found in the text
+     * file as the column names. This is used for a DELIMITED text file. esacpe
+     * sequence reference: \n newline <br>
+     * \t tab <br>
+     * \b backspace <br>
+     * \r return <br>
+     * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
+     * 
+     * @param dataSource -
+     *            text file datasource to read from
+     * @param delimiter -
+     *            Char the file is delimited By
+     * @param qualifier -
+     *            Char text is qualified by
+     * @return PZParser
+     */
+    PZParser newDelimitedParser(final Reader dataSource, final char delimiter, final char qualifier);
 
     /**
      * Constructs a new DataSet using the first line of data found in the text
@@ -226,6 +360,9 @@ public interface PZParserFactory {
      *            Char the file is delimited By
      * @param qualifier -
      *            Char text is qualified by
+     * @deprecated Please use the newDelimitedParser(Reader, char, char, boolean).  
+     *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
+     * @return PZParser
      */
     PZParser newDelimitedParser(final InputStream dataSource, final char delimiter, final char qualifier);
 }

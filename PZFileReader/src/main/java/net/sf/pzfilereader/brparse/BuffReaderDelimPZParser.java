@@ -36,7 +36,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +52,6 @@ import net.sf.pzfilereader.util.ParserUtils;
 
 public class BuffReaderDelimPZParser extends DelimiterPZParser {    
     private BufferedReader br;
-    
-    private InputStreamReader isr;
     
     private boolean processedFirst = false;
     
@@ -78,6 +76,15 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
     
+    public BuffReaderDelimPZParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
+        super(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
+    }
+    
+    public BuffReaderDelimPZParser(final Reader dataSourceStream, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
+        super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+    }
     
     public DataSet doParse() {
         final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
@@ -85,12 +92,7 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
             
-            if (getDataSourceStream() == null) {
-                setDataSourceStream(ParserUtils.createInputStream(getDataSource()));
-            }
-            
-            isr = new InputStreamReader(getDataSourceStream());
-            br = new BufferedReader(isr);
+            br = new BufferedReader(getDataSourceReader());
             
             return ds;
         
@@ -187,10 +189,6 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
         if (br != null) {
             br.close();
             br = null;
-        }
-        if (isr != null) {
-            isr.close();
-            isr = null;
         }
     }
     

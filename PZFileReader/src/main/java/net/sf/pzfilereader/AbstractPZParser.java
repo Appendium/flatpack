@@ -32,13 +32,17 @@
  */
 package net.sf.pzfilereader;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author xhensevb 
+ * @author zepernick
  * 
  */
 public abstract class AbstractPZParser implements PZParser {
@@ -54,12 +58,16 @@ public abstract class AbstractPZParser implements PZParser {
 
     private String dataDefinition = null;
 
-    private InputStream dataSourceStream = null;
+   // private InputStream dataSourceStream = null;
 
-    private File dataSource = null;
+   // private File dataSource = null;
+    
+    private Reader dataSourceReader = null;
+    
+    private List readersToClose = null; 
 
-    protected AbstractPZParser(final File dataSource) {
-        this.dataSource = dataSource;
+    /*protected AbstractPZParser(final File dataSource) {
+        this.dataSourceReader = new FileReader(dataSource);
     }
 
     protected AbstractPZParser(final InputStream dataSourceStream) {
@@ -73,6 +81,15 @@ public abstract class AbstractPZParser implements PZParser {
 
     protected AbstractPZParser(final InputStream dataSourceStream, final String dataDefinition) {
         this.dataSourceStream = dataSourceStream;
+        this.dataDefinition = dataDefinition;
+    }*/
+
+    protected AbstractPZParser(final Reader dataSourceReader) {
+        this.dataSourceReader = dataSourceReader;
+    }
+    
+    protected AbstractPZParser(final Reader dataSourceReader, final String dataDefinition) {
+        this.dataSourceReader = dataSourceReader;
         this.dataDefinition = dataDefinition;
     }
 
@@ -116,6 +133,28 @@ public abstract class AbstractPZParser implements PZParser {
     protected void setColumnMD(final Map map) {
         columnMD = map;
     }
+    
+    //this is used for backward compatability.  We are instantiating Readers from
+    //InputStream and File from previous versions. Close out any Readers in the
+    //readersToClose list.  This can be removed after we remove the deprecated methods
+    protected void closeReaders() throws IOException{
+        if (readersToClose != null) {
+            final Iterator readersToCloseIt = readersToClose.iterator();
+            while (readersToCloseIt.hasNext()) {
+                final Reader r = (Reader)readersToCloseIt.next();
+                r.close();
+            }
+        }
+    }
+    
+    //adds a reader to the close list.  the list will be processed after parsing is
+    //completed.
+    protected void addToCloseReaderList(final Reader r) {
+        if (readersToClose == null) {
+            readersToClose = new ArrayList();
+        }
+        readersToClose.add(r);
+    }
 
     protected void addToColumnMD(final Object key, final Object value) {
         if (columnMD == null) {
@@ -140,7 +179,7 @@ public abstract class AbstractPZParser implements PZParser {
         this.dataDefinition = dataDefinition;
     }
 
-    protected File getDataSource() {
+  /*  protected File getDataSource() {
         return dataSource;
     }
 
@@ -154,7 +193,7 @@ public abstract class AbstractPZParser implements PZParser {
 
     protected void setDataSourceStream(final InputStream dataSourceStream) {
         this.dataSourceStream = dataSourceStream;
-    }
+    }*/
 
     protected Map getColumnMD() {
         return columnMD;
@@ -174,6 +213,20 @@ public abstract class AbstractPZParser implements PZParser {
     protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel) {
         final DataError de = new DataError(errorDesc, lineNo, errorLevel);
         ds.addError(de);
+    }
+
+    /**
+     * @return the dataSourceReader
+     */
+    protected Reader getDataSourceReader() {
+        return dataSourceReader;
+    }
+
+    /**
+     * @param dataSourceReader the dataSourceReader to set
+     */
+    protected void setDataSourceReader(Reader dataSourceReader) {
+        this.dataSourceReader = dataSourceReader;
     }
 
 }

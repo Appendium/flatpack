@@ -34,6 +34,8 @@ package net.sf.pzfilereader;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -43,20 +45,37 @@ import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author xhensevb
+ * @author zepernick
  * 
  */
 public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
-
     private Connection con;
+    
+    private InputStream dataSourceStream;
 
     public DBDelimiterPZParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition,
             final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
-        super(dataSourceStream, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
+        super(null, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
+        this.con = con;
+        this.dataSourceStream = dataSourceStream;
+    }
+    
+    public DBDelimiterPZParser(final Connection con, final Reader dataSourceReader, final String dataDefinition,
+            final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+        super(dataSourceReader, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
         this.con = con;
     }
 
     protected void init() {
         try {
+            //check to see if the user is using a InputStream.  This is 
+            //here for backwards compatability
+            if (dataSourceStream != null) {
+                final Reader r = new InputStreamReader(dataSourceStream);
+                setDataSourceReader(r);
+                addToCloseReaderList(r);
+            }            
+            
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
             addToColumnMD(PZConstants.DETAIL_ID, cmds);
             addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds));
@@ -66,11 +85,9 @@ public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
             }
             setInitialised(true);
         } catch (final SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new InitialisationException(e);
         } catch (final FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new InitialisationException(e);
         } 
     }
 

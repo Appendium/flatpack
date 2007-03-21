@@ -33,10 +33,8 @@
 package net.sf.pzfilereader;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +53,7 @@ import net.sf.pzfilereader.util.ParserUtils;
 public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
     private final Logger logger = LoggerFactory.getLogger(AbstractFixedLengthPZParser.class);
     
-    protected AbstractFixedLengthPZParser(final File dataSource, final String dataDefinition) {
+   /* protected AbstractFixedLengthPZParser(final File dataSource, final String dataDefinition) {
         super(dataSource, dataDefinition);
     }
 
@@ -69,11 +67,19 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
 
     protected AbstractFixedLengthPZParser(final InputStream dataSourceStream) {
         super(dataSourceStream);
+    }*/
+    
+    protected AbstractFixedLengthPZParser(final Reader dataSourceReader, final String dataDefinition) {
+        super(dataSourceReader, dataDefinition);
+    }
+
+    protected AbstractFixedLengthPZParser(final Reader dataSourceReader) {
+        super(dataSourceReader);
     }
 
     public DataSet doParse() {
         try {
-            if (getDataSourceStream() != null) {
+           /* if (getDataSourceStream() != null) {
                 return doFixedLengthFile(getDataSourceStream());
             } else {
                 InputStream stream;
@@ -85,9 +91,10 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
                         stream.close();
                     }
                 }
-            }
+            }*/
+            return doFixedLengthFile(getDataSourceReader());
         } catch (final IOException e) {
-            logger.error("error accessing/creating inputstream", e);
+            logger.error("error accessing/reading data", e);
         }
         return null;
     }
@@ -99,8 +106,7 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
      * puts together the dataset for fixed length file. This is used for PZ XML
      * mappings, and SQL table mappings
      */
-    private DataSet doFixedLengthFile(final InputStream dataSource) throws IOException {
-        InputStreamReader isr = null;
+    private DataSet doFixedLengthFile(final Reader dataSource) throws IOException {
         BufferedReader br = null;
 
         final DefaultDataSet ds = new DefaultDataSet(getColumnMD());
@@ -112,8 +118,7 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
             final Map recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
 
             // Read in the flat file
-            isr = new InputStreamReader(dataSource);
-            br = new BufferedReader(isr);
+            br = new BufferedReader(dataSource);
             String line = null;
             int lineCount = 0;
             // map of record lengths corrisponding to the ID's in the columnMD
@@ -177,12 +182,10 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
                 ds.addRow(row);
             }
         } finally {
-            if (isr != null) {
-                isr.close();
-            }
             if (br != null) {
                 br.close();
             }
+            closeReaders();
         }
         return ds;
     }

@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -48,6 +49,7 @@ import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author xhensevb
+ * @author zepernick
  * 
  */
 public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
@@ -61,7 +63,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
    
     private final Logger logger = LoggerFactory.getLogger(AbstractDelimiterPZParser.class);
     
-    public AbstractDelimiterPZParser(final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
+    /*public AbstractDelimiterPZParser(final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceStream, dataDefinition);
         this.delimiter = delimiter;
@@ -83,12 +85,30 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         this.delimiter = delimiter;
         this.qualifier = qualifier;
         this.ignoreFirstRecord = ignoreFirstRecord;
+    }*/
+    
+    public AbstractDelimiterPZParser(final Reader dataSourceReader, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord) {
+        super(dataSourceReader, dataDefinition);
+        this.delimiter = delimiter;
+        this.qualifier = qualifier;
+        this.ignoreFirstRecord = ignoreFirstRecord;
+    }
+    
+    
+    public AbstractDelimiterPZParser(final Reader dataSourceReader, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
+        super(dataSourceReader);
+        this.delimiter = delimiter;
+        this.qualifier = qualifier;
+        this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
     public DataSet doParse() {
         try {
             lineCount = 0;
-            if (getDataSourceStream() != null) {
+            return doDelimitedFile(getDataSourceReader(), shouldCreateMDFromFile());
+          /*  if (getDataSourceStream() != null) {
                 return doDelimitedFile(getDataSourceStream(),  shouldCreateMDFromFile());
             } else {
                 InputStream stream = null;
@@ -100,7 +120,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                         stream.close();
                     }
                 }
-            }
+            }*/
         } catch (final IOException e) {
             logger.error("error accessing/creating inputstream", e);
         } 
@@ -144,12 +164,10 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
      * puts together the dataset for a DELIMITED file. This is used for PZ XML
      * mappings, and SQL table mappings
      */
-    private DataSet doDelimitedFile(final InputStream dataSource, final boolean createMDFromFile) throws IOException {
+    private DataSet doDelimitedFile(final Reader dataSource, final boolean createMDFromFile) throws IOException {
         if (dataSource == null) {
             throw new NullPointerException("dataSource is null");
         }
-
-        InputStreamReader isr = null;
         BufferedReader br = null;
         final DefaultDataSet ds = new DefaultDataSet(getColumnMD());
         try {
@@ -159,8 +177,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             // get the total column count
             // columnCount = columnMD.size();
 
-            isr = new InputStreamReader(dataSource);
-            br = new BufferedReader(isr);
+            br = new BufferedReader(dataSource);
 
             boolean processedFirst = false;
             /** loop through each line in the file */
@@ -220,12 +237,10 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 ds.addRow(row);
             }
         } finally {
-            if (isr != null) {
-                isr.close();
-            }
             if (br != null) {
                 br.close();
             }
+            closeReaders();
         }
         return ds;
     }
