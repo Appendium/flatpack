@@ -34,6 +34,7 @@ package net.sf.pzfilereader.brparse;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 
 import net.sf.pzfilereader.PZParser;
@@ -81,6 +82,17 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
      */
     public PZParser newFixedLengthParser(final File pzmapXML, final File dataSource) {
         return new BuffReaderFixedPZParser(pzmapXML, dataSource);
+    }
+    
+    /**
+     * Not supported at this time.
+     */
+    public PZParser newFixedLengthParser(Connection con, Reader dataSource, String dataDefinition) {
+        throw new UnsupportedOperationException("Not supported...");
+    }
+    
+    public PZParser newFixedLengthParser(Reader pzmapXMLStream, Reader dataSource) {
+        return new BuffReaderFixedPZParser(pzmapXMLStream, dataSource);
     }
 
     /*
@@ -141,5 +153,20 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
      */
     public PZParser newDelimitedParser(final InputStream dataSourceStream, final char delimiter, final char qualifier) {
         return new BuffReaderDelimPZParser(dataSourceStream, delimiter, qualifier, false);
+    }
+    
+    /**
+     * Not supported at this time.
+     */
+    public PZParser newDelimitedParser(Connection con, Reader dataSource, String dataDefinition, char delimiter, char qualifier, boolean ignoreFirstRecord) {
+        throw new UnsupportedOperationException("Not supported...");
+    }
+    
+    public PZParser newDelimitedParser(Reader dataSource, char delimiter, char qualifier) {
+        return new BuffReaderDelimPZParser(dataSource, delimiter, qualifier, false);
+    }
+    
+    public PZParser newDelimitedParser(Reader pzmapXML, Reader dataSource, char delimiter, char qualifier, boolean ignoreFirstRecord) {
+        return new BuffReaderDelimPZParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 }

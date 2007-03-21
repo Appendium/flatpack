@@ -33,47 +33,87 @@
 package net.sf.pzfilereader;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
-import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.xml.PZMapParser;
 
 import org.jdom.JDOMException;
 
 /**
  * @author xhensevb
+ * @author zepernick
  * 
  */
 public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
     private InputStream pzmapXMLStream;
 
     private File pzmapXML;
+    
+    private Reader pzmapReader;
+    
+    //this InputStream and file can be removed after support for 
+    //file and inputstream is removed from the parserfactory.  The
+    //methods have been deprecated..pz
+    private InputStream dataSourceStream = null;
+    
+    private File dataSource = null;
 
     public FixedLengthPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
-        super(dataSourceStream);
+        super(null);
         this.pzmapXMLStream = pzmapXMLStream;
+        this.dataSourceStream = dataSourceStream;
     }
 
     public FixedLengthPZParser(final File pzmapXML, final File dataSource) {
-        super(dataSource);
+        super(null);
         this.pzmapXML = pzmapXML;
+        this.dataSource = dataSource;
+    }
+    
+    public FixedLengthPZParser(final Reader pzmapReader, final Reader dataSourceReader) {
+        super (dataSourceReader);
+        this.pzmapReader = pzmapReader;
     }
 
     protected void init() {
         try {
-            if (pzmapXMLStream != null) {
-                setColumnMD(PZMapParser.parse(pzmapXMLStream));
-            } else {
-                final InputStream stream = ParserUtils.createInputStream(pzmapXML);
-                try {
-                    setColumnMD(PZMapParser.parse(stream));
-                } finally {
-                    if (stream != null) {
-                        stream.close();
-                    }
+            //check to see if the user is using a File or InputStream.  This is 
+            //here for backwards compatability
+            if (dataSourceStream != null) {
+                final Reader r = new InputStreamReader(dataSourceStream);
+                setDataSourceReader(r);
+                addToCloseReaderList(r);
+            } else if (dataSource != null){
+                final Reader r = new FileReader(dataSource);
+                setDataSourceReader(r);
+                addToCloseReaderList(r);
+            }
+            
+            
+            boolean closeMapReader = false;
+            if (pzmapXML != null) {
+                this.pzmapReader = new FileReader(pzmapXML);
+                closeMapReader = true;
+            } else if (pzmapXMLStream != null) {
+                this.pzmapReader = new InputStreamReader(pzmapXMLStream);
+                closeMapReader = true;
+            }
+            
+            try {
+                setColumnMD(PZMapParser.parse(this.pzmapReader));
+            } finally {
+                if (closeMapReader) {
+                    //only close the reader if it is one we created
+                    //otherwise we will let the user handle it
+                    this.pzmapReader.close();
                 }
             }
+            
+          //  setInitialised(true);
         } catch (final JDOMException e) {
             throw new InitialisationException(e);
         } catch (final IOException e) {

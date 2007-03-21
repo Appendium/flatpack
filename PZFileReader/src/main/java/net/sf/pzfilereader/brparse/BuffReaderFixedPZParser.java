@@ -36,7 +36,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
@@ -53,9 +53,7 @@ import net.sf.pzfilereader.util.ParserUtils;
 
 public class BuffReaderFixedPZParser extends FixedLengthPZParser{
     private BufferedReader br = null;
-    
-    private InputStreamReader isr;
-    
+     
     private int lineCount = 0;
     
     private Map recordLengths = null;
@@ -70,6 +68,10 @@ public class BuffReaderFixedPZParser extends FixedLengthPZParser{
         super(pzmapXML, dataSource);
     }
     
+    public BuffReaderFixedPZParser(final Reader pzmapXML, final Reader dataSource) {
+        super(pzmapXML, dataSource);
+    }
+    
     
     public DataSet doParse() {
         final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
@@ -79,12 +81,7 @@ public class BuffReaderFixedPZParser extends FixedLengthPZParser{
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
             
-            if (getDataSourceStream() == null) {
-                setDataSourceStream(ParserUtils.createInputStream(getDataSource()));
-            }
-            
-            isr = new InputStreamReader(getDataSourceStream());
-            br = new BufferedReader(isr);
+            br = new BufferedReader(getDataSourceReader());
             
             return ds;
         
@@ -166,9 +163,6 @@ public class BuffReaderFixedPZParser extends FixedLengthPZParser{
     public void close() throws IOException{
         if (br != null) {
             br.close();
-        }
-        if (isr != null) {
-            isr.close();
         }
     }
     

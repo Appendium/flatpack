@@ -34,34 +34,66 @@ package net.sf.pzfilereader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
 
 import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author xhensevb
+ * @author zepernick
  * 
  */
 public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
-
     private Connection con;
+        
+    //this InputStream and file can be removed after support for 
+    //file and inputstream is removed from the parserfactory.  The
+    //methods have been deprecated..pz
+    private InputStream dataSourceStream = null;
+    
+    private File dataSource = null;
 
     public DBFixedLengthPZParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
-        super(dataSourceStream, dataDefinition);
+        //Reader will be setup in the init(), passing null for now.
+        //this constructor will eventually be deleted
+        super(null, dataDefinition);
         this.con = con;
+        this.dataSourceStream = dataSourceStream;
     }
 
     public DBFixedLengthPZParser(final Connection con, final File dataSource, final String dataDefinition) {
-        super(dataSource, dataDefinition);
+        super(null, dataDefinition);
         this.con = con;
+        this.dataSource = dataSource;
     }
 
+    public DBFixedLengthPZParser(final Connection con, final Reader dataSourceReader, final String dataDefinition) {
+        super(dataSourceReader, dataDefinition);
+        this.con = con;
+    }
+    
     protected void init() {
         try {
+            //check to see if the user is using a File or InputStream.  This is 
+            //here for backwards compatability
+            if (dataSourceStream != null) {
+                final Reader r = new InputStreamReader(dataSourceStream);
+                setDataSourceReader(r);
+                addToCloseReaderList(r);
+            } else if (dataSource != null){
+                final Reader r = new FileReader(dataSource);
+                setDataSourceReader(r);
+                addToCloseReaderList(r);
+            }
+            
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
 
             addToColumnMD(PZConstants.DETAIL_ID, cmds);
@@ -73,11 +105,9 @@ public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
 
             setInitialised(true);
         } catch (final SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new InitialisationException(e);
         } catch (final FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new InitialisationException(e);
         } 
     }
 
