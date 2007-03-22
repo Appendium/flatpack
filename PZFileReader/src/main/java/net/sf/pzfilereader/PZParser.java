@@ -95,7 +95,6 @@ public interface PZParser {
      *         the value of a column.        
      *         Example when true: Column name = AColumnName ; getString("acolumnname") would fail
      *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
-     * @return boolean
      */
-    boolean setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
+    void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
 }

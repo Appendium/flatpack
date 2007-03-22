@@ -50,6 +50,8 @@ public abstract class AbstractPZParser implements PZParser {
     private boolean handlingShortLines = false;
     
     private boolean ignoreExtraColumns = false;
+    
+    private boolean columnNamesCaseSensitive = false;
 
     private boolean initialised = false;
 
@@ -227,6 +229,14 @@ public abstract class AbstractPZParser implements PZParser {
      */
     protected void setDataSourceReader(Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
+    }
+    
+    public boolean isColumnNamesCaseSensitive() {
+        return columnNamesCaseSensitive;
+    }
+    
+    public void setColumnNamesCaseSensitive(boolean columnNamesCaseSensitive) {
+       this.columnNamesCaseSensitive = columnNamesCaseSensitive;
     }
 
 }
