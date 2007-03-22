@@ -78,4 +78,24 @@ public interface PZParser {
      *         will NOT register these lines as erros in the DataError collection.
      */
     void setIgnoreExtraColumns(final boolean ignoreExtraColumns);
+    
+    /**
+     * Default is false
+     * 
+     * @return true, column names will have to be an exact match when retrieving the value of a column.        
+     *         Example when true: Column name = AColumnName ; getString("acolumnname") would fail
+     *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
+     */
+    boolean isColumnNamesCaseSensitive();
+    
+    /**
+     * Default is false
+     * 
+     * @param columnNamesCaseSensitive when true, column names will have to be an exact match when retrieving 
+     *         the value of a column.        
+     *         Example when true: Column name = AColumnName ; getString("acolumnname") would fail
+     *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
+     * @return boolean
+     */
+    boolean setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
 }
