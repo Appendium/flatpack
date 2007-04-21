@@ -261,7 +261,11 @@ public class DefaultDataSet implements DataSet {
     public String getString(final String column) {
         final Row row = (Row) rows.get(pointer);
         final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
-
+        
+        if (pzparser.isNullEmptyStrings() && s.trim().equals("")) {
+            return null;
+        }   
+        
         if (upperCase) {
             // convert data to uppercase before returning
             // return row.getValue(ParserUtils.findColumn(column,

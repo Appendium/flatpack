@@ -56,6 +56,8 @@ public abstract class AbstractPZParser implements PZParser {
     private boolean initialised = false;
     
     private boolean ignoreParseWarnings = false;
+    
+    private boolean nullEmptyStrings = false;
 
     /** Map of column metadata's */
     private Map columnMD = null;
@@ -251,6 +253,14 @@ public abstract class AbstractPZParser implements PZParser {
     
     public void setIgnoreParseWarnings(boolean ignoreParseWarnings) {
         this.ignoreParseWarnings = ignoreParseWarnings;        
+    }
+    
+    public boolean isNullEmptyStrings() {
+        return nullEmptyStrings;
+    }
+    
+    public void setNullEmptyStrings(boolean nullEmptyStrings) {
+        this.nullEmptyStrings = nullEmptyStrings;        
     }
 
 }
