@@ -109,7 +109,7 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
     private DataSet doFixedLengthFile(final Reader dataSource) throws IOException {
         BufferedReader br = null;
 
-        final DefaultDataSet ds = new DefaultDataSet(getColumnMD());
+        final DefaultDataSet ds = new DefaultDataSet(getColumnMD(), this);
 
         try {
             //gather the conversion properties

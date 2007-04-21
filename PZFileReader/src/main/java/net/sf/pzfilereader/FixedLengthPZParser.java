@@ -104,7 +104,7 @@ public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
             }
             
             try {
-                setColumnMD(PZMapParser.parse(this.pzmapReader));
+                setColumnMD(PZMapParser.parse(this.pzmapReader, this));
             } finally {
                 if (closeMapReader) {
                     //only close the reader if it is one we created

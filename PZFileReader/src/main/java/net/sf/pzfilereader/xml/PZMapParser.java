@@ -32,13 +32,9 @@
  */
 package net.sf.pzfilereader.xml;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
@@ -92,7 +89,7 @@ public final class PZMapParser {
         InputStreamReader isr = null;
         try {
             isr = new InputStreamReader(xmlStream);
-            return parse(isr);
+            return parse(isr, null);
         } finally {
             if (isr != null) {
                 isr.close();
@@ -106,11 +103,13 @@ public final class PZMapParser {
      * returns a Map containing Lists of ColumnMetaData.
      * 
      * @param xmlStreamReader
+     * @param pzparser
+     *          Can be null.  Allows additional opts to be set durring the XML map read
      * @return Map <records> with their corrisponding
      * @throws IOException
      * @throws JDOMException
      */
-    public static Map parse(final Reader xmlStreamReader) throws JDOMException, IOException {
+    public static Map parse(final Reader xmlStreamReader, final PZParser pzparser) throws JDOMException, IOException {
         //use for debug when JDOM complains about the xml
         /* final BufferedReader br = new BufferedReader(xmlStreamReader);
         final FileWriter fw = new FileWriter("c:/test.pz");
@@ -148,7 +147,7 @@ public final class PZMapParser {
         mdIndex.put(PZConstants.DETAIL_ID, columns); // always force detail
         // to the top of
         // the map no matter what
-        mdIndex.put(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns));
+        mdIndex.put(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns, pzparser));
 
         // get all of the "record" elements and the columns under them
         final Iterator recordDescriptors = root.getChildren("RECORD").iterator();
@@ -166,7 +165,7 @@ public final class PZMapParser {
 
             columns = getColumnChildren(xmlElement);
             final XMLRecordElement xmlre = new XMLRecordElement();
-            xmlre.setColumns(columns);
+            xmlre.setColumns(columns, pzparser);
             xmlre.setIndicator(xmlElement.getAttributeValue("indicator"));
             xmlre.setElementNumber(convertAttributeToInt(xmlElement.getAttribute("elementNumber")));
             xmlre.setStartPosition(convertAttributeToInt(xmlElement.getAttribute("startPosition")));

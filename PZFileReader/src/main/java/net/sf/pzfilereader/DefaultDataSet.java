@@ -75,9 +75,12 @@ public class DefaultDataSet implements DataSet {
     private boolean strictNumericParse = false;
 
     private Map columnMD;
+    
+    private PZParser pzparser;
 
-    public DefaultDataSet(final Map columnMD2) {
+    public DefaultDataSet(final Map columnMD2, final PZParser pzparser) {
         this.columnMD = columnMD2;
+        this.pzparser = pzparser;
     }
 
     public void addRow(final Row row) {
@@ -147,7 +150,7 @@ public class DefaultDataSet implements DataSet {
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
         final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
         if (s.trim().equals("")) {
             //don't do the parse on empties
             return null;
@@ -164,7 +167,7 @@ public class DefaultDataSet implements DataSet {
         final StringBuffer newString = new StringBuffer();
         final Row row = (Row) rows.get(pointer);
 
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
 
         if (!strictNumericParse) {
             newString.append(ParserUtils.stripNonDoubleChars(s));
@@ -178,7 +181,7 @@ public class DefaultDataSet implements DataSet {
     
     public Object getObject(String column, Class classToConvertTo) {
         final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
         return ParserUtils.runPzConverter(pzConvertProps, s, classToConvertTo);
     }
 
@@ -221,7 +224,7 @@ public class DefaultDataSet implements DataSet {
     public int getInt(final String column) {
         final StringBuffer newString = new StringBuffer();
         final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
 
         if (!strictNumericParse) {
             newString.append(ParserUtils.stripNonLongChars(s));
@@ -257,7 +260,7 @@ public class DefaultDataSet implements DataSet {
      */
     public String getString(final String column) {
         final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column));
+        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
 
         if (upperCase) {
             // convert data to uppercase before returning
@@ -280,7 +283,7 @@ public class DefaultDataSet implements DataSet {
     
     public void setValue(String column, String value) {
         final Row row = (Row) rows.get(pointer);
-        final int colIndex = ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column);
+        final int colIndex = ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser);
         
         row.setValue(colIndex, value);
     }

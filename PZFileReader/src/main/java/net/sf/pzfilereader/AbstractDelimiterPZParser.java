@@ -169,7 +169,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
             throw new NullPointerException("dataSource is null");
         }
         BufferedReader br = null;
-        final DefaultDataSet ds = new DefaultDataSet(getColumnMD());
+        final DefaultDataSet ds = new DefaultDataSet(getColumnMD(), this);
         try {
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
@@ -189,7 +189,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                     continue;
                 } else if (!processedFirst && createMDFromFile) {
                     processedFirst = true;
-                    setColumnMD(ParserUtils.getColumnMDFromFile(line, delimiter, qualifier));
+                    setColumnMD(ParserUtils.getColumnMDFromFile(line, delimiter, qualifier, this));
                     ds.setColumnMD(getColumnMD());
                     continue;
                 }
