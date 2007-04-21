@@ -61,35 +61,6 @@ public class ParserUtilsTest extends TestCase{
          assertEquals(ParserUtils.runPzConverter(convertProps, "$5.3556", BigDecimal.class), new BigDecimal("5.3556"));
      }
      
-     public void testCaseSensitiveMetaData() {
-         DataSet ds;
-         final String cols = "COLUMN1,column2,Column3\r\n value1,value2,value3";
-         PZParser p = DefaultPZParserFactory.getInstance().newDelimitedParser(
-                 new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
-         
-         //check that column names are case sensitive
-         p.setColumnNamesCaseSensitive(true);
-         ds = p.parse();
-         ds.next();
-         try {
-             ds.getString("COLUMN2");
-             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
-         } catch (NoSuchElementException e) {
-             //this should happen since we are matching case
-         }
-         
-         //check that column names are NOT case sensitive
-         p = DefaultPZParserFactory.getInstance().newDelimitedParser(
-                 new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
-         p.setColumnNamesCaseSensitive(false);
-         ds = p.parse();
-         ds.next();
-         try {
-             ds.getString("COLUMN2");
-         } catch (NoSuchElementException e) {
-             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should NOT fail with case sensitivity turned OFF");
-         }
-     }
     
     
     public static void main(final String[] args) {
