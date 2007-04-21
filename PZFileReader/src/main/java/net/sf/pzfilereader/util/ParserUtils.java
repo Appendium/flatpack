@@ -56,6 +56,7 @@ import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Map.Entry;
 
+import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.converter.PZConvertException;
 import net.sf.pzfilereader.converter.PZConverter;
 import net.sf.pzfilereader.structure.ColumnMetaData;
@@ -71,18 +72,6 @@ import net.sf.pzfilereader.xml.XMLRecordElement;
  */
 public final class ParserUtils {
     private ParserUtils() {
-    }
-
-    /**
-     * @deprecated should only use the splitLine with a CHAR.
-     * @param line
-     * @param delimiter
-     * @param qualifier
-     * @return List
-     */
-    public static List splitLine(final String line, final String delimiter, final String qualifier) {
-        return splitLine(line, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0, 
-                PZConstants.SPLITLINE_SIZE_INIT);
     }
 
     /**
@@ -353,8 +342,25 @@ public final class ParserUtils {
      * @param qualifier
      * @exception Exception
      * @return ArrayList - ColumnMetaData
+     * @deprecated Use getColumnMDFromFile(String, char, char, PZParser)
      */
     public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier)  {
+        return getColumnMDFromFile(line, delimiter, qualifier, null);
+    }
+    
+    /**
+     * Returns a list of ColumnMetaData objects. This is for use with delimited
+     * files. The first line of the file which contains data will be used as the
+     * column names
+     *
+     * @param line
+     * @param delimiter
+     * @param qualifier
+     * @param p
+     *          PZParser used to specify additional option when working witht the ColumnMetaData. Can be null
+     * @return ArrayList - ColumnMetaData
+     */
+    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final PZParser p)  {
         List lineData = null;
         final List results = new ArrayList();
         final Map columnMD = new LinkedHashMap();
@@ -367,7 +373,7 @@ public final class ParserUtils {
         }
 
         columnMD.put(PZConstants.DETAIL_ID, results);
-        columnMD.put(PZConstants.COL_IDX, buidColumnIndexMap(results));
+        columnMD.put(PZConstants.COL_IDX, buidColumnIndexMap(results, p));
 
         return columnMD;
     }
@@ -440,22 +446,6 @@ public final class ParserUtils {
         }
 
         throw new NoSuchElementException("Column Name: " + columnName + " does not exist");
-    }
-
-    /**
-     * Determines if the given line is the first part of a multiline record
-     *
-     * @param chrArry -
-     *            char data of the line
-     * @param delimiter -
-     *            delimiter being used
-     * @param qualifier -
-     *            qualifier being used
-     * @return boolean
-     * @deprecated use the char version
-     */
-    public static boolean isMultiLine(final char[] chrArry, final String delimiter, final String qualifier) {
-        return isMultiLine(chrArry, delimiter != null ? delimiter.charAt(0) : 0, qualifier != null ? qualifier.charAt(0) : 0);
     }
 
     /**
@@ -567,20 +557,6 @@ public final class ParserUtils {
 
     }
 
-    /**
-     * Returns the key to the list of ColumnMetaData objects. Returns the
-     * correct MetaData per the mapping file and the data contained on the line
-     *
-     *
-     * @param columnMD
-     * @param line
-     * @return List - ColumMetaData
-     * @deprecated Moved to FixedWidthParserUtils.getCMDKey()
-     *
-     */
-    public static String getCMDKeyForFixedLengthFile(final Map columnMD, final String line) {
-        return FixedWidthParserUtils.getCMDKey(columnMD, line);
-    }
 
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
@@ -643,19 +619,25 @@ public final class ParserUtils {
      * Use this method to find the index of a column.
      *
      * @author Benoit Xhenseval
+     * @author Paul Zepernick
      * @param key
      * @param columnMD
      * @param colName
+     * @param p
+     *          Can be null.  Used to specify potential options on how the column should be retrieved
      * @return -1 if it does not find it
      */
-    public static int getColumnIndex(final String key, final Map columnMD, final String colName) {
+    public static int getColumnIndex(final String key, final Map columnMD, final String colName, final PZParser p) {
         int idx = -1;
+        String column = colName;
+        if (p != null && !p.isColumnNamesCaseSensitive()) {
+            column = colName.toLowerCase(Locale.getDefault());
+        }
         if (key != null && !key.equals(PZConstants.DETAIL_ID) && !key.equals(PZConstants.COL_IDX)) {
-            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(colName.toLowerCase(
-                    Locale.getDefault()));
+            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(column);
         } else if (key == null || key.equals(PZConstants.DETAIL_ID)) {
             final Map map = (Map) columnMD.get(PZConstants.COL_IDX);
-            final Integer i = (Integer) map.get(colName.toLowerCase(Locale.getDefault()));
+            final Integer i = (Integer) map.get(column);
             if (i != null) { //happens when the col name does not exist in the mapping
                 idx = i.intValue();
             }
@@ -665,6 +647,20 @@ public final class ParserUtils {
             throw new NoSuchElementException("Column " + colName + " does not exist, check case/spelling. key:" + key);
         }
         return idx;
+    }
+    
+    /**
+     * Use this method to find the index of a column.
+     *
+     * @author Benoit Xhenseval
+     * @param key
+     * @param columnMD
+     * @param colName
+     * @return -1 if it does not find it
+     * @deprecated use getColumnIndex(String, Map, String, PZParser)
+     */
+    public static int getColumnIndex(final String key, final Map columnMD, final String colName) {
+        return getColumnIndex(key, columnMD, colName, null);
     }
 
     /**
@@ -757,21 +753,42 @@ public final class ParserUtils {
      * Build a map of name/position based on a list of ColumnMetaData.
      *
      * @author Benoit Xhenseval
+     * @author Paul Zepernick
      * @param columns
+     * @param p
+     *         Reference to Parser which can provide additional options on how the 
+     *         map should be build.  This can be NULL.
      * @return a new Map
      */
-    public static Map buidColumnIndexMap(final List columns) {
+    public static Map buidColumnIndexMap(final List columns, final PZParser p) {
         Map map = null;
         if (columns != null && !columns.isEmpty()) {
             map = new HashMap();
             int idx = 0;
             for (final Iterator it = columns.iterator(); it.hasNext(); idx++) {
                 final ColumnMetaData meta = (ColumnMetaData) it.next();
-                map.put(meta.getColName().toLowerCase(
-                        Locale.getDefault()), new Integer(idx));
+                String colName = meta.getColName();
+                if (p != null && !p.isColumnNamesCaseSensitive()) {
+                    //user has selected to make column names case sensitive
+                    //on lookups
+                    colName = colName.toLowerCase(Locale.getDefault());
+                }
+                map.put(colName, new Integer(idx));
             }
         }
         return map;
+    }
+    
+    /**
+     * Build a map of name/position based on a list of ColumnMetaData.
+     *
+     * @author Benoit Xhenseval
+     * @param columns
+     * @return a new Map
+     * @deprecated Please use buildColumnIndexMap(List, PZParser)
+     */
+    public static Map buidColumnIndexMap(final List columns) {
+       return buidColumnIndexMap(columns, null);
     }
     
     /**
@@ -890,6 +907,7 @@ public final class ParserUtils {
      *          tables
      * @param dataDefinition
      *          Name of the data definition stored in the Datafile table
+     * @throws SQLException
      * @return List
      */
     public static List buildMDFromSQLTable(final Connection con, final String dataDefinition) throws SQLException{

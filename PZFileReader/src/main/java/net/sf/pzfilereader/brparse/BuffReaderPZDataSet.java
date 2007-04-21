@@ -51,7 +51,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
     private final Logger logger = LoggerFactory.getLogger(BuffReaderPZDataSet.class);
     
     public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
-        super(columnMD2);
+        super(columnMD2, brDelimPzParser);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
         this.brDelimPzParser = brDelimPzParser;
@@ -59,7 +59,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
     }
     
     public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderFixedPZParser brFixedPzParser) {
-        super(columnMD2);
+        super(columnMD2, brFixedPzParser);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
         this.brFixedPzParser = brFixedPzParser;     

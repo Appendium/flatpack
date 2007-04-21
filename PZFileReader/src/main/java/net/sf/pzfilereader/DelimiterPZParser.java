@@ -39,7 +39,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import net.sf.pzfilereader.util.ParserUtils;
 import net.sf.pzfilereader.xml.PZMapParser;
 
 import org.jdom.JDOMException;
@@ -125,7 +124,7 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
             
             if (this.pzmapReader != null) {
                 try {
-                    setColumnMD(PZMapParser.parse(this.pzmapReader));
+                    setColumnMD(PZMapParser.parse(this.pzmapReader, this));
                 } finally {
                     if (closeMapReader) {
                         //only close the reader if it is one we created

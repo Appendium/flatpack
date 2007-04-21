@@ -17,6 +17,7 @@ package net.sf.pzfilereader.xml;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.util.ParserUtils;
 
 /**
@@ -108,10 +109,22 @@ public class XMLRecordElement {
     /**
      * @param columns
      *            The columns to set.
+     * @deprecated  Please use setColumns(List, PZParser)
      */
     public void setColumns(final List columns) {
         this.columns = columns;
-        this.columnIndex = ParserUtils.buidColumnIndexMap(columns);
+        this.columnIndex = ParserUtils.buidColumnIndexMap(columns, null);
+    }
+    
+    /**
+     * @param columns
+     *            The columns to set.
+     * @param p
+     *          PZParser being used.  Can be null.
+     */
+    public void setColumns(final List columns, final PZParser p) {
+        this.columns = columns;
+        this.columnIndex = ParserUtils.buidColumnIndexMap(columns, p);
     }
 
     /**

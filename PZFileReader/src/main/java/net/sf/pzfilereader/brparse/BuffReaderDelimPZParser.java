@@ -125,7 +125,7 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
                 continue;
             } else if (!processedFirst && shouldCreateMDFromFile()) {
                 processedFirst = true;
-                setColumnMD(ParserUtils.getColumnMDFromFile(line, getDelimiter(), getQualifier()));
+                setColumnMD(ParserUtils.getColumnMDFromFile(line, getDelimiter(), getQualifier(), this));
                 continue;
             }
     

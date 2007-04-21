@@ -78,7 +78,7 @@ public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
             
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
             addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds));
+            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
