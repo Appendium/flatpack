@@ -8,6 +8,8 @@
   </properties>
   <body>
 	<release version="3.1.0" date="in svn" description="Maintenance">
+		<action dev="zepernick" type="change">Feature Request 1569891.  Added setNullEmptyStrings to the 
+		PZParser.  This will make the DataSet.getString() return null if the column is empty.</action>
 		<action dev="zepernick" type="change">Added option to the PZParser setIgnoreParseWarnings(boolean).
 		When true, the parser will not log warning into the error collection in the DataSet.  The
 		default is false.</action>
