@@ -97,4 +97,19 @@ public interface PZParser {
      *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
      */
     void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
+    
+    /**
+     * Default is false
+     * 
+     * @return true, warnings encountered durring parsing will not be included in the DataSet errors
+     */
+    boolean isIgnoreParseWarnings();
+    
+    
+    /**
+     * 
+     * @param ignoreParseWarnings when true, warnings encountered durring parsing will not be included 
+     *                            in the DataSet errors
+     */
+    void setIgnoreParseWarnings(final boolean ignoreParseWarnings);
 }

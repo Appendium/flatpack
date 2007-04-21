@@ -54,6 +54,8 @@ public abstract class AbstractPZParser implements PZParser {
     private boolean columnNamesCaseSensitive = false;
 
     private boolean initialised = false;
+    
+    private boolean ignoreParseWarnings = false;
 
     /** Map of column metadata's */
     private Map columnMD = null;
@@ -213,6 +215,10 @@ public abstract class AbstractPZParser implements PZParser {
      *            int errorLevel 1,2,3 1=warning 2=error 3= severe error
      */
     protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel) {
+        if (errorLevel == 1 && isIgnoreParseWarnings()) {
+            //user has selected to not log warnings in the parser
+            return;
+        }
         final DataError de = new DataError(errorDesc, lineNo, errorLevel);
         ds.addError(de);
     }
@@ -237,6 +243,14 @@ public abstract class AbstractPZParser implements PZParser {
     
     public void setColumnNamesCaseSensitive(boolean columnNamesCaseSensitive) {
        this.columnNamesCaseSensitive = columnNamesCaseSensitive;
+    }
+    
+    public boolean isIgnoreParseWarnings() {
+        return ignoreParseWarnings;
+    }
+    
+    public void setIgnoreParseWarnings(boolean ignoreParseWarnings) {
+        this.ignoreParseWarnings = ignoreParseWarnings;        
     }
 
 }
