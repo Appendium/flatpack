@@ -112,4 +112,16 @@ public interface PZParser {
      *                            in the DataSet errors
      */
     void setIgnoreParseWarnings(final boolean ignoreParseWarnings);
+    
+    /**
+     * 
+     * @return true, empty Strings will get returned as NULL when calling DataSet.getString()
+     */
+    boolean isNullEmptyStrings();
+    
+    /**
+     * 
+     * @param nullEmptyStrings when true, empty Strings will get returned as NULL when calling DataSet.getString()
+     */
+    void setNullEmptyStrings(final boolean nullEmptyStrings);
 }
