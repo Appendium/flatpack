@@ -8,6 +8,14 @@
   </properties>
   <body>
 	<release version="3.1.0" date="in svn" description="Maintenance">
+		<action dev="zepernick" type="change">Removing deprecated methods in ParserUtils;
+		isMultiLine(), splitLine(), getCMDKeyForFixedLengthFile()</action>
+		<action dev="zepernick" type="change">Added option to PZParser setColumnNamesCaseSensitive().  
+		This will force the user to lookup the column value in the exact same case as the column was specified
+		in the mapping or file.  Deprecated the current method signatures for;ParserUtils.buidColumnIndexMap,
+		ParserUtils.getColumnIndex,ParserUtils.getColumnMDFromFile.  Added PZParser parameter to new signatures, 
+		however, this parameter CAN BE null.  Registered PZParser with the DefaultDataSet.  This will provide
+		the ability to see what options were set pertaining to data retrieval.</action>
 		<action dev="zepernick" type="change">Changing the PZParseFactory to use java.io.Reader instead of File 
 		or InputStream.  The File and InputStream methods are still available, but are now deprecated.</action>
 		<action dev="zepernick" type="change">Removed deprecated PZMapParser.parse(File).  
