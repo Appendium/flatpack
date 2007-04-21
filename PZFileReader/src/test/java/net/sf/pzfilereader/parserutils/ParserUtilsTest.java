@@ -1,10 +1,15 @@
 package net.sf.pzfilereader.parserutils;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 
+import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
+import net.sf.pzfilereader.PZParser;
+import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 import junit.framework.TestCase;
 /**
@@ -54,6 +59,36 @@ public class ParserUtilsTest extends TestCase{
          assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Double.class), new Double("5.00"));
          assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Integer.class), new Integer("5"));
          assertEquals(ParserUtils.runPzConverter(convertProps, "$5.3556", BigDecimal.class), new BigDecimal("5.3556"));
+     }
+     
+     public void testCaseSensitiveMetaData() {
+         DataSet ds;
+         final String cols = "COLUMN1,column2,Column3\r\n value1,value2,value3";
+         PZParser p = DefaultPZParserFactory.getInstance().newDelimitedParser(
+                 new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+         
+         //check that column names are case sensitive
+         p.setColumnNamesCaseSensitive(true);
+         ds = p.parse();
+         ds.next();
+         try {
+             ds.getString("COLUMN2");
+             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
+         } catch (NoSuchElementException e) {
+             //this should happen since we are matching case
+         }
+         
+         //check that column names are NOT case sensitive
+         p = DefaultPZParserFactory.getInstance().newDelimitedParser(
+                 new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+         p.setColumnNamesCaseSensitive(false);
+         ds = p.parse();
+         ds.next();
+         try {
+             ds.getString("COLUMN2");
+         } catch (NoSuchElementException e) {
+             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should NOT fail with case sensitivity turned OFF");
+         }
      }
     
     
