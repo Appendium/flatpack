@@ -5,7 +5,8 @@
     		  startPosition CDATA  "1"
 			  endPosition CDATA "1"
               elementNumber CDATA "1"
-              indicator CDATA #REQUIRED>
+              elementCount CDATA "0"
+              indicator CDATA "">
 	<!ELEMENT COLUMN EMPTY>
 	<!ATTLIST COLUMN name CDATA  #REQUIRED
 			  length CDATA  "1"	>

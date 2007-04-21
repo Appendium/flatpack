@@ -154,11 +154,11 @@ public final class PZMapParser {
         while (recordDescriptors.hasNext()) {
             final Element xmlElement = (Element) recordDescriptors.next();
 
-            // make sure the id attribute does not have a value of "detail" this
-            // is the harcoded
-            // value we are using to mark columns specified outside of a
-            // <RECORD> element
             if (xmlElement.getAttributeValue("id").equals(PZConstants.DETAIL_ID)) {
+                // make sure the id attribute does not have a value of "detail" this
+                // is the harcoded
+                // value we are using to mark columns specified outside of a
+                // <RECORD> element
                 throw new IllegalArgumentException(
                         "The ID 'detail' on the <RECORD> element is reserved, please select another id");
             }
@@ -170,6 +170,7 @@ public final class PZMapParser {
             xmlre.setElementNumber(convertAttributeToInt(xmlElement.getAttribute("elementNumber")));
             xmlre.setStartPosition(convertAttributeToInt(xmlElement.getAttribute("startPosition")));
             xmlre.setEndPositition(convertAttributeToInt(xmlElement.getAttribute("endPosition")));
+            xmlre.setElementCount(convertAttributeToInt(xmlElement.getAttribute("elementCount")));
             mdIndex.put(xmlElement.getAttributeValue("id"), xmlre);
         }
 
