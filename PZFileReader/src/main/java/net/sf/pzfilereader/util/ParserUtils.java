@@ -583,11 +583,17 @@ public final class ParserUtils {
                 // others match
             }
             final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
-
-            if (recordXMLElement.getElementNumber() > lineElements.size()) {
+            
+            if (recordXMLElement.getElementCount() > 0 && 
+                    recordXMLElement.getElementCount() == lineElements.size()) {
+                //determing which <record> mapping to use by the number of elements
+                //contained on the line
+                return (String)entry.getKey();
+            } else if (recordXMLElement.getElementNumber() > lineElements.size()) {
                 // make sure the element referenced in the mapping exists
                 continue;
             }
+            
             final String lineElement = (String) lineElements.get(recordXMLElement.getElementNumber() - 1);
             if (lineElement.equals(recordXMLElement.getIndicator())) {
                 // we found the MD object we want to return

@@ -31,6 +31,8 @@ public class XMLRecordElement {
     private int endPositition = 0;
 
     private int elementNumber = 0;
+    
+    private int elementCount = 0;
 
     private String indicator;
 
@@ -143,5 +145,25 @@ public class XMLRecordElement {
             }
         }
         return idx;
+    }
+
+    /**
+     * Used to determine the <record> mapping the row belongs to.  Will
+     * only be evaluated if > 0.
+     * 
+     * @return the elementCount
+     */
+    public int getElementCount() {
+        return elementCount;
+    }
+
+    /**
+     * Used to determine the <record> mapping the row belongs to.  Will
+     * only be evaluated if > 0.
+     * 
+     * @param elementCount the elementCount to set
+     */
+    public void setElementCount(int elementCount) {
+        this.elementCount = elementCount;
     }
 }
