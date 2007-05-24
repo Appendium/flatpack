@@ -38,7 +38,7 @@ package net.sf.pzfilereader.converter;
  * 
  * @author Paul Zepernick
  */
-public class PZConvertException extends RuntimeException{
+public class PZConvertException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -68,5 +68,5 @@ public class PZConvertException extends RuntimeException{
     public PZConvertException(final String message, final Throwable cause) {
         super(message, cause);
     }
-    
+
 }

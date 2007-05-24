@@ -36,9 +36,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
+import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.pzfilereader.xml.PZMetaData;
 
 /**
  * @author xhensevb 
@@ -48,52 +49,23 @@ import java.util.Map;
 public abstract class AbstractPZParser implements PZParser {
 
     private boolean handlingShortLines = false;
-    
     private boolean ignoreExtraColumns = false;
-    
     private boolean columnNamesCaseSensitive = false;
-
     private boolean initialised = false;
-    
     private boolean ignoreParseWarnings = false;
-    
     private boolean nullEmptyStrings = false;
 
     /** Map of column metadata's */
-    private Map columnMD = null;
-
+    //    private Map columnMD = null;
+    private PZMetaData pzMetaData = null;
     private String dataDefinition = null;
-
-   // private InputStream dataSourceStream = null;
-
-   // private File dataSource = null;
-    
     private Reader dataSourceReader = null;
-    
-    private List readersToClose = null; 
-
-    /*protected AbstractPZParser(final File dataSource) {
-        this.dataSourceReader = new FileReader(dataSource);
-    }
-
-    protected AbstractPZParser(final InputStream dataSourceStream) {
-        this.dataSourceStream = dataSourceStream;
-    }
-
-    protected AbstractPZParser(final File dataSource, final String dataDefinition) {
-        this.dataSource = dataSource;
-        this.dataDefinition = dataDefinition;
-    }
-
-    protected AbstractPZParser(final InputStream dataSourceStream, final String dataDefinition) {
-        this.dataSourceStream = dataSourceStream;
-        this.dataDefinition = dataDefinition;
-    }*/
+    private List readersToClose = null;
 
     protected AbstractPZParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
     }
-    
+
     protected AbstractPZParser(final Reader dataSourceReader, final String dataDefinition) {
         this.dataSourceReader = dataSourceReader;
         this.dataDefinition = dataDefinition;
@@ -116,13 +88,13 @@ public abstract class AbstractPZParser implements PZParser {
     public void setHandlingShortLines(final boolean handleShortLines) {
         this.handlingShortLines = handleShortLines;
     }
-    
+
     public boolean isIgnoreExtraColumns() {
         return ignoreExtraColumns;
     }
-    
-    public void setIgnoreExtraColumns(boolean ignoreExtraColumns) {
-        this.ignoreExtraColumns = ignoreExtraColumns;        
+
+    public void setIgnoreExtraColumns(final boolean ignoreExtraColumns) {
+        this.ignoreExtraColumns = ignoreExtraColumns;
     }
 
     public final DataSet parse() {
@@ -136,23 +108,25 @@ public abstract class AbstractPZParser implements PZParser {
 
     protected abstract void init();
 
-    protected void setColumnMD(final Map map) {
-        columnMD = map;
-    }
-    
+    /**
+     * @deprecated
+     */
+    //    protected void setColumnMD(final Map map) {
+    //        columnMD = map;
+    //    }
     //this is used for backward compatability.  We are instantiating Readers from
     //InputStream and File from previous versions. Close out any Readers in the
     //readersToClose list.  This can be removed after we remove the deprecated methods
-    protected void closeReaders() throws IOException{
+    protected void closeReaders() throws IOException {
         if (readersToClose != null) {
             final Iterator readersToCloseIt = readersToClose.iterator();
             while (readersToCloseIt.hasNext()) {
-                final Reader r = (Reader)readersToCloseIt.next();
+                final Reader r = (Reader) readersToCloseIt.next();
                 r.close();
             }
         }
     }
-    
+
     //adds a reader to the close list.  the list will be processed after parsing is
     //completed.
     protected void addToCloseReaderList(final Reader r) {
@@ -162,12 +136,21 @@ public abstract class AbstractPZParser implements PZParser {
         readersToClose.add(r);
     }
 
-    protected void addToColumnMD(final Object key, final Object value) {
-        if (columnMD == null) {
-            columnMD = new LinkedHashMap();
+    protected void addToMetaData(final List columns) {
+        if (pzMetaData == null) {
+            pzMetaData = new PZMetaData(columns, ParserUtils.buidColumnIndexMap(columns, this));
+        } else {
+            pzMetaData.setColumnsNames(columns);
+            pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(columns, this));
         }
-        columnMD.put(key, value);
     }
+
+    //    protected void addToColumnMD(final Object key, final Object value) {
+    //        if (columnMD == null) {
+    //            columnMD = new LinkedHashMap();
+    //        }
+    //        columnMD.put(key, value);
+    //    }
 
     protected boolean isInitialised() {
         return initialised;
@@ -185,26 +168,25 @@ public abstract class AbstractPZParser implements PZParser {
         this.dataDefinition = dataDefinition;
     }
 
-  /*  protected File getDataSource() {
-        return dataSource;
-    }
+    /*  protected File getDataSource() {
+     return dataSource;
+     }
 
-    protected void setDataSource(final File dataSource) {
-        this.dataSource = dataSource;
-    }
+     protected void setDataSource(final File dataSource) {
+     this.dataSource = dataSource;
+     }
 
-    protected InputStream getDataSourceStream() {
-        return dataSourceStream;
-    }
+     protected InputStream getDataSourceStream() {
+     return dataSourceStream;
+     }
 
-    protected void setDataSourceStream(final InputStream dataSourceStream) {
-        this.dataSourceStream = dataSourceStream;
-    }*/
+     protected void setDataSourceStream(final InputStream dataSourceStream) {
+     this.dataSourceStream = dataSourceStream;
+     }*/
 
-    protected Map getColumnMD() {
-        return columnMD;
-    }
-
+    //    protected Map getColumnMD() {
+    //        return columnMD;
+    //    }
     /**
      * Adds a new error to this DataSet. These can be collected, and retreived
      * after processing
@@ -235,32 +217,40 @@ public abstract class AbstractPZParser implements PZParser {
     /**
      * @param dataSourceReader the dataSourceReader to set
      */
-    protected void setDataSourceReader(Reader dataSourceReader) {
+    protected void setDataSourceReader(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
     }
-    
+
     public boolean isColumnNamesCaseSensitive() {
         return columnNamesCaseSensitive;
     }
-    
-    public void setColumnNamesCaseSensitive(boolean columnNamesCaseSensitive) {
-       this.columnNamesCaseSensitive = columnNamesCaseSensitive;
+
+    public void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive) {
+        this.columnNamesCaseSensitive = columnNamesCaseSensitive;
     }
-    
+
     public boolean isIgnoreParseWarnings() {
         return ignoreParseWarnings;
     }
-    
-    public void setIgnoreParseWarnings(boolean ignoreParseWarnings) {
-        this.ignoreParseWarnings = ignoreParseWarnings;        
+
+    public void setIgnoreParseWarnings(final boolean ignoreParseWarnings) {
+        this.ignoreParseWarnings = ignoreParseWarnings;
     }
-    
+
     public boolean isNullEmptyStrings() {
         return nullEmptyStrings;
     }
-    
-    public void setNullEmptyStrings(boolean nullEmptyStrings) {
-        this.nullEmptyStrings = nullEmptyStrings;        
+
+    public void setNullEmptyStrings(final boolean nullEmptyStrings) {
+        this.nullEmptyStrings = nullEmptyStrings;
+    }
+
+    public PZMetaData getPzMetaData() {
+        return pzMetaData;
+    }
+
+    public void setPzMetaData(final PZMetaData pzMap) {
+        this.pzMetaData = pzMap;
     }
 
 }

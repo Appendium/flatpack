@@ -53,13 +53,13 @@ import net.sf.pzfilereader.PZParserFactory;
  * 
  * @author Paul Zepernick
  */
-public class BuffReaderPZParseFactory implements PZParserFactory{
+public class BuffReaderPZParseFactory implements PZParserFactory {
     private static final BuffReaderPZParseFactory INSTANCE = new BuffReaderPZParseFactory();
 
     public static PZParserFactory getInstance() {
         return INSTANCE;
     }
-    
+
     /**
      * Not supported at this time.
      */
@@ -83,15 +83,15 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
     public PZParser newFixedLengthParser(final File pzmapXML, final File dataSource) {
         return new BuffReaderFixedPZParser(pzmapXML, dataSource);
     }
-    
+
     /**
      * Not supported at this time.
      */
-    public PZParser newFixedLengthParser(Connection con, Reader dataSource, String dataDefinition) {
+    public PZParser newFixedLengthParser(final Connection con, final Reader dataSource, final String dataDefinition) {
         throw new UnsupportedOperationException("Not supported...");
     }
-    
-    public PZParser newFixedLengthParser(Reader pzmapXMLStream, Reader dataSource) {
+
+    public PZParser newFixedLengthParser(final Reader pzmapXMLStream, final Reader dataSource) {
         return new BuffReaderFixedPZParser(pzmapXMLStream, dataSource);
     }
 
@@ -108,8 +108,8 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
     /**
      * Not supported at this time.
      */
-    public PZParser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition,
-            final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+    public PZParser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord) {
         throw new UnsupportedOperationException("Not supported...");
     }
 
@@ -130,8 +130,8 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream, char, char, boolean)
      */
-    public PZParser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream,
-            final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+    public PZParser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord) {
         return new BuffReaderDelimPZParser(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
@@ -154,19 +154,21 @@ public class BuffReaderPZParseFactory implements PZParserFactory{
     public PZParser newDelimitedParser(final InputStream dataSourceStream, final char delimiter, final char qualifier) {
         return new BuffReaderDelimPZParser(dataSourceStream, delimiter, qualifier, false);
     }
-    
+
     /**
      * Not supported at this time.
      */
-    public PZParser newDelimitedParser(Connection con, Reader dataSource, String dataDefinition, char delimiter, char qualifier, boolean ignoreFirstRecord) {
+    public PZParser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord) {
         throw new UnsupportedOperationException("Not supported...");
     }
-    
-    public PZParser newDelimitedParser(Reader dataSource, char delimiter, char qualifier) {
+
+    public PZParser newDelimitedParser(final Reader dataSource, final char delimiter, final char qualifier) {
         return new BuffReaderDelimPZParser(dataSource, delimiter, qualifier, false);
     }
-    
-    public PZParser newDelimitedParser(Reader pzmapXML, Reader dataSource, char delimiter, char qualifier, boolean ignoreFirstRecord) {
+
+    public PZParser newDelimitedParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
         return new BuffReaderDelimPZParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 }

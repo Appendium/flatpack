@@ -36,6 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 
 import net.sf.pzfilereader.ordering.OrderBy;
@@ -132,8 +133,7 @@ public interface DataSet {
      * @return Date
      */
     Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException;
-    
-    
+
     /**
      *  Returns the value of the column with the type of object
      *  specified
@@ -145,7 +145,7 @@ public interface DataSet {
      * @return Object
      *             Value of the column in the specified object
      */
-    Object getObject(final String column, final Class classToConvertTo); 
+    Object getObject(final String column, final Class classToConvertTo);
 
     /**
      * Returns a String array of column names in the DataSet. This will assume
@@ -235,7 +235,6 @@ public interface DataSet {
      */
     void orderRows(final OrderBy ob) throws Exception;
 
-
     /**
      * Sets data in the DataSet to lowercase
      */
@@ -274,7 +273,7 @@ public interface DataSet {
      *            The strictNumericParse to set.
      */
     void setStrictNumericParse(final boolean strictNumericParse);
-    
+
     /**
      * Sets the properties from the pzconvert.properties file.
      * This file specifies the PZConverter implementation to use
@@ -284,7 +283,7 @@ public interface DataSet {
      *          Property mapping for String to Object conversion
      */
     void setPZConvertProps(Properties props);
-    
+
     /**
      * Changes the value of the given column only for the 
      * given row which the pointer is currently sitting on. 

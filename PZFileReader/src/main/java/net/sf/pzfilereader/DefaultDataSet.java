@@ -39,14 +39,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
 
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.ColumnMetaData;
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.PZConstants;
+import net.sf.pzfilereader.util.PZStringUtils;
 import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.pzfilereader.xml.PZMetaData;
 
 /**
  * @author xhensevb
@@ -56,7 +57,7 @@ public class DefaultDataSet implements DataSet {
     private final List rows = new ArrayList();
 
     private final List errors = new ArrayList();
-    
+
     private Properties pzConvertProps = null;
 
     /** Pointer for the current row in the array we are on */
@@ -74,12 +75,22 @@ public class DefaultDataSet implements DataSet {
      */
     private boolean strictNumericParse = false;
 
-    private Map columnMD;
-    
+    //    private Map columnMD;
+
+    private PZMetaData pzMetaData;
+
     private PZParser pzparser;
 
-    public DefaultDataSet(final Map columnMD2, final PZParser pzparser) {
-        this.columnMD = columnMD2;
+    //    /**
+    //     * @deprecated use the constructor with PZMetaData 
+    //     */
+    //    public DefaultDataSet(final Map columnMD2, final PZParser pzparser) {
+    //        this.columnMD = columnMD2;
+    //        this.pzparser = pzparser;
+    //    }
+
+    public DefaultDataSet(final PZMetaData pzMetaData, final PZParser pzparser) {
+        this.pzMetaData = pzMetaData;
         this.pzparser = pzparser;
     }
 
@@ -100,8 +111,8 @@ public class DefaultDataSet implements DataSet {
         ColumnMetaData column = null;
         String[] array = null;
 
-        if (columnMD != null) {
-            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
+        if (/*columnMD != null || */pzMetaData != null) {
+            final List cmds = pzMetaData.getColumnsNames();// ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
 
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
@@ -121,8 +132,8 @@ public class DefaultDataSet implements DataSet {
     public String[] getColumns(final String recordID) {
         String[] array = null;
 
-        if (columnMD != null) {
-            final List cmds = ParserUtils.getColumnMetaData(recordID, columnMD);
+        if (pzMetaData != null) {
+            final List cmds = ParserUtils.getColumnMetaData(recordID, pzMetaData);
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
                 final ColumnMetaData column = (ColumnMetaData) cmds.get(i);
@@ -149,9 +160,8 @@ public class DefaultDataSet implements DataSet {
      *      java.text.SimpleDateFormat)
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
-        final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
-        if (s.trim().equals("")) {
+        final String s = getStringValue(column);
+        if (PZStringUtils.isBlank(s)) {
             //don't do the parse on empties
             return null;
         }
@@ -165,9 +175,8 @@ public class DefaultDataSet implements DataSet {
      */
     public double getDouble(final String column) {
         final StringBuffer newString = new StringBuffer();
-        final Row row = (Row) rows.get(pointer);
-
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
+        final String s = getStringValue(column);
+        //        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
 
         if (!strictNumericParse) {
             newString.append(ParserUtils.stripNonDoubleChars(s));
@@ -177,11 +186,14 @@ public class DefaultDataSet implements DataSet {
 
         return Double.parseDouble(newString.toString());
     }
-    
-    
-    public Object getObject(String column, Class classToConvertTo) {
+
+    private String getStringValue(final String column) {
         final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
+        return row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), pzMetaData, column, pzparser));
+    }
+
+    public Object getObject(final String column, final Class classToConvertTo) {
+        final String s = getStringValue(column);
         return ParserUtils.runPzConverter(pzConvertProps, s, classToConvertTo);
     }
 
@@ -222,17 +234,13 @@ public class DefaultDataSet implements DataSet {
      * @see net.sf.pzfilereader.IDataSet#getInt(java.lang.String)
      */
     public int getInt(final String column) {
-        final StringBuffer newString = new StringBuffer();
-        final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
+        final String s = getStringValue(column);
 
         if (!strictNumericParse) {
-            newString.append(ParserUtils.stripNonLongChars(s));
-        } else {
-            newString.append(s);
+            return Integer.parseInt(ParserUtils.stripNonLongChars(s));
         }
 
-        return Integer.parseInt(newString.toString());
+        return Integer.parseInt(s);
     }
 
     /*
@@ -259,13 +267,12 @@ public class DefaultDataSet implements DataSet {
      * @see net.sf.pzfilereader.IDataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
-        final Row row = (Row) rows.get(pointer);
-        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
-        
-        if (pzparser.isNullEmptyStrings() && s.trim().equals("")) {
+        final String s = getStringValue(column);
+
+        if (pzparser.isNullEmptyStrings() && PZStringUtils.isBlank(s)) {
             return null;
-        }   
-        
+        }
+
         if (upperCase) {
             // convert data to uppercase before returning
             // return row.getValue(ParserUtils.findColumn(column,
@@ -283,12 +290,11 @@ public class DefaultDataSet implements DataSet {
         // return value as how it is in the file
         return s;
     }
-    
-    
-    public void setValue(String column, String value) {
+
+    public void setValue(final String column, final String value) {
         final Row row = (Row) rows.get(pointer);
-        final int colIndex = ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser);
-        
+        final int colIndex = ParserUtils.getColumnIndex(row.getMdkey(), pzMetaData, column, pzparser);
+
         row.setValue(colIndex, value);
     }
 
@@ -350,7 +356,8 @@ public class DefaultDataSet implements DataSet {
         // with <RECORD> mappings");
         // }
         if (ob != null && rows != null) {
-            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
+            final List cmds = pzMetaData.getColumnsNames();
+            //            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
             ob.setColumnMD(cmds);
             Collections.sort(rows, ob);
             goTop();
@@ -439,38 +446,32 @@ public class DefaultDataSet implements DataSet {
         rows.remove(pointer);
         pointer--;
     }
-    
-    public void setPZConvertProps(Properties props) {
-        this.pzConvertProps = props;
-    }
 
-    protected void setColumnMD(final Map columnMD) {
-        this.columnMD = columnMD;
-    }
-    
-    /**
-     * Returns the column meta data assoicated with 
-     * this DataSet
-     * 
-     * @return Map
-     */
-    protected Map getColumnMD() {
-        return this.columnMD;
+    public void setPZConvertProps(final Properties props) {
+        this.pzConvertProps = props;
     }
 
     /**
      * @param pointer the pointer to set
      */
-    protected void setPointer(int pointer) {
+    protected void setPointer(final int pointer) {
         this.pointer = pointer;
     }
-    
+
     /**
      * Clears all of the in memory rows of the DataSet
      *
      */
     protected void clearRows() {
         rows.clear();
+    }
+
+    public PZMetaData getPzMetaData() {
+        return pzMetaData;
+    }
+
+    public void setPzMetaData(final PZMetaData pzMetaData) {
+        this.pzMetaData = pzMetaData;
     }
 
 }

@@ -33,79 +33,97 @@
 package net.sf.pzfilereader.brparse;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import net.sf.pzfilereader.DefaultDataSet;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.structure.Row;
+import net.sf.pzfilereader.xml.PZMetaData;
 
-public class BuffReaderPZDataSet extends DefaultDataSet{
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class BuffReaderPZDataSet extends DefaultDataSet {
     private final BuffReaderDelimPZParser brDelimPzParser;
-    
+
     private final BuffReaderFixedPZParser brFixedPzParser;
-    
+
     private final Logger logger = LoggerFactory.getLogger(BuffReaderPZDataSet.class);
-    
-    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
+
+    //    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
+    //        super(columnMD2, brDelimPzParser);
+    //        //register the parser with the dataset so we can fetch rows from 
+    //        //the bufferedreader as needed
+    //        this.brDelimPzParser = brDelimPzParser;
+    //        this.brFixedPzParser = null;
+    //    }
+    //
+    //    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderFixedPZParser brFixedPzParser) {
+    //        super(columnMD2, brFixedPzParser);
+    //        //register the parser with the dataset so we can fetch rows from 
+    //        //the bufferedreader as needed
+    //        this.brFixedPzParser = brFixedPzParser;
+    //        this.brDelimPzParser = null;
+    //    }
+
+    public BuffReaderPZDataSet(final PZMetaData columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
         super(columnMD2, brDelimPzParser);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
         this.brDelimPzParser = brDelimPzParser;
         this.brFixedPzParser = null;
     }
-    
-    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderFixedPZParser brFixedPzParser) {
+
+    public BuffReaderPZDataSet(final PZMetaData columnMD2, final BuffReaderFixedPZParser brFixedPzParser) {
         super(columnMD2, brFixedPzParser);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
-        this.brFixedPzParser = brFixedPzParser;     
+        this.brFixedPzParser = brFixedPzParser;
         this.brDelimPzParser = null;
     }
-    
+
     public boolean next() {
         try {
             Row r = null;
-            
+
             if (brDelimPzParser != null) {
-               r = brDelimPzParser.buildRow(this);
+                r = brDelimPzParser.buildRow(this);
             } else if (brFixedPzParser != null) {
-               r = brFixedPzParser.buildRow(this);
+                r = brFixedPzParser.buildRow(this);
             } else {
                 //this should not happen, throw exception
                 throw new RuntimeException("No parser available to fetch row");
             }
-                
-            
+
             if (r == null) {
                 setPointer(-1);
                 return false;
             }
-                    
+
             //make sure we have some MD
-            if (getColumnMD() == null) {
-                //create a new map so the user cannot change the internal 
-                //DataSet representation of the MD through the parser
-                setColumnMD(new LinkedHashMap(brDelimPzParser.getColumnMD()));
-            }   
-            
+            //            if (getColumnMD() == null) {
+            //                //create a new map so the user cannot change the internal 
+            //                //DataSet representation of the MD through the parser
+            //                setColumnMD(new LinkedHashMap(brDelimPzParser.getColumnMD()));
+            //            }
+
+            if (getPzMetaData() == null) {
+                setPzMetaData(brDelimPzParser.getPzMetaData());
+            }
+
             clearRows();
             addRow(r);
-            
+
             setPointer(0);
-            
+
             return true;
-            
-        } catch(final IOException ex) {
+
+        } catch (final IOException ex) {
             logger.error("error building Row on next()", ex);
         }
-       
+
         return false;
     }
-    
+
     /**
      * Not Supported!
      * @return boolean
@@ -113,8 +131,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
     public boolean previous() {
         throw new UnsupportedOperationException("previous() is Not Implemented");
     }
-    
-    
+
     /**
      * Not Supported! 
      * @param ob - OrderBy object
@@ -122,19 +139,19 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
      * @see com.pz.reader.ordering.OrderBy
      * @see com.pz.reader.ordering.OrderColumn
      */
-    public void orderRows(OrderBy ob) throws Exception{
-        throw new UnsupportedOperationException("orderRows() is Not Implemented"); 
+    public void orderRows(final OrderBy ob) throws Exception {
+        throw new UnsupportedOperationException("orderRows() is Not Implemented");
     }
-    
+
     /**
      * Not Supported!
      * @param localPointer - int
      * @exception IndexOutOfBoundsException
      */
-    public void absolute(int localPointer) {
-        throw new UnsupportedOperationException("absolute() is Not Implemented"); 
+    public void absolute(final int localPointer) {
+        throw new UnsupportedOperationException("absolute() is Not Implemented");
     }
-    
+
     /**
      *Not Supported!
      */
@@ -149,25 +166,25 @@ public class BuffReaderPZDataSet extends DefaultDataSet{
     public int getIndex() {
         throw new UnsupportedOperationException("getIndex() is Not Implemented");
     }
-    
+
     /**
      * Not Supported!
      */
     public void goBottom() {
         throw new UnsupportedOperationException("goBottom() is Not Implemented");
     }
-    
+
     /**
      * Not Supported!
      */
     public void goTop() {
         throw new UnsupportedOperationException("goTop() is Not Implemented");
     }
-    
+
     /**
      * Not Supported!
      */
-    public void setValue(String column, String value) {
+    public void setValue(final String column, final String value) {
         throw new UnsupportedOperationException("setValue() is Not Implemented");
     }
 

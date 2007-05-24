@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.xml.PZMetaData;
 import net.sf.pzfilereader.xml.XMLRecordElement;
 
 /**
@@ -80,6 +81,7 @@ public final class FixedWidthParserUtils {
      * @param columnMD
      * @param line
      * @return List - ColumMetaData
+     * @deprecated use the PZMetaData
      */
     public static String getCMDKey(final Map columnMD, final String line) {
         if (columnMD.size() == 1) {
@@ -108,7 +110,53 @@ public final class FixedWidthParserUtils {
             final int subto = recordXMLElement.getEndPositition();
             if (line.substring(subfrm, subto).equals(recordXMLElement.getIndicator())) {
                 // we found the MD object we want to return
-                return (String)entry.getKey();
+                return (String) entry.getKey();
+            }
+
+        }
+
+        // must be a detail line
+        return PZConstants.DETAIL_ID;
+
+    }
+
+    /**
+     * Returns the key to the list of ColumnMetaData objects. Returns the
+     * correct MetaData per the mapping file and the data contained on the line
+     * 
+     * 
+     * @param columnMD
+     * @param line
+     * @return List - ColumMetaData
+     */
+    public static String getCMDKey(final PZMetaData columnMD, final String line) {
+        if (!columnMD.isAnyRecordFormatSpecified()) {
+            // no <RECORD> elments were specifed for this parse, just return the
+            // detail id
+            return PZConstants.DETAIL_ID;
+        }
+        final Iterator mapEntries = columnMD.xmlRecordIterator();
+        // loop through the XMLRecordElement objects and see if we need a
+        // different MD object
+        while (mapEntries.hasNext()) {
+            final Entry entry = (Entry) mapEntries.next();
+            //            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
+            //                continue; // skip this key will be assumed if none of the
+            // others match
+            //            }
+            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
+
+            if (recordXMLElement.getEndPositition() > line.length()) {
+                // make sure our substring is not going to fail
+                continue;
+            }
+            final int subfrm = recordXMLElement.getStartPosition() - 1; // convert
+            // to 0
+            // based
+            final int subto = recordXMLElement.getEndPositition();
+            if (line.substring(subfrm, subto).equals(recordXMLElement.getIndicator())) {
+                // we found the MD object we want to return
+                return (String) entry.getKey();
             }
 
         }

@@ -40,7 +40,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
 /**
@@ -50,18 +49,18 @@ import net.sf.pzfilereader.util.ParserUtils;
  */
 public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
     private Connection con;
-    
+
     private InputStream dataSourceStream;
 
-    public DBDelimiterPZParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition,
-            final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+    public DBDelimiterPZParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord) {
         super(null, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
         this.con = con;
         this.dataSourceStream = dataSourceStream;
     }
-    
-    public DBDelimiterPZParser(final Connection con, final Reader dataSourceReader, final String dataDefinition,
-            final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+
+    public DBDelimiterPZParser(final Connection con, final Reader dataSourceReader, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceReader, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
         this.con = con;
     }
@@ -74,11 +73,12 @@ public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
                 addToCloseReaderList(r);
-            }            
-            
+            }
+
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
-            addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
+            addToMetaData(cmds);
+            //            addToColumnMD(PZConstants.DETAIL_ID, cmds);
+            //            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
@@ -88,7 +88,7 @@ public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
             throw new InitialisationException(e);
         } catch (final FileNotFoundException e) {
             throw new InitialisationException(e);
-        } 
+        }
     }
 
     protected boolean shouldCreateMDFromFile() {

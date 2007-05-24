@@ -17,8 +17,9 @@ import net.sf.pzfilereader.utilities.UnitTestUtils;
 public class ParserUtilsSplitLineTest extends TestCase {
     private static final String[] DELIMITED_DATA_NO_BREAKS = { "Column 1", "Column 2", "Column 3", "Column 4", "Column 5" };
 
-    private static final String[] DELIMITED_DATA_WITH_BREAKS = { "Column 1 \r\n\r\n Test After Break \r\n Another Break",
-            "Column 2", "Column 3 \r\n\r\n Test After Break", "Column 4", "Column 5 \r\n\r\n Test After Break\r\n Another Break" };
+    private static final String[] DELIMITED_DATA_WITH_BREAKS =
+            { "Column 1 \r\n\r\n Test After Break \r\n Another Break", "Column 2", "Column 3 \r\n\r\n Test After Break", "Column 4",
+                    "Column 5 \r\n\r\n Test After Break\r\n Another Break" };
 
     // TODO think of a situation that actually breaks the parse. This still
     // works because of the way it is coded
@@ -28,8 +29,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
     // 0 = delimiter
     // 1 = qualifier
-    private static final char[][] DELIM_QUAL_PAIR = { { ',', '\"' }, { '\t', '\"' }, { '|', '\"' }, { '_', '\"' }, { ',', 0 },
-            { '|', 0 }, { '\t', 0 } };
+    private static final char[][] DELIM_QUAL_PAIR =
+            { { ',', '\"' }, { '\t', '\"' }, { '|', '\"' }, { '_', '\"' }, { ',', 0 }, { '|', 0 }, { '\t', 0 } };
 
     /**
      * Test without any line breaks
@@ -47,8 +48,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             // check to make sure we have the same amount of elements which were
             // expected
-            assertEquals("Expected size (d = [" + d + "] q = [" + (q != 0 ? String.valueOf(q) : "") + "] txt [" + txtToParse
-                    + "])", DELIMITED_DATA_NO_BREAKS.length, splitLineResults.size());
+            assertEquals("Expected size (d = [" + d + "] q = [" + (q != 0 ? String.valueOf(q) : "") + "] txt [" + txtToParse + "])",
+                    DELIMITED_DATA_NO_BREAKS.length, splitLineResults.size());
 
             // loop through each value and compare what came back
             for (int j = 0; j < DELIMITED_DATA_NO_BREAKS.length; j++) {
@@ -75,8 +76,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             // check to make sure we have the same amount of elements which were
             // expected
-            assertEquals("Did Not Get Amount Of Elements Expected (d = " + d + " q = " + q + ")",
-                    DELIMITED_DATA_WITH_BREAKS.length, splitLineResults.size());
+            assertEquals("Did Not Get Amount Of Elements Expected (d = " + d + " q = " + q + ")", DELIMITED_DATA_WITH_BREAKS.length, splitLineResults
+                    .size());
 
             // loop through each value and compare what came back
             for (int j = 0; j < DELIMITED_DATA_WITH_BREAKS.length; j++) {
@@ -120,9 +121,9 @@ public class ParserUtilsSplitLineTest extends TestCase {
         // example typically from Excel.
         check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\"', new String[] { "test1", "test2", "0.00",
                 "another, element here", "lastone" });
-        
-        check("\"FRED\",\"ZNAME\",\"Text Qualifier \" and seperator, in string\",\"ELYRIA\",\"OH\",\"\"", ',', '\"', 
-                new String[] {"FRED", "ZNAME", "Text Qualifier \" and seperator, in string", "ELYRIA", "OH", ""});
+
+        check("\"FRED\",\"ZNAME\",\"Text Qualifier \" and seperator, in string\",\"ELYRIA\",\"OH\",\"\"", ',', '\"', new String[] { "FRED", "ZNAME",
+                "Text Qualifier \" and seperator, in string", "ELYRIA", "OH", "" });
 
         check("a\",b,c\"", ',', '\"', new String[] { "a\"", "b", "c\"" });
         check("  a, b ,c ", ',', '\"', new String[] { "a", "b", "c" });
@@ -135,18 +136,18 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("\"a, b,\"\"c\"", ',', '\"', new String[] { "a, b,\"c" });
         check("\"a, b,\"\"c\", \"     test\"", ',', '\"', new String[] { "a, b,\"c", "     test" });
         check("\"a, b,\"\"c\",      test", ',', '\"', new String[] { "a, b,\"c", "test" });
-        
-        check("one two three", ' ', '\u0000', new String[] {"one", "two", "three"});
-        check("\"one\" \"two\" three", ' ', '\"', new String[] {"one", "two", "three"});
-        check("\"one\"  \"two\"  three", ' ', '\"', new String[] {"one", "", "two", "", "three"});
-        
-        check (" , , ", ',', '"', new String[] {"","",""});
-        check (" , , ", ',', PZConstants.NO_QUALIFIER, new String[] {"","",""});
-        check (" \t \t ", '\t', '"', new String[] {"","",""});
-        check (" \t \t ", '\t', PZConstants.NO_QUALIFIER, new String[] {"","",""});
-        check ("  ", ' ', '"', new String[] {"","",""});
-        check ("  ", ' ', PZConstants.NO_QUALIFIER, new String[] {"","",""});
-        
+
+        check("one two three", ' ', '\u0000', new String[] { "one", "two", "three" });
+        check("\"one\" \"two\" three", ' ', '\"', new String[] { "one", "two", "three" });
+        check("\"one\"  \"two\"  three", ' ', '\"', new String[] { "one", "", "two", "", "three" });
+
+        check(" , , ", ',', '"', new String[] { "", "", "" });
+        check(" , , ", ',', PZConstants.NO_QUALIFIER, new String[] { "", "", "" });
+        check(" \t \t ", '\t', '"', new String[] { "", "", "" });
+        check(" \t \t ", '\t', PZConstants.NO_QUALIFIER, new String[] { "", "", "" });
+        check("  ", ' ', '"', new String[] { "", "", "" });
+        check("  ", ' ', PZConstants.NO_QUALIFIER, new String[] { "", "", "" });
+
     }
 
     /**
@@ -160,8 +161,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("  a,b,c", ',', '\'', new String[] { "a", "b", "c" });
 
         // example typically from Excel.
-        check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\'', new String[] { "\"test1\"", "test2",
-                "\"0.00\"", "\"another", "element here\"", "lastone" });
+        check("\"test1\",test2,\"0.00\",\"another, element here\",lastone", ',', '\'', new String[] { "\"test1\"", "test2", "\"0.00\"", "\"another",
+                "element here\"", "lastone" });
 
         // what would you expect of these ones?
 
@@ -183,14 +184,14 @@ public class ParserUtilsSplitLineTest extends TestCase {
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
         final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier, 10);
 
-        assertEquals(
-                "Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]",
-                expected.length, splitLineResults.size());
+        assertEquals("Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]", expected.length,
+                splitLineResults.size());
 
         for (int i = 0; i < expected.length; i++) {
             assertEquals("expecting...", expected[i], splitLineResults.get(i));
         }
     }
+
     public static void main(final String[] args) {
         junit.textui.TestRunner.run(ParserUtilsSplitLineTest.class);
     }

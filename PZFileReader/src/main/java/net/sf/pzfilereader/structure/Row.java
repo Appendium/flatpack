@@ -33,7 +33,7 @@ public class Row {
 
     /** key to the MD for this row, null will indicate it is "detail" MD */
     private String mdkey;
-    
+
     /**
      * Constructs a new Row
      *

@@ -49,28 +49,23 @@ import org.jdom.JDOMException;
  */
 public class DelimiterPZParser extends AbstractDelimiterPZParser {
     private InputStream pzmapXMLStream = null;
-
     private File pzmapXML = null;
-   
     private Reader pzmapReader;
-    
+
     //this InputStream and file can be removed after support for 
     //file and inputstream is removed from the parserfactory.  The
     //methods have been deprecated..pz
     private InputStream dataSourceStream = null;
-    
     private File dataSource = null;
-   
 
-    public DelimiterPZParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord) {
+    public DelimiterPZParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(null, delimiter, qualifier, ignoreFirstRecord);
         this.pzmapXML = pzmapXML;
         this.dataSource = dataSource;
     }
 
-    public DelimiterPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
-            final char qualifier, final boolean ignoreFirstRecord) {
+    public DelimiterPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
         super(null, delimiter, qualifier, ignoreFirstRecord);
         this.pzmapXMLStream = pzmapXMLStream;
         this.dataSourceStream = dataSourceStream;
@@ -81,17 +76,15 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
         this.dataSource = dataSource;
     }
 
-    public DelimiterPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord) {
+    public DelimiterPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(null, delimiter, qualifier, ignoreFirstRecord);
         this.dataSourceStream = dataSourceStream;
     }
-    
-    public DelimiterPZParser(final Reader dataSourceReader, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord) {
+
+    public DelimiterPZParser(final Reader dataSourceReader, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceReader, delimiter, qualifier, ignoreFirstRecord);
     }
-    
+
     public DelimiterPZParser(final Reader dataSourceReader, final Reader pzmapReader, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         super(dataSourceReader, delimiter, qualifier, ignoreFirstRecord);
@@ -106,13 +99,12 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
                 addToCloseReaderList(r);
-            } else if (dataSource != null){
+            } else if (dataSource != null) {
                 final Reader r = new FileReader(dataSource);
                 setDataSourceReader(r);
                 addToCloseReaderList(r);
             }
-            
-            
+
             boolean closeMapReader = false;
             if (pzmapXML != null) {
                 this.pzmapReader = new FileReader(pzmapXML);
@@ -121,10 +113,11 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
                 this.pzmapReader = new InputStreamReader(pzmapXMLStream);
                 closeMapReader = true;
             }
-            
+
             if (this.pzmapReader != null) {
                 try {
-                    setColumnMD(PZMapParser.parse(this.pzmapReader, this));
+                    //                    setColumnMD(PZMapParser.parse(this.pzmapReader, this));
+                    setPzMetaData(PZMapParser.parseMap(this.pzmapReader, this));
                 } finally {
                     if (closeMapReader) {
                         //only close the reader if it is one we created
@@ -133,7 +126,7 @@ public class DelimiterPZParser extends AbstractDelimiterPZParser {
                     }
                 }
             }
-            
+
             setInitialised(true);
         } catch (final JDOMException e) {
             throw new InitialisationException(e);

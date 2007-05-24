@@ -62,7 +62,7 @@ public interface PZParser {
      *            producing an error
      */
     void setHandlingShortLines(final boolean handleShortLines);
-    
+
     /**
      * 
      * @return true, detail lines with a length or column count > the mapping
@@ -70,7 +70,7 @@ public interface PZParser {
      *         lines as erros in the DataError collection.
      */
     boolean isIgnoreExtraColumns();
-    
+
     /**
      * 
      * @param ignoreExtraColumns when true, detail lines with a length or column 
@@ -78,7 +78,7 @@ public interface PZParser {
      *         will NOT register these lines as erros in the DataError collection.
      */
     void setIgnoreExtraColumns(final boolean ignoreExtraColumns);
-    
+
     /**
      * Default is false
      * 
@@ -87,7 +87,7 @@ public interface PZParser {
      *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
      */
     boolean isColumnNamesCaseSensitive();
-    
+
     /**
      * Default is false
      * 
@@ -97,28 +97,27 @@ public interface PZParser {
      *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
      */
     void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
-    
+
     /**
      * Default is false
      * 
      * @return true, warnings encountered durring parsing will not be included in the DataSet errors
      */
     boolean isIgnoreParseWarnings();
-    
-    
+
     /**
      * 
      * @param ignoreParseWarnings when true, warnings encountered durring parsing will not be included 
      *                            in the DataSet errors
      */
     void setIgnoreParseWarnings(final boolean ignoreParseWarnings);
-    
+
     /**
      * 
      * @return true, empty Strings will get returned as NULL when calling DataSet.getString()
      */
     boolean isNullEmptyStrings();
-    
+
     /**
      * 
      * @param nullEmptyStrings when true, empty Strings will get returned as NULL when calling DataSet.getString()

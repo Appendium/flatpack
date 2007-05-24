@@ -42,8 +42,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-
-import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
 /**
@@ -53,12 +51,12 @@ import net.sf.pzfilereader.util.ParserUtils;
  */
 public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
     private Connection con;
-        
+
     //this InputStream and file can be removed after support for 
     //file and inputstream is removed from the parserfactory.  The
     //methods have been deprecated..pz
     private InputStream dataSourceStream = null;
-    
+
     private File dataSource = null;
 
     public DBFixedLengthPZParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
@@ -79,7 +77,7 @@ public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
         super(dataSourceReader, dataDefinition);
         this.con = con;
     }
-    
+
     protected void init() {
         try {
             //check to see if the user is using a File or InputStream.  This is 
@@ -88,16 +86,17 @@ public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
                 addToCloseReaderList(r);
-            } else if (dataSource != null){
+            } else if (dataSource != null) {
                 final Reader r = new FileReader(dataSource);
                 setDataSourceReader(r);
                 addToCloseReaderList(r);
             }
-            
-            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
 
-            addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
+            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
+            addToMetaData(cmds);
+
+            //            addToColumnMD(PZConstants.DETAIL_ID, cmds);
+            //            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
@@ -108,7 +107,7 @@ public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
             throw new InitialisationException(e);
         } catch (final FileNotFoundException e) {
             throw new InitialisationException(e);
-        } 
+        }
     }
 
     public DataSet doParse() {

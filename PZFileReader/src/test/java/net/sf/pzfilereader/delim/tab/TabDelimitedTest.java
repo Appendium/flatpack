@@ -16,7 +16,7 @@ import net.sf.pzfilereader.DataSet;
  * Preferences - Java - Code Style - Code Templates
  */
 public class TabDelimitedTest extends TestCase {
-    public TabDelimitedTest(final String name) { 
+    public TabDelimitedTest(final String name) {
         super(name);
     }
 
@@ -46,7 +46,7 @@ public class TabDelimitedTest extends TestCase {
         try {
             final TabDelimited testTab = new TabDelimited();
 
-            ds = testTab.getDsForTest(); 
+            ds = testTab.getDsForTest();
 
             // check that we parsed in the right amount of rows
             assertEquals(2, ds.getRowCount());
