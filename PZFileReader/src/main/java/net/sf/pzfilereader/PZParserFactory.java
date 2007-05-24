@@ -116,7 +116,7 @@ public interface PZParserFactory {
      * @return PZParser
      */
     PZParser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream);
-    
+
     /**
      * Constructs a new DataSet using the database table file layout method.
      * This is used for a FIXED LENGTH text file.
@@ -134,7 +134,7 @@ public interface PZParserFactory {
      * @return PZParser
      */
     PZParser newFixedLengthParser(final Connection con, final Reader dataSource, final String dataDefinition);
-    
+
     /**
      * New constructor based on Reader. Constructs a new DataSet using the
      * PZMAP XML file layout method. This is used for a FIXED LENGTH text file.
@@ -187,9 +187,9 @@ public interface PZParserFactory {
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
-    PZParser newDelimitedParser(final Connection con, final InputStream dataSource, final String dataDefinition,
-            final char delimiter, final char qualifier, final boolean ignoreFirstRecord);
-    
+    PZParser newDelimitedParser(final Connection con, final InputStream dataSource, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord);
+
     /**
      * New constructor based on Reader. Constructs a new DataSet using the
      * database table file layout method. This is used for a DELIMITED text
@@ -218,8 +218,8 @@ public interface PZParserFactory {
      *            skips the first line that contains data in the file
      * @return PZParser
      */
-    PZParser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition,
-            final char delimiter, final char qualifier, final boolean ignoreFirstRecord);
+    PZParser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
+            final char qualifier, final boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is
@@ -270,8 +270,7 @@ public interface PZParserFactory {
      */
     PZParser newDelimitedParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord);
-    
-    
+
     /**
      * New constructor based on InputStream. Constructs a new DataSet using the
      * PZMAP XML file layout method. This is used for a DELIMITED text file.
@@ -299,8 +298,8 @@ public interface PZParserFactory {
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
-    PZParser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
-            final char qualifier, final boolean ignoreFirstRecord);
+    PZParser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the first line of data found in the text
@@ -322,7 +321,7 @@ public interface PZParserFactory {
      * @return PZParser
      */
     PZParser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier);
-    
+
     /**
      * Constructs a new DataSet using the first line of data found in the text
      * file as the column names. This is used for a DELIMITED text file. esacpe

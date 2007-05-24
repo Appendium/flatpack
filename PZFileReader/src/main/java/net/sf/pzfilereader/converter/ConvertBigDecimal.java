@@ -11,13 +11,13 @@ import net.sf.pzfilereader.util.ParserUtils;
  *  
  * @author Paul Zepernick
  */
-public class ConvertBigDecimal implements PZConverter{
+public class ConvertBigDecimal implements PZConverter {
     /*
      * (non-Javadoc)
      * 
      * @see net.sf.pzfilereader.converter#convertValue(java.lang.String)
      */
-    public Object convertValue(String valueToConvert) {
+    public Object convertValue(final String valueToConvert) {
         return new BigDecimal(ParserUtils.stripNonDoubleChars(valueToConvert));
     }
 }

@@ -49,7 +49,7 @@ public class ConvertDouble implements PZConverter {
      * 
      * @see net.sf.pzfilereader.converter#convertValue(java.lang.String)
      */
-    public Object convertValue(String valueToConvert) {
+    public Object convertValue(final String valueToConvert) {
         return new Double(ParserUtils.stripNonDoubleChars(valueToConvert));
     }
 

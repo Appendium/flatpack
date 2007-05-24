@@ -42,11 +42,10 @@ public class ExcelTransformer {
     private DataSet ds;
 
     private File xlsFile;
-    
+
     private String[] exportOnlyColumns;
-    
+
     private String[] excludeFromExportColumns;
-    
 
     /**
      * Constructs a new Excel transformer
@@ -74,7 +73,7 @@ public class ExcelTransformer {
         try {
             final String[] columnNames = ds.getColumns();
             final List exportOnlyColumnsList = exportOnlyColumns != null ? Arrays.asList(exportOnlyColumns) : null;
-                    
+
             final List excludeFromExportColumnsList = excludeFromExportColumns != null ? Arrays.asList(excludeFromExportColumns) : null;
             // get the current position of the DataSet. We have to go to the top
             // to do this write,
@@ -92,10 +91,10 @@ public class ExcelTransformer {
             int colOffset = 0;
             for (int i = 0; i < columnNames.length; i++) {
                 if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])) {
-                    colOffset ++;
+                    colOffset++;
                     continue;
-                }else if (excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
-                    colOffset ++;
+                } else if (excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
+                    colOffset++;
                     continue;
                 }
                 final Label xlsTextLbl = new Label(i - colOffset, 0, columnNames[i], cellFormat);
@@ -108,17 +107,17 @@ public class ExcelTransformer {
                 if (!ds.isRecordID(PZConstants.DETAIL_ID)) {
                     continue;
                 }
-                
+
                 colOffset = 0;
                 for (int i = 0; i < columnNames.length; i++) {
                     if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])) {
-                        colOffset ++;
+                        colOffset++;
                         continue;
                     } else if (excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
-                        colOffset ++;
+                        colOffset++;
                         continue;
-                    }                    
-                    
+                    }
+
                     final Label xlsTextLbl = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
                     wrkSheet.addCell(xlsTextLbl);
                 }
@@ -138,8 +137,7 @@ public class ExcelTransformer {
         }
 
     }
-    
-    
+
     /**
      * The columns names contained in the array will be igored if
      * setExportOnlyColumns() is called.  
@@ -149,7 +147,7 @@ public class ExcelTransformer {
      * 
      * @param excludeFromExportColumns the excludeFromExportColumns to set
      */
-    public void setExcludeFromExportColumns(String[] excludeFromExportColumns) {
+    public void setExcludeFromExportColumns(final String[] excludeFromExportColumns) {
         this.excludeFromExportColumns = excludeFromExportColumns;
     }
 
@@ -159,7 +157,7 @@ public class ExcelTransformer {
      * 
      * @param exportOnlyColumns the exportOnlyColumns to set
      */
-    public void setExportOnlyColumns(String[] exportOnlyColumns) {
+    public void setExportOnlyColumns(final String[] exportOnlyColumns) {
         this.exportOnlyColumns = exportOnlyColumns;
     }
 

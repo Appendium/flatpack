@@ -63,8 +63,9 @@ import org.slf4j.LoggerFactory;
  */
 public final class PZMapParser {
     private static boolean showDebug = false;
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PZMapParser.class);
+
     /**
      * Constructor
      * 
@@ -75,7 +76,7 @@ public final class PZMapParser {
     }
 
     /**
-     * Method based on InputStream. Reads the XMLDocument for a PZMap
+     * Method based on InputStream. Reads the XMLDocument for a PZMetaData
      * file from an InputStream, WebStart combatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
      * 
@@ -98,7 +99,7 @@ public final class PZMapParser {
     }
 
     /**
-     * New method based on Reader. Reads the XMLDocument for a PZMap
+     * New method based on Reader. Reads the XMLDocument for a PZMetaData
      * file from an InputStream, WebStart combatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
      * 
@@ -112,16 +113,16 @@ public final class PZMapParser {
     public static Map parse(final Reader xmlStreamReader, final PZParser pzparser) throws JDOMException, IOException {
         //use for debug when JDOM complains about the xml
         /* final BufferedReader br = new BufferedReader(xmlStreamReader);
-        final FileWriter fw = new FileWriter("c:/test.pz");
-        final PrintWriter out = new PrintWriter(fw);
-        String line = null;
-        while ((line = br.readLine()) != null) {
-            out.println(line);
-        }
-        out.flush();
-        fw.close();
-        br.close();*/
-        
+         final FileWriter fw = new FileWriter("c:/test.pz");
+         final PrintWriter out = new PrintWriter(fw);
+         String line = null;
+         while ((line = br.readLine()) != null) {
+         out.println(line);
+         }
+         out.flush();
+         fw.close();
+         br.close();*/
+
         if (xmlStreamReader == null) {
             throw new NullPointerException("XML Reader Is Not Allowed To Be Null...");
         }
@@ -159,8 +160,7 @@ public final class PZMapParser {
                 // is the harcoded
                 // value we are using to mark columns specified outside of a
                 // <RECORD> element
-                throw new IllegalArgumentException(
-                        "The ID 'detail' on the <RECORD> element is reserved, please select another id");
+                throw new IllegalArgumentException("The ID 'detail' on the <RECORD> element is reserved, please select another id");
             }
 
             columns = getColumnChildren(xmlElement);
@@ -234,13 +234,13 @@ public final class PZMapParser {
     public static void setDebug(final boolean b) {
         showDebug = b;
     }
-    
+
     //TODO convert to logger instead of system out
     private static void showDebug(final Map xmlResults) {
         final Iterator mapIt = xmlResults.entrySet().iterator();
         while (mapIt.hasNext()) {
             XMLRecordElement xmlrecEle = null;
-            final Entry entry = (Entry)mapIt.next();
+            final Entry entry = (Entry) mapIt.next();
             final String recordID = (String) entry.getKey();
             Iterator columns = null;
             if (recordID.equals(PZConstants.DETAIL_ID)) {
@@ -252,9 +252,8 @@ public final class PZMapParser {
 
             LOGGER.debug(">>>>Column MD Id: " + recordID);
             if (xmlrecEle != null) {
-                LOGGER.debug("Start Position: " + xmlrecEle.getStartPosition() + " " + "End Position: "
-                        + xmlrecEle.getEndPositition() + " " + "Element Number: " + xmlrecEle.getElementNumber() + " "
-                        + "Indicator: " + xmlrecEle.getIndicator());
+                LOGGER.debug("Start Position: " + xmlrecEle.getStartPosition() + " " + "End Position: " + xmlrecEle.getEndPositition() + " "
+                        + "Element Number: " + xmlrecEle.getElementNumber() + " " + "Indicator: " + xmlrecEle.getIndicator());
             }
             while (columns.hasNext()) {
                 final ColumnMetaData cmd = (ColumnMetaData) columns.next();
@@ -262,5 +261,28 @@ public final class PZMapParser {
 
             }
         }
+    }
+
+    /**
+     * New method based on Reader. Reads the XMLDocument for a PZMetaData
+     * file from an InputStream, WebStart combatible. Parses the XML file, and
+     * returns a Map containing Lists of ColumnMetaData.
+     * 
+     * @param xmlStreamReader
+     * @param pzparser
+     *          Can be null.  Allows additional opts to be set durring the XML map read
+     * @return Map <records> with their corrisponding
+     * @throws IOException
+     * @throws JDOMException
+     */
+    public static PZMetaData parseMap(final Reader xmlStreamReader, final PZParser pzparser) throws JDOMException, IOException {
+        final Map map = parse(xmlStreamReader, pzparser);
+
+        final List col = (List) map.get(PZConstants.DETAIL_ID);
+        map.remove(PZConstants.DETAIL_ID);
+
+        final Map m = (Map) map.get(PZConstants.COL_IDX);
+        map.remove(PZConstants.COL_IDX);
+        return new PZMetaData(col, m, map);
     }
 }

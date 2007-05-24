@@ -38,10 +38,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import net.sf.pzfilereader.DataSet;
 import net.sf.pzfilereader.DefaultDataSet;
@@ -50,11 +46,14 @@ import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
 
-public class BuffReaderDelimPZParser extends DelimiterPZParser {    
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class BuffReaderDelimPZParser extends DelimiterPZParser {
     private BufferedReader br;
-    
+
     private boolean processedFirst = false;
-    
+
     private final Logger logger = LoggerFactory.getLogger(BuffReaderDelimPZParser.class);
 
     public BuffReaderDelimPZParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
@@ -62,8 +61,8 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
         super(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public BuffReaderDelimPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
-            final char qualifier, final boolean ignoreFirstRecord) {
+    public BuffReaderDelimPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
         super(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
@@ -71,38 +70,37 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
         super(dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public BuffReaderDelimPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord) {
+    public BuffReaderDelimPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
-    
+
     public BuffReaderDelimPZParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         super(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
-    
-    public BuffReaderDelimPZParser(final Reader dataSourceStream, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord) {
+
+    public BuffReaderDelimPZParser(final Reader dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
-    
+
     public DataSet doParse() {
-        final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
+        //        final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
+        final DataSet ds = new BuffReaderPZDataSet(getPzMetaData(), this);
         try {
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
-            
+
             br = new BufferedReader(getDataSourceReader());
-            
+
             return ds;
-        
-        } catch(IOException ex) {
+
+        } catch (final IOException ex) {
             logger.error("error accessing/creating inputstream", ex);
         }
-        
+
         return null;
     }
-    
+
     /**
      * Reads in the next record on the file and return a row
      * 
@@ -110,34 +108,37 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
      * @return Row
      * @throws IOException
      */
-    public Row buildRow(final DefaultDataSet ds) throws IOException{
+    public Row buildRow(final DefaultDataSet ds) throws IOException {
         /** loop through each line in the file */
         while (true) {
-            String line = fetchNextRecord(br, getQualifier(), getDelimiter());
-            
+            final String line = fetchNextRecord(br, getQualifier(), getDelimiter());
+
             if (line == null) {
                 return null;
             }
-            
+
             // check to see if the user has elected to skip the first record
             if (!processedFirst && isIgnoreFirstRecord()) {
                 processedFirst = true;
                 continue;
             } else if (!processedFirst && shouldCreateMDFromFile()) {
                 processedFirst = true;
-                setColumnMD(ParserUtils.getColumnMDFromFile(line, getDelimiter(), getQualifier(), this));
+                setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, getDelimiter(), getQualifier(), this));
+                //                setColumnMD(ParserUtils.getColumnMDFromFile(line, getDelimiter(), getQualifier(), this));
                 continue;
             }
-    
-             //TODO
+
+            //TODO
             //seems like we may want to try doing something like this.  I have my reservations because
             //it is possible that we don't get a "detail" id and this might generate NPE
             //is it going to create too much overhead to do a null check here as well???
             //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
             // column values
             List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), PZConstants.SPLITLINE_SIZE_INIT);
-            final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
-            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
+            //            final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
+            final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
+            //            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
+            final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
             final int columnCount = cmds.size();
             // DEBUG
 
@@ -153,7 +154,7 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
                     //log the error
                     addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2);
                     continue;
-                }                
+                }
             } else if (columns.size() < columnCount) {
                 if (isHandlingShortLines()) {
                     // We can pad this line out
@@ -175,41 +176,32 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
             // to limit the memory use
             row.setCols(columns);
             row.setRowNumber(getLineCount());
-            
-            return row;             
+
+            return row;
         }
     }
-    
+
     /**
      * Closes out the file readers
      *
      *@throws IOException
      */
-    public void close() throws IOException{
+    public void close() throws IOException {
         if (br != null) {
             br.close();
             br = null;
         }
     }
-    
+
     //try to clean up the file handles automatically if
     //the close was not called
     protected void finalize() throws Throwable {
         try {
             close();
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             logger.warn("Problem trying to auto close file handles...", ex);
         } finally {
             super.finalize();
         }
-    }
-    
-    /**
-     * Returns the meta data describing the columns.
-     * This exposes this method to the DataSet which
-     * it could not otherwise see because it is protected.
-     */
-    public Map getColumnMD() {
-        return super.getColumnMD();
     }
 }

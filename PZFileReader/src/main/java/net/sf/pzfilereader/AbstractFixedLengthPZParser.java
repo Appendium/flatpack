@@ -38,13 +38,13 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.sf.pzfilereader.structure.Row;
 import net.sf.pzfilereader.util.FixedWidthParserUtils;
 import net.sf.pzfilereader.util.PZConstants;
 import net.sf.pzfilereader.util.ParserUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author xhensevb
@@ -52,23 +52,23 @@ import net.sf.pzfilereader.util.ParserUtils;
  */
 public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
     private final Logger logger = LoggerFactory.getLogger(AbstractFixedLengthPZParser.class);
-    
-   /* protected AbstractFixedLengthPZParser(final File dataSource, final String dataDefinition) {
-        super(dataSource, dataDefinition);
-    }
 
-    protected AbstractFixedLengthPZParser(final File dataSource) {
-        super(dataSource);
-    }
+    /* protected AbstractFixedLengthPZParser(final File dataSource, final String dataDefinition) {
+     super(dataSource, dataDefinition);
+     }
 
-    protected AbstractFixedLengthPZParser(final InputStream dataSourceStream, final String dataDefinition) {
-        super(dataSourceStream, dataDefinition);
-    }
+     protected AbstractFixedLengthPZParser(final File dataSource) {
+     super(dataSource);
+     }
 
-    protected AbstractFixedLengthPZParser(final InputStream dataSourceStream) {
-        super(dataSourceStream);
-    }*/
-    
+     protected AbstractFixedLengthPZParser(final InputStream dataSourceStream, final String dataDefinition) {
+     super(dataSourceStream, dataDefinition);
+     }
+
+     protected AbstractFixedLengthPZParser(final InputStream dataSourceStream) {
+     super(dataSourceStream);
+     }*/
+
     protected AbstractFixedLengthPZParser(final Reader dataSourceReader, final String dataDefinition) {
         super(dataSourceReader, dataDefinition);
     }
@@ -79,19 +79,19 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
 
     public DataSet doParse() {
         try {
-           /* if (getDataSourceStream() != null) {
-                return doFixedLengthFile(getDataSourceStream());
-            } else {
-                InputStream stream;
-                stream = ParserUtils.createInputStream(getDataSource());
-                try {
-                    return doFixedLengthFile(stream);
-                } finally {
-                    if (stream != null) {
-                        stream.close();
-                    }
-                }
-            }*/
+            /* if (getDataSourceStream() != null) {
+             return doFixedLengthFile(getDataSourceStream());
+             } else {
+             InputStream stream;
+             stream = ParserUtils.createInputStream(getDataSource());
+             try {
+             return doFixedLengthFile(stream);
+             } finally {
+             if (stream != null) {
+             stream.close();
+             }
+             }
+             }*/
             return doFixedLengthFile(getDataSourceReader());
         } catch (final IOException e) {
             logger.error("error accessing/reading data", e);
@@ -109,13 +109,15 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
     private DataSet doFixedLengthFile(final Reader dataSource) throws IOException {
         BufferedReader br = null;
 
-        final DefaultDataSet ds = new DefaultDataSet(getColumnMD(), this);
+        //        final DefaultDataSet ds = new DefaultDataSet(getColumnMD(), this);
+        final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);
 
         try {
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
 
-            final Map recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
+            //            final Map recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
+            final Map recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
 
             // Read in the flat file
             br = new BufferedReader(dataSource);
@@ -131,7 +133,8 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
                     continue;
                 }
 
-                final String mdkey = FixedWidthParserUtils.getCMDKey(getColumnMD(), line);
+                final String mdkey = FixedWidthParserUtils.getCMDKey(getPzMetaData(), line);
+                //                final String mdkey = FixedWidthParserUtils.getCMDKey(getColumnMD(), line);
                 final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
 
                 if (line.length() > recordLength) {
@@ -156,8 +159,7 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
                         addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
 
                     } else {
-                        addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount,
-                                2);
+                        addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2);
                         continue;
                     }
                 }
@@ -166,7 +168,8 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
                 final Row row = new Row();
                 row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
 
-                final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
+                //                final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
+                final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
                 // to limit the memory use
                 // Build the columns for the row

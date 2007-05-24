@@ -39,7 +39,7 @@ package net.sf.pzfilereader.converter;
  * @author Paul Zepernick
  */
 public interface PZConverter {
-    
+
     /**
      * Returns the converted object from the 
      * column in IDataSet
@@ -47,5 +47,5 @@ public interface PZConverter {
      * @param valueToConvert
      * @return Object
      */
-    Object convertValue(String valueToConvert); 
+    Object convertValue(String valueToConvert);
 }

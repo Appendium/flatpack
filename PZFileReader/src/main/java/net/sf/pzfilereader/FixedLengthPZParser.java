@@ -52,14 +52,14 @@ public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
     private InputStream pzmapXMLStream;
 
     private File pzmapXML;
-    
+
     private Reader pzmapReader;
-    
+
     //this InputStream and file can be removed after support for 
     //file and inputstream is removed from the parserfactory.  The
     //methods have been deprecated..pz
     private InputStream dataSourceStream = null;
-    
+
     private File dataSource = null;
 
     public FixedLengthPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
@@ -73,9 +73,9 @@ public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
         this.pzmapXML = pzmapXML;
         this.dataSource = dataSource;
     }
-    
+
     public FixedLengthPZParser(final Reader pzmapReader, final Reader dataSourceReader) {
-        super (dataSourceReader);
+        super(dataSourceReader);
         this.pzmapReader = pzmapReader;
     }
 
@@ -87,13 +87,12 @@ public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
                 addToCloseReaderList(r);
-            } else if (dataSource != null){
+            } else if (dataSource != null) {
                 final Reader r = new FileReader(dataSource);
                 setDataSourceReader(r);
                 addToCloseReaderList(r);
             }
-            
-            
+
             boolean closeMapReader = false;
             if (pzmapXML != null) {
                 this.pzmapReader = new FileReader(pzmapXML);
@@ -102,9 +101,10 @@ public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
                 this.pzmapReader = new InputStreamReader(pzmapXMLStream);
                 closeMapReader = true;
             }
-            
+
             try {
-                setColumnMD(PZMapParser.parse(this.pzmapReader, this));
+                //                setColumnMD(PZMapParser.parse(this.pzmapReader, this));
+                setPzMetaData(PZMapParser.parseMap(this.pzmapReader, this));
             } finally {
                 if (closeMapReader) {
                     //only close the reader if it is one we created
@@ -112,8 +112,8 @@ public class FixedLengthPZParser extends AbstractFixedLengthPZParser {
                     this.pzmapReader.close();
                 }
             }
-            
-          //  setInitialised(true);
+
+            //  setInitialised(true);
         } catch (final JDOMException e) {
             throw new InitialisationException(e);
         } catch (final IOException e) {

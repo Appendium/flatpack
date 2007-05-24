@@ -60,6 +60,7 @@ import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.converter.PZConvertException;
 import net.sf.pzfilereader.converter.PZConverter;
 import net.sf.pzfilereader.structure.ColumnMetaData;
+import net.sf.pzfilereader.xml.PZMetaData;
 import net.sf.pzfilereader.xml.XMLRecordElement;
 
 /**
@@ -96,8 +97,8 @@ public final class ParserUtils {
      *            intial capacity of the List size
      * @return List
      */
-    public static List splitLine(final String line, final char delimiter, final char qualifier, int initialSize) {
-        List list = new ArrayList(initialSize);
+    public static List splitLine(final String line, final char delimiter, final char qualifier, final int initialSize) {
+        final List list = new ArrayList(initialSize);
 
         if (delimiter == 0) {
             list.add(line);
@@ -105,7 +106,7 @@ public final class ParserUtils {
         } else if (line == null) {
             return list;
         }
-        
+
         String trimmedLine;
         if (delimiter == '\t' || delimiter == ' ') {
             //skip the trim for these delimiters, doing the trim will mess up the parse
@@ -114,8 +115,8 @@ public final class ParserUtils {
         } else {
             trimmedLine = line.trim();
         }
-        
-        int size = trimmedLine.length();
+
+        final int size = trimmedLine.length();
 
         if (size == 0) {
             list.add("");
@@ -174,19 +175,19 @@ public final class ParserUtils {
                         int start = i + 1;
                         char charToCheck = trimmedLine.charAt(start);
                         while (charToCheck == ' ') {
-                            start ++;
+                            start++;
                             if (start == size) {
                                 break;
                             }
-                            charToCheck = trimmedLine.charAt(start); 
-                        }                        
-                        
+                            charToCheck = trimmedLine.charAt(start);
+                        }
+
                         if (charToCheck != delimiter) {
                             previousChar = currentChar;
                             endBlock = i + 1;
                             continue;
                         }
-                        
+
                     }
                     insideQualifier = false;
                     blockWasInQualifier = true;
@@ -250,7 +251,7 @@ public final class ParserUtils {
         if (value == null) {
             return null;
         }
-        
+
         String trimmed = value;
         int offset = 0;
         final int maxLength = value.length();
@@ -276,7 +277,7 @@ public final class ParserUtils {
         if (value == null) {
             return null;
         }
-        
+
         String trimmed = value;
         int offset = 0;
         final int maxLength = value.length();
@@ -290,7 +291,7 @@ public final class ParserUtils {
 
         return trimmed;
     }
-    
+
     /**
      * Will return a null if the String is empty returns the 
      * trimmed string otherwise.
@@ -303,11 +304,11 @@ public final class ParserUtils {
         if (value == null) {
             return null;
         }
-        
+
         final String ret = value.trim();
-        
+
         return ret.length() == 0 ? null : ret;
-        
+
     }
 
     /**
@@ -331,7 +332,6 @@ public final class ParserUtils {
         return s.toString();
     }
 
-
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited
      * files. The first line of the file which contains data will be used as the
@@ -344,10 +344,10 @@ public final class ParserUtils {
      * @return ArrayList - ColumnMetaData
      * @deprecated Use getColumnMDFromFile(String, char, char, PZParser)
      */
-    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier)  {
+    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier) {
         return getColumnMDFromFile(line, delimiter, qualifier, null);
     }
-    
+
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited
      * files. The first line of the file which contains data will be used as the
@@ -359,8 +359,9 @@ public final class ParserUtils {
      * @param p
      *          PZParser used to specify additional option when working witht the ColumnMetaData. Can be null
      * @return ArrayList - ColumnMetaData
+     * @deprecated use the getPZMetaDataFromFile 
      */
-    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final PZParser p)  {
+    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final PZParser p) {
         List lineData = null;
         final List results = new ArrayList();
         final Map columnMD = new LinkedHashMap();
@@ -383,6 +384,32 @@ public final class ParserUtils {
      * files. The first line of the file which contains data will be used as the
      * column names
      *
+     * @param line
+     * @param delimiter
+     * @param qualifier
+     * @param p
+     *          PZParser used to specify additional option when working witht the ColumnMetaData. Can be null
+     * @return PZMetaData
+     */
+    public static PZMetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final PZParser p) {
+        List lineData = null;
+        final List results = new ArrayList();
+
+        lineData = splitLine(line, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
+        for (int i = 0; i < lineData.size(); i++) {
+            final ColumnMetaData cmd = new ColumnMetaData();
+            cmd.setColName((String) lineData.get(i));
+            results.add(cmd);
+        }
+
+        return new PZMetaData(results, buidColumnIndexMap(results, p));
+    }
+
+    /**
+     * Returns a list of ColumnMetaData objects. This is for use with delimited
+     * files. The first line of the file which contains data will be used as the
+     * column names
+     *
      * @param theFile
      * @param delimiter
      * @param qualifier
@@ -390,8 +417,7 @@ public final class ParserUtils {
      * @exception IOException
      * @return ArrayList - ColumnMetaData
      */
-    public static List getColumnMDFromFile(final File theFile, final String delimiter, 
-            final String qualifier) throws IOException{
+    public static List getColumnMDFromFile(final File theFile, final String delimiter, final String qualifier) throws IOException {
         BufferedReader br = null;
         FileReader fr = null;
         String line = null;
@@ -530,6 +556,7 @@ public final class ParserUtils {
      *
      * @param columnMD
      * @return Map
+     * @deprecated use PZMetaData
      */
     public static Map calculateRecordLengths(final Map columnMD) {
         final Map recordLengths = new HashMap();
@@ -557,6 +584,39 @@ public final class ParserUtils {
 
     }
 
+    public static Map calculateRecordLengths(final PZMetaData columnMD) {
+        final Map recordLengths = new HashMap();
+        List cmds = null;
+
+        // first the basic columns
+        int recordLength = 0;
+        for (final Iterator i = columnMD.getColumnsNames().iterator(); i.hasNext();) {
+            recordLength += ((ColumnMetaData) i.next()).getColLength();
+        }
+
+        recordLengths.put(PZConstants.DETAIL_ID, new Integer(recordLength));
+
+        final Iterator columnMDIt = columnMD.xmlRecordIterator();
+        while (columnMDIt.hasNext()) {
+            final Entry entry = (Entry) columnMDIt.next();
+            //            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
+            //                cmds = (List) columnMD.get(PZConstants.DETAIL_ID);
+            //            } else {
+            cmds = ((XMLRecordElement) entry.getValue()).getColumns();
+            //            }
+
+            recordLength = 0;
+            for (int i = 0; i < cmds.size(); i++) {
+                recordLength += ((ColumnMetaData) cmds.get(i)).getColLength();
+            }
+
+            recordLengths.put(entry.getKey(), new Integer(recordLength));
+
+        }
+
+        return recordLengths;
+
+    }
 
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
@@ -566,6 +626,7 @@ public final class ParserUtils {
      * @param columnMD
      * @param lineElements
      * @return List - ColumMetaData
+     * @deprecated use the PZMetaData
      */
     public static String getCMDKeyForDelimitedFile(final Map columnMD, final List lineElements) {
         if (columnMD.size() == 1) {
@@ -583,21 +644,58 @@ public final class ParserUtils {
                 // others match
             }
             final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
-            
-            if (recordXMLElement.getElementCount() > 0 && 
-                    recordXMLElement.getElementCount() == lineElements.size()) {
+
+            if (recordXMLElement.getElementCount() > 0 && recordXMLElement.getElementCount() == lineElements.size()) {
                 //determing which <record> mapping to use by the number of elements
                 //contained on the line
-                return (String)entry.getKey();
+                return (String) entry.getKey();
             } else if (recordXMLElement.getElementNumber() > lineElements.size()) {
                 // make sure the element referenced in the mapping exists
                 continue;
             }
-            
+
             final String lineElement = (String) lineElements.get(recordXMLElement.getElementNumber() - 1);
             if (lineElement.equals(recordXMLElement.getIndicator())) {
                 // we found the MD object we want to return
-                return (String)entry.getKey();
+                return (String) entry.getKey();
+            }
+
+        }
+
+        // must be a detail line
+        return PZConstants.DETAIL_ID;
+    }
+
+    public static String getCMDKeyForDelimitedFile(final PZMetaData columnMD, final List lineElements) {
+        if (!columnMD.isAnyRecordFormatSpecified()) {
+            // no <RECORD> elments were specifed for this parse, just return the
+            // detail id
+            return PZConstants.DETAIL_ID;
+        }
+        final Iterator mapEntries = columnMD.xmlRecordIterator();//getColumnsNames().iterator();
+        // loop through the XMLRecordElement objects and see if we need a
+        // different MD object
+        while (mapEntries.hasNext()) {
+            final Entry entry = (Entry) mapEntries.next();
+            //            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
+            //                continue; // skip this key will be assumed if none of the
+            //                // others match
+            //            }
+            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
+
+            if (recordXMLElement.getElementCount() > 0 && recordXMLElement.getElementCount() == lineElements.size()) {
+                //determing which <record> mapping to use by the number of elements
+                //contained on the line
+                return (String) entry.getKey();
+            } else if (recordXMLElement.getElementNumber() > lineElements.size()) {
+                // make sure the element referenced in the mapping exists
+                continue;
+            }
+
+            final String lineElement = (String) lineElements.get(recordXMLElement.getElementNumber() - 1);
+            if (lineElement.equals(recordXMLElement.getIndicator())) {
+                // we found the MD object we want to return
+                return (String) entry.getKey();
             }
 
         }
@@ -612,6 +710,7 @@ public final class ParserUtils {
      * @param key
      * @param columnMD
      * @return List
+     * @deprecated use the PZMetaData
      */
     public static List getColumnMetaData(final String key, final Map columnMD) {
         if (key == null || key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
@@ -619,6 +718,14 @@ public final class ParserUtils {
         }
 
         return ((XMLRecordElement) columnMD.get(key)).getColumns();
+    }
+
+    public static List getColumnMetaData(final String key, final PZMetaData columnMD) {
+        if (key == null || key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
+            return columnMD.getColumnsNames();
+        }
+
+        return columnMD.getListColumnsForRecord(key);
     }
 
     /**
@@ -632,6 +739,7 @@ public final class ParserUtils {
      * @param p
      *          Can be null.  Used to specify potential options on how the column should be retrieved
      * @return -1 if it does not find it
+     * @deprecated use PZMetaData
      */
     public static int getColumnIndex(final String key, final Map columnMD, final String colName, final PZParser p) {
         int idx = -1;
@@ -654,7 +762,31 @@ public final class ParserUtils {
         }
         return idx;
     }
-    
+
+    public static int getColumnIndex(final String key, final PZMetaData columnMD, final String colName, final PZParser p) {
+        int idx = -1;
+        String column = colName;
+        if (p != null && !p.isColumnNamesCaseSensitive()) {
+            column = colName.toLowerCase(Locale.getDefault());
+        }
+        idx = columnMD.getColumnIndex(key, column);
+
+        //        if (key != null && !key.equals(PZConstants.DETAIL_ID) && !key.equals(PZConstants.COL_IDX)) {
+        //            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(column);
+        //        } else if (key == null || key.equals(PZConstants.DETAIL_ID)) {
+        //            final Map map = (Map) columnMD.get(PZConstants.COL_IDX);
+        //            final Integer i = (Integer) map.get(column);
+        //            if (i != null) { //happens when the col name does not exist in the mapping
+        //                idx = i.intValue();
+        //            }
+        //        }
+
+        if (idx < 0) {
+            throw new NoSuchElementException("Column " + colName + " does not exist, check case/spelling. key:" + key);
+        }
+        return idx;
+    }
+
     /**
      * Use this method to find the index of a column.
      *
@@ -722,9 +854,9 @@ public final class ParserUtils {
      * </p>
      *
      * <pre>
-     *                StringUtils.padding(0, 'e')  = &quot;&quot;
-     *                StringUtils.padding(3, 'e')  = &quot;eee&quot;
-     *                StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
+     *                PZStringUtils.padding(0, 'e')  = &quot;&quot;
+     *                PZStringUtils.padding(3, 'e')  = &quot;eee&quot;
+     *                PZStringUtils.padding(-2, 'e') = IndexOutOfBoundsException
      * </pre>
      *
      * <p>
@@ -784,7 +916,7 @@ public final class ParserUtils {
         }
         return map;
     }
-    
+
     /**
      * Build a map of name/position based on a list of ColumnMetaData.
      *
@@ -794,14 +926,14 @@ public final class ParserUtils {
      * @deprecated Please use buildColumnIndexMap(List, PZParser)
      */
     public static Map buidColumnIndexMap(final List columns) {
-       return buidColumnIndexMap(columns, null);
+        return buidColumnIndexMap(columns, null);
     }
-    
+
     /**
      * Removes chars from the String that could not 
      * be parsed into a Long value
      *
-     *      StringUtils.stripNonLongChars("1000.25") = "1000"
+     *      PZStringUtils.stripNonLongChars("1000.25") = "1000"
      *
      * Method will truncate everything to the right of the decimal
      * place when encountered.
@@ -811,7 +943,7 @@ public final class ParserUtils {
      */
     public static String stripNonLongChars(final String value) {
         final StringBuffer newString = new StringBuffer();
-        
+
         for (int i = 0; i < value.length(); i++) {
             final char c = value.charAt(i);
             if (c == '.') {
@@ -826,12 +958,12 @@ public final class ParserUtils {
         final int sLen = newString.length();
         final String s = newString.toString();
         if (sLen == 0 || (sLen == 1 && s.equals("-"))) {
-           return "0";
+            return "0";
         }
-        
+
         return newString.toString();
     }
-    
+
     /**
      * Removes chars from the String that could not 
      * be parsed into a Double value
@@ -841,11 +973,10 @@ public final class ParserUtils {
      */
     public static String stripNonDoubleChars(final String value) {
         final StringBuffer newString = new StringBuffer();
-        
+
         for (int i = 0; i < value.length(); i++) {
             final char c = value.charAt(i);
-            if (c >= '0' && c <= '9' || c == '-'
-                    || c == '.') {
+            if (c >= '0' && c <= '9' || c == '-' || c == '.') {
                 newString.append(c);
             }
         }
@@ -854,10 +985,10 @@ public final class ParserUtils {
         if (sLen == 0 || (sLen == 1 && s.equals(".")) || (sLen == 1 && s.equals("-"))) {
             return "0";
         }
-        
+
         return newString.toString();
     }
-    
+
     /**
      * Retrieves the conversion table for use with the getObject()
      * method in IDataSet
@@ -866,14 +997,14 @@ public final class ParserUtils {
      * @return Properties
      *              Properties contained in the pzconvert.properties file
      */
-    public static Properties loadConvertProperties() throws IOException{
+    public static Properties loadConvertProperties() throws IOException {
         final Properties pzConvertProps = new Properties();
         final URL url = ParserUtils.class.getClassLoader().getResource("pzconvert.properties");
         pzConvertProps.load(url.openStream());
-        
-        return pzConvertProps;        
+
+        return pzConvertProps;
     }
-    
+
     /**
      * Converts a String value to the appropriate Object via
      * the correct net.sf.pzfilereader.converter.PZConverter implementation
@@ -890,20 +1021,20 @@ public final class ParserUtils {
     public static Object runPzConverter(final Properties classXref, final String value, final Class typeToReturn) {
         final String sConverter = classXref.getProperty(typeToReturn.getName());
         if (sConverter == null) {
-            throw new PZConvertException (typeToReturn.getName() + " is not registered in pzconvert.properties");
+            throw new PZConvertException(typeToReturn.getName() + " is not registered in pzconvert.properties");
         }
         try {
-            final PZConverter pzconverter = (PZConverter)Class.forName(sConverter).newInstance();
+            final PZConverter pzconverter = (PZConverter) Class.forName(sConverter).newInstance();
             return pzconverter.convertValue(value);
-        } catch(IllegalAccessException ex) {
+        } catch (final IllegalAccessException ex) {
             throw new PZConvertException(ex);
-        } catch(InstantiationException ex) {
+        } catch (final InstantiationException ex) {
             throw new PZConvertException(ex);
-        } catch(ClassNotFoundException ex) {
+        } catch (final ClassNotFoundException ex) {
             throw new PZConvertException(ex);
         }
     }
-    
+
     /**
      * Returns a definition of pz column metadata from a given
      * pz datastructure held in an SQL database
@@ -916,33 +1047,32 @@ public final class ParserUtils {
      * @throws SQLException
      * @return List
      */
-    public static List buildMDFromSQLTable(final Connection con, final String dataDefinition) throws SQLException{
+    public static List buildMDFromSQLTable(final Connection con, final String dataDefinition) throws SQLException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         final List cmds = new ArrayList();
         try {
-            final String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON "
-                + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO " 
-                + "WHERE DATAFILE.DATAFILE_DESC = ? "
-                + "ORDER BY DATASTRUCTURE_COL_ORDER";
-    
+            final String sql =
+                    "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
+                            + "WHERE DATAFILE.DATAFILE_DESC = ? " + "ORDER BY DATASTRUCTURE_COL_ORDER";
+
             stmt = con.prepareStatement(sql); // always use PreparedStatement
             // as the DB can do clever things.
             stmt.setString(1, dataDefinition);
             rs = stmt.executeQuery();
-    
+
             int recPosition = 1;
             // put array of columns together. These will be used to put together
             // the dataset when reading in the file
             while (rs.next()) {
-    
+
                 final ColumnMetaData column = new ColumnMetaData();
                 column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
                 column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
                 column.setStartPosition(recPosition);
                 column.setEndPosition(recPosition + (rs.getInt("DATASTRUCTURE_LENGTH") - 1));
                 recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
-    
+
                 cmds.add(column);
             }
         } finally {
@@ -953,113 +1083,112 @@ public final class ParserUtils {
                 stmt.close();
             }
         }
-        
+
         return cmds;
     }
-    
-   
+
     //LEAVE AS A REFERENCE FOR POSSIBLE LATER USE
-   /* public static List splitLineWithBuf(String line, final char delimiter, char qualifier, int initialSize) {
-        List list = new ArrayList(initialSize);
+    /* public static List splitLineWithBuf(String line, final char delimiter, char qualifier, int initialSize) {
+     List list = new ArrayList(initialSize);
 
-        if (delimiter == 0) {
-            list.add(line);
-            return list;
-        } else if (line == null) {
-            return list;
-        }
+     if (delimiter == 0) {
+     list.add(line);
+     return list;
+     } else if (line == null) {
+     return list;
+     }
 
-        final String trimmedLine = line.trim();
-        int size = trimmedLine.length();
+     final String trimmedLine = line.trim();
+     int size = trimmedLine.length();
 
-        if (size == 0) {
-            list.add("");
-            return list;
-        }
+     if (size == 0) {
+     list.add("");
+     return list;
+     }
 
-        boolean insideQualifier = false;
-        char previousChar = 0;
-        boolean blockWasInQualifier = false;
-        StringBuffer buf = new StringBuffer(32);
+     boolean insideQualifier = false;
+     char previousChar = 0;
+     boolean blockWasInQualifier = false;
+     StringBuffer buf = new StringBuffer(32);
 
-        // final String doubleQualifier = String.valueOf(qualifier) +
-        // String.valueOf(qualifier);
-        for (int i = 0; i < size; i++) {
-            final char currentChar = trimmedLine.charAt(i);
-            if (currentChar != delimiter && currentChar != qualifier) {
-                previousChar = currentChar;
-                if (' ' != currentChar || insideQualifier || buf.length() > 0) {
-                    buf.append(currentChar);
-                }
-                continue;
-            }
+     // final String doubleQualifier = String.valueOf(qualifier) +
+     // String.valueOf(qualifier);
+     for (int i = 0; i < size; i++) {
+     final char currentChar = trimmedLine.charAt(i);
+     if (currentChar != delimiter && currentChar != qualifier) {
+     previousChar = currentChar;
+     if (' ' != currentChar || insideQualifier || buf.length() > 0) {
+     buf.append(currentChar);
+     }
+     continue;
+     }
 
-            if (currentChar == delimiter) {
-                // we've found the delimiter (eg ,)
-                if (!insideQualifier) {
-                    // String trimmed = trimmedLine.substring(startBlock,
-                    // endBlock > startBlock ? endBlock : startBlock + 1);
-                    String trimmed = buf.toString();
-                    if (!blockWasInQualifier) {
-                        trimmed = trimmed.trim();
-                        // trimmed = trimmed.replaceAll(doubleQualifier,
-                        // String.valueOf(qualifier));
-                    }
+     if (currentChar == delimiter) {
+     // we've found the delimiter (eg ,)
+     if (!insideQualifier) {
+     // String trimmed = trimmedLine.substring(startBlock,
+     // endBlock > startBlock ? endBlock : startBlock + 1);
+     String trimmed = buf.toString();
+     if (!blockWasInQualifier) {
+     trimmed = trimmed.trim();
+     // trimmed = trimmed.replaceAll(doubleQualifier,
+     // String.valueOf(qualifier));
+     }
 
-                    if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
-                        list.add("");
-                    } else {
-                        list.add(trimmed);
-                    }
-                    blockWasInQualifier = false;
-                    buf.delete(0, buf.length());
-                } else if (buf.length() != 1 || buf.charAt(0) != qualifier) {
-                    buf.append(currentChar);
-                } else {
-                    buf.delete(0, buf.length());
-                    insideQualifier = false;
-                    list.add("");
-                }
-            } else if (currentChar == qualifier) {
-                if (!insideQualifier && previousChar != qualifier) {
-                    if (previousChar == delimiter || previousChar == 0 || previousChar == ' ') {
-                        insideQualifier = true;
-                        int l = buf.length();
-                        if (l > 0) {
-                            buf.delete(0, l); // just entered a
-                            // qualifier, remove
-                            // whatever was
-                        }
-                    } else {
-                        buf.append(currentChar);
-                    }
-                } else {
-                    insideQualifier = false;
-                    blockWasInQualifier = true;
-                    if (previousChar == qualifier) {
-                        buf.append(qualifier);
-                        insideQualifier = true;
-                        previousChar = 0;
-                        continue;
-                    }
-                    // last column (e.g. finishes with ")
-                    if (i == size - 1) {
-                        // list.add(trimmedLine.substring(startBlock, size -
-                        // 1));
-                        list.add(buf.toString());
-                        buf.delete(0, buf.length());
-                    }
-                }
-            }
-            previousChar = currentChar;
-        }
+     if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
+     list.add("");
+     } else {
+     list.add(trimmed);
+     }
+     blockWasInQualifier = false;
+     buf.delete(0, buf.length());
+     } else if (buf.length() != 1 || buf.charAt(0) != qualifier) {
+     buf.append(currentChar);
+     } else {
+     buf.delete(0, buf.length());
+     insideQualifier = false;
+     list.add("");
+     }
+     } else if (currentChar == qualifier) {
+     if (!insideQualifier && previousChar != qualifier) {
+     if (previousChar == delimiter || previousChar == 0 || previousChar == ' ') {
+     insideQualifier = true;
+     int l = buf.length();
+     if (l > 0) {
+     buf.delete(0, l); // just entered a
+     // qualifier, remove
+     // whatever was
+     }
+     } else {
+     buf.append(currentChar);
+     }
+     } else {
+     insideQualifier = false;
+     blockWasInQualifier = true;
+     if (previousChar == qualifier) {
+     buf.append(qualifier);
+     insideQualifier = true;
+     previousChar = 0;
+     continue;
+     }
+     // last column (e.g. finishes with ")
+     if (i == size - 1) {
+     // list.add(trimmedLine.substring(startBlock, size -
+     // 1));
+     list.add(buf.toString());
+     buf.delete(0, buf.length());
+     }
+     }
+     }
+     previousChar = currentChar;
+     }
 
-        if (buf.length() > 0) {
-            list.add(buf.toString().trim());
-        } else if (trimmedLine.charAt(size - 1) == delimiter) {
-            list.add("");
-        }
+     if (buf.length() > 0) {
+     list.add(buf.toString().trim());
+     } else if (trimmedLine.charAt(size - 1) == delimiter) {
+     list.add("");
+     }
 
-        return list;
-    }*/
+     return list;
+     }*/
 }

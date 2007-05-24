@@ -8,8 +8,8 @@ package net.sf.pzfilereader.columninfile;
 import java.io.File;
 
 import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DefaultPZParserFactory;
 import net.sf.pzfilereader.DataSet;
+import net.sf.pzfilereader.DefaultPZParserFactory;
 import net.sf.pzfilereader.PZParser;
 import net.sf.pzfilereader.ordering.OrderBy;
 import net.sf.pzfilereader.ordering.OrderColumn;
@@ -28,7 +28,9 @@ public class DelimitedColumnNamesInFile {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File("net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+        final PZParser pzparser =
+                DefaultPZParserFactory.getInstance().newDelimitedParser(
+                        new File("net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
         final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
@@ -61,11 +63,12 @@ public class DelimitedColumnNamesInFile {
 
     public DataSet getDsForTest() throws Exception {
 
-        final PZParser parser = DefaultPZParserFactory.getInstance().newDelimitedParser(
-                new File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+        final PZParser parser =
+                DefaultPZParserFactory.getInstance().newDelimitedParser(
+                        new File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
 
         return parser.parse();
-        
+
         // return new DataSet(new
         // File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"),
         // ",",

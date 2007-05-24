@@ -27,17 +27,11 @@ import net.sf.pzfilereader.util.ParserUtils;
  */
 public class XMLRecordElement {
     private int startPosition = 0;
-
     private int endPositition = 0;
-
     private int elementNumber = 0;
-    
     private int elementCount = 0;
-
     private String indicator;
-
     private List columns;
-
     private Map columnIndex;
 
     /**
@@ -117,7 +111,7 @@ public class XMLRecordElement {
         this.columns = columns;
         this.columnIndex = ParserUtils.buidColumnIndexMap(columns, null);
     }
-    
+
     /**
      * @param columns
      *            The columns to set.
@@ -163,7 +157,7 @@ public class XMLRecordElement {
      * 
      * @param elementCount the elementCount to set
      */
-    public void setElementCount(int elementCount) {
+    public void setElementCount(final int elementCount) {
         this.elementCount = elementCount;
     }
 }

@@ -99,10 +99,8 @@ public class OrderBy implements Comparator, Serializable {
 
             // convert to one type of case so the comparator does not take case
             // into account when sorting
-            final Comparable comp0 = row0.getValue(ParserUtils.findColumn(
-                    oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
-            final Comparable comp1 = row1.getValue(ParserUtils.findColumn(
-                    oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
+            final Comparable comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
+            final Comparable comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
 
             // multiply by the sort indicator to get a ASC or DESC result
             result = comp0.compareTo(comp1) * oc.getSortIndicator();
