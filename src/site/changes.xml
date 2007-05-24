@@ -7,7 +7,8 @@
     <title>Changes</title>
   </properties>
   <body>
-	<release version="3.1.0" date="in svn" description="Maintenance">
+	<release version="3.1.0-SNAPSHOT" date="in svn" description="Maintenance">
+		<action dev="benoitx" type="change">Created a PZMetaData class for internal use, it contains the list of column names and index for fast access.</action>
 		<action dev="zepernick" type="change">Feature Request 1596087.  Added attribute "elementCount" on record
 		element mapping, which can determine a header, trailer, or detail record by the number of elements contained
 		on the record.  This only applies to delimited files.</action>
@@ -30,7 +31,7 @@
 		Added PZMapParser.parse(Reader).  Deprecated PZMapParser.parse(InputStream). </action>
 		<action dev="zepernick" type="fix">Stopped column lookup from being case sensitive</action>
 		<action dev="zepernick" type="change">Feature Request 1566626.  Added setIgnoreExtraColumns() method to the PZParser.
-		Added the ability to ignore extra columns/bytes	from delimited & fixed width files.  Data is truncated when it goes 
+		Added the ability to ignore extra columns/bytes	from delimited &amp; fixed width files.  Data is truncated when it goes 
 		outside of the column definition.</action>
 	</release>
     <release version="3.0.0" date="2007-02-11" description="Move to Maven and Subversion">
