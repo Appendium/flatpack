@@ -199,6 +199,18 @@
             project="default" statvalue="36" type="cobertura-branch"/>
         <summaryresult date="2007-02-11" filecount="2" module="default"
             project="default" statvalue="2" type="pmd"/>
+        <summaryresult date="2007-05-24" filecount="44" module="default"
+            project="default" statvalue="17" type="checkstyle"/>
+        <summaryresult date="2007-05-24" filecount="1" module="default"
+            project="default" statvalue="1" type="findbugs"/>
+        <summaryresult date="2007-05-24" filecount="6" module="default"
+            project="default" statvalue="118" type="simian"/>
+        <summaryresult date="2007-05-24" filecount="37" module="default"
+            project="default" statvalue="29" type="cobertura-line"/>
+        <summaryresult date="2007-05-24" filecount="37" module="default"
+            project="default" statvalue="37" type="cobertura-branch"/>
+        <summaryresult date="2007-05-24" filecount="1" module="default"
+            project="default" statvalue="1" type="pmd"/>
     </summary>
     <file id="default-default-com_pz_reader_ordering_package.html"
         module="default" path="com/pz/reader/ordering/package.html" project="default">
@@ -522,6 +534,8 @@
         <result date="2006-12-16" statvalue="100" type="cobertura-branch"/>
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="62" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_DataSet.java"
         module="default" path="net/sf/pzfilereader/DataSet.java" project="default">
@@ -561,6 +575,10 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="1" type="checkstyle"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="1" type="pmd"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_LargeDataSet.java"
         module="default" path="net/sf/pzfilereader/LargeDataSet.java" project="default">
@@ -636,6 +654,9 @@
         <result date="2007-02-11" statvalue="4" type="checkstyle"/>
         <result date="2007-02-11" statvalue="54" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="64" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="6" type="checkstyle"/>
+        <result date="2007-05-24" statvalue="45" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="56" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_xml_PZMapParser.java"
         module="default" path="net/sf/pzfilereader/xml/PZMapParser.java" project="default">
@@ -693,6 +714,7 @@
         <result date="2006-12-16" statvalue="33" type="cobertura-branch"/>
         <result date="2007-01-18" statvalue="45" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="45" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="54" type="cobertura-line"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_structure_ColumnMetaData.java"
@@ -718,6 +740,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="66" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="66" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_Version.java"
         module="default" path="net/sf/pzfilereader/Version.java" project="default">
@@ -731,12 +755,14 @@
         <result date="2006-12-16" statvalue="100" type="cobertura-branch"/>
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_xml_XMLRecordElement.java"
         module="default"
         path="net/sf/pzfilereader/xml/XMLRecordElement.java" project="default">
         <result date="2006-10-17" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="1" type="checkstyle"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_util_PZConstants.java"
         module="default"
@@ -750,6 +776,7 @@
         <result date="2006-12-16" statvalue="100" type="cobertura-branch"/>
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_AbstractDelimiterPZParser.java"
@@ -777,6 +804,9 @@
         <result date="2007-02-11" statvalue="3" type="checkstyle"/>
         <result date="2007-02-11" statvalue="56" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="66" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="2" type="checkstyle"/>
+        <result date="2007-05-24" statvalue="59" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="68" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_DelimiterPZParser.java"
@@ -797,6 +827,9 @@
         <result date="2007-01-18" statvalue="75" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="37" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="75" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="1" type="checkstyle"/>
+        <result date="2007-05-24" statvalue="42" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="71" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_FixedLengthPZParser.java"
@@ -839,6 +872,7 @@
         <result date="2007-01-18" statvalue="2" type="checkstyle"/>
         <result date="2007-01-18" statvalue="2" type="pmd"/>
         <result date="2007-02-11" statvalue="2" type="checkstyle"/>
+        <result date="2007-05-24" statvalue="2" type="checkstyle"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_util_FixedWidthParserUtils.java"
@@ -861,6 +895,8 @@
         <result date="2007-01-18" statvalue="16" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="30" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="16" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="20" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="10" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_util_RegExParser.java"
         module="default"
@@ -904,6 +940,8 @@
         <result date="2007-01-18" statvalue="50" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="43" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="50" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="76" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="83" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_DefaultDataSet.java"
         module="default" path="net/sf/pzfilereader/DefaultDataSet.java" project="default">
@@ -922,6 +960,9 @@
         <result date="2007-01-18" statvalue="11" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="22" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="11" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="1" type="checkstyle"/>
+        <result date="2007-05-24" statvalue="34" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="33" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_DefaultPZParserFactory.java"
@@ -939,6 +980,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="33" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="29" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_PZParser.java"
         module="default" path="net/sf/pzfilereader/PZParser.java" project="default">
@@ -954,6 +997,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_PZParserFactory.java"
         module="default" path="net/sf/pzfilereader/PZParserFactory.java" project="default">
@@ -969,6 +1014,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_InitialisationException.java"
@@ -980,6 +1027,7 @@
         <result date="2006-12-16" statvalue="100" type="cobertura-branch"/>
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_converter_package.html"
@@ -1001,6 +1049,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_converter_ConvertBigDecimal.java"
@@ -1015,6 +1065,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_converter_PZConvertException.java"
@@ -1025,6 +1077,7 @@
         <result date="2006-12-16" statvalue="100" type="cobertura-branch"/>
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file id="default-default-net_sf_pzfilereader_brparse_package.html"
         module="default" path="net/sf/pzfilereader/brparse/package.html" project="default">
@@ -1066,6 +1119,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_converter_ConvertInteger.java"
@@ -1079,6 +1134,8 @@
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-line"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_brparse_BuffReaderPZParseFactory.java"
@@ -1088,6 +1145,7 @@
         <result date="2006-12-16" statvalue="100" type="cobertura-branch"/>
         <result date="2007-01-18" statvalue="100" type="cobertura-branch"/>
         <result date="2007-02-11" statvalue="100" type="cobertura-branch"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
     <file
         id="default-default-net_sf_pzfilereader_brparse_BuffReaderPZDataSet.java"
@@ -1100,5 +1158,19 @@
         <result date="2006-12-16" statvalue="1" type="pmd"/>
         <result date="2007-01-18" statvalue="1" type="pmd"/>
         <result date="2007-02-11" statvalue="1" type="pmd"/>
+    </file>
+    <file
+        id="default-default-net_sf_pzfilereader_util_PZStringUtils.java"
+        module="default"
+        path="net/sf/pzfilereader/util/PZStringUtils.java" project="default">
+        <result date="2007-05-24" statvalue="3" type="checkstyle"/>
+        <result date="2007-05-24" statvalue="25" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="25" type="cobertura-branch"/>
+    </file>
+    <file id="default-default-net_sf_pzfilereader_xml_PZMetaData.java"
+        module="default" path="net/sf/pzfilereader/xml/PZMetaData.java" project="default">
+        <result date="2007-05-24" statvalue="1" type="findbugs"/>
+        <result date="2007-05-24" statvalue="41" type="cobertura-line"/>
+        <result date="2007-05-24" statvalue="100" type="cobertura-branch"/>
     </file>
 </qalab>
