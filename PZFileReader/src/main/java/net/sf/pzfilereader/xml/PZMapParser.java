@@ -235,7 +235,6 @@ public final class PZMapParser {
         showDebug = b;
     }
 
-    //TODO convert to logger instead of system out
     private static void showDebug(final Map xmlResults) {
         final Iterator mapIt = xmlResults.entrySet().iterator();
         while (mapIt.hasNext()) {
