@@ -4,11 +4,11 @@
   </properties>
   <head>
     <meta name="description"
-	content="Mentions of the PZFileReader."
+	content="Mentions of the FlatPack."
 	/>
 
     <meta name="keywords"
-        content="Flat file parser, CSV parser, PZFileReader, sourceforge, java, open source" />
+        content="Flat file parser, CSV parser, FlatPack, PZFileReader, sourceforge, java, open source" />
     <meta name="Subject" content="Flat File Parser" />
     <meta name="Copyright" content="Paul Zepernick and ObjectLab Financial Ltd" />
     <meta name="Language" content="English" />

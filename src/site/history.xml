@@ -19,9 +19,9 @@
   </head>
   <body>
     <!-- The body of the document contains a number of sections -->
-    <section name="PZFileReader History">
+    <section name="FlatPack / PZFileReader History">
 
-    <p>The base code for PZFileReader was started from a project I worked on at my job.  At the time, I was writing quite 
+    <p>The base code for FlatPack was started as PZFileReader.  At the time, I was writing quite 
     a few file imports which were mostly fixed width.  I kept encountering the same problem; we had to add something 
     to the file layout somewhere, or expand a length, thus changing all the substrings in the code.</p>
     
@@ -45,6 +45,7 @@
     They developed the Maven build, the website and are active members of this project. They are world leaders in the design
     and development of bespoke applications for the Securities Finance Industry.</p>
     
+    <p>In May 2007, we realised that PZFileReader was actually much more than what the name implied... we then renamed it FlatPack!</p>
     </section>
 
   </body>

@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <!DOCTYPE PZMAP SYSTEM
-	"pzfilereader.dtd" >
+	"flatpack.dtd" >
 <PZMAP>
 	<COLUMN name="FIRSTNAME" length="35" />
 	<COLUMN name="LASTNAME" length="35" />
