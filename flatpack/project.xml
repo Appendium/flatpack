@@ -34,10 +34,10 @@
    </description>
    <repository>
       <connection>
-         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/PZFileReader
+         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/flatpack
       </connection>
       <developerConnection>
-         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/PZFileReader
+         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/flatpack
       </developerConnection>
    </repository>
    <dependencies />

@@ -1,11 +1,11 @@
 <document>
   <properties>
     <author email="Kit@objectlab.co.uk">Benoit Xhenseval</author>
-    <title>PZFileReader Into</title>
+    <title>FlatPack Into</title>
   </properties>
   <head>
     <meta name="description"
-	content="PZFIle Reader Apache 2.0 license."
+	content="FlatPack Apache 2.0 license."
 	/>
 
     <meta name="keywords"
@@ -20,7 +20,7 @@
   </head>
   <body>
     <!-- The body of the document contains a number of sections -->
-    <section name="PZFileReader Examples">
+    <section name="FlatPack Examples">
 
     <p>Check out the <a href="apidocs/index.html">UML diagrams here</a></p>
     <p>Also look at the <a href="maven-reports.html">Project Reports</a> menu on the left for project specific items, unit tests, QA etc.</p>

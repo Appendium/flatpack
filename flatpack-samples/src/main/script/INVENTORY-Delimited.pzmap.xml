@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <!DOCTYPE PZMAP SYSTEM
-	"pzfilereader.dtd" >
+	"flatpack.dtd" >
 <PZMAP>
 	<COLUMN name="ITEM_DESC" />
 	<COLUMN name="IN_STOCK" />

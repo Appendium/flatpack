@@ -109,7 +109,7 @@
          <unsubscribe>
             http://lists.sourceforge.net/lists/listinfo/flatpack-user
          </unsubscribe>
-         <post>pzfilereader-user@lists.sourceforge.net</post>
+         <post>flatpack-user@lists.sourceforge.net</post>
          <archive>
             http://sourceforge.net/mailarchive/forum.php?forum=flatpack-user
          </archive>
@@ -124,7 +124,7 @@
          </unsubscribe>
          <post/>
          <archive>
-            http://sourceforge.net/mailarchive/forum.php?forum=pzfilereader-svn
+            http://sourceforge.net/mailarchive/forum.php?forum=flatpack-svn
          </archive>
       </mailingList>
       <mailingList>

@@ -1,10 +1,10 @@
 <document>
   <properties>
-    <title>PZFileReader XML Examples</title>
+    <title>FlatPack XML Examples</title>
   </properties>
   <head>
     <meta name="description"
-	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	content="FlatPack offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
 	/>
 
     <meta name="keywords"
@@ -20,7 +20,7 @@
   <body>
     <!-- The body of the document contains a number of sections -->
     <section name="Documentation">
-    <p>A manual is available as <a href="pzfilereader-manual.doc">Word</a> document or a <a href="pzfilereader-manual.pdf">PDF</a>.</p>
+    <p>A manual is available as <a href="flatpack-manual.doc">Word</a> document or a <a href="flatpack-manual.pdf">PDF</a>.</p>
     </section>
 
     <section name="XML Examples">
@@ -30,8 +30,8 @@
 	<pre>
 &lt;?xml version="1.0"?>
 &lt;!-- DTD can be pulled from the Jar or over the web-->
-&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
-&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+&lt;!DOCTYPE PZMAP SYSTEM	"flatpack.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://flatpack.sourceforge.net/flatpack.dtd" >-->
 &lt;PZMAP>
 	&lt;COLUMN name="FIRSTNAME" />
 	&lt;COLUMN name="LASTNAME" />
@@ -50,8 +50,8 @@
 	<pre>
 &lt;?xml version='1.0'?>
 &lt;!-- DTD can be pulled from the Jar or over the web-->
-&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
-&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+&lt;!DOCTYPE PZMAP SYSTEM	"flatpack.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://flatpack.sourceforge.net/flatpack.dtd" >-->
 &lt;PZMAP>
     &lt;RECORD id="header" indicator="H" elementNumber="1">
         &lt;COLUMN name="RECORDINDICATOR" />
@@ -78,8 +78,8 @@
 	<pre>
 &lt;?xml version="1.0"?>
 &lt;!-- DTD can be pulled from the Jar or over the web-->
-&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
-&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+&lt;!DOCTYPE PZMAP SYSTEM	"flatpack.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://flatpack.sourceforge.net/flatpack.dtd" >-->
 &lt;PZMAP>
 	&lt;COLUMN name="FIRSTNAME" length="35" />
 	&lt;COLUMN name="LASTNAME" length="35" />
@@ -98,8 +98,8 @@
 	<pre>
 &lt;?xml version='1.0'?>
 &lt;!-- DTD can be pulled from the Jar or over the web-->
-&lt;!DOCTYPE PZMAP SYSTEM	"pzfilereader.dtd" >
-&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://pzfilereader.sourceforge.net/pzfilereader.dtd" >-->
+&lt;!DOCTYPE PZMAP SYSTEM	"flatpack.dtd" >
+&lt;!--&lt;!DOCTYPE PZMAP SYSTEM	"http://flatpack.sourceforge.net/flatpack.dtd" >-->
 
 &lt;PZMAP>
     &lt;RECORD id="header" startPosition="1" endPosition="7" indicator="HEADER ">

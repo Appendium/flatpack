@@ -7,7 +7,8 @@
     <title>Changes</title>
   </properties>
   <body>
-	<release version="3.1.0-SNAPSHOT" date="in svn" description="Maintenance">
+	<release version="3.1.0-SNAPSHOT" date="in svn" description="NAME CHANGE">
+		<action dev="benoitx" type="change">Goodbye PZFileReader, Hello FlatPack!!!</action>
 		<action dev="benoitx" type="change">Created a PZMetaData class for internal use, it contains the list of column names and index for fast access.</action>
 		<action dev="zepernick" type="change">Feature Request 1596087.  Added attribute "elementCount" on record
 		element mapping, which can determine a header, trailer, or detail record by the number of elements contained

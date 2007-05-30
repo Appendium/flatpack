@@ -4,7 +4,7 @@
   </properties>
   <head>
     <meta name="description"
-	content="PZFileReader offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
+	content="FlatPack offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license."
 	/>
 
     <meta name="keywords" content="CSV, Fixed length file parser" />

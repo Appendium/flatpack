@@ -26,33 +26,33 @@
     <p>Feb 11, 2007: PZFileReader 3.0.0 is released, new interfaces (not backward compatible) but great performance improvements (order of magnitude).</p>
     </section>
 
-    <section name="PZFileReader Introduction">
+    <section name="FlatPack Introduction">
 
-    <p>PZFileReader came out of the frustration of having to mix file parsing logic with business logic.</p>
+    <p>FlatPack came out of the frustration of having to mix file parsing logic with business logic.</p>
     
-    <p>PZFileReader on SourceForge: a Java (1.4+) flat file parser that handles CSV, fixed length and custom delimiters. The formats are configured in XML, it is fast and released under Apache license 2.0.</p>
+    <p>FlatPack on SourceForge: a Java (1.4+) flat file parser that handles CSV, fixed length and custom delimiters. The formats are configured in XML, it is fast and released under Apache license 2.0.</p>
     
     <p>Substrings in a <strong>fixed width parse</strong> can be daunting to deal with when trying to analyze what existing code is doing, 
     and what about when you have no comments...</p>
     
     <p>We also provide <strong>delimited file parsing</strong>; works with any delimiter / qualifier, multiline records, delimiter or qualifier allowed in column value.</p>
     
-    <p>A manual is available as <a href="documentation/pzfilereader-manual.doc">Word</a> document or a <a href="documentation/pzfilereader-manual.pdf">PDF</a>.</p>
+    <p>A manual is available as <a href="documentation/flatpack-manual.doc">Word</a> document or a <a href="documentation/flatpack-manual.pdf">PDF</a>.</p>
     
-    <p>PZFileReader is part of the ObjectLab Kit family.<a href="http://digg.com/submit?phase=2&amp;url=objectlabkit.sourceforge.net&amp;title=Paul%20Zepernick%20and%20ObjectLab%20have%20released%20version%202%2E3%2E0%20of%20PZFileReader%2E&amp;bodytext=PZFileReader%20on%20SourceForge%3A%20a%20Java%20(1%2E4%2B)%20flat%20file%20parser%20that%20handles%20CSV,%20fixed%20length%20and%20custom%20delimiters%2E%20The%20formats%20are%20configured%20in%20XML%20or%20in%20DB%2E%20Once%20parsed%20the%20data%20is%20easily%20accessible%20record%20by%20record%20and%20via%20a%20column%20name,%20regardless%20of%20order%2E%20%20It%20is%20fast%20and%20released%20under%20Apache%20license%202%2E0%2E&amp;topic=programming">
+    <p>FlatPack is part of the ObjectLab Kit family.<a href="http://digg.com/submit?phase=2&amp;url=objectlabkit.sourceforge.net&amp;title=Paul%20Zepernick%20and%20ObjectLab%20have%20released%20version%202%2E3%2E0%20of%20FlatPack%2E&amp;bodytext=FlatPack%20on%20SourceForge%3A%20a%20Java%20(1%2E4%2B)%20flat%20file%20parser%20that%20handles%20CSV,%20fixed%20length%20and%20custom%20delimiters%2E%20The%20formats%20are%20configured%20in%20XML%20or%20in%20DB%2E%20Once%20parsed%20the%20data%20is%20easily%20accessible%20record%20by%20record%20and%20via%20a%20column%20name,%20regardless%20of%20order%2E%20%20It%20is%20fast%20and%20released%20under%20Apache%20license%202%2E0%2E&amp;topic=programming">
     <img src="http://digg.com/img/badges/91x17-digg-button.png" width="91" height="17" alt="Digg!" style="vertical-align:middle" /></a></p>    
 
-    <subsection name="Why should you use PZFileReader?">
+    <subsection name="Why should you use FlatPack?">
 
 	<p>There is more to it than one could imagine at first sight:</p>
 	<ul>
 	
 	<li><strong>Problem Sorting Data Prior To File Processing?</strong></li>
-	<ul><li>PZFileReader provides a sorting mechanism for your flat files.  This allows for your data to be properly sorted before processing your business logic.</li></ul>
+	<ul><li>FlatPack provides a sorting mechanism for your flat files.  This allows for your data to be properly sorted before processing your business logic.</li></ul>
 
     
     	<li><strong>Bad Numeric Data?</strong></li>
-    	<ul><li>Do you often receive numeric data with dollar signs, or commas?  PZFileReader has the ability to strip these out and return as a double or int.  
+    	<ul><li>Do you often receive numeric data with dollar signs, or commas?  FlatPack has the ability to strip these out and return as a double or int.  
             Even empty elements or hard spaces can be converted to a numeric without issue.</li></ul>
 
     	<li><strong>Problems With One Bad Record Blowing Up The Entire Parse?</strong></li>
@@ -68,8 +68,8 @@
     <subsection name="UML?">
     <p>We are using yDoc to generate a 'javadoc-like' documentation per module with the added twist of UML diagrams:</p>
     <ul>
-       <li><a href="multiproject/pzfilereader/apidocs/index.html">UML for PZFileReader</a></li>
-       <li><a href="multiproject/pzfilereader-examples/apidocs/index.html">UML for Examples</a></li>
+       <li><a href="multiproject/flatpack/apidocs/index.html">UML for FlatPack</a></li>
+       <li><a href="multiproject/flatpack-examples/apidocs/index.html">UML for Examples</a></li>
     </ul>
     </subsection>
 
@@ -155,7 +155,7 @@
       
     </subsection>
 
-    <subsection name="Using SLF4J With PZFileReader">
+    <subsection name="Using SLF4J With FlatPack">
     
     <div class="source"><pre>
 		Slf4j is utilized to capture logging information that occurred during a parse. 
