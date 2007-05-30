@@ -3,7 +3,7 @@
 <!--
    /*  
    * ========================================================================
-   * ObjectLab Financial Ltd, proud sponsor of PZFileReader.
+   * ObjectLab Financial Ltd, proud sponsor of FlatPack.
    * ========================================================================
    */
 -->
@@ -13,7 +13,7 @@
    xmlns:define="jelly:define" xmlns:doc="doc" xmlns:util="jelly:util"
    xmlns:log="jelly:log">
 
-   <goal name="pz:copyscript">
+   <goal name="fp:copyscript">
         <ant:copy todir="${maven.build.dir}">
             <ant:fileset dir="${maven.src.dir}/main/script" includes="*.bat">
 	    </ant:fileset>
@@ -23,7 +23,7 @@
 	    </ant:filterset>
         </ant:copy>
         <ant:copy todir="${maven.build.dir}">
-            <ant:fileset dir="${basedir}/../pzfilereader/target" includes="*.jar"/>
+            <ant:fileset dir="${basedir}/../flatpack/target" includes="*.jar"/>
         </ant:copy>
         <ant:copy todir="${maven.build.dir}">
             <ant:fileset dir="${basedir}/../common-build/lib" includes="*.jar"/>
@@ -35,6 +35,6 @@
         </ant:copy>
    </goal>
 
-   <goal name="pz:build" prereqs="jar:install,pz:copyscript" />
-   <goal name="pz:rebuild" prereqs="clean,pz:build" />
+   <goal name="fp:build" prereqs="jar:install,fp:copyscript" />
+   <goal name="fp:rebuild" prereqs="clean,fp:build" />
 </project>

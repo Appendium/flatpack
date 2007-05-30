@@ -24,26 +24,26 @@
 
 <project>
    <extend>../common-build/project.xml</extend>
-   <name>PZFileReader Examples</name>
-   <artifactId>pzfilereader-examples</artifactId>
-   <package>net.sf.pzfilereader</package>
+   <name>FlatPack Examples</name>
+   <artifactId>flatpack-examples</artifactId>
+   <package>net.sf.flatpack</package>
    <shortDescription>Examples for Flat File Parser via XML Mappings (fixed length,csv)</shortDescription>
    <description>
        Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
-       Maps column positions in the file to user friendly names via XML. See PZFileReader Feature List under News for complete feature list.
+       Maps column positions in the file to user friendly names via XML. See FlatPack Feature List under News for complete feature list.
    </description>
    <repository>
       <connection>
-         scm:svn:https://svn.sourceforge.net/svnroot/pzfilereader/trunk/PZFileReader
+         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/PZFileReader
       </connection>
       <developerConnection>
-         scm:svn:https://svn.sourceforge.net/svnroot/pzfilereader/trunk/PZFileReader
+         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/PZFileReader
       </developerConnection>
    </repository>
    <dependencies>
       <dependency>
-         <groupId>net.sf.pzfilereader</groupId>
-         <artifactId>pzfilereader</artifactId>
+         <groupId>net.sf.flatpack</groupId>
+         <artifactId>flatpack</artifactId>
          <version>${pom.currentVersion}</version>
          <type>jar</type>
       </dependency>
@@ -71,7 +71,7 @@
             <filtering>false</filtering>
          </resource>
 <!--         <resource>
-            <directory>${basedir}/../pzfilereader/target</directory>
+            <directory>${basedir}/../flatpack/target</directory>
             <includes>
                <include>**/*.jar</include>
             </includes>

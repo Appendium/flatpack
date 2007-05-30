@@ -24,8 +24,8 @@
 
 <project>
    <extend>${basedir}/common-build/project.xml</extend>
-   <artifactId>pzfilereader-site</artifactId>
-   <name>PZFileReader</name>
+   <artifactId>flatpack-site</artifactId>
+   <name>FlatPack</name>
    <shortDescription>
        Flat File Parser via XML Mappings (fixed length,csv).
    </shortDescription>
