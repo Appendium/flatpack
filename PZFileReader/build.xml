@@ -1,6 +1,6 @@
-<project name="PZFileReader" default="docs" basedir=".">
+<project name="FlatPack" default="docs" basedir=".">
     <description>
-        Disto Build Script For pzFileReader
+        Disto Build Script For FlatPack
     </description>
   <!-- set global properties for this build -->
   <property name="src" location="./src/main/java"/>
@@ -52,7 +52,7 @@
   <target name="dist" depends="compile"
         description="generate the distribution" >
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/pzFileReader${version}.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/flatpack${version}.jar" basedir="${build}"/>
   	<delete dir="${build}"/>
   </target>
 
@@ -63,14 +63,14 @@
 	
   <target name="docs" depends="clean">
    <!-- create javadocs -->
-	 <javadoc packagenames="net.sf.pzfilereader.*"
+	 <javadoc packagenames="net.sf.flatpack.*"
 	           sourcepath="${dist}/source"
 	           defaultexcludes="yes"
 	           destdir="JavaDocs"
 	           author="true"
 	           version="true"
 	           use="true"
-	           windowtitle="pzFileReader Documentation Version: ${version}">
+	           windowtitle="flatpack Documentation Version: ${version}">
 	 </javadoc>
     <copy todir="${dist}/JavaDocs">
       <fileset dir="JavaDocs" includes="**/*"/>

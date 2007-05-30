@@ -26,7 +26,7 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/POM/3.0.0 http://maven.apache.org/maven-v3_0_0.xsd">
    <pomVersion>3</pomVersion>
-   <groupId>net.sf.pzfilereader</groupId>
+   <groupId>net.sf.flatpack</groupId>
    <currentVersion>3.1.0-SNAPSHOT</currentVersion>
    <organization>
       <name>ObjectLab Financial Ltd</name>
@@ -36,19 +36,19 @@
       </logo>
    </organization>
    <inceptionYear>2006</inceptionYear>
-   <url>http://pzfilereader.sourceforge.net</url>
+   <url>http://flatpack.sourceforge.net</url>
    <issueTrackingUrl>
          http://www.sourceforge.net/tracker/?group_id=127761
    </issueTrackingUrl>
-   <siteAddress>pzfilereader.sourceforge.net</siteAddress>
+   <siteAddress>flatpack.sourceforge.net</siteAddress>
    <siteDirectory/>
    <repository>
-      <url>http://pzfilereader.svn.sourceforge.net/pzfilereader</url>
+      <url>http://flatpack.svn.sourceforge.net/flatpack</url>
       <connection>
-         scm:svn:https://pzfilereader.svn.sourceforge.net/svnroot/pzfilereader/trunk
+         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk
       </connection>
       <developerConnection>
-         scm:svn:https://pzfilereader.svn.sourceforge.net/svnroot/pzfilereader/trunk
+         scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk
       </developerConnection>
    </repository>
    <developers>
@@ -89,7 +89,7 @@
    <!-- any mailing lists for the project -->
    <mailingLists>
       <mailingList>
-         <name>PZFileReader Announcements (via ObjectLab Kit list)</name>
+         <name>FlatPack Announcements (via ObjectLab Kit list)</name>
          <subscribe>
             http://lists.sourceforge.net/lists/listinfo/objectlabkit-announce
          </subscribe>
@@ -102,25 +102,25 @@
          </archive>
       </mailingList>
       <mailingList>
-         <name>PZFileReader User</name>
+         <name>FlatPack User</name>
          <subscribe>
-            http://lists.sourceforge.net/lists/listinfo/pzfilereader-user
+            http://lists.sourceforge.net/lists/listinfo/flatpack-user
          </subscribe>
          <unsubscribe>
-            http://lists.sourceforge.net/lists/listinfo/pzfilereader-user
+            http://lists.sourceforge.net/lists/listinfo/flatpack-user
          </unsubscribe>
          <post>pzfilereader-user@lists.sourceforge.net</post>
          <archive>
-            http://sourceforge.net/mailarchive/forum.php?forum=pzfilereader-user
+            http://sourceforge.net/mailarchive/forum.php?forum=flatpack-user
          </archive>
       </mailingList>
       <mailingList>
-         <name>PZFileReader Developers (SVN checkins)</name>
+         <name>FlatPack Developers (SVN checkins)</name>
          <subscribe>
-            http://lists.sourceforge.net/lists/listinfo/pzfilereader-svn
+            http://lists.sourceforge.net/lists/listinfo/flatpack-svn
          </subscribe>
          <unsubscribe>
-            http://lists.sourceforge.net/lists/listinfo/pzfilereader-svn
+            http://lists.sourceforge.net/lists/listinfo/flatpack-svn
          </unsubscribe>
          <post/>
          <archive>
