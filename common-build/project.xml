@@ -177,7 +177,7 @@
       <!-- We need to put here something other when we release it or I'll receive the emails from
          everyone who tries to use the project... -->
       <nagEmailAddress>pzepernick@gmail.com</nagEmailAddress>
-      <defaultGoal>pz:build</defaultGoal>
+      <defaultGoal>fp:build</defaultGoal>
    </build>
 
    <reports>
