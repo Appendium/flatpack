@@ -47,19 +47,19 @@ import net.sf.flatpack.util.ParserUtils;
  * @author zepernick
  * 
  */
-public class DBDelimiterPZParser extends AbstractDelimiterPZParser {
+public class DBDelimiterParser extends AbstractDelimiterParser {
     private Connection con;
 
     private InputStream dataSourceStream;
 
-    public DBDelimiterPZParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
+    public DBDelimiterParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
         super(null, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
         this.con = con;
         this.dataSourceStream = dataSourceStream;
     }
 
-    public DBDelimiterPZParser(final Connection con, final Reader dataSourceReader, final String dataDefinition, final char delimiter,
+    public DBDelimiterParser(final Connection con, final Reader dataSourceReader, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceReader, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
         this.con = con;

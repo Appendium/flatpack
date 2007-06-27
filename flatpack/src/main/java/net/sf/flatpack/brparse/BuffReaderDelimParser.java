@@ -41,51 +41,51 @@ import java.util.List;
 
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultDataSet;
-import net.sf.flatpack.DelimiterPZParser;
+import net.sf.flatpack.DelimiterParser;
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BuffReaderDelimPZParser extends DelimiterPZParser {
+public class BuffReaderDelimParser extends DelimiterParser {
     private BufferedReader br;
 
     private boolean processedFirst = false;
 
-    private final Logger logger = LoggerFactory.getLogger(BuffReaderDelimPZParser.class);
+    private final Logger logger = LoggerFactory.getLogger(BuffReaderDelimParser.class);
 
-    public BuffReaderDelimPZParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
+    public BuffReaderDelimParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         super(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public BuffReaderDelimPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter, final char qualifier,
+    public BuffReaderDelimParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         super(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public BuffReaderDelimPZParser(final File dataSource, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+    public BuffReaderDelimParser(final File dataSource, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public BuffReaderDelimPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+    public BuffReaderDelimParser(final InputStream dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public BuffReaderDelimPZParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
+    public BuffReaderDelimParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         super(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public BuffReaderDelimPZParser(final Reader dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+    public BuffReaderDelimParser(final Reader dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
     public DataSet doParse() {
         //        final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
-        final DataSet ds = new BuffReaderPZDataSet(getPzMetaData(), this);
+        final DataSet ds = new BuffReaderDataSet(getPzMetaData(), this);
         try {
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
@@ -134,7 +134,7 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
             //is it going to create too much overhead to do a null check here as well???
             //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
             // column values
-            List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), PZConstants.SPLITLINE_SIZE_INIT);
+            List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
             //            final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
             final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
             //            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
@@ -172,7 +172,7 @@ public class BuffReaderDelimPZParser extends DelimiterPZParser {
             }
 
             final Row row = new Row();
-            row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
+            row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
             // to limit the memory use
             row.setCols(columns);
             row.setRowNumber(getLineCount());

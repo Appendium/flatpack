@@ -44,10 +44,10 @@ import java.util.Properties;
 import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.util.PZConstants;
-import net.sf.flatpack.util.PZStringUtils;
+import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FPStringUtils;
 import net.sf.flatpack.util.ParserUtils;
-import net.sf.flatpack.xml.PZMetaData;
+import net.sf.flatpack.xml.MetaData;
 
 /**
  * @author xhensevb
@@ -77,9 +77,9 @@ public class DefaultDataSet implements DataSet {
 
     //    private Map columnMD;
 
-    private PZMetaData pzMetaData;
+    private MetaData pzMetaData;
 
-    private PZParser pzparser;
+    private Parser pzparser;
 
     //    /**
     //     * @deprecated use the constructor with PZMetaData 
@@ -89,7 +89,7 @@ public class DefaultDataSet implements DataSet {
     //        this.pzparser = pzparser;
     //    }
 
-    public DefaultDataSet(final PZMetaData pzMetaData, final PZParser pzparser) {
+    public DefaultDataSet(final MetaData pzMetaData, final Parser pzparser) {
         this.pzMetaData = pzMetaData;
         this.pzparser = pzparser;
     }
@@ -161,7 +161,7 @@ public class DefaultDataSet implements DataSet {
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
         final String s = getStringValue(column);
-        if (PZStringUtils.isBlank(s)) {
+        if (FPStringUtils.isBlank(s)) {
             //don't do the parse on empties
             return null;
         }
@@ -269,7 +269,7 @@ public class DefaultDataSet implements DataSet {
     public String getString(final String column) {
         final String s = getStringValue(column);
 
-        if (pzparser.isNullEmptyStrings() && PZStringUtils.isBlank(s)) {
+        if (pzparser.isNullEmptyStrings() && FPStringUtils.isBlank(s)) {
             return null;
         }
 
@@ -402,7 +402,7 @@ public class DefaultDataSet implements DataSet {
     public boolean isRecordID(final String recordID) {
         String rowID = ((Row) rows.get(pointer)).getMdkey();
         if (rowID == null) {
-            rowID = PZConstants.DETAIL_ID;
+            rowID = FPConstants.DETAIL_ID;
         }
 
         return rowID.equals(recordID);
@@ -466,11 +466,11 @@ public class DefaultDataSet implements DataSet {
         rows.clear();
     }
 
-    public PZMetaData getPzMetaData() {
+    public MetaData getPzMetaData() {
         return pzMetaData;
     }
 
-    public void setPzMetaData(final PZMetaData pzMetaData) {
+    public void setPzMetaData(final MetaData pzMetaData) {
         this.pzMetaData = pzMetaData;
     }
 

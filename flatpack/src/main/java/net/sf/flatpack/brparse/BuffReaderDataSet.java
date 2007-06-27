@@ -37,17 +37,17 @@ import java.io.IOException;
 import net.sf.flatpack.DefaultDataSet;
 import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.xml.PZMetaData;
+import net.sf.flatpack.xml.MetaData;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BuffReaderPZDataSet extends DefaultDataSet {
-    private final BuffReaderDelimPZParser brDelimPzParser;
+public class BuffReaderDataSet extends DefaultDataSet {
+    private final BuffReaderDelimParser brDelimPzParser;
 
-    private final BuffReaderFixedPZParser brFixedPzParser;
+    private final BuffReaderFixedParser brFixedPzParser;
 
-    private final Logger logger = LoggerFactory.getLogger(BuffReaderPZDataSet.class);
+    private final Logger logger = LoggerFactory.getLogger(BuffReaderDataSet.class);
 
     //    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
     //        super(columnMD2, brDelimPzParser);
@@ -65,7 +65,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet {
     //        this.brDelimPzParser = null;
     //    }
 
-    public BuffReaderPZDataSet(final PZMetaData columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
+    public BuffReaderDataSet(final MetaData columnMD2, final BuffReaderDelimParser brDelimPzParser) {
         super(columnMD2, brDelimPzParser);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
@@ -73,7 +73,7 @@ public class BuffReaderPZDataSet extends DefaultDataSet {
         this.brFixedPzParser = null;
     }
 
-    public BuffReaderPZDataSet(final PZMetaData columnMD2, final BuffReaderFixedPZParser brFixedPzParser) {
+    public BuffReaderDataSet(final MetaData columnMD2, final BuffReaderFixedParser brFixedPzParser) {
         super(columnMD2, brFixedPzParser);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed

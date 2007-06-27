@@ -42,7 +42,7 @@ import net.sf.flatpack.util.ParserUtils;
  *  
  * @author Paul Zepernick
  */
-public class ConvertDouble implements PZConverter {
+public class ConvertDouble implements Converter {
 
     /*
      * (non-Javadoc)

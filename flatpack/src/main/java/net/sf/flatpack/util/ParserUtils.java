@@ -56,11 +56,11 @@ import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Map.Entry;
 
-import net.sf.flatpack.PZParser;
-import net.sf.flatpack.converter.PZConvertException;
-import net.sf.flatpack.converter.PZConverter;
+import net.sf.flatpack.Parser;
+import net.sf.flatpack.converter.FPConvertException;
+import net.sf.flatpack.converter.Converter;
 import net.sf.flatpack.structure.ColumnMetaData;
-import net.sf.flatpack.xml.PZMetaData;
+import net.sf.flatpack.xml.MetaData;
 import net.sf.flatpack.xml.XMLRecordElement;
 
 /**
@@ -361,20 +361,20 @@ public final class ParserUtils {
      * @return ArrayList - ColumnMetaData
      * @deprecated use the getPZMetaDataFromFile 
      */
-    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final PZParser p) {
+    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
         List lineData = null;
         final List results = new ArrayList();
         final Map columnMD = new LinkedHashMap();
 
-        lineData = splitLine(line, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
+        lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT);
         for (int i = 0; i < lineData.size(); i++) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName((String) lineData.get(i));
             results.add(cmd);
         }
 
-        columnMD.put(PZConstants.DETAIL_ID, results);
-        columnMD.put(PZConstants.COL_IDX, buidColumnIndexMap(results, p));
+        columnMD.put(FPConstants.DETAIL_ID, results);
+        columnMD.put(FPConstants.COL_IDX, buidColumnIndexMap(results, p));
 
         return columnMD;
     }
@@ -391,18 +391,18 @@ public final class ParserUtils {
      *          PZParser used to specify additional option when working witht the ColumnMetaData. Can be null
      * @return PZMetaData
      */
-    public static PZMetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final PZParser p) {
+    public static MetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
         List lineData = null;
         final List results = new ArrayList();
 
-        lineData = splitLine(line, delimiter, qualifier, PZConstants.SPLITLINE_SIZE_INIT);
+        lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT);
         for (int i = 0; i < lineData.size(); i++) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName((String) lineData.get(i));
             results.add(cmd);
         }
 
-        return new PZMetaData(results, buidColumnIndexMap(results, p));
+        return new MetaData(results, buidColumnIndexMap(results, p));
     }
 
     /**
@@ -433,7 +433,7 @@ public final class ParserUtils {
                     continue;
                 }
 
-                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), PZConstants.SPLITLINE_SIZE_INIT);
+                lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), FPConstants.SPLITLINE_SIZE_INIT);
                 for (int i = 0; i < lineData.size(); i++) {
                     final ColumnMetaData cmd = new ColumnMetaData();
                     cmd.setColName((String) lineData.get(i));
@@ -565,8 +565,8 @@ public final class ParserUtils {
         final Iterator columnMDIt = columnMD.entrySet().iterator();
         while (columnMDIt.hasNext()) {
             final Entry entry = (Entry) columnMDIt.next();
-            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
-                cmds = (List) columnMD.get(PZConstants.DETAIL_ID);
+            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
+                cmds = (List) columnMD.get(FPConstants.DETAIL_ID);
             } else {
                 cmds = ((XMLRecordElement) entry.getValue()).getColumns();
             }
@@ -584,7 +584,7 @@ public final class ParserUtils {
 
     }
 
-    public static Map calculateRecordLengths(final PZMetaData columnMD) {
+    public static Map calculateRecordLengths(final MetaData columnMD) {
         final Map recordLengths = new HashMap();
         List cmds = null;
 
@@ -594,7 +594,7 @@ public final class ParserUtils {
             recordLength += ((ColumnMetaData) i.next()).getColLength();
         }
 
-        recordLengths.put(PZConstants.DETAIL_ID, new Integer(recordLength));
+        recordLengths.put(FPConstants.DETAIL_ID, new Integer(recordLength));
 
         final Iterator columnMDIt = columnMD.xmlRecordIterator();
         while (columnMDIt.hasNext()) {
@@ -632,14 +632,14 @@ public final class ParserUtils {
         if (columnMD.size() == 1) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return PZConstants.DETAIL_ID;
+            return FPConstants.DETAIL_ID;
         }
         final Iterator mapEntries = columnMD.entrySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (mapEntries.hasNext()) {
             final Entry entry = (Entry) mapEntries.next();
-            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
+            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
@@ -663,14 +663,14 @@ public final class ParserUtils {
         }
 
         // must be a detail line
-        return PZConstants.DETAIL_ID;
+        return FPConstants.DETAIL_ID;
     }
 
-    public static String getCMDKeyForDelimitedFile(final PZMetaData columnMD, final List lineElements) {
+    public static String getCMDKeyForDelimitedFile(final MetaData columnMD, final List lineElements) {
         if (!columnMD.isAnyRecordFormatSpecified()) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return PZConstants.DETAIL_ID;
+            return FPConstants.DETAIL_ID;
         }
         final Iterator mapEntries = columnMD.xmlRecordIterator();//getColumnsNames().iterator();
         // loop through the XMLRecordElement objects and see if we need a
@@ -701,7 +701,7 @@ public final class ParserUtils {
         }
 
         // must be a detail line
-        return PZConstants.DETAIL_ID;
+        return FPConstants.DETAIL_ID;
     }
 
     /**
@@ -713,15 +713,15 @@ public final class ParserUtils {
      * @deprecated use the PZMetaData
      */
     public static List getColumnMetaData(final String key, final Map columnMD) {
-        if (key == null || key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
-            return (List) columnMD.get(PZConstants.DETAIL_ID);
+        if (key == null || key.equals(FPConstants.DETAIL_ID) || key.equals(FPConstants.COL_IDX)) {
+            return (List) columnMD.get(FPConstants.DETAIL_ID);
         }
 
         return ((XMLRecordElement) columnMD.get(key)).getColumns();
     }
 
-    public static List getColumnMetaData(final String key, final PZMetaData columnMD) {
-        if (key == null || key.equals(PZConstants.DETAIL_ID) || key.equals(PZConstants.COL_IDX)) {
+    public static List getColumnMetaData(final String key, final MetaData columnMD) {
+        if (key == null || key.equals(FPConstants.DETAIL_ID) || key.equals(FPConstants.COL_IDX)) {
             return columnMD.getColumnsNames();
         }
 
@@ -741,16 +741,16 @@ public final class ParserUtils {
      * @return -1 if it does not find it
      * @deprecated use PZMetaData
      */
-    public static int getColumnIndex(final String key, final Map columnMD, final String colName, final PZParser p) {
+    public static int getColumnIndex(final String key, final Map columnMD, final String colName, final Parser p) {
         int idx = -1;
         String column = colName;
         if (p != null && !p.isColumnNamesCaseSensitive()) {
             column = colName.toLowerCase(Locale.getDefault());
         }
-        if (key != null && !key.equals(PZConstants.DETAIL_ID) && !key.equals(PZConstants.COL_IDX)) {
+        if (key != null && !key.equals(FPConstants.DETAIL_ID) && !key.equals(FPConstants.COL_IDX)) {
             idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(column);
-        } else if (key == null || key.equals(PZConstants.DETAIL_ID)) {
-            final Map map = (Map) columnMD.get(PZConstants.COL_IDX);
+        } else if (key == null || key.equals(FPConstants.DETAIL_ID)) {
+            final Map map = (Map) columnMD.get(FPConstants.COL_IDX);
             final Integer i = (Integer) map.get(column);
             if (i != null) { //happens when the col name does not exist in the mapping
                 idx = i.intValue();
@@ -763,7 +763,7 @@ public final class ParserUtils {
         return idx;
     }
 
-    public static int getColumnIndex(final String key, final PZMetaData columnMD, final String colName, final PZParser p) {
+    public static int getColumnIndex(final String key, final MetaData columnMD, final String colName, final Parser p) {
         int idx = -1;
         String column = colName;
         if (p != null && !p.isColumnNamesCaseSensitive()) {
@@ -898,7 +898,7 @@ public final class ParserUtils {
      *         map should be build.  This can be NULL.
      * @return a new Map
      */
-    public static Map buidColumnIndexMap(final List columns, final PZParser p) {
+    public static Map buidColumnIndexMap(final List columns, final Parser p) {
         Map map = null;
         if (columns != null && !columns.isEmpty()) {
             map = new HashMap();
@@ -1021,17 +1021,17 @@ public final class ParserUtils {
     public static Object runPzConverter(final Properties classXref, final String value, final Class typeToReturn) {
         final String sConverter = classXref.getProperty(typeToReturn.getName());
         if (sConverter == null) {
-            throw new PZConvertException(typeToReturn.getName() + " is not registered in pzconvert.properties");
+            throw new FPConvertException(typeToReturn.getName() + " is not registered in pzconvert.properties");
         }
         try {
-            final PZConverter pzconverter = (PZConverter) Class.forName(sConverter).newInstance();
+            final Converter pzconverter = (Converter) Class.forName(sConverter).newInstance();
             return pzconverter.convertValue(value);
         } catch (final IllegalAccessException ex) {
-            throw new PZConvertException(ex);
+            throw new FPConvertException(ex);
         } catch (final InstantiationException ex) {
-            throw new PZConvertException(ex);
+            throw new FPConvertException(ex);
         } catch (final ClassNotFoundException ex) {
-            throw new PZConvertException(ex);
+            throw new FPConvertException(ex);
         }
     }
 

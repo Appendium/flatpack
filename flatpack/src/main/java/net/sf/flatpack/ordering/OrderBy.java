@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
 /**
@@ -85,16 +85,16 @@ public class OrderBy implements Comparator, Serializable {
             final OrderColumn oc = (OrderColumn) orderbys.get(i);
             // null indicates "detail" record which is what the parser assigns
             // to <column> 's setup outside of <record> elements
-            final String mdkey0 = row0.getMdkey() == null ? PZConstants.DETAIL_ID : row0.getMdkey();
-            final String mdkey1 = row1.getMdkey() == null ? PZConstants.DETAIL_ID : row1.getMdkey();
+            final String mdkey0 = row0.getMdkey() == null ? FPConstants.DETAIL_ID : row0.getMdkey();
+            final String mdkey1 = row1.getMdkey() == null ? FPConstants.DETAIL_ID : row1.getMdkey();
 
             // shift all non detail records to the bottom of the DataSet
-            if (!mdkey0.equals(PZConstants.DETAIL_ID) && !mdkey1.equals(PZConstants.DETAIL_ID)) {
+            if (!mdkey0.equals(FPConstants.DETAIL_ID) && !mdkey1.equals(FPConstants.DETAIL_ID)) {
                 // keep headers / trailers in the same order at the bottom of
                 // the DataSet
                 return 0;
-            } else if (!mdkey0.equals(PZConstants.DETAIL_ID) || !mdkey1.equals(PZConstants.DETAIL_ID)) {
-                return !mdkey0.equals(PZConstants.DETAIL_ID) ? 1 : 0;
+            } else if (!mdkey0.equals(FPConstants.DETAIL_ID) || !mdkey1.equals(FPConstants.DETAIL_ID)) {
+                return !mdkey0.equals(FPConstants.DETAIL_ID) ? 1 : 0;
             }
 
             // convert to one type of case so the comparator does not take case

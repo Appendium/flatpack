@@ -104,7 +104,7 @@ public class ExcelTransformer {
             cellFormat = new WritableCellFormat(times10pt);
             int row = 1;
             while (ds.next()) {
-                if (!ds.isRecordID(PZConstants.DETAIL_ID)) {
+                if (!ds.isRecordID(FPConstants.DETAIL_ID)) {
                     continue;
                 }
 

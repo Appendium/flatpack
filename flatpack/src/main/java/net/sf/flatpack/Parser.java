@@ -39,7 +39,7 @@ package net.sf.flatpack;
  * 
  * @author Benoit Xhenseval
  */
-public interface PZParser {
+public interface Parser {
 
     /**
      * Start the parsing.  Will return "null" if the

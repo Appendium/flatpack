@@ -30,43 +30,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package net.sf.flatpack.converter;
 
 /**
- * Exception thrown when a conversion error occurs
+ * Responsible for converting a column in IDataSet
+ * to the desired Object.
  * 
  * @author Paul Zepernick
  */
-public class PZConvertException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
+public interface Converter {
 
     /**
+     * Returns the converted object from the 
+     * column in IDataSet
      * 
+     * @param valueToConvert
+     * @return Object
      */
-    public PZConvertException() {
-    }
-
-    /**
-     * @param message
-     */
-    public PZConvertException(final String message) {
-        super(message);
-    }
-
-    /**
-     * @param cause
-     */
-    public PZConvertException(final Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * @param message
-     * @param cause
-     */
-    public PZConvertException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
-
+    Object convertValue(String valueToConvert);
 }

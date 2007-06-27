@@ -42,7 +42,7 @@ import net.sf.flatpack.util.ParserUtils;
  *  
  * @author Paul Zepernick
  */
-public class ConvertInteger implements PZConverter {
+public class ConvertInteger implements Converter {
 
     /*
      * (non-Javadoc)

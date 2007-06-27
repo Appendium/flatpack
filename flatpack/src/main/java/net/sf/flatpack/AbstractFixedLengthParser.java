@@ -40,7 +40,7 @@ import java.util.Map;
 
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FixedWidthParserUtils;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
 import org.slf4j.Logger;
@@ -50,8 +50,8 @@ import org.slf4j.LoggerFactory;
  * @author xhensevb
  * 
  */
-public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
-    private final Logger logger = LoggerFactory.getLogger(AbstractFixedLengthPZParser.class);
+public abstract class AbstractFixedLengthParser extends AbstractParser {
+    private final Logger logger = LoggerFactory.getLogger(AbstractFixedLengthParser.class);
 
     /* protected AbstractFixedLengthPZParser(final File dataSource, final String dataDefinition) {
      super(dataSource, dataDefinition);
@@ -69,11 +69,11 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
      super(dataSourceStream);
      }*/
 
-    protected AbstractFixedLengthPZParser(final Reader dataSourceReader, final String dataDefinition) {
+    protected AbstractFixedLengthParser(final Reader dataSourceReader, final String dataDefinition) {
         super(dataSourceReader, dataDefinition);
     }
 
-    protected AbstractFixedLengthPZParser(final Reader dataSourceReader) {
+    protected AbstractFixedLengthParser(final Reader dataSourceReader) {
         super(dataSourceReader);
     }
 
@@ -166,7 +166,7 @@ public abstract class AbstractFixedLengthPZParser extends AbstractPZParser {
 
                 // int recPosition = 1;
                 final Row row = new Row();
-                row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
+                row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
 
                 //                final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());

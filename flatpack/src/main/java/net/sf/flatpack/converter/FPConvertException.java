@@ -30,26 +30,43 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package net.sf.flatpack.util;
+
+package net.sf.flatpack.converter;
 
 /**
- * @author xhensevb
+ * Exception thrown when a conversion error occurs
  * 
+ * @author Paul Zepernick
  */
-public final class PZConstants {
-    public static final String DETAIL_ID = "detail";
+public class FPConvertException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
 
-    public static final String COL_IDX = "colIndex";
-
-    public static final String DELIMITED_FILE = "delimited";
-
-    public static final String FIXEDLENGTH_FILE = "fixed";
-
-    public static final int SPLITLINE_SIZE_INIT = 10;
-
-    public static final char NO_QUALIFIER = '\0';
-
-    private PZConstants() {
-
+    /**
+     * 
+     */
+    public FPConvertException() {
     }
+
+    /**
+     * @param message
+     */
+    public FPConvertException(final String message) {
+        super(message);
+    }
+
+    /**
+     * @param cause
+     */
+    public FPConvertException(final Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public FPConvertException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
 }

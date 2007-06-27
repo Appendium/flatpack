@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sf.flatpack.structure.ColumnMetaData;
-import net.sf.flatpack.xml.PZMetaData;
+import net.sf.flatpack.xml.MetaData;
 import net.sf.flatpack.xml.XMLRecordElement;
 
 /**
@@ -87,14 +87,14 @@ public final class FixedWidthParserUtils {
         if (columnMD.size() == 1) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return PZConstants.DETAIL_ID;
+            return FPConstants.DETAIL_ID;
         }
         final Iterator mapEntries = columnMD.entrySet().iterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (mapEntries.hasNext()) {
             final Entry entry = (Entry) mapEntries.next();
-            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
+            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
                 continue; // skip this key will be assumed if none of the
                 // others match
             }
@@ -116,7 +116,7 @@ public final class FixedWidthParserUtils {
         }
 
         // must be a detail line
-        return PZConstants.DETAIL_ID;
+        return FPConstants.DETAIL_ID;
 
     }
 
@@ -129,11 +129,11 @@ public final class FixedWidthParserUtils {
      * @param line
      * @return List - ColumMetaData
      */
-    public static String getCMDKey(final PZMetaData columnMD, final String line) {
+    public static String getCMDKey(final MetaData columnMD, final String line) {
         if (!columnMD.isAnyRecordFormatSpecified()) {
             // no <RECORD> elments were specifed for this parse, just return the
             // detail id
-            return PZConstants.DETAIL_ID;
+            return FPConstants.DETAIL_ID;
         }
         final Iterator mapEntries = columnMD.xmlRecordIterator();
         // loop through the XMLRecordElement objects and see if we need a
@@ -162,7 +162,7 @@ public final class FixedWidthParserUtils {
         }
 
         // must be a detail line
-        return PZConstants.DETAIL_ID;
+        return FPConstants.DETAIL_ID;
 
     }
 }
