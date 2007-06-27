@@ -56,7 +56,7 @@ public final class ResolveLocalDTD implements EntityResolver {
      */
     public InputSource resolveEntity(final String publicId, final String systemId) throws SAXException, IOException {
         if (!systemId.toLowerCase(Locale.getDefault()).startsWith("http://")) {
-            final URL resource = getClass().getResource("pzfilereader.dtd");
+            final URL resource = getClass().getResource("flatpack.dtd");
 
             if (resource != null) {
                 return new InputSource(resource.openStream());
