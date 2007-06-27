@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Properties;
 
 import junit.framework.TestCase;
-import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.flatpack.util.ParserUtils;
 
 /**
  * Test misc methods in the ParserUtils

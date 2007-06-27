@@ -4,10 +4,10 @@ import java.io.StringReader;
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.PZParser;
-import net.sf.pzfilereader.util.PZConstants;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.DefaultPZParserFactory;
+import net.sf.flatpack.PZParser;
+import net.sf.flatpack.util.PZConstants;
 
 /**
  * Test the different options that can be 

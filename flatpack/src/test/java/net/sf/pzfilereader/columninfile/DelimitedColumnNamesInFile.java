@@ -7,12 +7,12 @@ package net.sf.pzfilereader.columninfile;
 
 import java.io.File;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.PZParser;
-import net.sf.pzfilereader.ordering.OrderBy;
-import net.sf.pzfilereader.ordering.OrderColumn;
+import net.sf.flatpack.DataError;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.DefaultPZParserFactory;
+import net.sf.flatpack.PZParser;
+import net.sf.flatpack.ordering.OrderBy;
+import net.sf.flatpack.ordering.OrderColumn;
 
 /**
  * @author zepernick
