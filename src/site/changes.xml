@@ -8,6 +8,7 @@
   </properties>
   <body>
 	<release version="3.1.0-SNAPSHOT" date="in svn" description="NAME CHANGE">
+		<action dev="zepernick" type="change">Moved package strcuture from net.sf.pzfilereader to net.sf.flatpack</action>
 		<action dev="benoitx" type="change">Goodbye PZFileReader, Hello FlatPack!!!</action>
 		<action dev="benoitx" type="change">Created a PZMetaData class for internal use, it contains the list of column names and index for fast access.</action>
 		<action dev="zepernick" type="change">Feature Request 1596087.  Added attribute "elementCount" on record
