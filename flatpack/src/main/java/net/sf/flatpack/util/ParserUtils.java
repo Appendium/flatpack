@@ -999,7 +999,7 @@ public final class ParserUtils {
      */
     public static Properties loadConvertProperties() throws IOException {
         final Properties pzConvertProps = new Properties();
-        final URL url = ParserUtils.class.getClassLoader().getResource("pzconvert.properties");
+        final URL url = ParserUtils.class.getClassLoader().getResource("fpconvert.properties");
         pzConvertProps.load(url.openStream());
 
         return pzConvertProps;
