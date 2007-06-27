@@ -39,14 +39,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sf.flatpack.util.ParserUtils;
-import net.sf.flatpack.xml.PZMetaData;
+import net.sf.flatpack.xml.MetaData;
 
 /**
  * @author xhensevb 
  * @author zepernick
  * 
  */
-public abstract class AbstractPZParser implements PZParser {
+public abstract class AbstractParser implements Parser {
 
     private boolean handlingShortLines = false;
     private boolean ignoreExtraColumns = false;
@@ -57,16 +57,16 @@ public abstract class AbstractPZParser implements PZParser {
 
     /** Map of column metadata's */
     //    private Map columnMD = null;
-    private PZMetaData pzMetaData = null;
+    private MetaData pzMetaData = null;
     private String dataDefinition = null;
     private Reader dataSourceReader = null;
     private List readersToClose = null;
 
-    protected AbstractPZParser(final Reader dataSourceReader) {
+    protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
     }
 
-    protected AbstractPZParser(final Reader dataSourceReader, final String dataDefinition) {
+    protected AbstractParser(final Reader dataSourceReader, final String dataDefinition) {
         this.dataSourceReader = dataSourceReader;
         this.dataDefinition = dataDefinition;
     }
@@ -138,7 +138,7 @@ public abstract class AbstractPZParser implements PZParser {
 
     protected void addToMetaData(final List columns) {
         if (pzMetaData == null) {
-            pzMetaData = new PZMetaData(columns, ParserUtils.buidColumnIndexMap(columns, this));
+            pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(columns, this));
         } else {
             pzMetaData.setColumnsNames(columns);
             pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(columns, this));
@@ -245,11 +245,11 @@ public abstract class AbstractPZParser implements PZParser {
         this.nullEmptyStrings = nullEmptyStrings;
     }
 
-    public PZMetaData getPzMetaData() {
+    public MetaData getPzMetaData() {
         return pzMetaData;
     }
 
-    public void setPzMetaData(final PZMetaData pzMap) {
+    public void setPzMetaData(final MetaData pzMap) {
         this.pzMetaData = pzMap;
     }
 

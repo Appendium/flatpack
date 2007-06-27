@@ -49,7 +49,7 @@ import net.sf.flatpack.util.ParserUtils;
  * @author zepernick
  * 
  */
-public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
+public class DBFixedLengthParser extends AbstractFixedLengthParser {
     private Connection con;
 
     //this InputStream and file can be removed after support for 
@@ -59,7 +59,7 @@ public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
 
     private File dataSource = null;
 
-    public DBFixedLengthPZParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
+    public DBFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
         //Reader will be setup in the init(), passing null for now.
         //this constructor will eventually be deleted
         super(null, dataDefinition);
@@ -67,13 +67,13 @@ public class DBFixedLengthPZParser extends AbstractFixedLengthPZParser {
         this.dataSourceStream = dataSourceStream;
     }
 
-    public DBFixedLengthPZParser(final Connection con, final File dataSource, final String dataDefinition) {
+    public DBFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition) {
         super(null, dataDefinition);
         this.con = con;
         this.dataSource = dataSource;
     }
 
-    public DBFixedLengthPZParser(final Connection con, final Reader dataSourceReader, final String dataDefinition) {
+    public DBFixedLengthParser(final Connection con, final Reader dataSourceReader, final String dataDefinition) {
         super(dataSourceReader, dataDefinition);
         this.con = con;
     }

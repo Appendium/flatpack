@@ -30,22 +30,26 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package net.sf.flatpack.converter;
+package net.sf.flatpack.util;
 
 /**
- * Responsible for converting a column in IDataSet
- * to the desired Object.
+ * @author xhensevb
  * 
- * @author Paul Zepernick
  */
-public interface PZConverter {
+public final class FPConstants {
+    public static final String DETAIL_ID = "detail";
 
-    /**
-     * Returns the converted object from the 
-     * column in IDataSet
-     * 
-     * @param valueToConvert
-     * @return Object
-     */
-    Object convertValue(String valueToConvert);
+    public static final String COL_IDX = "colIndex";
+
+    public static final String DELIMITED_FILE = "delimited";
+
+    public static final String FIXEDLENGTH_FILE = "fixed";
+
+    public static final int SPLITLINE_SIZE_INIT = 10;
+
+    public static final char NO_QUALIFIER = '\0';
+
+    private FPConstants() {
+
+    }
 }

@@ -43,9 +43,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sf.flatpack.PZParser;
+import net.sf.flatpack.Parser;
 import net.sf.flatpack.structure.ColumnMetaData;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
 import org.jdom.Attribute;
@@ -61,10 +61,10 @@ import org.slf4j.LoggerFactory;
  * 
  * Parses a PZmap definition XML file
  */
-public final class PZMapParser {
+public final class MapParser {
     private static boolean showDebug = false;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PZMapParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapParser.class);
 
     /**
      * Constructor
@@ -72,7 +72,7 @@ public final class PZMapParser {
      * @param XMLDocument -
      *            xml file to be parsed
      */
-    private PZMapParser() {
+    private MapParser() {
     }
 
     /**
@@ -110,7 +110,7 @@ public final class PZMapParser {
      * @throws IOException
      * @throws JDOMException
      */
-    public static Map parse(final Reader xmlStreamReader, final PZParser pzparser) throws JDOMException, IOException {
+    public static Map parse(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
         //use for debug when JDOM complains about the xml
         /* final BufferedReader br = new BufferedReader(xmlStreamReader);
          final FileWriter fw = new FileWriter("c:/test.pz");
@@ -145,17 +145,17 @@ public final class PZMapParser {
         List columns = getColumnChildren(root);
         final Map mdIndex = new LinkedHashMap(); // retain the same order
         // specified in the mapping
-        mdIndex.put(PZConstants.DETAIL_ID, columns); // always force detail
+        mdIndex.put(FPConstants.DETAIL_ID, columns); // always force detail
         // to the top of
         // the map no matter what
-        mdIndex.put(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns, pzparser));
+        mdIndex.put(FPConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns, pzparser));
 
         // get all of the "record" elements and the columns under them
         final Iterator recordDescriptors = root.getChildren("RECORD").iterator();
         while (recordDescriptors.hasNext()) {
             final Element xmlElement = (Element) recordDescriptors.next();
 
-            if (xmlElement.getAttributeValue("id").equals(PZConstants.DETAIL_ID)) {
+            if (xmlElement.getAttributeValue("id").equals(FPConstants.DETAIL_ID)) {
                 // make sure the id attribute does not have a value of "detail" this
                 // is the harcoded
                 // value we are using to mark columns specified outside of a
@@ -242,7 +242,7 @@ public final class PZMapParser {
             final Entry entry = (Entry) mapIt.next();
             final String recordID = (String) entry.getKey();
             Iterator columns = null;
-            if (recordID.equals(PZConstants.DETAIL_ID)) {
+            if (recordID.equals(FPConstants.DETAIL_ID)) {
                 columns = ((List) entry.getValue()).iterator();
             } else {
                 xmlrecEle = (XMLRecordElement) entry.getValue();
@@ -274,14 +274,14 @@ public final class PZMapParser {
      * @throws IOException
      * @throws JDOMException
      */
-    public static PZMetaData parseMap(final Reader xmlStreamReader, final PZParser pzparser) throws JDOMException, IOException {
+    public static MetaData parseMap(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
         final Map map = parse(xmlStreamReader, pzparser);
 
-        final List col = (List) map.get(PZConstants.DETAIL_ID);
-        map.remove(PZConstants.DETAIL_ID);
+        final List col = (List) map.get(FPConstants.DETAIL_ID);
+        map.remove(FPConstants.DETAIL_ID);
 
-        final Map m = (Map) map.get(PZConstants.COL_IDX);
-        map.remove(PZConstants.COL_IDX);
-        return new PZMetaData(col, m, map);
+        final Map m = (Map) map.get(FPConstants.COL_IDX);
+        map.remove(FPConstants.COL_IDX);
+        return new MetaData(col, m, map);
     }
 }

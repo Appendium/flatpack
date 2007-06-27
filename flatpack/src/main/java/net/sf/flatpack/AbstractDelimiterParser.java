@@ -38,7 +38,7 @@ import java.io.Reader;
 import java.util.List;
 
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
 import org.slf4j.Logger;
@@ -49,13 +49,13 @@ import org.slf4j.LoggerFactory;
  * @author zepernick
  * 
  */
-public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
+public abstract class AbstractDelimiterParser extends AbstractParser {
     private char delimiter = 0;
     private char qualifier = 0;
     private boolean ignoreFirstRecord = false;
     private int lineCount = 0;
 
-    private final Logger logger = LoggerFactory.getLogger(AbstractDelimiterPZParser.class);
+    private final Logger logger = LoggerFactory.getLogger(AbstractDelimiterParser.class);
 
     /*public AbstractDelimiterPZParser(final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
      final char qualifier, final boolean ignoreFirstRecord) {
@@ -81,7 +81,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
      this.ignoreFirstRecord = ignoreFirstRecord;
      }*/
 
-    public AbstractDelimiterPZParser(final Reader dataSourceReader, final String dataDefinition, final char delimiter, final char qualifier,
+    public AbstractDelimiterParser(final Reader dataSourceReader, final String dataDefinition, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         super(dataSourceReader, dataDefinition);
         this.delimiter = delimiter;
@@ -89,7 +89,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
         this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
-    public AbstractDelimiterPZParser(final Reader dataSourceReader, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
+    public AbstractDelimiterParser(final Reader dataSourceReader, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
         super(dataSourceReader);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
@@ -190,7 +190,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 }
 
                 // column values
-                List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), PZConstants.SPLITLINE_SIZE_INIT);
+                List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
                 //                final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
                 //                final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
@@ -226,7 +226,7 @@ public abstract class AbstractDelimiterPZParser extends AbstractPZParser {
                 }
 
                 final Row row = new Row();
-                row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey); // try
+                row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
                 // to limit the memory use
                 row.setCols(columns);
                 row.setRowNumber(lineCount);

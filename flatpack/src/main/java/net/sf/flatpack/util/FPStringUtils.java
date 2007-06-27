@@ -5,7 +5,7 @@ package net.sf.flatpack.util;
  * 
  * @author Jakarta Commons
  */
-public class PZStringUtils {
+public class FPStringUtils {
     /**
      * <p>Checks if a String is whitespace, empty ("") or null.</p>
      *
@@ -51,7 +51,7 @@ public class PZStringUtils {
      * @since 2.0
      */
     public static boolean isNotBlank(final String str) {
-        return !PZStringUtils.isBlank(str);
+        return !FPStringUtils.isBlank(str);
     }
 
 }

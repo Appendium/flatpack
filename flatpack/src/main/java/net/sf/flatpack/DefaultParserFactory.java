@@ -41,10 +41,10 @@ import java.sql.Connection;
  * @author xhensevb
  * 
  */
-public class DefaultPZParserFactory implements PZParserFactory {
-    private static final DefaultPZParserFactory INSTANCE = new DefaultPZParserFactory();
+public class DefaultParserFactory implements ParserFactory {
+    private static final DefaultParserFactory INSTANCE = new DefaultParserFactory();
 
-    public static PZParserFactory getInstance() {
+    public static ParserFactory getInstance() {
         return INSTANCE;
     }
 
@@ -54,8 +54,8 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newFixedWidthParser(java.sql.Connection,
      *      java.io.File, java.lang.String)
      */
-    public PZParser newFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition) {
-        return new DBFixedLengthPZParser(con, dataSource, dataDefinition);
+    public Parser newFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition) {
+        return new DBFixedLengthParser(con, dataSource, dataDefinition);
     }
 
     /*
@@ -64,8 +64,8 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newFixedWidthParser(java.sql.Connection,
      *      java.io.InputStream, java.lang.String)
      */
-    public PZParser newFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
-        return new DBFixedLengthPZParser(con, dataSourceStream, dataDefinition);
+    public Parser newFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
+        return new DBFixedLengthParser(con, dataSourceStream, dataDefinition);
     }
 
     /*
@@ -74,8 +74,8 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File,
      *      java.io.File)
      */
-    public PZParser newFixedLengthParser(final File pzmapXML, final File dataSource) {
-        return new FixedLengthPZParser(pzmapXML, dataSource);
+    public Parser newFixedLengthParser(final File pzmapXML, final File dataSource) {
+        return new FixedLengthParser(pzmapXML, dataSource);
     }
 
     /*
@@ -84,16 +84,16 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream)
      */
-    public PZParser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
-        return new FixedLengthPZParser(pzmapXMLStream, dataSourceStream);
+    public Parser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
+        return new FixedLengthParser(pzmapXMLStream, dataSourceStream);
     }
 
-    public PZParser newFixedLengthParser(final Connection con, final Reader dataSource, final String dataDefinition) {
-        return new DBFixedLengthPZParser(con, dataSource, dataDefinition);
+    public Parser newFixedLengthParser(final Connection con, final Reader dataSource, final String dataDefinition) {
+        return new DBFixedLengthParser(con, dataSource, dataDefinition);
     }
 
-    public PZParser newFixedLengthParser(final Reader pzmapXMLStream, final Reader dataSource) {
-        return new FixedLengthPZParser(pzmapXMLStream, dataSource);
+    public Parser newFixedLengthParser(final Reader pzmapXMLStream, final Reader dataSource) {
+        return new FixedLengthParser(pzmapXMLStream, dataSource);
     }
 
     /*
@@ -102,9 +102,9 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.sql.Connection,
      *      java.io.InputStream, java.lang.String, char, char, boolean)
      */
-    public PZParser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
+    public Parser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        return new DBDelimiterPZParser(con, dataSourceStream, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
+        return new DBDelimiterParser(con, dataSourceStream, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
     }
 
     /*
@@ -113,9 +113,9 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File,
      *      java.io.File, char, char, boolean)
      */
-    public PZParser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
+    public Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
-        return new DelimiterPZParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
+        return new DelimiterParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
     /*
@@ -124,9 +124,9 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream, char, char, boolean)
      */
-    public PZParser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
+    public Parser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        return new DelimiterPZParser(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
+        return new DelimiterParser(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
     /*
@@ -135,8 +135,8 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File, char,
      *      char)
      */
-    public PZParser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier) {
-        return new DelimiterPZParser(dataSource, delimiter, qualifier, false);
+    public Parser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier) {
+        return new DelimiterParser(dataSource, delimiter, qualifier, false);
     }
 
     /*
@@ -145,22 +145,22 @@ public class DefaultPZParserFactory implements PZParserFactory {
      * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
      *      char, char)
      */
-    public PZParser newDelimitedParser(final InputStream dataSourceStream, final char delimiter, final char qualifier) {
-        return new DelimiterPZParser(dataSourceStream, delimiter, qualifier, false);
+    public Parser newDelimitedParser(final InputStream dataSourceStream, final char delimiter, final char qualifier) {
+        return new DelimiterParser(dataSourceStream, delimiter, qualifier, false);
     }
 
-    public PZParser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
+    public Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        return new DBDelimiterPZParser(con, dataSource, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
+        return new DBDelimiterParser(con, dataSource, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public PZParser newDelimitedParser(final Reader dataSource, final char delimiter, final char qualifier) {
-        return new DelimiterPZParser(dataSource, delimiter, qualifier, false);
+    public Parser newDelimitedParser(final Reader dataSource, final char delimiter, final char qualifier) {
+        return new DelimiterParser(dataSource, delimiter, qualifier, false);
     }
 
-    public PZParser newDelimitedParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
+    public Parser newDelimitedParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
-        return new DelimiterPZParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
+        return new DelimiterParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
     }
 
 }

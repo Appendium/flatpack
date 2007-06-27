@@ -11,7 +11,7 @@ import net.sf.flatpack.util.ParserUtils;
  *  
  * @author Paul Zepernick
  */
-public class ConvertBigDecimal implements PZConverter {
+public class ConvertBigDecimal implements Converter {
     /*
      * (non-Javadoc)
      * 

@@ -42,39 +42,39 @@ import java.util.Map;
 
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultDataSet;
-import net.sf.flatpack.FixedLengthPZParser;
+import net.sf.flatpack.FixedLengthParser;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FixedWidthParserUtils;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BuffReaderFixedPZParser extends FixedLengthPZParser {
+public class BuffReaderFixedParser extends FixedLengthParser {
     private BufferedReader br = null;
 
     private int lineCount = 0;
 
     private Map recordLengths = null;
 
-    private final Logger logger = LoggerFactory.getLogger(BuffReaderFixedPZParser.class);
+    private final Logger logger = LoggerFactory.getLogger(BuffReaderFixedParser.class);
 
-    public BuffReaderFixedPZParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
+    public BuffReaderFixedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
         super(pzmapXMLStream, dataSourceStream);
     }
 
-    public BuffReaderFixedPZParser(final File pzmapXML, final File dataSource) {
+    public BuffReaderFixedParser(final File pzmapXML, final File dataSource) {
         super(pzmapXML, dataSource);
     }
 
-    public BuffReaderFixedPZParser(final Reader pzmapXML, final Reader dataSource) {
+    public BuffReaderFixedParser(final Reader pzmapXML, final Reader dataSource) {
         super(pzmapXML, dataSource);
     }
 
     public DataSet doParse() {
         //        final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
-        final DataSet ds = new BuffReaderPZDataSet(getPzMetaData(), this);
+        final DataSet ds = new BuffReaderDataSet(getPzMetaData(), this);
         lineCount = 0;
         //        recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
         recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
@@ -142,7 +142,7 @@ public class BuffReaderFixedPZParser extends FixedLengthPZParser {
             }
 
             final Row row = new Row();
-            row.setMdkey(mdkey.equals(PZConstants.DETAIL_ID) ? null : mdkey);
+            row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey);
 
             //            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
             final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());

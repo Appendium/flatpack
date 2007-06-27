@@ -17,7 +17,7 @@ package net.sf.flatpack.xml;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.flatpack.PZParser;
+import net.sf.flatpack.Parser;
 import net.sf.flatpack.util.ParserUtils;
 
 /**
@@ -118,7 +118,7 @@ public class XMLRecordElement {
      * @param p
      *          PZParser being used.  Can be null.
      */
-    public void setColumns(final List columns, final PZParser p) {
+    public void setColumns(final List columns, final Parser p) {
         this.columns = columns;
         this.columnIndex = ParserUtils.buidColumnIndexMap(columns, p);
     }
