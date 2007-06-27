@@ -8,8 +8,17 @@
   </properties>
   <body>
 	<release version="3.1.0-SNAPSHOT" date="in svn" description="NAME CHANGE">
-		<action dev="zepernick" type="change">Moved package strcuture from net.sf.pzfilereader to net.sf.flatpack</action>
 		<action dev="benoitx" type="change">Goodbye PZFileReader, Hello FlatPack!!!</action>
+		<action dev="zepernick" type="change">Moved package strcuture from net.sf.pzfilereader to net.sf.flatpack</action>
+		<action dev="zepernick" type="change">XML mapping dtd renamed from pzfilereader.dtd to flatpack.dtd</action>
+		<action dev="zepernick" type="change">pzconvert.properties renamed to fpconvert.properties</action>		
+		<action dev="zepernick" type="change">The following classes had the "PZ" removed from their name; 
+		PZMapParser, PZMetaData, BuffReaderDelimPZParser, BuffReaderFixedPZParser, BuffReaderPZDataSet, 
+		BuffReaderPZParseFactory, AbstractDelimiterPZParser, AbstractFixedLengthPZParser, AbstractPZParser, 
+		DBDelimiterPZParser, DBFixedLengthPZParser, DefaultPZParserFactory, DelimiterPZParser, 
+		FixedLengthPZParser, PZParser, PZParserFactory, PZConverter</action>
+		<action dev="zepernick" type="change">The following classes had the "PZ" changed to "FP" in their name; 
+		PZConstants, PZStringUtils, PZConvertException</action>			
 		<action dev="benoitx" type="change">Created a PZMetaData class for internal use, it contains the list of column names and index for fast access.</action>
 		<action dev="zepernick" type="change">Feature Request 1596087.  Added attribute "elementCount" on record
 		element mapping, which can determine a header, trailer, or detail record by the number of elements contained
