@@ -7,7 +7,7 @@
 package net.sf.pzfilereader.delim.tab;
 
 import junit.framework.TestCase;
-import net.sf.pzfilereader.DataSet;
+import net.sf.flatpack.DataSet;
 
 /**
  * @author zepernick

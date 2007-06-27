@@ -3,8 +3,8 @@ package net.sf.pzfilereader.parserutils;
 import java.util.List;
 
 import junit.framework.TestCase;
-import net.sf.pzfilereader.util.PZConstants;
-import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.ParserUtils;
 import net.sf.pzfilereader.utilities.UnitTestUtils;
 
 /**

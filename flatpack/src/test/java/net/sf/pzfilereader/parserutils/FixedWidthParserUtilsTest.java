@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
-import net.sf.pzfilereader.structure.ColumnMetaData;
-import net.sf.pzfilereader.util.FixedWidthParserUtils;
-import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.flatpack.structure.ColumnMetaData;
+import net.sf.flatpack.util.FixedWidthParserUtils;
+import net.sf.flatpack.util.ParserUtils;
 
 /**
  * Test the functionality of a fixed width parse

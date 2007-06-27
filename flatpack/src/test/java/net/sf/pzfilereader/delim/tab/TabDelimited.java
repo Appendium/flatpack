@@ -7,10 +7,10 @@ package net.sf.pzfilereader.delim.tab;
 
 import java.io.File;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.PZParser;
+import net.sf.flatpack.DataError;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.DefaultPZParserFactory;
+import net.sf.flatpack.PZParser;
 
 /**
  * @author zepernick
