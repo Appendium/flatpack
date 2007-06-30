@@ -200,8 +200,9 @@ public class ConsoleMenu {
      * @return boolean as selected by the user of the console app
      */
     public static boolean getBoolean(final String title, final boolean defaultValue) {
-        final String val = ConsoleMenu.selectOne(title, new String[] { "Yes", "No" }, new String[] { Boolean.TRUE.toString(),
-                Boolean.FALSE.toString() }, defaultValue ? 1 : 2);
+        final String val =
+                ConsoleMenu.selectOne(title, new String[] { "Yes", "No" }, new String[] { Boolean.TRUE.toString(), Boolean.FALSE.toString() },
+                        defaultValue ? 1 : 2);
 
         return Boolean.valueOf(val).booleanValue();
     }
@@ -234,8 +235,8 @@ public class ConsoleMenu {
 
     public static Date getDate(final String title, final Date defaultValue) {
         final SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yy");
-        final String date = ConsoleMenu.getString(title + "(dd-MM-yy"
-                + (defaultValue != null ? ", default:" + fmt.format(defaultValue) : "") + ")", null);
+        final String date =
+                ConsoleMenu.getString(title + "(dd-MM-yy" + (defaultValue != null ? ", default:" + fmt.format(defaultValue) : "") + ")", null);
         try {
             if (date == null || date.length() == 0) {
                 return defaultValue;
@@ -287,8 +288,7 @@ public class ConsoleMenu {
      *            value for each option
      * @return String as selected by the user of the console app
      */
-    public static String selectOne(final String title, final String[] optionNames, final String[] optionValues,
-            final int defaultOption) {
+    public static String selectOne(final String title, final String[] optionNames, final String[] optionValues, final int defaultOption) {
         if (optionNames.length != optionValues.length) {
             throw new IllegalArgumentException("option names and values must have same length");
         }

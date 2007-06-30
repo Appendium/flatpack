@@ -33,8 +33,8 @@ public class CSVPerformanceTest {
         try {
 
             settings = readSettings();
-            String filename = (String) settings.get("csvFile");
-            String verbose = (String) settings.get("verbose");
+            final String filename = (String) settings.get("csvFile");
+            final String verbose = (String) settings.get("verbose");
 
             call(filename, Boolean.valueOf(verbose).booleanValue(), true);
         } catch (final Exception ex) {
@@ -43,18 +43,17 @@ public class CSVPerformanceTest {
 
     }
 
-    public static void call(String filename, boolean verbose, boolean traverse) throws Exception, InterruptedException {
+    public static void call(final String filename, final boolean verbose, final boolean traverse) throws Exception, InterruptedException {
         String[] colNames = null;
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
         System.out.println("Parsing....");
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(filename), 
-                ',', '"');
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(filename), ',', '"');
         long timeStarted = System.currentTimeMillis();
         final DataSet ds = pzparser.parse();
         long timeFinished = System.currentTimeMillis();
-        
+
         String timeMessage = "";
 
         if (timeFinished - timeStarted < 1000) {
@@ -74,11 +73,11 @@ public class CSVPerformanceTest {
             timeStarted = System.currentTimeMillis();
             colNames = ds.getColumns();
             int rowCount = 0;
-            int colCount = colNames.length;
+            final int colCount = colNames.length;
             while (ds.next()) {
                 rowCount++;
                 for (int i = 0; i < colNames.length; i++) {
-                    String string = ds.getString(colNames[i]);
+                    final String string = ds.getString(colNames[i]);
 
                     if (verbose) {
                         System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + string);
@@ -94,12 +93,11 @@ public class CSVPerformanceTest {
             if (timeFinished - timeStarted < 1000) {
                 timeMessage = (timeFinished - timeStarted) + " Milleseconds...";
             } else {
-                timeMessage = ((float)((timeFinished - timeStarted) / 1000.0)) + " Seconds...";
+                timeMessage = ((float) ((timeFinished - timeStarted) / 1000.0)) + " Seconds...";
             }
 
             System.out.println("");
-            System.out.println("********Traversed Data In: " + timeMessage + " (rows: " + rowCount + " Col:" + colCount
-                    + ") ******");
+            System.out.println("********Traversed Data In: " + timeMessage + " (rows: " + rowCount + " Col:" + colCount + ") ******");
 
         }
 

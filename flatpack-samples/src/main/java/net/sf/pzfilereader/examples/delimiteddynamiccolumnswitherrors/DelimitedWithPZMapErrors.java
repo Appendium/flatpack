@@ -23,8 +23,8 @@ import net.sf.flatpack.ordering.OrderColumn;
  */
 public class DelimitedWithPZMapErrors {
     public static void main(final String[] args) throws Exception {
-        String mapping = getDefaultMapping();
-        String data = getDefaultDataFile();
+        final String mapping = getDefaultMapping();
+        final String data = getDefaultDataFile();
         call(mapping, data);
 
     }
@@ -37,12 +37,11 @@ public class DelimitedWithPZMapErrors {
         return "PEOPLE-DelimitedWithHeaderTrailer.pzmap.xml";
     }
 
-    public static void call(String mapping, String data) throws Exception {
-         // delimited by a comma
+    public static void call(final String mapping, final String data) throws Exception {
+        // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), 
-                ',', '"', true);
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), ',', '"', true);
         final DataSet ds = pzparser.parse();
         // re order the data set by last name
         final OrderBy orderby = new OrderBy();
@@ -53,7 +52,7 @@ public class DelimitedWithPZMapErrors {
         final String[] colNames = ds.getColumns();
 
         while (ds.next()) {
-            
+
             if (ds.isRecordID("header")) {
                 System.out.println(">>>>found header");
                 System.out.println("COLUMN NAME: INDICATOR VALUE: " + ds.getString("RECORDINDICATOR"));
@@ -69,8 +68,7 @@ public class DelimitedWithPZMapErrors {
                 System.out.println("===========================================================================");
                 continue;
             }
-            
-            
+
             for (int i = 0; i < colNames.length; i++) {
                 System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
             }

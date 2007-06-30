@@ -34,12 +34,12 @@ public class CSVTestFileCreator {
 
         createFile(cols, rows);
     }
-    
-    public static void createFile(int cols, int rows) {
-        createFile(cols,rows,"SampleCSV.csv");
+
+    public static void createFile(final int cols, final int rows) {
+        createFile(cols, rows, "SampleCSV.csv");
     }
-    
-    public static void createFile(int cols, int rows, final String filename) {
+
+    public static void createFile(final int cols, final int rows, final String filename) {
         FileWriter fw = null;
         PrintWriter out = null;
         try {

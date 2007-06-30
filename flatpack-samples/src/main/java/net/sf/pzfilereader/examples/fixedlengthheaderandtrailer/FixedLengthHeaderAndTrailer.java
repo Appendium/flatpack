@@ -21,8 +21,8 @@ import net.sf.flatpack.Parser;
  */
 public class FixedLengthHeaderAndTrailer {
     public static void main(final String[] args) throws Exception {
-        String mapping = getDefaultMapping();
-        String data = getDefaultDataFile();
+        final String mapping = getDefaultMapping();
+        final String data = getDefaultDataFile();
         call(mapping, data);
 
     }
@@ -35,11 +35,10 @@ public class FixedLengthHeaderAndTrailer {
         return "PEOPLE-FixedLengthWithHeaderTrailer.pzmap.xml";
     }
 
-    public static void call(String mapping, String data) throws Exception {
+    public static void call(final String mapping, final String data) throws Exception {
         Iterator errors = null;
         DataError dataError = null;
-        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new File(mapping),
-                new File(data));
+        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new File(mapping), new File(data));
         final DataSet ds = pzparser.parse();
 
         while (ds.next()) {

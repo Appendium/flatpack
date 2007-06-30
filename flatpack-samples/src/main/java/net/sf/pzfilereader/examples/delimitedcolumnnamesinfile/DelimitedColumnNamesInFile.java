@@ -28,10 +28,9 @@ public class DelimitedColumnNamesInFile {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(
-                new File("PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '"');
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File("PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '"');
         final DataSet ds = pzparser.parse();
-        
+
         // re order the data set by last name
         orderby = new OrderBy();
         orderby.addOrderColumn(new OrderColumn("CITY", false));

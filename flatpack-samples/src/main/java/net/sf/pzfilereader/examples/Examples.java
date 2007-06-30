@@ -33,12 +33,12 @@ public class Examples implements Repeater {
     /**
      * @param args
      */
-    public static void main(String[] args) {
-        Examples examples = new Examples();
+    public static void main(final String[] args) {
+        final Examples examples = new Examples();
         examples.run();
     }
 
-    public void repeat(Method target) {
+    public void repeat(final Method target) {
     }
 
     public void doCall() {
@@ -88,7 +88,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", CSVHeaderAndTrailer.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", CSVHeaderAndTrailer.getDefaultDataFile());
             CSVHeaderAndTrailer.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -99,7 +99,7 @@ public class Examples implements Repeater {
             final boolean data = ConsoleMenu.getBoolean("Traverse the entire parsed file", true);
             final boolean verbose = ConsoleMenu.getBoolean("Verbose", false);
             CSVPerformanceTest.call(mapping, verbose, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -109,7 +109,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", DelimitedWithPZMap.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMap.getDefaultDataFile());
             DelimitedWithPZMap.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -119,7 +119,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", DelimitedWithPZMapErrors.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMapErrors.getDefaultDataFile());
             DelimitedWithPZMapErrors.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -129,7 +129,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", DelimitedFileExportToExcel.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", DelimitedFileExportToExcel.getDefaultDataFile());
             DelimitedFileExportToExcel.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -139,7 +139,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", FixedLengthWithPZMap.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", FixedLengthWithPZMap.getDefaultDataFile());
             FixedLengthWithPZMap.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -149,7 +149,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", FixedLengthHeaderAndTrailer.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", FixedLengthHeaderAndTrailer.getDefaultDataFile());
             FixedLengthHeaderAndTrailer.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -159,7 +159,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", LargeDelimitedWithPZMap.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", LargeDelimitedWithPZMap.getDefaultDataFile());
             LargeDelimitedWithPZMap.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -169,7 +169,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", LargeFixedLengthWithPZMap.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", LargeFixedLengthWithPZMap.getDefaultDataFile());
             LargeFixedLengthWithPZMap.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -178,13 +178,13 @@ public class Examples implements Repeater {
         try {
             final int cols = ConsoleMenu.getInt("Number of cols", 10);
             final int rows = ConsoleMenu.getInt("Number of rows", 2000000);
-            String filename = "LargeSampleCSV.csv";
+            final String filename = "LargeSampleCSV.csv";
             CSVTestFileCreator.createFile(cols, rows, filename);
 
             System.out.println("Large file created");
 
             CSVLarge.call(filename);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -193,7 +193,7 @@ public class Examples implements Repeater {
         try {
             final String data = ConsoleMenu.getString("Data   ", LowLevelParse.getDefaultDataFile());
             LowLevelParse.call(data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -202,7 +202,7 @@ public class Examples implements Repeater {
         try {
             final String data = ConsoleMenu.getString("Data   ", DelimitedMultiLine.getDefaultDataFile());
             DelimitedMultiLine.call(data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -212,7 +212,7 @@ public class Examples implements Repeater {
             final String mapping = ConsoleMenu.getString("Mapping ", NumericsAndDates.getDefaultMapping());
             final String data = ConsoleMenu.getString("Data   ", NumericsAndDates.getDefaultDataFile());
             NumericsAndDates.call(mapping, data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -227,7 +227,7 @@ public class Examples implements Repeater {
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < repeat; i++) {
-            StringBuffer sb = new StringBuffer();
+            final StringBuffer sb = new StringBuffer();
             for (int u = 0; u < 1000; u++) {
                 sb.append("h");
             }
@@ -237,7 +237,7 @@ public class Examples implements Repeater {
         System.out.println("Creating new SB " + (stop - start) + " ms.");
 
         start = System.currentTimeMillis();
-        StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer();
         for (int i = 0; i < repeat; i++) {
             for (int u = 0; u < characters; u++) {
                 sb.append("h");
@@ -255,7 +255,7 @@ public class Examples implements Repeater {
         final int numberOfCols = ConsoleMenu.getInt("How many columns?", 100);
         final boolean qualif = ConsoleMenu.getBoolean("With qualifier?", true);
 
-        StringBuffer aRow = new StringBuffer();
+        final StringBuffer aRow = new StringBuffer();
         for (int i = 0; i < numberOfCols; i++) {
             if (qualif) {
                 aRow.append("\"");
@@ -268,11 +268,11 @@ public class Examples implements Repeater {
 
         final String line = aRow.toString();
 
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         for (int i = 0; i < repeat; i++) {
             ParserUtils.splitLine(line, ',', '\"', FPConstants.SPLITLINE_SIZE_INIT);
         }
-        long stop = System.currentTimeMillis();
+        final long stop = System.currentTimeMillis();
 
         System.out.println("ParserUtil " + (stop - start) + " ms.");
 
