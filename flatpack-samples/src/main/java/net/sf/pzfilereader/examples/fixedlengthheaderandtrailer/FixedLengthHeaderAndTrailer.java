@@ -8,11 +8,10 @@ package net.sf.pzfilereader.examples.fixedlengthheaderandtrailer;
 import java.io.File;
 import java.util.Iterator;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.PZParser;
+import net.sf.flatpack.DataError;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.DefaultParserFactory;
+import net.sf.flatpack.Parser;
 
 /**
  * @author zepernick
@@ -39,7 +38,7 @@ public class FixedLengthHeaderAndTrailer {
     public static void call(String mapping, String data) throws Exception {
         Iterator errors = null;
         DataError dataError = null;
-        final PZParser pzparser = DefaultPZParserFactory.getInstance().newFixedLengthParser(new File(mapping),
+        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new File(mapping),
                 new File(data));
         final DataSet ds = pzparser.parse();
 

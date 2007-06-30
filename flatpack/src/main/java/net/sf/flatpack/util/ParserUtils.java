@@ -1007,7 +1007,7 @@ public final class ParserUtils {
 
     /**
      * Converts a String value to the appropriate Object via
-     * the correct net.sf.pzfilereader.converter.PZConverter implementation
+     * the correct net.sf.flatpack.converter.PZConverter implementation
      * 
      * @param classXref
      *             Properties holding class cross reference

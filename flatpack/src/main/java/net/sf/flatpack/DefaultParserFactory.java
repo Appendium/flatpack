@@ -51,7 +51,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newFixedWidthParser(java.sql.Connection,
+     * @see net.sf.flatpack.PZParserFactory#newFixedWidthParser(java.sql.Connection,
      *      java.io.File, java.lang.String)
      */
     public Parser newFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition) {
@@ -61,7 +61,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newFixedWidthParser(java.sql.Connection,
+     * @see net.sf.flatpack.PZParserFactory#newFixedWidthParser(java.sql.Connection,
      *      java.io.InputStream, java.lang.String)
      */
     public Parser newFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
@@ -71,7 +71,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File)
      */
     public Parser newFixedLengthParser(final File pzmapXML, final File dataSource) {
@@ -81,7 +81,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream)
      */
     public Parser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
@@ -99,7 +99,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.sql.Connection,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.sql.Connection,
      *      java.io.InputStream, java.lang.String, char, char, boolean)
      */
     public Parser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
@@ -110,7 +110,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File, char, char, boolean)
      */
     public Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
@@ -121,7 +121,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream, char, char, boolean)
      */
     public Parser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
@@ -132,7 +132,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File, char,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File, char,
      *      char)
      */
     public Parser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier) {
@@ -142,7 +142,7 @@ public class DefaultParserFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      char, char)
      */
     public Parser newDelimitedParser(final InputStream dataSourceStream, final char delimiter, final char qualifier) {

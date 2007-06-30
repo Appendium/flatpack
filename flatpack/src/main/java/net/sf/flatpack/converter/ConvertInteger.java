@@ -47,7 +47,7 @@ public class ConvertInteger implements Converter {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.converter#convertValue(java.lang.String)
+     * @see net.sf.flatpack.converter#convertValue(java.lang.String)
      */
     public Object convertValue(final String valueToConvert) {
         return new Integer(ParserUtils.stripNonLongChars(valueToConvert));

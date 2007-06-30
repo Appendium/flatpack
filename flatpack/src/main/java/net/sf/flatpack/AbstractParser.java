@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -42,9 +42,9 @@ import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.xml.MetaData;
 
 /**
- * @author xhensevb 
+ * @author xhensevb
  * @author zepernick
- * 
+ *
  */
 public abstract class AbstractParser implements Parser {
 
@@ -73,8 +73,8 @@ public abstract class AbstractParser implements Parser {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see net.sf.pzfilereader.PZParser#isHandlingShortLines()
+     *
+     * @see net.sf.flatpack.PZParser#isHandlingShortLines()
      */
     public boolean isHandlingShortLines() {
         return handlingShortLines;
@@ -82,8 +82,8 @@ public abstract class AbstractParser implements Parser {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see net.sf.pzfilereader.PZParser#setHandlingShortLines(boolean)
+     *
+     * @see net.sf.flatpack.PZParser#setHandlingShortLines(boolean)
      */
     public void setHandlingShortLines(final boolean handleShortLines) {
         this.handlingShortLines = handleShortLines;
@@ -190,7 +190,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Adds a new error to this DataSet. These can be collected, and retreived
      * after processing
-     * 
+     *
      * @param errorDesc -
      *            String description of error
      * @param lineNo -

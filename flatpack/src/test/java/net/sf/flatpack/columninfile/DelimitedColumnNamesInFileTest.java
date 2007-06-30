@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-package net.sf.pzfilereader.columninfile;
+package net.sf.flatpack.columninfile;
 
 import junit.framework.TestCase;
 import net.sf.flatpack.DataSet;

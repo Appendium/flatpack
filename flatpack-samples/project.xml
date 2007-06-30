@@ -47,6 +47,34 @@
          <version>${pom.currentVersion}</version>
          <type>jar</type>
       </dependency>
+      <dependency>
+         <groupId>jdom</groupId>
+         <artifactId>jdom</artifactId>
+         <version>1.0</version>
+         <type>jar</type>
+         <url>http://www.jdom.org</url>
+      </dependency>
+      <dependency>
+         <groupId>jexcelapi</groupId>
+         <artifactId>jxl</artifactId>
+         <version>2.4.2</version>
+         <type>jar</type>
+         <url>http://sourceforge.net/projects/jexcelapi</url>
+      </dependency>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>1.1.0-RC1</version>
+         <type>jar</type>
+         <url>http://www.slf4j.org</url>
+      </dependency>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-simple</artifactId>
+         <version>1.1.0-RC1</version>
+         <type>jar</type>
+         <url>http://www.slf4j.org</url>
+      </dependency>
    </dependencies>
 
    <build>

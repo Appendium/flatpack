@@ -142,7 +142,8 @@
       </mailingList>
    </mailingLists>
 
-   <dependencies>
+   <dependencies/>
+   <!--
       <dependency>
          <groupId>jdom</groupId>
          <artifactId>jdom</artifactId>
@@ -172,7 +173,7 @@
          <url>http://www.slf4j.org</url>
       </dependency>
    </dependencies>
-
+-->
    <build>
       <!-- We need to put here something other when we release it or I'll receive the emails from
          everyone who tries to use the project... -->

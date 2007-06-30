@@ -1,11 +1,11 @@
-package net.sf.pzfilereader.parserutils;
+package net.sf.flatpack.parserutils;
 
 import java.util.List;
 
 import junit.framework.TestCase;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
-import net.sf.pzfilereader.utilities.UnitTestUtils;
+import net.sf.flatpack.utilities.UnitTestUtils;
 
 /**
  * Test the functionality of the splitLine method. This method returns a List of
@@ -142,11 +142,11 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check("\"one\"  \"two\"  three", ' ', '\"', new String[] { "one", "", "two", "", "three" });
 
         check(" , , ", ',', '"', new String[] { "", "", "" });
-        check(" , , ", ',', PZConstants.NO_QUALIFIER, new String[] { "", "", "" });
+        check(" , , ", ',', FPConstants.NO_QUALIFIER, new String[] { "", "", "" });
         check(" \t \t ", '\t', '"', new String[] { "", "", "" });
-        check(" \t \t ", '\t', PZConstants.NO_QUALIFIER, new String[] { "", "", "" });
+        check(" \t \t ", '\t', FPConstants.NO_QUALIFIER, new String[] { "", "", "" });
         check("  ", ' ', '"', new String[] { "", "", "" });
-        check("  ", ' ', PZConstants.NO_QUALIFIER, new String[] { "", "", "" });
+        check("  ", ' ', FPConstants.NO_QUALIFIER, new String[] { "", "", "" });
 
     }
 

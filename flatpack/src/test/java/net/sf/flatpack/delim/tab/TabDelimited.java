@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.columninfile;
+package net.sf.flatpack.delim.tab;
 
 /*
  * Created on Nov 27, 2005
@@ -9,35 +9,33 @@ import java.io.File;
 
 import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
-import net.sf.flatpack.DefaultPZParserFactory;
-import net.sf.flatpack.PZParser;
-import net.sf.flatpack.ordering.OrderBy;
-import net.sf.flatpack.ordering.OrderColumn;
+import net.sf.flatpack.DefaultParserFactory;
+import net.sf.flatpack.Parser;
 
 /**
  * @author zepernick
- * 
+ *
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class DelimitedColumnNamesInFile {
+public class TabDelimited {
     public static void main(final String[] args) throws Exception {
         String[] colNames = null;
-        OrderBy orderby = null;
+        File tmpFile = null;
 
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final PZParser pzparser =
-                DefaultPZParserFactory.getInstance().newDelimitedParser(
-                        new File("net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+        tmpFile = new File("net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt");
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(tmpFile, '\t', '\"');
         final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
-        orderby = new OrderBy();
-        orderby.addOrderColumn(new OrderColumn("CITY", false));
-        orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
-        ds.orderRows(orderby);
+        /*
+         * orderby = new OrderBy(); orderby.addOrderColumn(new
+         * OrderColumn("CITY",false)); orderby.addOrderColumn(new
+         * OrderColumn("LASTNAME",true)); ds.orderRows(orderby);
+         */
 
         colNames = ds.getColumns();
 
@@ -62,16 +60,14 @@ public class DelimitedColumnNamesInFile {
     // used for Junit test
 
     public DataSet getDsForTest() throws Exception {
+        final Parser parser =
+                DefaultParserFactory.getInstance().newDelimitedParser(
+                        new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
 
-        final PZParser parser =
-                DefaultPZParserFactory.getInstance().newDelimitedParser(
-                        new File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+        parser.setHandlingShortLines(true);
 
         return parser.parse();
 
-        // return new DataSet(new
-        // File("src/test/java/net/sf/pzfilereader/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"),
-        // ",",
-        // "\"", false);
+        //        return new DataSet(new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
     }
 }

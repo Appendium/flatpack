@@ -1,13 +1,13 @@
-package net.sf.pzfilereader.pzparser;
+package net.sf.flatpack.pzparser;
 
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
 import net.sf.flatpack.DataSet;
-import net.sf.flatpack.DefaultPZParserFactory;
-import net.sf.flatpack.PZParser;
-import net.sf.flatpack.util.PZConstants;
+import net.sf.flatpack.DefaultParserFactory;
+import net.sf.flatpack.Parser;
+import net.sf.flatpack.util.FPConstants;
 
 /**
  * Test the different options that can be 
@@ -20,14 +20,14 @@ public class PZParserOptsTest extends TestCase {
     public void testEmptyToNull() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1,,value3";
-        PZParser p = DefaultPZParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setNullEmptyStrings(true);
         ds = p.parse();
         ds.next();
 
         assertEquals("String should be null...", null, ds.getString("column2"));
 
-        p = DefaultPZParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setNullEmptyStrings(false);
         ds = p.parse();
         ds.next();
@@ -38,14 +38,14 @@ public class PZParserOptsTest extends TestCase {
     public void testIgnoreWarnings() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1,value2";
-        PZParser p = DefaultPZParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setHandlingShortLines(true);
         p.setIgnoreParseWarnings(true);
         ds = p.parse();
 
         assertEquals("Error collection should be empty...", 0, ds.getErrors().size());
 
-        p = DefaultPZParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setHandlingShortLines(true);
         p.setIgnoreParseWarnings(false);
         ds = p.parse();
@@ -57,7 +57,7 @@ public class PZParserOptsTest extends TestCase {
     public void testCaseSensitiveMetaData() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1,value2,value3";
-        PZParser p = DefaultPZParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
 
         //check that column names are case sensitive
         p.setColumnNamesCaseSensitive(true);
@@ -71,7 +71,7 @@ public class PZParserOptsTest extends TestCase {
         }
 
         //check that column names are NOT case sensitive
-        p = DefaultPZParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', PZConstants.NO_QUALIFIER);
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setColumnNamesCaseSensitive(false);
         ds = p.parse();
         ds.next();

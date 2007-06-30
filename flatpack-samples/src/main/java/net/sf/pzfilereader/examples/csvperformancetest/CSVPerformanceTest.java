@@ -6,11 +6,10 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.PZParser;
+import net.sf.flatpack.DataError;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.DefaultParserFactory;
+import net.sf.flatpack.Parser;
 
 /*
  * Created on Dec 1, 2005
@@ -50,7 +49,7 @@ public class CSVPerformanceTest {
         // text qualified by double quotes
         // ignore first record
         System.out.println("Parsing....");
-        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(filename), 
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(filename), 
                 ',', '"');
         long timeStarted = System.currentTimeMillis();
         final DataSet ds = pzparser.parse();

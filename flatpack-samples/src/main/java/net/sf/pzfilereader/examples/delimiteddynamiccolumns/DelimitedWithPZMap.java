@@ -8,13 +8,12 @@ package net.sf.pzfilereader.examples.delimiteddynamiccolumns;
 import java.io.File;
 import java.util.Iterator;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.DefaultPZParserFactory;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.PZParser;
-import net.sf.pzfilereader.ordering.OrderBy;
-import net.sf.pzfilereader.ordering.OrderColumn;
+import net.sf.flatpack.DataError;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.DefaultParserFactory;
+import net.sf.flatpack.Parser;
+import net.sf.flatpack.ordering.OrderBy;
+import net.sf.flatpack.ordering.OrderColumn;
 
 /**
  * @author zepernick
@@ -44,7 +43,7 @@ public class DelimitedWithPZMap {
         // text qualified by double quotes
         // ignore first record
         OrderBy orderby = null;
-        final PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(new File(mapping), 
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), 
                 new File(data), ',', '"', true);
         final DataSet ds = pzparser.parse();
 

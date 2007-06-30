@@ -12,7 +12,7 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for 
  the specific language governing permissions and limitations under the License.  
  */
-package net.sf.pzfilereader.parserutils;
+package net.sf.flatpack.parserutils;
 
 import junit.framework.TestCase;
 import net.sf.flatpack.util.ParserUtils;
