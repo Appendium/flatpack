@@ -6,10 +6,10 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.pzfilereader.DataError;
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.brparse.BuffReaderDelimPZParser;
-import net.sf.pzfilereader.brparse.BuffReaderPZParseFactory;
+import net.sf.flatpack.DataError;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.brparse.BuffReaderDelimParser;
+import net.sf.flatpack.brparse.BuffReaderParseFactory;
 
 /*
  * Created on Dec 1, 2005
@@ -42,14 +42,14 @@ public class CSVLarge {
     }
 
     public static void call(String data) throws Exception {
-        BuffReaderDelimPZParser pzparse = null;
+        BuffReaderDelimParser pzparse = null;
         try {
 
 
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-            pzparse = (BuffReaderDelimPZParser)BuffReaderPZParseFactory.getInstance().newDelimitedParser(new File(data), 
+            pzparse = (BuffReaderDelimParser)BuffReaderParseFactory.getInstance().newDelimitedParser(new File(data), 
                      ',', '"');
     
             final DataSet ds = pzparse.parse();

@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.parserutils;
+package net.sf.flatpack.parserutils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,9 +8,9 @@ package net.sf.pzfilereader.examples.largedataset.delimiteddynamiccolumns;
 import java.io.File;
 import java.io.FileInputStream;
 
-import net.sf.pzfilereader.DataSet;
-import net.sf.pzfilereader.brparse.BuffReaderDelimPZParser;
-import net.sf.pzfilereader.brparse.BuffReaderPZParseFactory;
+import net.sf.flatpack.DataSet;
+import net.sf.flatpack.brparse.BuffReaderDelimParser;
+import net.sf.flatpack.brparse.BuffReaderParseFactory;
 
 /**
  * @author zepernick
@@ -38,7 +38,7 @@ public class LargeDelimitedWithPZMap {
         String[] colNames = null;
         FileInputStream pzmap = null;
         FileInputStream fileToParse = null;
-        BuffReaderDelimPZParser pzparse = null;
+        BuffReaderDelimParser pzparse = null;
         try {
             pzmap = new FileInputStream(new File(mapping));
             fileToParse = new FileInputStream(new File(data));
@@ -46,7 +46,7 @@ public class LargeDelimitedWithPZMap {
             // text qualified by double quotes
             // ignore first record
             
-            pzparse = (BuffReaderDelimPZParser)BuffReaderPZParseFactory.getInstance().newDelimitedParser(pzmap, 
+            pzparse = (BuffReaderDelimParser)BuffReaderParseFactory.getInstance().newDelimitedParser(pzmap, 
                     fileToParse, ',', '"', true);
     
             final DataSet ds = pzparse.parse();

@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.utilities;
+package net.sf.flatpack.utilities;
 
 /**
  * Static utility methods for Junit tests

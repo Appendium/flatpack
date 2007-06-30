@@ -105,7 +105,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getColumns()
+     * @see net.sf.flatpack.IDataSet#getColumns()
      */
     public String[] getColumns() {
         ColumnMetaData column = null;
@@ -127,7 +127,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getColumns(java.lang.String)
+     * @see net.sf.flatpack.IDataSet#getColumns(java.lang.String)
      */
     public String[] getColumns(final String recordID) {
         String[] array = null;
@@ -147,7 +147,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String)
+     * @see net.sf.flatpack.IDataSet#getDate(java.lang.String)
      */
     public Date getDate(final String column) throws ParseException {
         return getDate(column, new SimpleDateFormat("yyyyMMdd"));
@@ -156,7 +156,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getDate(java.lang.String,
+     * @see net.sf.flatpack.IDataSet#getDate(java.lang.String,
      *      java.text.SimpleDateFormat)
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
@@ -171,7 +171,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getDouble(java.lang.String)
+     * @see net.sf.flatpack.IDataSet#getDouble(java.lang.String)
      */
     public double getDouble(final String column) {
         final StringBuffer newString = new StringBuffer();
@@ -200,7 +200,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getErrorCount()
+     * @see net.sf.flatpack.IDataSet#getErrorCount()
      */
     public int getErrorCount() {
         if (getErrors() != null) {
@@ -213,7 +213,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getErrors()
+     * @see net.sf.flatpack.IDataSet#getErrors()
      */
     public List getErrors() {
         return errors;
@@ -222,7 +222,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getIndex()
+     * @see net.sf.flatpack.IDataSet#getIndex()
      */
     public int getIndex() {
         return pointer;
@@ -231,7 +231,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getInt(java.lang.String)
+     * @see net.sf.flatpack.IDataSet#getInt(java.lang.String)
      */
     public int getInt(final String column) {
         final String s = getStringValue(column);
@@ -246,7 +246,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getRowCount()
+     * @see net.sf.flatpack.IDataSet#getRowCount()
      */
     public int getRowCount() {
         return rows.size();
@@ -255,7 +255,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getRowNo()
+     * @see net.sf.flatpack.IDataSet#getRowNo()
      */
     public int getRowNo() {
         return ((Row) rows.get(pointer)).getRowNumber();
@@ -264,7 +264,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#getString(java.lang.String)
+     * @see net.sf.flatpack.IDataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
         final String s = getStringValue(column);
@@ -301,7 +301,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#goBottom()
+     * @see net.sf.flatpack.IDataSet#goBottom()
      */
     public void goBottom() {
         pointer = rows.size() - 1;
@@ -310,7 +310,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#goTop()
+     * @see net.sf.flatpack.IDataSet#goTop()
      */
     public void goTop() {
         pointer = -1;
@@ -319,7 +319,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#isAnError(int)
+     * @see net.sf.flatpack.IDataSet#isAnError(int)
      */
     public boolean isAnError(final int lineNo) {
         for (int i = 0; i < errors.size(); i++) {
@@ -333,7 +333,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#next()
+     * @see net.sf.flatpack.IDataSet#next()
      */
     public boolean next() {
         if (pointer < rows.size() && pointer + 1 != rows.size()) {
@@ -346,7 +346,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#orderRows(net.sf.pzfilereader.ordering.OrderBy)
+     * @see net.sf.flatpack.IDataSet#orderRows(net.sf.flatpack.ordering.OrderBy)
      */
     public void orderRows(final OrderBy ob) throws Exception {
         // PZ try to handle other <records> by sending them to
@@ -367,7 +367,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#previous()
+     * @see net.sf.flatpack.IDataSet#previous()
      */
     public boolean previous() {
         if (pointer <= 0) {
@@ -440,7 +440,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.IDataSet#remove()
+     * @see net.sf.flatpack.IDataSet#remove()
      */
     public void remove() {
         rows.remove(pointer);

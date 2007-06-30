@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
-	<classpathentry path="src/main/java" kind="src"/>
-	<classpathentry sourcepath="/PZ_SRC_HOME" path="MAVEN_REPO/net.sf.flatpack/jars/flatpack-3.0.0.jar" kind="var"/>
-	<classpathentry path="MAVEN_REPO/jdom/jars/jdom-1.0.jar" kind="var"/>
-	<classpathentry path="MAVEN_REPO/jexcelapi/jars/jxl-2.4.2.jar" kind="var"/>
-	<classpathentry path="MAVEN_REPO/org.slf4j/jars/slf4j-api-1.1.0-RC1.jar" kind="var"/>
-	<classpathentry path="MAVEN_REPO/org.slf4j/jars/slf4j-simple-1.1.0-RC1.jar" kind="var"/>
-	<classpathentry path="target/classes" kind="output"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="var" path="MAVEN_REPO/net.sf.flatpack/jars/flatpack-3.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/jdom/jars/jdom-1.0.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/jexcelapi/jars/jxl-2.4.2.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org.slf4j/jars/slf4j-api-1.1.0-RC1.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org.slf4j/jars/slf4j-simple-1.1.0-RC1.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

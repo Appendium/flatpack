@@ -5,6 +5,8 @@ package net.sf.pzfilereader.examples;
 
 import java.lang.reflect.Method;
 
+import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.ParserUtils;
 import net.sf.pzfilereader.examples.createsamplecsv.CSVTestFileCreator;
 import net.sf.pzfilereader.examples.csvheaderandtrailer.CSVHeaderAndTrailer;
 import net.sf.pzfilereader.examples.csvperformancetest.CSVPerformanceTest;
@@ -19,8 +21,6 @@ import net.sf.pzfilereader.examples.largedataset.largecsvperformancetest.CSVLarg
 import net.sf.pzfilereader.examples.lowlevelparse.LowLevelParse;
 import net.sf.pzfilereader.examples.multilinedelimitedrecord.DelimitedMultiLine;
 import net.sf.pzfilereader.examples.numericsanddates.NumericsAndDates;
-import net.sf.pzfilereader.util.PZConstants;
-import net.sf.pzfilereader.util.ParserUtils;
 
 /**
  * @author Benoit Xhenseval
@@ -270,7 +270,7 @@ public class Examples implements Repeater {
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < repeat; i++) {
-            ParserUtils.splitLine(line, ',', '\"', PZConstants.SPLITLINE_SIZE_INIT);
+            ParserUtils.splitLine(line, ',', '\"', FPConstants.SPLITLINE_SIZE_INIT);
         }
         long stop = System.currentTimeMillis();
 

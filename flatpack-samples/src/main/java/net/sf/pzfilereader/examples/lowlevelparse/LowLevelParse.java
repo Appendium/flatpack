@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
-import net.sf.pzfilereader.util.ParserUtils;
+import net.sf.flatpack.util.ParserUtils;
 
 /*
  * Created on Nov 27, 2005

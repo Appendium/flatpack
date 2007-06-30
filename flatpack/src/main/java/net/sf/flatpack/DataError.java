@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -34,7 +34,7 @@ package net.sf.flatpack;
 
 /**
  * This class holds errors that occured while parsing or processing a data file.
- * 
+ *
  * @author Paul Zepernick
  * @version 2.0
  */
@@ -46,7 +46,7 @@ public class DataError {
     private final int errorLevel;
 
     /**
-     * 
+     *
      * @param errorDesc
      *          Text description of the error that occured
      * @param lineNo
@@ -62,7 +62,7 @@ public class DataError {
 
     /**
      * Returns the errorDesc.
-     * 
+     *
      * @return String
      */
     public String getErrorDesc() {
@@ -71,7 +71,7 @@ public class DataError {
 
     /**
      * Returns the errorLevel.
-     * 
+     *
      * @return int
      */
     public int getErrorLevel() {
@@ -80,7 +80,7 @@ public class DataError {
 
     /**
      * Returns the lineNo.
-     * 
+     *
      * @return int
      */
     public int getLineNo() {

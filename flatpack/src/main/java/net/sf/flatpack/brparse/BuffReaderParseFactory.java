@@ -77,7 +77,7 @@ public class BuffReaderParseFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File)
      */
     public Parser newFixedLengthParser(final File pzmapXML, final File dataSource) {
@@ -98,7 +98,7 @@ public class BuffReaderParseFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream)
      */
     public Parser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
@@ -116,7 +116,7 @@ public class BuffReaderParseFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File, char, char, boolean)
      */
     public Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
@@ -127,7 +127,7 @@ public class BuffReaderParseFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream, char, char, boolean)
      */
     public Parser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
@@ -138,7 +138,7 @@ public class BuffReaderParseFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.File, char,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File, char,
      *      char)
      */
     public Parser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier) {
@@ -148,7 +148,7 @@ public class BuffReaderParseFactory implements ParserFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.PZParserFactory#newParser(java.io.InputStream,
+     * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      char, char)
      */
     public Parser newDelimitedParser(final InputStream dataSourceStream, final char delimiter, final char qualifier) {

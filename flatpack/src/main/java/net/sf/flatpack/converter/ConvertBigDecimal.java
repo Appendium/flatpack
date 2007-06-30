@@ -15,7 +15,7 @@ public class ConvertBigDecimal implements Converter {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sf.pzfilereader.converter#convertValue(java.lang.String)
+     * @see net.sf.flatpack.converter#convertValue(java.lang.String)
      */
     public Object convertValue(final String valueToConvert) {
         return new BigDecimal(ParserUtils.stripNonDoubleChars(valueToConvert));

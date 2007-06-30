@@ -24,7 +24,34 @@
 
 <project xmlns:j="jelly:core" xmlns:ant="jelly:ant"
    xmlns:maven="jelly:maven" xmlns:x="jelly:xml">
+<!--
+   <goal name="fp:clean" prereqs="multiproject:clean,clean" />
 
+   <goal name="fp:build">
+      <j:set var="goal" value="fp:build" />
+      <j:set var="do.obfuscation" value="false" scope="parent" />
+      <attainGoal name="multiproject:goal" />
+   </goal>
+
+   <goal name="fp:rebuild">
+      <attainGoal name="fp:clean" />
+      <j:set var="goal" value="fp:rebuild" />
+      <attainGoal name="multiproject:goal" />
+   </goal>
+
+   <goal name="fp:releasebuild">
+      <attainGoal name="fp:rebuild" />
+      <j:set var="goal" value="artifact:create-upload-bundle" />
+      <attainGoal name="multiproject:goal" />
+      <attainGoal name="fp:site" />
+   </goal>
+
+   <goal name="fp:site">
+      <attainGoal name="dist:build" />
+      <attainGoal name="dist:multiproject" />
+   </goal>
+   -->
+   
    <goal name="fp:clean" prereqs="multiproject:clean,clean" />
 
    <goal name="fp:build">

@@ -6,7 +6,7 @@
   <property name="src" location="./src/main/java"/>
   <property name="build" location="build"/>
   <!--set this to the target of the build-->	
-  <property name="dist"  location="c:/pzFileReader/distro"/>
+  <property name="dist"  location="c:/flatpack/distro"/>
   <property name="include" value="include"/>
   <property name="version" value="3.0.0"/>
 
