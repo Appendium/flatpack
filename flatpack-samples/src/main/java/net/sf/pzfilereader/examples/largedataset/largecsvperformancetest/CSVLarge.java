@@ -28,10 +28,10 @@ public class CSVLarge {
 
     public static void main(final String[] args) {
         try {
-            Map settings = readSettings();
-            String data = (String) settings.get("csvFile");
+            final Map settings = readSettings();
+            final String data = (String) settings.get("csvFile");
             call(data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -41,17 +41,15 @@ public class CSVLarge {
         return "LargeSampleCSV.csv";
     }
 
-    public static void call(String data) throws Exception {
+    public static void call(final String data) throws Exception {
         BuffReaderDelimParser pzparse = null;
         try {
-
 
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-            pzparse = (BuffReaderDelimParser)BuffReaderParseFactory.getInstance().newDelimitedParser(new File(data), 
-                     ',', '"');
-    
+            pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(new File(data), ',', '"');
+
             final DataSet ds = pzparse.parse();
             final long timeStarted = System.currentTimeMillis();
             int totalCount = 0;

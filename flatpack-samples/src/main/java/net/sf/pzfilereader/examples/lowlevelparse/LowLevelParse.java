@@ -19,10 +19,10 @@ import net.sf.flatpack.util.ParserUtils;
 public class LowLevelParse {
 
     public static void main(final String[] args) {
-        String data = getDefaultDataFile();
+        final String data = getDefaultDataFile();
         try {
             call(data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -32,7 +32,7 @@ public class LowLevelParse {
         return "PEOPLE-CommaDelimitedWithQualifier.txt";
     }
 
-    public static void call(String data) throws Exception {
+    public static void call(final String data) throws Exception {
         BufferedReader br = null;
         FileReader fr = null;
         final File textFile = new File(data);

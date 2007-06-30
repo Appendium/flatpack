@@ -20,10 +20,10 @@ import net.sf.flatpack.Parser;
 public class DelimitedMultiLine {
 
     public static void main(final String[] args) throws Exception {
-        String data = getDefaultDataFile();
+        final String data = getDefaultDataFile();
         try {
             call(data);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -33,12 +33,11 @@ public class DelimitedMultiLine {
         return "PEOPLE-CommaDelimitedWithQualifierMultiLine.txt";
     }
 
-    public static void call(String data) throws Exception {
+    public static void call(final String data) throws Exception {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(data),
-                ',', '\"');
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(data), ',', '\"');
         final DataSet ds = pzparser.parse();
 
         final String[] colNames = ds.getColumns();

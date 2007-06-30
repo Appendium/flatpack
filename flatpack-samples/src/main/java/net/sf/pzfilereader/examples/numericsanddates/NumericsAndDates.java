@@ -20,8 +20,8 @@ import net.sf.flatpack.Parser;
  */
 public class NumericsAndDates {
     public static void main(final String[] args) throws Exception {
-        String mapping = getDefaultMapping();
-        String data = getDefaultDataFile();
+        final String mapping = getDefaultMapping();
+        final String data = getDefaultDataFile();
         call(mapping, data);
     }
 
@@ -33,15 +33,14 @@ public class NumericsAndDates {
         return "INVENTORY-Delimited.pzmap.xml";
     }
 
-    public static void call(String mapping, String data) throws Exception {
+    public static void call(final String mapping, final String data) throws Exception {
         // wll provide a clean format for printing the date to the screen
         final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), 
-                new File(data), ',', '\"', true);
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), ',', '\"', true);
         final DataSet ds = pzparser.parse();
         // demonstrates the casting abilities of PZFileReader
         while (ds.next()) {

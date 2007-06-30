@@ -19,8 +19,8 @@ import net.sf.flatpack.Parser;
  */
 public class FixedLengthWithPZMap {
     public static void main(final String[] args) throws Exception {
-        String mapping = getDefaultMapping();
-        String data = getDefaultDataFile();
+        final String mapping = getDefaultMapping();
+        final String data = getDefaultDataFile();
         call(mapping, data);
 
     }
@@ -33,9 +33,8 @@ public class FixedLengthWithPZMap {
         return "PEOPLE-FixedLength.pzmap.xml";
     }
 
-    public static void call(String mapping, String data) throws Exception {
-        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(
-                new File(mapping), new File(data));
+    public static void call(final String mapping, final String data) throws Exception {
+        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new File(mapping), new File(data));
         final DataSet ds = pzparser.parse();
 
         final String[] colNames = ds.getColumns();

@@ -11,7 +11,6 @@ import net.sf.flatpack.DataSet;
 import net.sf.flatpack.brparse.BuffReaderFixedParser;
 import net.sf.flatpack.brparse.BuffReaderParseFactory;
 
-
 /**
  * @author zepernick
  * 
@@ -20,8 +19,8 @@ import net.sf.flatpack.brparse.BuffReaderParseFactory;
  */
 public class LargeFixedLengthWithPZMap {
     public static void main(final String[] args) throws Exception {
-        String mapping = getDefaultMapping();
-        String data = getDefaultDataFile();
+        final String mapping = getDefaultMapping();
+        final String data = getDefaultDataFile();
         call(mapping, data);
     }
 
@@ -33,24 +32,23 @@ public class LargeFixedLengthWithPZMap {
         return "PEOPLE-FixedLength.pzmap.xml";
     }
 
-    public static void call(String mapping, String data) throws Exception {
+    public static void call(final String mapping, final String data) throws Exception {
         String[] colNames = null;
         BuffReaderFixedParser pzparse = null;
         try {
-            pzparse = (BuffReaderFixedParser)BuffReaderParseFactory.getInstance().newFixedLengthParser(new File(mapping), 
-                    new File(data));
-    
+            pzparse = (BuffReaderFixedParser) BuffReaderParseFactory.getInstance().newFixedLengthParser(new File(mapping), new File(data));
+
             final DataSet ds = pzparse.parse();
             colNames = ds.getColumns();
-    
+
             while (ds.next()) {
                 for (int i = 0; i < colNames.length; i++) {
                     System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
                 }
-    
+
                 System.out.println("===========================================================================");
             }
-            
+
         } finally {
             pzparse.close();
         }

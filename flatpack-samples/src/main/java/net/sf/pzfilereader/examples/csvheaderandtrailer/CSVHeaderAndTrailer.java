@@ -36,8 +36,7 @@ public class CSVHeaderAndTrailer {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record 
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(mapFile, dataFile, 
-                ',', '\"', true);
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(mapFile, dataFile, ',', '\"', true);
         final DataSet ds = pzparser.parse();
         while (ds.next()) {
 

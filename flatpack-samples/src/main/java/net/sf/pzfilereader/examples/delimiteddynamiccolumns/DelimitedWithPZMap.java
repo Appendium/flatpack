@@ -24,8 +24,8 @@ import net.sf.flatpack.ordering.OrderColumn;
 public class DelimitedWithPZMap {
     public static void main(final String[] args) throws Exception {
 
-        String mapping = getDefaultMapping();
-        String data = getDefaultDataFile();
+        final String mapping = getDefaultMapping();
+        final String data = getDefaultDataFile();
         call(mapping, data);
 
     }
@@ -38,13 +38,12 @@ public class DelimitedWithPZMap {
         return "PEOPLE-DelimitedWithHeaderTrailer.pzmap.xml";
     }
 
-    public static void call(String mapping, String data) throws Exception {
+    public static void call(final String mapping, final String data) throws Exception {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
         OrderBy orderby = null;
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), 
-                new File(data), ',', '"', true);
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), ',', '"', true);
         final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
@@ -53,10 +52,10 @@ public class DelimitedWithPZMap {
         orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
         // ds.orderRows(orderby);
 
-        String[] colNames = ds.getColumns();
+        final String[] colNames = ds.getColumns();
 
         while (ds.next()) {
-            
+
             if (ds.isRecordID("header")) {
                 System.out.println(">>>>found header");
                 System.out.println("COLUMN NAME: INDICATOR VALUE: " + ds.getString("RECORDINDICATOR"));
@@ -72,7 +71,7 @@ public class DelimitedWithPZMap {
                 System.out.println("===========================================================================");
                 continue;
             }
-            
+
             for (int i = 0; i < colNames.length; i++) {
                 System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
             }
@@ -84,10 +83,10 @@ public class DelimitedWithPZMap {
             System.out.println("<<<<FOUND ERRORS IN FILE>>>>");
             final Iterator pzerrors = ds.getErrors().iterator();
             while (pzerrors.hasNext()) {
-                final DataError error = (DataError)pzerrors.next();
+                final DataError error = (DataError) pzerrors.next();
                 System.out.println("Error Msg: " + error.getErrorDesc() + " line no: " + error.getLineNo());
             }
-            
+
         }
 
     }

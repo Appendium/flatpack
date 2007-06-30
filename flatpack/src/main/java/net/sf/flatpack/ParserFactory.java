@@ -218,8 +218,8 @@ public interface ParserFactory {
      *            skips the first line that contains data in the file
      * @return PZParser
      */
-    Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
-            final char qualifier, final boolean ignoreFirstRecord);
+    Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is
@@ -244,8 +244,7 @@ public interface ParserFactory {
      *            The File can be wrapped in a "new FileReader(File)"
      * @return PZParser
      */
-    Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
-            final boolean ignoreFirstRecord);
+    Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier, final boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is

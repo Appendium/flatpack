@@ -20,8 +20,8 @@ import net.sf.flatpack.brparse.BuffReaderParseFactory;
  */
 public class LargeDelimitedWithPZMap {
     public static void main(final String[] args) throws Exception {
-        String mapping = getDefaultMapping();
-        String data = getDefaultDataFile();
+        final String mapping = getDefaultMapping();
+        final String data = getDefaultDataFile();
         call(mapping, data);
 
     }
@@ -34,7 +34,7 @@ public class LargeDelimitedWithPZMap {
         return "PEOPLE-Delimited.pzmap.xml";
     }
 
-    public static void call(String mapping, String data) throws Exception {
+    public static void call(final String mapping, final String data) throws Exception {
         String[] colNames = null;
         FileInputStream pzmap = null;
         FileInputStream fileToParse = null;
@@ -45,30 +45,29 @@ public class LargeDelimitedWithPZMap {
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-            
-            pzparse = (BuffReaderDelimParser)BuffReaderParseFactory.getInstance().newDelimitedParser(pzmap, 
-                    fileToParse, ',', '"', true);
-    
+
+            pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(pzmap, fileToParse, ',', '"', true);
+
             final DataSet ds = pzparse.parse();
-    
+
             colNames = ds.getColumns();
-    
+
             while (ds.next()) {
                 for (int i = 0; i < colNames.length; i++) {
                     System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
                 }
-    
+
                 System.out.println("===========================================================================");
             }
-    
+
             if (ds.getErrors() != null && ds.getErrors().size() > 0) {
                 System.out.println("FOUND ERRORS IN FILE");
             }
-            
+
         } finally {
             // free up the file readers
             pzparse.close();
-            
+
         }
 
     }
