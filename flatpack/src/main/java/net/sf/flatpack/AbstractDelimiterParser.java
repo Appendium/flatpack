@@ -185,7 +185,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     //                    setColumnMD(ParserUtils.getColumnMDFromFile(line, delimiter, qualifier, this));
                     setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, delimiter, qualifier, this));
                     //                    ds.setColumnMD(getColumnMD());
-                    ds.setPzMetaData(getPzMetaData());
+                    ds.setMetaData(getPzMetaData());
                     continue;
                 }
 

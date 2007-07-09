@@ -77,9 +77,9 @@ public class DefaultDataSet implements DataSet {
 
     //    private Map columnMD;
 
-    private MetaData pzMetaData;
+    private MetaData metaData;
 
-    private Parser pzparser;
+    private Parser parser;
 
     //    /**
     //     * @deprecated use the constructor with PZMetaData 
@@ -90,8 +90,8 @@ public class DefaultDataSet implements DataSet {
     //    }
 
     public DefaultDataSet(final MetaData pzMetaData, final Parser pzparser) {
-        this.pzMetaData = pzMetaData;
-        this.pzparser = pzparser;
+        this.metaData = pzMetaData;
+        this.parser = pzparser;
     }
 
     public void addRow(final Row row) {
@@ -111,8 +111,8 @@ public class DefaultDataSet implements DataSet {
         ColumnMetaData column = null;
         String[] array = null;
 
-        if (/*columnMD != null || */pzMetaData != null) {
-            final List cmds = pzMetaData.getColumnsNames();// ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
+        if (/*columnMD != null || */metaData != null) {
+            final List cmds = metaData.getColumnsNames();// ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
 
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
@@ -132,8 +132,8 @@ public class DefaultDataSet implements DataSet {
     public String[] getColumns(final String recordID) {
         String[] array = null;
 
-        if (pzMetaData != null) {
-            final List cmds = ParserUtils.getColumnMetaData(recordID, pzMetaData);
+        if (metaData != null) {
+            final List cmds = ParserUtils.getColumnMetaData(recordID, metaData);
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
                 final ColumnMetaData column = (ColumnMetaData) cmds.get(i);
@@ -189,7 +189,7 @@ public class DefaultDataSet implements DataSet {
 
     private String getStringValue(final String column) {
         final Row row = (Row) rows.get(pointer);
-        return row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), pzMetaData, column, pzparser));
+        return row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), metaData, column, parser));
     }
 
     public Object getObject(final String column, final Class classToConvertTo) {
@@ -269,7 +269,7 @@ public class DefaultDataSet implements DataSet {
     public String getString(final String column) {
         final String s = getStringValue(column);
 
-        if (pzparser.isNullEmptyStrings() && FPStringUtils.isBlank(s)) {
+        if (parser.isNullEmptyStrings() && FPStringUtils.isBlank(s)) {
             return null;
         }
 
@@ -293,7 +293,7 @@ public class DefaultDataSet implements DataSet {
 
     public void setValue(final String column, final String value) {
         final Row row = (Row) rows.get(pointer);
-        final int colIndex = ParserUtils.getColumnIndex(row.getMdkey(), pzMetaData, column, pzparser);
+        final int colIndex = ParserUtils.getColumnIndex(row.getMdkey(), metaData, column, parser);
 
         row.setValue(colIndex, value);
     }
@@ -356,7 +356,7 @@ public class DefaultDataSet implements DataSet {
         // with <RECORD> mappings");
         // }
         if (ob != null && rows != null) {
-            final List cmds = pzMetaData.getColumnsNames();
+            final List cmds = metaData.getColumnsNames();
             //            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
             ob.setColumnMD(cmds);
             Collections.sort(rows, ob);
@@ -466,12 +466,21 @@ public class DefaultDataSet implements DataSet {
         rows.clear();
     }
 
-    public MetaData getPzMetaData() {
-        return pzMetaData;
+    public MetaData getMetaData() {
+        return metaData;
     }
 
-    public void setPzMetaData(final MetaData pzMetaData) {
-        this.pzMetaData = pzMetaData;
+    public void setMetaData(final MetaData metaData) {
+        this.metaData = metaData;
     }
 
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append("Errors:").append(errors.size()).append(System.getProperty("line.separator"));
+        buf.append("Rows:").append(rows.size()).append(System.getProperty("line.separator"));
+        buf.append("Position:").append(pointer).append(System.getProperty("line.separator"));
+        buf.append("Conversion Props:").append(pzConvertProps).append(System.getProperty("line.separator"));
+        buf.append("MetaData:").append(metaData).append(System.getProperty("line.separator"));
+        return buf.toString();
+    }
 }
