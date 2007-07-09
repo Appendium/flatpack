@@ -86,4 +86,11 @@ public class DataError {
     public int getLineNo() {
         return lineNo;
     }
+
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append("Line:").append(lineNo).append(" Level:").append(errorLevel).append(" Desc:").append(errorDesc).append(
+                System.getProperty("line.separator"));
+        return buf.toString();
+    }
 }
