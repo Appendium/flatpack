@@ -782,7 +782,7 @@ public final class ParserUtils {
         //        }
 
         if (idx < 0) {
-            throw new NoSuchElementException("Column " + colName + " does not exist, check case/spelling. key:" + key);
+            throw new NoSuchElementException("Column [" + column + "] does not exist, check case/spelling. key:" + key);
         }
         return idx;
     }
