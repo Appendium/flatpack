@@ -76,4 +76,12 @@ public class MetaData {
         }
         return idx;
     }
+
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append("Col Names:").append(columnsNames).append(System.getProperty("line.separator"));
+        buf.append("Col Index Map:").append(columnIndexMap).append(System.getProperty("line.separator"));
+        buf.append("XML Record Elements:").append(xmlRecordElements).append(System.getProperty("line.separator"));
+        return buf.toString();
+    }
 }
