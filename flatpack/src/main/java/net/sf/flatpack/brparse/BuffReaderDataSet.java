@@ -106,8 +106,8 @@ public class BuffReaderDataSet extends DefaultDataSet {
             //                setColumnMD(new LinkedHashMap(brDelimPzParser.getColumnMD()));
             //            }
 
-            if (getPzMetaData() == null) {
-                setPzMetaData(brDelimPzParser.getPzMetaData());
+            if (getMetaData() == null) {
+                setMetaData(brDelimPzParser.getPzMetaData());
             }
 
             clearRows();
