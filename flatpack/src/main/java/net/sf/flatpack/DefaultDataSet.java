@@ -50,7 +50,8 @@ import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.xml.MetaData;
 
 /**
- * @author xhensevb
+ * @author Benoit Xhenseval
+ * @author Paul Zepernick
  * 
  */
 public class DefaultDataSet implements DataSet {
@@ -75,19 +76,9 @@ public class DefaultDataSet implements DataSet {
      */
     private boolean strictNumericParse = false;
 
-    //    private Map columnMD;
-
     private MetaData metaData;
 
     private Parser parser;
-
-    //    /**
-    //     * @deprecated use the constructor with PZMetaData 
-    //     */
-    //    public DefaultDataSet(final Map columnMD2, final PZParser pzparser) {
-    //        this.columnMD = columnMD2;
-    //        this.pzparser = pzparser;
-    //    }
 
     public DefaultDataSet(final MetaData pzMetaData, final Parser pzparser) {
         this.metaData = pzMetaData;
@@ -460,7 +451,7 @@ public class DefaultDataSet implements DataSet {
 
 
     public void clearRows() {
-        goTop(); //set the pointer back to -1
+        pointer = -1; //set the pointer back to -1 directly just in case this instance is a BuffReaderDataSet.
         rows.clear();
     }
     
