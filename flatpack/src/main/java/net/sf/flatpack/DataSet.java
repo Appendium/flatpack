@@ -294,4 +294,22 @@ public interface DataSet {
      *          Value to change the column to
      */
     void setValue(final String column, final String value);
+    
+    /**
+     * Clears out the rows in memory from the last parse.
+     *
+     */
+    void clearRows();
+    
+    /**
+     * Clears out the parse errors from memory
+     *
+     */
+    void clearErrors();
+    
+    /**
+     * Clears both the errors and rows from memory 
+     * 
+     */
+    void clearAll();
 }

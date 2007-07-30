@@ -458,12 +458,19 @@ public class DefaultDataSet implements DataSet {
         this.pointer = pointer;
     }
 
-    /**
-     * Clears all of the in memory rows of the DataSet
-     *
-     */
+
     public void clearRows() {
+        goTop(); //set the pointer back to -1
         rows.clear();
+    }
+    
+    public void clearAll() {
+        clearRows();
+        clearErrors();
+    }
+    
+    public void clearErrors() {
+       errors.clear();        
     }
 
     public MetaData getMetaData() {
