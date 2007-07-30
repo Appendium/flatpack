@@ -462,7 +462,7 @@ public class DefaultDataSet implements DataSet {
      * Clears all of the in memory rows of the DataSet
      *
      */
-    protected void clearRows() {
+    public void clearRows() {
         rows.clear();
     }
 
