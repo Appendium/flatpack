@@ -1,5 +1,5 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
  * 
  * Based in London, we are world leaders in the design and development 
  * of bespoke applications for the securities financing markets.
@@ -43,27 +43,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BuffReaderDataSet extends DefaultDataSet {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BuffReaderDataSet.class);
     private final BuffReaderDelimParser brDelimPzParser;
-
     private final BuffReaderFixedParser brFixedPzParser;
-
-    private final Logger logger = LoggerFactory.getLogger(BuffReaderDataSet.class);
-
-    //    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderDelimPZParser brDelimPzParser) {
-    //        super(columnMD2, brDelimPzParser);
-    //        //register the parser with the dataset so we can fetch rows from 
-    //        //the bufferedreader as needed
-    //        this.brDelimPzParser = brDelimPzParser;
-    //        this.brFixedPzParser = null;
-    //    }
-    //
-    //    public BuffReaderPZDataSet(final Map columnMD2, final BuffReaderFixedPZParser brFixedPzParser) {
-    //        super(columnMD2, brFixedPzParser);
-    //        //register the parser with the dataset so we can fetch rows from 
-    //        //the bufferedreader as needed
-    //        this.brFixedPzParser = brFixedPzParser;
-    //        this.brDelimPzParser = null;
-    //    }
 
     public BuffReaderDataSet(final MetaData columnMD2, final BuffReaderDelimParser brDelimPzParser) {
         super(columnMD2, brDelimPzParser);
@@ -118,7 +100,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
             return true;
 
         } catch (final IOException ex) {
-            logger.error("error building Row on next()", ex);
+            LOGGER.error("error building Row on next()", ex);
         }
 
         return false;
