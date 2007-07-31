@@ -53,22 +53,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractFixedLengthParser extends AbstractParser {
     private final Logger logger = LoggerFactory.getLogger(AbstractFixedLengthParser.class);
 
-    /* protected AbstractFixedLengthPZParser(final File dataSource, final String dataDefinition) {
-     super(dataSource, dataDefinition);
-     }
-
-     protected AbstractFixedLengthPZParser(final File dataSource) {
-     super(dataSource);
-     }
-
-     protected AbstractFixedLengthPZParser(final InputStream dataSourceStream, final String dataDefinition) {
-     super(dataSourceStream, dataDefinition);
-     }
-
-     protected AbstractFixedLengthPZParser(final InputStream dataSourceStream) {
-     super(dataSourceStream);
-     }*/
-
     protected AbstractFixedLengthParser(final Reader dataSourceReader, final String dataDefinition) {
         super(dataSourceReader, dataDefinition);
     }
@@ -77,21 +61,8 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
         super(dataSourceReader);
     }
 
-    public DataSet doParse() {
+    protected DataSet doParse() {
         try {
-            /* if (getDataSourceStream() != null) {
-             return doFixedLengthFile(getDataSourceStream());
-             } else {
-             InputStream stream;
-             stream = ParserUtils.createInputStream(getDataSource());
-             try {
-             return doFixedLengthFile(stream);
-             } finally {
-             if (stream != null) {
-             stream.close();
-             }
-             }
-             }*/
             return doFixedLengthFile(getDataSourceReader());
         } catch (final IOException e) {
             logger.error("error accessing/reading data", e);
@@ -109,14 +80,12 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
     private DataSet doFixedLengthFile(final Reader dataSource) throws IOException {
         BufferedReader br = null;
 
-        //        final DefaultDataSet ds = new DefaultDataSet(getColumnMD(), this);
         final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);
 
         try {
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
 
-            //            final Map recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
             final Map recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
 
             // Read in the flat file
@@ -134,7 +103,6 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 }
 
                 final String mdkey = FixedWidthParserUtils.getCMDKey(getPzMetaData(), line);
-                //                final String mdkey = FixedWidthParserUtils.getCMDKey(getColumnMD(), line);
                 final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
 
                 if (line.length() > recordLength) {
@@ -168,18 +136,8 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 final Row row = new Row();
                 row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
 
-                //                final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
-                // to limit the memory use
-                // Build the columns for the row
-                // for (int i = 0; i < cmds.size(); i++) {
-                // final String tempValue = line.substring(recPosition - 1,
-                // recPosition
-                // + (((ColumnMetaData) cmds.get(i)).getColLength() - 1));
-                // recPosition += ((ColumnMetaData) cmds.get(i)).getColLength();
-                // row.addColumn(tempValue.trim());
-                // }
                 row.setRowNumber(lineCount);
                 // add the row to the array
                 ds.addRow(row);

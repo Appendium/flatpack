@@ -57,30 +57,6 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
 
     private final Logger logger = LoggerFactory.getLogger(AbstractDelimiterParser.class);
 
-    /*public AbstractDelimiterPZParser(final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
-     final char qualifier, final boolean ignoreFirstRecord) {
-     super(dataSourceStream, dataDefinition);
-     this.delimiter = delimiter;
-     this.qualifier = qualifier;
-     this.ignoreFirstRecord = ignoreFirstRecord;
-     }
-
-     public AbstractDelimiterPZParser(final File dataSource, final char delimiter, final char qualifier,
-     final boolean ignoreFirstRecord) {
-     super(dataSource);
-     this.delimiter = delimiter;
-     this.qualifier = qualifier;
-     this.ignoreFirstRecord = ignoreFirstRecord;
-     }
-
-     public AbstractDelimiterPZParser(final InputStream dataSourceStream, final char delimiter, final char qualifier,
-     final boolean ignoreFirstRecord) {
-     super(dataSourceStream);
-     this.delimiter = delimiter;
-     this.qualifier = qualifier;
-     this.ignoreFirstRecord = ignoreFirstRecord;
-     }*/
-
     public AbstractDelimiterParser(final Reader dataSourceReader, final String dataDefinition, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         super(dataSourceReader, dataDefinition);
@@ -96,23 +72,10 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
-    public DataSet doParse() {
+    protected DataSet doParse() {
         try {
             lineCount = 0;
             return doDelimitedFile(getDataSourceReader(), shouldCreateMDFromFile());
-            /*  if (getDataSourceStream() != null) {
-             return doDelimitedFile(getDataSourceStream(),  shouldCreateMDFromFile());
-             } else {
-             InputStream stream = null;
-             try {
-             stream = ParserUtils.createInputStream(getDataSource());
-             return doDelimitedFile(stream, shouldCreateMDFromFile());
-             } finally {
-             if (stream != null) {
-             stream.close();
-             }
-             }
-             }*/
         } catch (final IOException e) {
             logger.error("error accessing/creating inputstream", e);
         }
@@ -161,14 +124,10 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
             throw new NullPointerException("dataSource is null");
         }
         BufferedReader br = null;
-        //        final DefaultDataSet ds = new DefaultDataSet(getColumnMD(), this);
         final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);
         try {
             //gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
-
-            // get the total column count
-            // columnCount = columnMD.size();
 
             br = new BufferedReader(dataSource);
 
@@ -182,9 +141,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     continue;
                 } else if (!processedFirst && createMDFromFile) {
                     processedFirst = true;
-                    //                    setColumnMD(ParserUtils.getColumnMDFromFile(line, delimiter, qualifier, this));
                     setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, delimiter, qualifier, this));
-                    //                    ds.setColumnMD(getColumnMD());
                     ds.setMetaData(getPzMetaData());
                     continue;
                 }
@@ -192,8 +149,6 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 // column values
                 List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
-                //                final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
-                //                final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 final int columnCount = cmds.size();
 
