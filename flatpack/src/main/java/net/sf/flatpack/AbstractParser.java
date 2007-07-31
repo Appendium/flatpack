@@ -145,13 +145,6 @@ public abstract class AbstractParser implements Parser {
         }
     }
 
-    //    protected void addToColumnMD(final Object key, final Object value) {
-    //        if (columnMD == null) {
-    //            columnMD = new LinkedHashMap();
-    //        }
-    //        columnMD.put(key, value);
-    //    }
-
     protected boolean isInitialised() {
         return initialised;
     }
@@ -168,25 +161,6 @@ public abstract class AbstractParser implements Parser {
         this.dataDefinition = dataDefinition;
     }
 
-    /*  protected File getDataSource() {
-     return dataSource;
-     }
-
-     protected void setDataSource(final File dataSource) {
-     this.dataSource = dataSource;
-     }
-
-     protected InputStream getDataSourceStream() {
-     return dataSourceStream;
-     }
-
-     protected void setDataSourceStream(final InputStream dataSourceStream) {
-     this.dataSourceStream = dataSourceStream;
-     }*/
-
-    //    protected Map getColumnMD() {
-    //        return columnMD;
-    //    }
     /**
      * Adds a new error to this DataSet. These can be collected, and retreived
      * after processing
@@ -252,5 +226,4 @@ public abstract class AbstractParser implements Parser {
     public void setPzMetaData(final MetaData pzMap) {
         this.pzMetaData = pzMap;
     }
-
 }

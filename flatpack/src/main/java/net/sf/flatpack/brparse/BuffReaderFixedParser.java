@@ -72,11 +72,9 @@ public class BuffReaderFixedParser extends FixedLengthParser {
         super(pzmapXML, dataSource);
     }
 
-    public DataSet doParse() {
-        //        final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
+    protected DataSet doParse() {
         final DataSet ds = new BuffReaderDataSet(getPzMetaData(), this);
         lineCount = 0;
-        //        recordLengths = ParserUtils.calculateRecordLengths(getColumnMD());
         recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
         try {
             //gather the conversion properties
@@ -110,7 +108,6 @@ public class BuffReaderFixedParser extends FixedLengthParser {
                 continue;
             }
 
-            //            final String mdkey = FixedWidthParserUtils.getCMDKey(getColumnMD(), line);
             final String mdkey = FixedWidthParserUtils.getCMDKey(getPzMetaData(), line);
             final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
 
@@ -144,7 +141,6 @@ public class BuffReaderFixedParser extends FixedLengthParser {
             final Row row = new Row();
             row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey);
 
-            //            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
             final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
             row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
 

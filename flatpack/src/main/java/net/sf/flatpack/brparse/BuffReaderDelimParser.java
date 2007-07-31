@@ -83,7 +83,7 @@ public class BuffReaderDelimParser extends DelimiterParser {
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
-    public DataSet doParse() {
+    protected DataSet doParse() {
         //        final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
         final DataSet ds = new BuffReaderDataSet(getPzMetaData(), this);
         try {
