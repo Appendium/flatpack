@@ -8,6 +8,8 @@
   </properties>
   <body>
 	<release version="3.1.0-SNAPSHOT" date="in svn" description="NAME CHANGE">
+		<action dev="zepernick" type="change">added contains() method to DataSet to check for the existance of 
+		a column name on the current row.  DataSet must be on a valid row.</action>
 		<action dev="zepernick" type="change">Added clearRows(), clearErrors(), and clearAll() methods to DataSet</action>
 		<action dev="benoitx" type="change">Goodbye PZFileReader, Hello FlatPack!!!</action>
 		<action dev="zepernick" type="change">Moved package strcuture from net.sf.pzfilereader to net.sf.flatpack</action>
