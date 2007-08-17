@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -480,5 +481,22 @@ public class DefaultDataSet implements DataSet {
         buf.append("Conversion Props:").append(pzConvertProps).append(System.getProperty("line.separator"));
         buf.append("MetaData:").append(metaData).append(System.getProperty("line.separator"));
         return buf.toString();
+    }
+    
+    public boolean contains(String column) {
+        if (pointer == -1) {
+            throw new IndexOutOfBoundsException("dataset on invalid row. need to call next()");
+        }     
+        
+        final Iterator cmds = ParserUtils.getColumnMetaData(((Row) rows.get(pointer)).getMdkey(), metaData).iterator();        
+        while (cmds.hasNext()) {
+            final ColumnMetaData cmd = (ColumnMetaData)cmds.next();
+            if (cmd.getColName().equalsIgnoreCase(column)) {
+                return true;
+            }
+        }
+        
+        return false;
+        
     }
 }
