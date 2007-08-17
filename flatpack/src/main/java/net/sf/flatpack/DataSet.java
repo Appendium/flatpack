@@ -312,4 +312,13 @@ public interface DataSet {
      * 
      */
     void clearAll();
+    
+    /**
+     * Does this DataSet contain a column with the given name?
+     * 
+     * @param column
+     *          Column name to check for
+     * @return boolean
+     */
+    boolean contains(final String column);
 }
