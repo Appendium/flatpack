@@ -244,7 +244,8 @@ public interface ParserFactory {
      *            The File can be wrapped in a "new FileReader(File)"
      * @return PZParser
      */
-    Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier, final boolean ignoreFirstRecord);
+    Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier, 
+            final boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is

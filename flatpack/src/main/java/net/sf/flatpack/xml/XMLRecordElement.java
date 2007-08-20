@@ -113,13 +113,13 @@ public class XMLRecordElement {
     }
 
     /**
-     * @param columns
+     * @param columnsToUse
      *            The columns to set.
      * @param p
      *          PZParser being used.  Can be null.
      */
-    public void setColumns(final List columns, final Parser p) {
-        this.columns = columns;
+    public void setColumns(final List columnsToUse, final Parser p) {
+        this.columns = columnsToUse;
         this.columnIndex = ParserUtils.buidColumnIndexMap(columns, p);
     }
 

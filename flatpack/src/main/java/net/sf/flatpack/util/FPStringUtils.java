@@ -5,7 +5,11 @@ package net.sf.flatpack.util;
  * 
  * @author Jakarta Commons
  */
-public class FPStringUtils {
+public final class FPStringUtils {
+    private FPStringUtils() {
+        
+    }
+    
     /**
      * <p>Checks if a String is whitespace, empty ("") or null.</p>
      *
