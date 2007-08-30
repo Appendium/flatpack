@@ -259,24 +259,20 @@ public class DefaultDataSet implements DataSet {
      * @see net.sf.flatpack.IDataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
-        final String s = getStringValue(column);
+        String s = getStringValue(column);
 
         if (parser.isNullEmptyStrings() && FPStringUtils.isBlank(s)) {
-            return null;
-        }
-
-        if (upperCase) {
+            s = null;
+        } else if (upperCase) {
             // convert data to uppercase before returning
             // return row.getValue(ParserUtils.findColumn(column,
             // cmds)).toUpperCase(Locale.getDefault());
-            return s.toUpperCase(Locale.getDefault());
-        }
-
-        if (lowerCase) {
+            s = s.toUpperCase(Locale.getDefault());
+        }else if (lowerCase) {
             // convert data to lowercase before returning
             // return row.getValue(ParserUtils.findColumn(column,
             // cmds)).toLowerCase(Locale.getDefault());
-            return s.toLowerCase(Locale.getDefault());
+            s = s.toLowerCase(Locale.getDefault());
         }
 
         // return value as how it is in the file
@@ -450,19 +446,18 @@ public class DefaultDataSet implements DataSet {
         this.pointer = pointer;
     }
 
-
     public void clearRows() {
         pointer = -1; //set the pointer back to -1 directly just in case this instance is a BuffReaderDataSet.
         rows.clear();
     }
-    
+
     public void clearAll() {
         clearRows();
         clearErrors();
     }
-    
+
     public void clearErrors() {
-       errors.clear();        
+        errors.clear();
     }
 
     public MetaData getMetaData() {
@@ -482,21 +477,21 @@ public class DefaultDataSet implements DataSet {
         buf.append("MetaData:").append(metaData).append(System.getProperty("line.separator"));
         return buf.toString();
     }
-    
+
     public boolean contains(String column) {
         if (pointer == -1) {
             throw new IndexOutOfBoundsException("dataset on invalid row. need to call next()");
-        }     
-        
-        final Iterator cmds = ParserUtils.getColumnMetaData(((Row) rows.get(pointer)).getMdkey(), metaData).iterator();        
+        }
+
+        final Iterator cmds = ParserUtils.getColumnMetaData(((Row) rows.get(pointer)).getMdkey(), metaData).iterator();
         while (cmds.hasNext()) {
-            final ColumnMetaData cmd = (ColumnMetaData)cmds.next();
+            final ColumnMetaData cmd = (ColumnMetaData) cmds.next();
             if (cmd.getColName().equalsIgnoreCase(column)) {
                 return true;
             }
         }
-        
+
         return false;
-        
+
     }
 }

@@ -7,9 +7,8 @@ package net.sf.flatpack.util;
  */
 public final class FPStringUtils {
     private FPStringUtils() {
-        
     }
-    
+
     /**
      * <p>Checks if a String is whitespace, empty ("") or null.</p>
      *
