@@ -478,7 +478,7 @@ public class DefaultDataSet implements DataSet {
         return buf.toString();
     }
 
-    public boolean contains(String column) {
+    public boolean contains(final String column) {
         if (pointer == -1) {
             throw new IndexOutOfBoundsException("dataset on invalid row. need to call next()");
         }

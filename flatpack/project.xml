@@ -77,11 +77,20 @@
       <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
       <unitTest>
          <includes>
-            <include>**/*Test.java</include>
+            <include>**/*Test?.java</include>
          </includes>
          <excludes>
             <exclude>**/Abstract*.java</exclude>
          </excludes>
+      <resources>
+         <resource>
+            <directory>src/test/resources</directory>
+            <includes>
+               <include>**/*.xml</include>
+            </includes>
+            <filtering>false</filtering>
+         </resource>
+      </resources>
       </unitTest>
       <resources>
          <resource>
