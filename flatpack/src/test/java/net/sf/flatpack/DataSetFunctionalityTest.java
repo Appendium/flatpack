@@ -15,7 +15,7 @@ public class DataSetFunctionalityTest extends TestCase {
     public void testContains() {
         DataSet ds;
         final String cols = "column1,column2,column3\r\n value1,value2,value3";
-        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        final Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
         ds.next();
         assertEquals("column should NOT be found...", false, ds.contains("shouldnotcontain"));
