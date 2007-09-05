@@ -90,15 +90,15 @@
     
     <div class="source"><pre>
     	//Obtain the proper parser for your needs
-    	PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(
-                new File("map.pzmap.xml"), //xml column mapping
-                new File("DataFile.txt"),  //txt file to parse
+    	Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+                new FileReader("map.pzmap.xml"), //xml column mapping
+                new FileReader("DataFile.txt"),  //txt file to parse
                 ',', //delimiter
                 '"', //text qualfier
                 false); //ignore the first record (may need to be done if first record contain column names)
                 
         //obtain DataSet
-        DataSet ds = pzparser.parse();
+        DataSet ds = parser.parse();
             
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
@@ -111,13 +111,13 @@
     
     <div class="source"><pre>
     	//Obtain the proper parser for your needs
-    	PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(
-                new File("DataFile.txt"),  //txt file to parse
+    	Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+                new FileReader("DataFile.txt"),  //txt file to parse
                 ',', //delimiter
                 '"'); //text qualifier
                 
         //obtain DataSet
-        DataSet ds = pzparser.parse();
+        DataSet ds = parser.parse();
             
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
@@ -131,12 +131,12 @@
     
     <div class="source"><pre>
 	    //Obtain the proper parser for your needs	
-        PZParser pzparser = DefaultPZParserFactory.getInstance().newDelimitedParser(
+        Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
         		new File("map.pzmap.xml"), //fixed with column map
                 new File("DataFile.txt"));  //txt file to parse
                 
         //obtain DataSet
-        DataSet ds = pzparser.parse();
+        DataSet ds = parser.parse();
             
         while (ds.next()){ //loop through file
             ds.getString("mycolumnName");
