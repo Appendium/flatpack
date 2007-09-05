@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
  -->
 
 <document>
@@ -8,44 +8,46 @@
   </properties>
   <body>
 	<release version="3.1.0-SNAPSHOT" date="in svn" description="NAME CHANGE">
-		<action dev="zepernick" type="change">added contains() method to DataSet to check for the existance of 
+		<action dev="benoitx" type="add">Paul and I would like to thank Dirk Holmes and Holger Hoffstatte from MuleSource for the initial contribution to the writer package.
+		The writer package will let you EXPORT a DataSet in a fixed length or Delimited (csv, etc) format. Thanks guys!</action>
+		<action dev="zepernick" type="change">added contains() method to DataSet to check for the existance of
 		a column name on the current row.  DataSet must be on a valid row.</action>
 		<action dev="zepernick" type="change">Added clearRows(), clearErrors(), and clearAll() methods to DataSet</action>
 		<action dev="benoitx" type="change">Goodbye PZFileReader, Hello FlatPack!!!</action>
 		<action dev="zepernick" type="change">Moved package strcuture from net.sf.pzfilereader to net.sf.flatpack</action>
 		<action dev="zepernick" type="change">XML mapping dtd renamed from pzfilereader.dtd to flatpack.dtd</action>
-		<action dev="zepernick" type="change">pzconvert.properties renamed to fpconvert.properties</action>		
-		<action dev="zepernick" type="change">The following classes had the "PZ" removed from their name; 
-		PZMapParser, PZMetaData, BuffReaderDelimPZParser, BuffReaderFixedPZParser, BuffReaderPZDataSet, 
-		BuffReaderPZParseFactory, AbstractDelimiterPZParser, AbstractFixedLengthPZParser, AbstractPZParser, 
-		DBDelimiterPZParser, DBFixedLengthPZParser, DefaultPZParserFactory, DelimiterPZParser, 
+		<action dev="zepernick" type="change">pzconvert.properties renamed to fpconvert.properties</action>
+		<action dev="zepernick" type="change">The following classes had the "PZ" removed from their name;
+		PZMapParser, PZMetaData, BuffReaderDelimPZParser, BuffReaderFixedPZParser, BuffReaderPZDataSet,
+		BuffReaderPZParseFactory, AbstractDelimiterPZParser, AbstractFixedLengthPZParser, AbstractPZParser,
+		DBDelimiterPZParser, DBFixedLengthPZParser, DefaultPZParserFactory, DelimiterPZParser,
 		FixedLengthPZParser, PZParser, PZParserFactory, PZConverter</action>
-		<action dev="zepernick" type="change">The following classes had the "PZ" changed to "FP" in their name; 
-		PZConstants, PZStringUtils, PZConvertException</action>			
+		<action dev="zepernick" type="change">The following classes had the "PZ" changed to "FP" in their name;
+		PZConstants, PZStringUtils, PZConvertException</action>
 		<action dev="benoitx" type="change">Created a PZMetaData class for internal use, it contains the list of column names and index for fast access.</action>
 		<action dev="zepernick" type="change">Feature Request 1596087.  Added attribute "elementCount" on record
 		element mapping, which can determine a header, trailer, or detail record by the number of elements contained
 		on the record.  This only applies to delimited files.</action>
-		<action dev="zepernick" type="change">Feature Request 1569891.  Added setNullEmptyStrings to the 
+		<action dev="zepernick" type="change">Feature Request 1569891.  Added setNullEmptyStrings to the
 		PZParser.  This will make the DataSet.getString() return null if the column is empty.</action>
 		<action dev="zepernick" type="change">Added option to the PZParser setIgnoreParseWarnings(boolean).
 		When true, the parser will not log warning into the error collection in the DataSet.  The
 		default is false.</action>
 		<action dev="zepernick" type="change">Removing deprecated methods in ParserUtils;
 		isMultiLine(), splitLine(), getCMDKeyForFixedLengthFile()</action>
-		<action dev="zepernick" type="change">Added option to PZParser setColumnNamesCaseSensitive().  
+		<action dev="zepernick" type="change">Added option to PZParser setColumnNamesCaseSensitive().
 		This will force the user to lookup the column value in the exact same case as the column was specified
 		in the mapping or file.  Deprecated the current method signatures for;ParserUtils.buidColumnIndexMap,
-		ParserUtils.getColumnIndex,ParserUtils.getColumnMDFromFile.  Added PZParser parameter to new signatures, 
+		ParserUtils.getColumnIndex,ParserUtils.getColumnMDFromFile.  Added PZParser parameter to new signatures,
 		however, this parameter CAN BE null.  Registered PZParser with the DefaultDataSet.  This will provide
 		the ability to see what options were set pertaining to data retrieval.</action>
-		<action dev="zepernick" type="change">Changing the PZParseFactory to use java.io.Reader instead of File 
+		<action dev="zepernick" type="change">Changing the PZParseFactory to use java.io.Reader instead of File
 		or InputStream.  The File and InputStream methods are still available, but are now deprecated.</action>
-		<action dev="zepernick" type="change">Removed deprecated PZMapParser.parse(File).  
+		<action dev="zepernick" type="change">Removed deprecated PZMapParser.parse(File).
 		Added PZMapParser.parse(Reader).  Deprecated PZMapParser.parse(InputStream). </action>
 		<action dev="zepernick" type="fix">Stopped column lookup from being case sensitive</action>
 		<action dev="zepernick" type="change">Feature Request 1566626.  Added setIgnoreExtraColumns() method to the PZParser.
-		Added the ability to ignore extra columns/bytes	from delimited &amp; fixed width files.  Data is truncated when it goes 
+		Added the ability to ignore extra columns/bytes	from delimited &amp; fixed width files.  Data is truncated when it goes
 		outside of the column definition.</action>
 	</release>
     <release version="3.0.0" date="2007-02-11" description="Move to Maven and Subversion">
@@ -54,10 +56,10 @@
     	<action dev="zepernick" type="change">DataSet.getDate() will now return a null on empty Strings</action>
     	<action dev="zepernick" type="change">Removed ParserUtils.getColumnMDFromFile(InputStream, String, String) this method
     	was deprecated in 2.2</action>
-    	<action dev="zepernick" type="change">Removed setters and default constructor from DataError.  Error properties 
+    	<action dev="zepernick" type="change">Removed setters and default constructor from DataError.  Error properties
     	are set through the new constructor.</action>
 	<action dev="zepernick" type="add">added the ability to limit the column which are exported to Excel in the ExcelTransformer class</action>
-    	<action dev="zepernick" type="add">added getObject(String column, Class toConvert) method.  PZFileReader will ship with 
+    	<action dev="zepernick" type="add">added getObject(String column, Class toConvert) method.  PZFileReader will ship with
     	default classes to handle conversions.  Custom conversions can be easily added by adding to the pzconvert.properties</action>
 	<action dev="zepernick" type="add">Unqualified elements have leading and trailing whitespace removed in a delimited parse</action>
 	<action dev="zepernick" type="add">Ability to issue an OrderBy On DataSet's containing record mapping elements</action>
@@ -95,9 +97,9 @@
       <action dev="zepernick" type="fix">A VERY Special Thanks to Roland Klein for contributing the following enchancements:
 	<br/>- Ability to read a file from an InputStream, File object support still exists.  This enhancement makes pzfilereader
 	Java Web Start friendly :)
-	
+
 	<br/>- Added a method in ParserUtils to create an InputStream from a File object.
-	
+
 	<br/>- Changed all ArrayLists and Vectors to List objects.  This affects the getErrors() method which was returning
 	a Vector.  This may potentially cause compilation errors if migrating from a previous version..</action>
       <action dev="zepernick" type="add">Implemented Roland's changed in cvs HEAD</action>
@@ -105,14 +107,14 @@
       <action dev="zepernick" type="add">Added ability to parse delimited file which have records spanning multiple lines in the file.  The element
 	which is breaking to the next line must be qualified.  The data can be qualified with any char, a double quote
 	is used in the example.
-	
+
 	ie. 	element, element, "element with line break
 			more element data
 			more element data
 			more element data"
 			start next rec here
       </action>
-      <action dev="zepernick" type="add">Begining to write some simple Junit tests under com.test.*  These will be excluded from the production jar.      
+      <action dev="zepernick" type="add">Begining to write some simple Junit tests under com.test.*  These will be excluded from the production jar.
       </action>
       <action dev="zepernick" type="add">Added getRowCount() method.  This returns the total amount of rows parsed from the file.  Rows which had errors
 	during the parse are excluded from this count and are added to the error collection.
@@ -133,7 +135,7 @@
     </release>
 
     <release version="2.0.0" date="2005-11-27" description="Maintenance">
-      <action dev="zepernick" type="add">Re-coded the way the MetaData was being stored.  It was being duplicated for every row in the file.  It is now only being stored 
+      <action dev="zepernick" type="add">Re-coded the way the MetaData was being stored.  It was being duplicated for every row in the file.  It is now only being stored
     once for the entire file.  This will drastically reduce memory usage.
       </action>
       <action dev="zepernick" type="add">Created a ParserUtils class.  This class can be used to perform low level reads if needed (no mapping file required).
@@ -154,7 +156,7 @@
 	This allows for the DataSet class to be extended if needed to provide custom functionality.
       </action>
       <action dev="zepernick" type="add">Took patch [1371162] a step further and also implemented for delimited files.  If the row is missing any columns, the parser
-	will automatically add the columns in as empty's.  This functionality happens only when the handleShortLines parameter is set 
+	will automatically add the columns in as empty's.  This functionality happens only when the handleShortLines parameter is set
 	to true.
       </action>
       <action dev="zepernick" type="add">Revamped user documenation.  The user documenation is now much more detailed.  User documentation and Java Docs are now
@@ -163,7 +165,7 @@
     </release>
     <release version="1.0.5" date="2005-10-01" description="Maintenance">
       <action dev="zepernick" type="fix">Fixed bug in delimited parse.  If the last column of the last column of the file was empty, the row was being logged to the
-    "errors" collection.  Thank you very much to Luke Driscoll who found this bug and submitted the patch.  See bug 
+    "errors" collection.  Thank you very much to Luke Driscoll who found this bug and submitted the patch.  See bug
     [ 1275910 ] CSV File with blank last column, for more information.
       </action>
       <action dev="zepernick" type="fix">While fixing bug 1275910, a couple of other bugs were brought to light.  Spaces before or after the delimiter with a text qualifier
@@ -178,7 +180,7 @@
       <action dev="zepernick" type="fix">Fixed bug in delimited parse.  If parsing a delimited file with text qualifiers, and the last column of a
 		line had hard spaces at the end, a string out of bounds exception was being thrown.
       </action>
-      <action dev="zepernick" type="fix">Added setStrictNumericParse(boolean) method.  This is defaulted to false.  When calling getDouble or getInt 
+      <action dev="zepernick" type="fix">Added setStrictNumericParse(boolean) method.  This is defaulted to false.  When calling getDouble or getInt
 		on a column, all non numeric chars will be striped before performing the parse.  If the column is empty after 		the strip, it will be returned as 0.  Setting this to true will parse all numeric values as is.
       </action>
     </release>
@@ -198,7 +200,7 @@
     <release version="1.0.2" date="2005-01-27" description="Maintenance">
       <action dev="zepernick" type="add">Changed parsing logic for delimited files with text qualifiers.  The parser will now parse lines that are qualified
 		and not qualified.  For example:
-		<br/>"here",1234,"test",50,test	
+		<br/>"here",1234,"test",50,test
 		<br/>This will now parse into 5 seperate columns.  However if the text contains a delimiter or seperator inside the text, it must be qualified to work correctly.
       </action>
     </release>
