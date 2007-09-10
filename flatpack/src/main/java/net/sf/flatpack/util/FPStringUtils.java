@@ -25,8 +25,8 @@ public final class FPStringUtils {
      * @since 2.0
      */
     public static boolean isBlank(final String str) {
-        int strLen;
-        if (str == null || (strLen = str.length()) == 0) {
+        int strLen = str == null ? 0 : str.length();        
+        if (strLen == 0) {
             return true;
         }
         for (int i = 0; i < strLen; i++) {
