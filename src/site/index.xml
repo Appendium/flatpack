@@ -135,8 +135,8 @@
     <div class="source"><pre>
 	    //Obtain the proper parser for your needs
         Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
-        		new File("map.pzmap.xml"), //fixed with column map
-                new File("DataFile.txt"));  //txt file to parse
+        		new FileReader("map.pzmap.xml"), //fixed with column map
+                new FileReader("DataFile.txt"));  //txt file to parse
 
         //obtain DataSet
         DataSet ds = parser.parse();
@@ -151,9 +151,18 @@
     <subsection name="Reading a Message of Fixed Width">
 
     <div class="source"><pre>
+    	final String msg = "data     data2     data3     data4"
+	    //Obtain the proper parser for your needs
+        Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+        		new FileReader("map.pzmap.xml"), //fixed with column map to bind col names
+                new StringReader(mag));  //data to parse
 
-... coming soon
+        //obtain DataSet
+        DataSet ds = parser.parse();
 
+        while (ds.next()){ //loop through file
+            ds.getString("mycolumnName");
+        }
     </pre></div>
 
     </subsection>
