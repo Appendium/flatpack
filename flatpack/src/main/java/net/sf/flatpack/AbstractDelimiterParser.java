@@ -260,27 +260,34 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                         if (qualiFound) {
                             if (chrArry[i] == ' ') {
                                 continue;
-                            } else {
+                            }else if (chrArry[i] == delim) {
+                                processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
+                                break;
+                            }                            
+                            qualiFound = false;
+                            //tried to replace the code below due to checkstyle error
+                            //} else {
                                 // not a space, if this char is the
                                 // delimiter, then we have reached the end
                                 // of
                                 // the record
-                                if (chrArry[i] == delim) {
+                           //     if (chrArry[i] == delim) {
                                     // processingMultiLine = false;
                                     // fix put in, setting to false caused
                                     // bug when processing multiple
                                     // multi-line
                                     // columns on the same record
-                                    processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
-                                    break;
-                                }
-                                qualiFound = false;
-                                continue;
-                            }
+                           //         processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
+                           //         break;
+                           //     }
+                           //     qualiFound = false;
+                           //     continue;
+                           // }
                         } else if (chrArry[i] == qual) {
                             qualiFound = true;
                         }
                     }
+                    
                     // check to see if we are still in multi line mode, if
                     // so grab the next line
                     if (processingMultiLine) {
