@@ -64,7 +64,7 @@ public class ExcelTransformer {
      * Writes the Excel file to disk
      * 
      * @throws IOException
-     * @thorws WriteException
+     * @throws WriteException
      */
     public void writeExcelFile() throws IOException, WriteException {
         WritableWorkbook excelWrkBook = null;
