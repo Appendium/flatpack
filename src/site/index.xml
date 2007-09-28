@@ -134,7 +134,7 @@
 
     <div class="source"><pre>
 	    //Obtain the proper parser for your needs
-        Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+        Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
         		new FileReader("map.pzmap.xml"), //fixed with column map
                 new FileReader("DataFile.txt"));  //txt file to parse
 
@@ -153,7 +153,7 @@
     <div class="source"><pre>
     	final String msg = "data     data2     data3     data4"
 	    //Obtain the proper parser for your needs
-        Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+        Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
         		new FileReader("map.pzmap.xml"), //fixed with column map to bind col names
                 new StringReader(mag));  //data to parse
 
