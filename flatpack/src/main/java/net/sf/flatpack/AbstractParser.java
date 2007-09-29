@@ -44,36 +44,45 @@ import net.sf.flatpack.xml.MetaData;
 /**
  * @author xhensevb
  * @author zepernick
- *
+ * 
  */
 public abstract class AbstractParser implements Parser {
 
     private boolean handlingShortLines = false;
+
     private boolean ignoreExtraColumns = false;
+
     private boolean columnNamesCaseSensitive = false;
+
     private boolean initialised = false;
+
     private boolean ignoreParseWarnings = false;
+
     private boolean nullEmptyStrings = false;
 
     /** Map of column metadata's */
-    //    private Map columnMD = null;
+    // private Map columnMD = null;
     private MetaData pzMetaData = null;
+
     private String dataDefinition = null;
+
     private Reader dataSourceReader = null;
+
     private List readersToClose = null;
 
     protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
     }
 
-    protected AbstractParser(final Reader dataSourceReader, final String dataDefinition) {
+    protected AbstractParser(final Reader dataSourceReader,
+            final String dataDefinition) {
         this.dataSourceReader = dataSourceReader;
         this.dataDefinition = dataDefinition;
     }
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see net.sf.flatpack.PZParser#isHandlingShortLines()
      */
     public boolean isHandlingShortLines() {
@@ -82,7 +91,7 @@ public abstract class AbstractParser implements Parser {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see net.sf.flatpack.PZParser#setHandlingShortLines(boolean)
      */
     public void setHandlingShortLines(final boolean handleShortLines) {
@@ -111,12 +120,14 @@ public abstract class AbstractParser implements Parser {
     /**
      * @deprecated
      */
-    //    protected void setColumnMD(final Map map) {
-    //        columnMD = map;
-    //    }
-    //this is used for backward compatability.  We are instantiating Readers from
-    //InputStream and File from previous versions. Close out any Readers in the
-    //readersToClose list.  This can be removed after we remove the deprecated methods
+    // protected void setColumnMD(final Map map) {
+    // columnMD = map;
+    // }
+    // this is used for backward compatability. We are instantiating Readers
+    // from
+    // InputStream and File from previous versions. Close out any Readers in the
+    // readersToClose list. This can be removed after we remove the deprecated
+    // methods
     protected void closeReaders() throws IOException {
         if (readersToClose != null) {
             final Iterator readersToCloseIt = readersToClose.iterator();
@@ -127,8 +138,9 @@ public abstract class AbstractParser implements Parser {
         }
     }
 
-    //adds a reader to the close list.  the list will be processed after parsing is
-    //completed.
+    // adds a reader to the close list. the list will be processed after parsing
+    // is
+    // completed.
     protected void addToCloseReaderList(final Reader r) {
         if (readersToClose == null) {
             readersToClose = new ArrayList();
@@ -138,10 +150,12 @@ public abstract class AbstractParser implements Parser {
 
     protected void addToMetaData(final List columns) {
         if (pzMetaData == null) {
-            pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(columns, this));
+            pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(
+                    columns, this));
         } else {
             pzMetaData.setColumnsNames(columns);
-            pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(columns, this));
+            pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(
+                    columns, this));
         }
     }
 
@@ -164,7 +178,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Adds a new error to this DataSet. These can be collected, and retreived
      * after processing
-     *
+     * 
      * @param errorDesc -
      *            String description of error
      * @param lineNo -
@@ -172,9 +186,10 @@ public abstract class AbstractParser implements Parser {
      * @param errorLevel -
      *            int errorLevel 1,2,3 1=warning 2=error 3= severe error
      */
-    protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel) {
+    protected void addError(final DefaultDataSet ds, final String errorDesc,
+            final int lineNo, final int errorLevel) {
         if (errorLevel == 1 && isIgnoreParseWarnings()) {
-            //user has selected to not log warnings in the parser
+            // user has selected to not log warnings in the parser
             return;
         }
         final DataError de = new DataError(errorDesc, lineNo, errorLevel);
@@ -189,7 +204,8 @@ public abstract class AbstractParser implements Parser {
     }
 
     /**
-     * @param dataSourceReader the dataSourceReader to set
+     * @param dataSourceReader
+     *            the dataSourceReader to set
      */
     protected void setDataSourceReader(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
@@ -199,7 +215,8 @@ public abstract class AbstractParser implements Parser {
         return columnNamesCaseSensitive;
     }
 
-    public void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive) {
+    public void setColumnNamesCaseSensitive(
+            final boolean columnNamesCaseSensitive) {
         this.columnNamesCaseSensitive = columnNamesCaseSensitive;
     }
 
