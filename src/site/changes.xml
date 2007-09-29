@@ -7,7 +7,7 @@
     <title>Changes</title>
   </properties>
   <body>
-	<release version="3.1.0-SNAPSHOT" date="in svn" description="NAME CHANGE">
+	<release version="3.1.0" date="2007-09-10" description="Name and structure change and new writers">
 		<action dev="benoitx" type="add">Paul and I would like to thank Dirk Holmes and Holger Hoffstatte from MuleSource for the initial contribution to the writer package.
 		The writer package will let you EXPORT a DataSet in a fixed length or Delimited (csv, etc) format. Thanks guys!</action>
 		<action dev="zepernick" type="change">added contains() method to DataSet to check for the existance of
