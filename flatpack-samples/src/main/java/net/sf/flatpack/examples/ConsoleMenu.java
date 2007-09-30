@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sf.pzfilereader.examples;
+package net.sf.flatpack.examples;
 
 import java.io.BufferedReader;
 import java.io.IOException;

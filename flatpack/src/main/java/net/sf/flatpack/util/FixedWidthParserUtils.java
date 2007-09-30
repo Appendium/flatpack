@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -44,7 +44,7 @@ import net.sf.flatpack.xml.XMLRecordElement;
 
 /**
  * Collection of parser utilities related to the parsing of fixed width files.
- * 
+ *
  * @author paul zepernick
  */
 public final class FixedWidthParserUtils {
@@ -53,7 +53,7 @@ public final class FixedWidthParserUtils {
 
     /**
      * Splits up a fixed width line of text
-     * 
+     *
      * @param columnMetaData
      *            Collection of ColumnMetaData to parse the line
      * @param lineToParse
@@ -76,8 +76,8 @@ public final class FixedWidthParserUtils {
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
      * correct MetaData per the mapping file and the data contained on the line
-     * 
-     * 
+     *
+     *
      * @param columnMD
      * @param line
      * @return List - ColumMetaData
@@ -123,8 +123,8 @@ public final class FixedWidthParserUtils {
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
      * correct MetaData per the mapping file and the data contained on the line
-     * 
-     * 
+     *
+     *
      * @param columnMD
      * @param line
      * @return List - ColumMetaData

@@ -18,7 +18,10 @@ DataSets. We would like to thank Dirk and Holger from the Mule Project
 for their kind contribution to FlatPack. We're looking forward to the
 result of using FlatPack in Mule, a great Open Source ESB.
 
-This release also adds a few convenience methods on a DataSet.
+This release also adds a few convenience methods on a DataSet and the 
+Parser classes, fixes a couple of bugs.
+More on changes at: http://flatpack.sf.net/changes-report.html
+
 
 FlatPack is released under the business friendly Apache License v2.0.
 

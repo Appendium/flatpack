@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -67,7 +67,7 @@ import net.sf.flatpack.xml.XMLRecordElement;
  *  Static utilities that are used to perform parsing in the
  *         DataSet class These can also be used for low level parsing, if not
  *         wishing to use the DataSet class.
- *         
+ *
  * @author Paul Zepernick
  * @author Benoit Xhenseval
  */
@@ -83,7 +83,7 @@ public final class ParserUtils {
      * Elements which are not qualified will have leading and trailing white
      * space removed.  This includes unqualified elements, which may be
      * contained in an unqualified parse: "data",  data  ,"data"
-     * 
+     *
      * Special thanks to Benoit for contributing this much improved speedy parser :0)
      *
      * @author Benoit Xhenseval
@@ -293,10 +293,10 @@ public final class ParserUtils {
     }
 
     /**
-     * Will return a null if the String is empty returns the 
+     * Will return a null if the String is empty returns the
      * trimmed string otherwise.
-     * 
-     * @param value 
+     *
+     * @param value
      *          to be trimmed
      * @return String
      */
@@ -359,7 +359,7 @@ public final class ParserUtils {
      * @param p
      *          PZParser used to specify additional option when working witht the ColumnMetaData. Can be null
      * @return ArrayList - ColumnMetaData
-     * @deprecated use the getPZMetaDataFromFile 
+     * @deprecated use the getPZMetaDataFromFile
      */
     public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
         List lineData = null;
@@ -894,7 +894,7 @@ public final class ParserUtils {
      * @author Paul Zepernick
      * @param columns
      * @param p
-     *         Reference to Parser which can provide additional options on how the 
+     *         Reference to Parser which can provide additional options on how the
      *         map should be build.  This can be NULL.
      * @return a new Map
      */
@@ -930,14 +930,14 @@ public final class ParserUtils {
     }
 
     /**
-     * Removes chars from the String that could not 
+     * Removes chars from the String that could not
      * be parsed into a Long value
      *
      *      PZStringUtils.stripNonLongChars("1000.25") = "1000"
      *
      * Method will truncate everything to the right of the decimal
      * place when encountered.
-     *  
+     *
      * @param value
      * @return String
      */
@@ -965,9 +965,9 @@ public final class ParserUtils {
     }
 
     /**
-     * Removes chars from the String that could not 
+     * Removes chars from the String that could not
      * be parsed into a Double value
-     * 
+     *
      * @param value
      * @return String
      */
@@ -992,7 +992,7 @@ public final class ParserUtils {
     /**
      * Retrieves the conversion table for use with the getObject()
      * method in IDataSet
-     * 
+     *
      * @throws IOException
      * @return Properties
      *              Properties contained in the pzconvert.properties file
@@ -1008,7 +1008,7 @@ public final class ParserUtils {
     /**
      * Converts a String value to the appropriate Object via
      * the correct net.sf.flatpack.converter.PZConverter implementation
-     * 
+     *
      * @param classXref
      *             Properties holding class cross reference
      * @param value
@@ -1038,7 +1038,7 @@ public final class ParserUtils {
     /**
      * Returns a definition of pz column metadata from a given
      * pz datastructure held in an SQL database
-     * 
+     *
      * @param con
      *          Database connection containing the Datafile and Datastructure
      *          tables

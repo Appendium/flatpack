@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.numericsanddates;
+package net.sf.flatpack.examples.numericsanddates;
 
 /*
  * Created on Dec 31, 2004
@@ -42,7 +42,7 @@ public class NumericsAndDates {
         // ignore first record
         final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), ',', '\"', true);
         final DataSet ds = pzparser.parse();
-        // demonstrates the casting abilities of PZFileReader
+        // demonstrates the casting abilities of FlatPack
         while (ds.next()) {
             System.out.println("Item Desc: " + ds.getString("ITEM_DESC") + " (String)");
             System.out.println("In Stock: " + ds.getInt("IN_STOCK") + " (int)");

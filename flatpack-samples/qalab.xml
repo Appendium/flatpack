@@ -382,7 +382,7 @@
         path="com/pz/reader/examples/largedataset/fixedlengthdynamiccolumns/LargeFixedLengthWithPZMap.java" project="default"/>
     <file id="default-default-com_pz_reader_examples_ConsoleMenu.java"
         module="default" path="com/pz/reader/examples/ConsoleMenu.java" project="default"/>
-    <file id="default-default-net_sf_pzfilereader_examples_package.html"
+    <file id="default-default-net_sf_flatpack_examples_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -406,7 +406,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_largedataset_largecsvperformancetest_package.html"
+        id="default-default-net_sf_flatpack_examples_largedataset_largecsvperformancetest_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/largedataset/largecsvperformancetest/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -430,7 +430,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_multilinedelimitedrecord_package.html"
+        id="default-default-net_sf_flatpack_examples_multilinedelimitedrecord_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/multilinedelimitedrecord/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -454,7 +454,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_numericsanddates_package.html"
+        id="default-default-net_sf_flatpack_examples_numericsanddates_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/numericsanddates/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -478,7 +478,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_delimitedcolumnnamesinfile_package.html"
+        id="default-default-net_sf_flatpack_examples_delimitedcolumnnamesinfile_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/delimitedcolumnnamesinfile/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -502,7 +502,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_delimiteddynamiccolumns_package.html"
+        id="default-default-net_sf_flatpack_examples_delimiteddynamiccolumns_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/delimiteddynamiccolumns/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -526,7 +526,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_exporttoexcel_package.html"
+        id="default-default-net_sf_flatpack_examples_exporttoexcel_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/exporttoexcel/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -550,7 +550,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_largedataset_fixedlengthdynamiccolumns_package.html"
+        id="default-default-net_sf_flatpack_examples_largedataset_fixedlengthdynamiccolumns_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/largedataset/fixedlengthdynamiccolumns/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -574,7 +574,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_createsamplecsv_package.html"
+        id="default-default-net_sf_flatpack_examples_createsamplecsv_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/createsamplecsv/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -598,7 +598,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_fixedlengthdynamiccolumns_package.html"
+        id="default-default-net_sf_flatpack_examples_fixedlengthdynamiccolumns_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/fixedlengthdynamiccolumns/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -622,7 +622,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_largedataset_delimiteddynamiccolumns_package.html"
+        id="default-default-net_sf_flatpack_examples_largedataset_delimiteddynamiccolumns_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/largedataset/delimiteddynamiccolumns/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -646,7 +646,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_csvperformancetest_package.html"
+        id="default-default-net_sf_flatpack_examples_csvperformancetest_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/csvperformancetest/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -670,7 +670,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_lowlevelparse_package.html"
+        id="default-default-net_sf_flatpack_examples_lowlevelparse_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/lowlevelparse/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -694,7 +694,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_delimiteddynamiccolumnswitherrors_package.html"
+        id="default-default-net_sf_flatpack_examples_delimiteddynamiccolumnswitherrors_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/delimiteddynamiccolumnswitherrors/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -718,7 +718,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_fixedlengthheaderandtrailer_package.html"
+        id="default-default-net_sf_flatpack_examples_fixedlengthheaderandtrailer_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/fixedlengthheaderandtrailer/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -742,7 +742,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_csvheaderandtrailer_package.html"
+        id="default-default-net_sf_flatpack_examples_csvheaderandtrailer_package.html"
         module="default"
         path="net/sf/pzfilereader/examples/csvheaderandtrailer/package.html" project="default">
         <result date="2006-10-17" statvalue="1" type="checkstyle"/>
@@ -766,7 +766,7 @@
         <result date="2007-09-29" statvalue="1" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_Examples.java"
+        id="default-default-net_sf_flatpack_examples_Examples.java"
         module="default"
         path="net/sf/pzfilereader/examples/Examples.java" project="default">
         <result date="2006-10-17" statvalue="21" type="checkstyle"/>
@@ -808,7 +808,7 @@
         <result date="2007-09-29" statvalue="1" type="findbugs"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_createsamplecsv_CSVTestFileCreator.java"
+        id="default-default-net_sf_flatpack_examples_createsamplecsv_CSVTestFileCreator.java"
         module="default"
         path="net/sf/pzfilereader/examples/createsamplecsv/CSVTestFileCreator.java" project="default">
         <result date="2006-10-17" statvalue="7" type="checkstyle"/>
@@ -870,7 +870,7 @@
         <result date="2007-09-29" statvalue="1" type="pmd"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_csvheaderandtrailer_CSVHeaderAndTrailer.java"
+        id="default-default-net_sf_flatpack_examples_csvheaderandtrailer_CSVHeaderAndTrailer.java"
         module="default"
         path="net/sf/pzfilereader/examples/csvheaderandtrailer/CSVHeaderAndTrailer.java" project="default">
         <result date="2006-10-17" statvalue="17" type="checkstyle"/>
@@ -894,7 +894,7 @@
         <result date="2007-09-29" statvalue="17" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_csvperformancetest_CSVPerformanceTest.java"
+        id="default-default-net_sf_flatpack_examples_csvperformancetest_CSVPerformanceTest.java"
         module="default"
         path="net/sf/pzfilereader/examples/csvperformancetest/CSVPerformanceTest.java" project="default">
         <result date="2006-10-17" statvalue="15" type="checkstyle"/>
@@ -944,7 +944,7 @@
         <result date="2007-09-29" statvalue="1" type="findbugs"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_delimitedcolumnnamesinfile_DelimitedColumnNamesInFile.java"
+        id="default-default-net_sf_flatpack_examples_delimitedcolumnnamesinfile_DelimitedColumnNamesInFile.java"
         module="default"
         path="net/sf/pzfilereader/examples/delimitedcolumnnamesinfile/DelimitedColumnNamesInFile.java" project="default">
         <result date="2006-10-17" statvalue="5" type="checkstyle"/>
@@ -973,7 +973,7 @@
         <result date="2007-09-29" statvalue="5" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_delimiteddynamiccolumns_DelimitedWithPZMap.java"
+        id="default-default-net_sf_flatpack_examples_delimiteddynamiccolumns_DelimitedWithPZMap.java"
         module="default"
         path="net/sf/pzfilereader/examples/delimiteddynamiccolumns/DelimitedWithPZMap.java" project="default">
         <result date="2006-10-17" statvalue="4" type="checkstyle"/>
@@ -1004,7 +1004,7 @@
         <result date="2007-09-29" statvalue="13" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_delimiteddynamiccolumnswitherrors_DelimitedWithPZMapErrors.java"
+        id="default-default-net_sf_flatpack_examples_delimiteddynamiccolumnswitherrors_DelimitedWithPZMapErrors.java"
         module="default"
         path="net/sf/pzfilereader/examples/delimiteddynamiccolumnswitherrors/DelimitedWithPZMapErrors.java" project="default">
         <result date="2006-10-17" statvalue="5" type="checkstyle"/>
@@ -1035,7 +1035,7 @@
         <result date="2007-09-29" statvalue="13" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_exporttoexcel_DelimitedFileExportToExcel.java"
+        id="default-default-net_sf_flatpack_examples_exporttoexcel_DelimitedFileExportToExcel.java"
         module="default"
         path="net/sf/pzfilereader/examples/exporttoexcel/DelimitedFileExportToExcel.java" project="default">
         <result date="2006-10-17" statvalue="2" type="checkstyle"/>
@@ -1066,7 +1066,7 @@
         <result date="2007-09-29" statvalue="3" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_fixedlengthdynamiccolumns_FixedLengthWithPZMap.java"
+        id="default-default-net_sf_flatpack_examples_fixedlengthdynamiccolumns_FixedLengthWithPZMap.java"
         module="default"
         path="net/sf/pzfilereader/examples/fixedlengthdynamiccolumns/FixedLengthWithPZMap.java" project="default">
         <result date="2006-10-17" statvalue="3" type="checkstyle"/>
@@ -1097,7 +1097,7 @@
         <result date="2007-09-29" statvalue="3" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_fixedlengthheaderandtrailer_FixedLengthHeaderAndTrailer.java"
+        id="default-default-net_sf_flatpack_examples_fixedlengthheaderandtrailer_FixedLengthHeaderAndTrailer.java"
         module="default"
         path="net/sf/pzfilereader/examples/fixedlengthheaderandtrailer/FixedLengthHeaderAndTrailer.java" project="default">
         <result date="2006-10-17" statvalue="17" type="checkstyle"/>
@@ -1128,7 +1128,7 @@
         <result date="2007-09-29" statvalue="17" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_largedataset_delimiteddynamiccolumns_LargeDelimitedWithPZMap.java"
+        id="default-default-net_sf_flatpack_examples_largedataset_delimiteddynamiccolumns_LargeDelimitedWithPZMap.java"
         module="default"
         path="net/sf/pzfilereader/examples/largedataset/delimiteddynamiccolumns/LargeDelimitedWithPZMap.java" project="default">
         <result date="2006-10-17" statvalue="4" type="checkstyle"/>
@@ -1162,7 +1162,7 @@
         <result date="2007-09-29" statvalue="4" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_largedataset_fixedlengthdynamiccolumns_LargeFixedLengthWithPZMap.java"
+        id="default-default-net_sf_flatpack_examples_largedataset_fixedlengthdynamiccolumns_LargeFixedLengthWithPZMap.java"
         module="default"
         path="net/sf/pzfilereader/examples/largedataset/fixedlengthdynamiccolumns/LargeFixedLengthWithPZMap.java" project="default">
         <result date="2006-10-17" statvalue="3" type="checkstyle"/>
@@ -1196,7 +1196,7 @@
         <result date="2007-09-29" statvalue="3" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_largedataset_largecsvperformancetest_CSVLarge.java"
+        id="default-default-net_sf_flatpack_examples_largedataset_largecsvperformancetest_CSVLarge.java"
         module="default"
         path="net/sf/pzfilereader/examples/largedataset/largecsvperformancetest/CSVLarge.java" project="default">
         <result date="2006-10-17" statvalue="9" type="checkstyle"/>
@@ -1239,7 +1239,7 @@
         <result date="2007-09-29" statvalue="2" type="findbugs"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_lowlevelparse_LowLevelParse.java"
+        id="default-default-net_sf_flatpack_examples_lowlevelparse_LowLevelParse.java"
         module="default"
         path="net/sf/pzfilereader/examples/lowlevelparse/LowLevelParse.java" project="default">
         <result date="2006-10-17" statvalue="4" type="checkstyle"/>
@@ -1301,7 +1301,7 @@
         <result date="2007-09-29" statvalue="1" type="pmd"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_multilinedelimitedrecord_DelimitedMultiLine.java"
+        id="default-default-net_sf_flatpack_examples_multilinedelimitedrecord_DelimitedMultiLine.java"
         module="default"
         path="net/sf/pzfilereader/examples/multilinedelimitedrecord/DelimitedMultiLine.java" project="default">
         <result date="2006-10-17" statvalue="4" type="checkstyle"/>
@@ -1332,7 +1332,7 @@
         <result date="2007-09-29" statvalue="4" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_numericsanddates_NumericsAndDates.java"
+        id="default-default-net_sf_flatpack_examples_numericsanddates_NumericsAndDates.java"
         module="default"
         path="net/sf/pzfilereader/examples/numericsanddates/NumericsAndDates.java" project="default">
         <result date="2006-10-17" statvalue="6" type="checkstyle"/>
@@ -1363,7 +1363,7 @@
         <result date="2007-09-29" statvalue="6" type="checkstyle"/>
     </file>
     <file
-        id="default-default-net_sf_pzfilereader_examples_ConsoleMenu.java"
+        id="default-default-net_sf_flatpack_examples_ConsoleMenu.java"
         module="default"
         path="net/sf/pzfilereader/examples/ConsoleMenu.java" project="default">
         <result date="2006-10-17" statvalue="2" type="findbugs"/>

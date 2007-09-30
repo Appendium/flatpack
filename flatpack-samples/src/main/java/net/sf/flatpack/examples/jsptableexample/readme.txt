@@ -2,7 +2,7 @@ This example has been tested under Tomcat 5.
 
 1.  Paste the PZFileReaderWebSamples into your 
 "Tomcat Install Dir"/webapps
-2.  Paste PZFileReader*.jar into the lib folder along with any dependencies
+2.  Paste Flatpack*.jar into the lib folder along with any dependencies
 3.  Start tomcat
 4.  Point your browser to http://localhost:8080/PZFileReaderWebSamples
 

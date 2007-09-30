@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.createsamplecsv;
+package net.sf.flatpack.examples.createsamplecsv;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;

@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.multilinedelimitedrecord;
+package net.sf.flatpack.examples.multilinedelimitedrecord;
 
 /*
  * Created on Dec 31, 2004

@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.fixedlengthheaderandtrailer;
+package net.sf.flatpack.examples.fixedlengthheaderandtrailer;
 
 /*
  * Created on Dec 31, 2004

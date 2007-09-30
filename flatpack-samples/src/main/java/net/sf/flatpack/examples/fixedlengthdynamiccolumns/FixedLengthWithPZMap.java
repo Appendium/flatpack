@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.fixedlengthdynamiccolumns;
+package net.sf.flatpack.examples.fixedlengthdynamiccolumns;
 
 /*
  * Created on Dec 31, 2004

@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author zepernick
- * 
+ *
  * Parses a PZmap definition XML file
  */
 public final class MapParser {
@@ -68,7 +68,7 @@ public final class MapParser {
 
     /**
      * Constructor
-     * 
+     *
      * @param XMLDocument -
      *            xml file to be parsed
      */
@@ -79,7 +79,7 @@ public final class MapParser {
      * Method based on InputStream. Reads the XMLDocument for a PZMetaData
      * file from an InputStream, WebStart combatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
-     * 
+     *
      * @param xmlStream
      * @return Map <records> with their corrisponding
      * @throws IOException
@@ -102,7 +102,7 @@ public final class MapParser {
      * New method based on Reader. Reads the XMLDocument for a PZMetaData
      * file from an InputStream, WebStart combatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
-     * 
+     *
      * @param xmlStreamReader
      * @param pzparser
      *          Can be null.  Allows additional opts to be set durring the XML map read
@@ -228,7 +228,7 @@ public final class MapParser {
     /**
      * If set to true, debug information for the map file will be thrown to the
      * console after the parse is finished
-     * 
+     *
      * @param b
      */
     public static void setDebug(final boolean b) {
@@ -266,7 +266,7 @@ public final class MapParser {
      * New method based on Reader. Reads the XMLDocument for a PZMetaData
      * file from an InputStream, WebStart combatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
-     * 
+     *
      * @param xmlStreamReader
      * @param pzparser
      *          Can be null.  Allows additional opts to be set durring the XML map read

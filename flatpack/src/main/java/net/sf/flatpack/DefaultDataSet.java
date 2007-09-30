@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -53,7 +53,7 @@ import net.sf.flatpack.xml.MetaData;
 /**
  * @author Benoit Xhenseval
  * @author Paul Zepernick
- * 
+ *
  */
 public class DefaultDataSet implements DataSet {
     private final List rows = new ArrayList();
@@ -96,7 +96,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getColumns()
      */
     public String[] getColumns() {
@@ -118,7 +118,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getColumns(java.lang.String)
      */
     public String[] getColumns(final String recordID) {
@@ -138,7 +138,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getDate(java.lang.String)
      */
     public Date getDate(final String column) throws ParseException {
@@ -147,7 +147,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getDate(java.lang.String,
      *      java.text.SimpleDateFormat)
      */
@@ -162,7 +162,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getDouble(java.lang.String)
      */
     public double getDouble(final String column) {
@@ -191,7 +191,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getErrorCount()
      */
     public int getErrorCount() {
@@ -204,7 +204,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getErrors()
      */
     public List getErrors() {
@@ -213,7 +213,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getIndex()
      */
     public int getIndex() {
@@ -222,7 +222,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getInt(java.lang.String)
      */
     public int getInt(final String column) {
@@ -237,7 +237,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getRowCount()
      */
     public int getRowCount() {
@@ -246,7 +246,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getRowNo()
      */
     public int getRowNo() {
@@ -255,7 +255,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
@@ -288,7 +288,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#goBottom()
      */
     public void goBottom() {
@@ -297,7 +297,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#goTop()
      */
     public void goTop() {
@@ -306,7 +306,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#isAnError(int)
      */
     public boolean isAnError(final int lineNo) {
@@ -320,7 +320,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#next()
      */
     public boolean next() {
@@ -333,7 +333,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#orderRows(net.sf.flatpack.ordering.OrderBy)
      */
     public void orderRows(final OrderBy ob) throws Exception {
@@ -354,7 +354,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#previous()
      */
     public boolean previous() {
@@ -383,7 +383,7 @@ public class DefaultDataSet implements DataSet {
 
     /**
      * Checks to see if the row has the given <RECORD> id
-     * 
+     *
      * @param recordID
      * @return boolean
      */
@@ -398,7 +398,7 @@ public class DefaultDataSet implements DataSet {
 
     /**
      * Sets the absolute position of the record pointer
-     * 
+     *
      * @param localPointer -
      *            int
      * @exception IndexOutOfBoundsException
@@ -417,7 +417,7 @@ public class DefaultDataSet implements DataSet {
      * remove any non numeric charcter from the field. The remaining numeric
      * chars's will be returned. If it is an empty string,or there are no
      * numeric chars, 0 will be returned for getInt() and getDouble()
-     * 
+     *
      * @param strictNumericParse
      *            The strictNumericParse to set.
      */
@@ -427,7 +427,7 @@ public class DefaultDataSet implements DataSet {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.IDataSet#remove()
      */
     public void remove() {

@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.delimiteddynamiccolumnswitherrors;
+package net.sf.flatpack.examples.delimiteddynamiccolumnswitherrors;
 
 /*
  * Created on Dec 31, 2004

@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.largedataset.largecsvperformancetest;
+package net.sf.flatpack.examples.largedataset.largecsvperformancetest;
 
 import java.io.BufferedReader;
 import java.io.File;

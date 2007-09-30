@@ -1,26 +1,26 @@
 /**
  * 
  */
-package net.sf.pzfilereader.examples;
+package net.sf.flatpack.examples;
 
 import java.lang.reflect.Method;
 
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
-import net.sf.pzfilereader.examples.createsamplecsv.CSVTestFileCreator;
-import net.sf.pzfilereader.examples.csvheaderandtrailer.CSVHeaderAndTrailer;
-import net.sf.pzfilereader.examples.csvperformancetest.CSVPerformanceTest;
-import net.sf.pzfilereader.examples.delimiteddynamiccolumns.DelimitedWithPZMap;
-import net.sf.pzfilereader.examples.delimiteddynamiccolumnswitherrors.DelimitedWithPZMapErrors;
-import net.sf.pzfilereader.examples.exporttoexcel.DelimitedFileExportToExcel;
-import net.sf.pzfilereader.examples.fixedlengthdynamiccolumns.FixedLengthWithPZMap;
-import net.sf.pzfilereader.examples.fixedlengthheaderandtrailer.FixedLengthHeaderAndTrailer;
-import net.sf.pzfilereader.examples.largedataset.delimiteddynamiccolumns.LargeDelimitedWithPZMap;
-import net.sf.pzfilereader.examples.largedataset.fixedlengthdynamiccolumns.LargeFixedLengthWithPZMap;
-import net.sf.pzfilereader.examples.largedataset.largecsvperformancetest.CSVLarge;
-import net.sf.pzfilereader.examples.lowlevelparse.LowLevelParse;
-import net.sf.pzfilereader.examples.multilinedelimitedrecord.DelimitedMultiLine;
-import net.sf.pzfilereader.examples.numericsanddates.NumericsAndDates;
+import net.sf.flatpack.examples.createsamplecsv.CSVTestFileCreator;
+import net.sf.flatpack.examples.csvheaderandtrailer.CSVHeaderAndTrailer;
+import net.sf.flatpack.examples.csvperformancetest.CSVPerformanceTest;
+import net.sf.flatpack.examples.delimiteddynamiccolumns.DelimitedWithPZMap;
+import net.sf.flatpack.examples.delimiteddynamiccolumnswitherrors.DelimitedWithPZMapErrors;
+import net.sf.flatpack.examples.exporttoexcel.DelimitedFileExportToExcel;
+import net.sf.flatpack.examples.fixedlengthdynamiccolumns.FixedLengthWithPZMap;
+import net.sf.flatpack.examples.fixedlengthheaderandtrailer.FixedLengthHeaderAndTrailer;
+import net.sf.flatpack.examples.largedataset.delimiteddynamiccolumns.LargeDelimitedWithPZMap;
+import net.sf.flatpack.examples.largedataset.fixedlengthdynamiccolumns.LargeFixedLengthWithPZMap;
+import net.sf.flatpack.examples.largedataset.largecsvperformancetest.CSVLarge;
+import net.sf.flatpack.examples.lowlevelparse.LowLevelParse;
+import net.sf.flatpack.examples.multilinedelimitedrecord.DelimitedMultiLine;
+import net.sf.flatpack.examples.numericsanddates.NumericsAndDates;
 
 /**
  * @author Benoit Xhenseval

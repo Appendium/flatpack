@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.csvheaderandtrailer;
+package net.sf.flatpack.examples.csvheaderandtrailer;
 
 /*
  * Created on Dec 31, 2004
