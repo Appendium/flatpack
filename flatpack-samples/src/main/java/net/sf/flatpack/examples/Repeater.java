@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sf.pzfilereader.examples;
+package net.sf.flatpack.examples;
 
 import java.lang.reflect.Method;
 

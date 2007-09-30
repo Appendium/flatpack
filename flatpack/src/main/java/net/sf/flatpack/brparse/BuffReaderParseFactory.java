@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -44,13 +44,13 @@ import net.sf.flatpack.ParserFactory;
  * Provides a PZParser which obtains records directly from
  * a BufferedReader as an alternative to reading the
  * entire file into memory.
- * 
+ *
  * Database column mappings are not supported by this factory
  * at the present time.  This class is meant to mimic the LargeDataSet
  * class of pre 3.0 versions, which did not support database mappings
  * either.  A RuntimeExcpetion will be thrown if trying to obtain a parser
  * for a database map.
- * 
+ *
  * @author Paul Zepernick
  */
 public class BuffReaderParseFactory implements ParserFactory {
@@ -76,7 +76,7 @@ public class BuffReaderParseFactory implements ParserFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File)
      */
@@ -97,7 +97,7 @@ public class BuffReaderParseFactory implements ParserFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream)
      */
@@ -115,7 +115,7 @@ public class BuffReaderParseFactory implements ParserFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File, char, char, boolean)
      */
@@ -126,7 +126,7 @@ public class BuffReaderParseFactory implements ParserFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream, char, char, boolean)
      */
@@ -137,7 +137,7 @@ public class BuffReaderParseFactory implements ParserFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File, char,
      *      char)
      */
@@ -147,7 +147,7 @@ public class BuffReaderParseFactory implements ParserFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      char, char)
      */

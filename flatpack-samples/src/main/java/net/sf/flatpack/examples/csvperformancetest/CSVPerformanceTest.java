@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.csvperformancetest;
+package net.sf.flatpack.examples.csvperformancetest;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.delimitedcolumnnamesinfile;
+package net.sf.flatpack.examples.delimitedcolumnnamesinfile;
 
 /*
  * Created on Nov 27, 2005

@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -41,16 +41,16 @@ import java.sql.Connection;
  * Factory definitions for creating a PZParser (delimiter or fixed length). The
  * creation of a parser will not start the parsing. It should not fail either
  * (unless DB issues etc).
- * 
+ *
  * @author Benoit Xhenseval
  */
 public interface ParserFactory {
     /**
      * Constructs a new DataSet using the database table file layout method.
      * This is used for a FIXED LENGTH text file.
-     * 
+     *
      * The user is responsible for closing the DB connection.
-     * 
+     *
      * @param con -
      *            Connection to database with DATAFILE and DATASTRUCTURE tables,
      *            user is responsible for closing it.
@@ -68,9 +68,9 @@ public interface ParserFactory {
     /**
      * Constructs a new DataSet using the database table file layout method.
      * This is used for a FIXED LENGTH text file.
-     * 
+     *
      * The user is responsible for closing the DB connection and InputStream.
-     * 
+     *
      * @param con -
      *            Connection to database with DATAFILE and DATASTRUCTURE tables,
      *            user is responsible for closing it.
@@ -88,7 +88,7 @@ public interface ParserFactory {
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is
      * used for a FIXED LENGTH text file.
-     * 
+     *
      * @param pzmapXML -
      *            Reference to the xml file holding the pzmap
      * @param dataSource -
@@ -102,9 +102,9 @@ public interface ParserFactory {
     /**
      * New constructor based on InputStream. Constructs a new DataSet using the
      * PZMAP XML file layout method. This is used for a FIXED LENGTH text file.
-     * 
+     *
      * The user is responsible for closing the InputStreams.
-     * 
+     *
      * @param pzmapXMLStream -
      *            Reference to the xml file InputStream holding the pzmap, user
      *            must close them after use.
@@ -120,9 +120,9 @@ public interface ParserFactory {
     /**
      * Constructs a new DataSet using the database table file layout method.
      * This is used for a FIXED LENGTH text file.
-     * 
+     *
      * The user is responsible for closing the DB connection.
-     * 
+     *
      * @param con -
      *            Connection to database with DATAFILE and DATASTRUCTURE tables,
      *            user is responsible for closing it.
@@ -138,9 +138,9 @@ public interface ParserFactory {
     /**
      * New constructor based on Reader. Constructs a new DataSet using the
      * PZMAP XML file layout method. This is used for a FIXED LENGTH text file.
-     * 
+     *
      * The user is responsible for closing the Readers.
-     * 
+     *
      * @param pzmapXMLStream -
      *            Reference to the xml Reader holding the pzmap, user
      *            must close them after use.
@@ -165,9 +165,9 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * The user is responsible for closing the DB connection and InputStream.
-     * 
+     *
      * @param con -
      *            Connection to database with DATAFILE and DATASTRUCTURE tables,
      *            user must close it when done.
@@ -183,7 +183,7 @@ public interface ParserFactory {
      *            Char text is qualified by
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
-     * @deprecated Please use the newDelimitedParser(Connection, Reader, String, char, char, boolean).  
+     * @deprecated Please use the newDelimitedParser(Connection, Reader, String, char, char, boolean).
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
@@ -198,9 +198,9 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * The user is responsible for closing the DB connection and InputStream.
-     * 
+     *
      * @param con -
      *            Connection to database with DATAFILE and DATASTRUCTURE tables,
      *            user must close it when done.
@@ -218,7 +218,7 @@ public interface ParserFactory {
      *            skips the first line that contains data in the file
      * @return PZParser
      */
-    Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter, 
+    Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord);
 
     /**
@@ -229,7 +229,7 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * @param pzmapXML -
      *            Reference to the xml file holding the pzmap
      * @param dataSource -
@@ -240,7 +240,7 @@ public interface ParserFactory {
      *            Char text is qualified by
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
-     * @deprecated Please use the newDelimitedParser(Reader, Reader, String, char, char, boolean).  
+     * @deprecated Please use the newDelimitedParser(Reader, Reader, String, char, char, boolean).
      *            The File can be wrapped in a "new FileReader(File)"
      * @return PZParser
      */
@@ -255,7 +255,7 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * @param pzmapXML -
      *            Reference to the xml file holding the pzmap
      * @param dataSource -
@@ -279,9 +279,9 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * The user is responsible for closing the InputStreams.
-     * 
+     *
      * @param pzmapXMLStream -
      *            Reference to the xml file holding the pzmap, user must close
      *            it when done.
@@ -294,7 +294,7 @@ public interface ParserFactory {
      *            Char text is qualified by
      * @param ignoreFirstRecord -
      *            skips the first line that contains data in the file
-     * @deprecated Please use the newDelimitedParser(Reader, Reader, String, char, char, boolean).  
+     * @deprecated Please use the newDelimitedParser(Reader, Reader, String, char, char, boolean).
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
@@ -309,14 +309,14 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * @param dataSource -
      *            text file datasource to read from
      * @param delimiter -
      *            Char the file is delimited By
      * @param qualifier -
      *            Char text is qualified by
-     * @deprecated Please use the newDelimitedParser(Reader, char, char, boolean).  
+     * @deprecated Please use the newDelimitedParser(Reader, char, char, boolean).
      *            The InputStream can be wrapped in a "new FileReader(File)"
      * @return PZParser
      */
@@ -330,7 +330,7 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * @param dataSource -
      *            text file datasource to read from
      * @param delimiter -
@@ -349,9 +349,9 @@ public interface ParserFactory {
      * \b backspace <br>
      * \r return <br>
      * \f form feed <br> \\ backslash <br> \' single quote <br> \" double quote
-     * 
+     *
      * The user must close the InputStream when done (after parsing).
-     * 
+     *
      * @param dataSource -
      *            text file InputStream to read from, user must close it when
      *            done.
@@ -359,7 +359,7 @@ public interface ParserFactory {
      *            Char the file is delimited By
      * @param qualifier -
      *            Char text is qualified by
-     * @deprecated Please use the newDelimitedParser(Reader, char, char, boolean).  
+     * @deprecated Please use the newDelimitedParser(Reader, char, char, boolean).
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */

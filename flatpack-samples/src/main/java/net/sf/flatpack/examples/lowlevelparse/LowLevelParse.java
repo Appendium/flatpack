@@ -1,4 +1,4 @@
-package net.sf.pzfilereader.examples.lowlevelparse;
+package net.sf.flatpack.examples.lowlevelparse;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,9 +1,9 @@
 /*
- * ObjectLab, http://www.objectlab.co.uk/open is supporting PZFileReader.
- * 
- * Based in London, we are world leaders in the design and development 
+ * ObjectLab, http://www.objectlab.co.uk/open is supporting FlatPack.
+ *
+ * Based in London, we are world leaders in the design and development
  * of bespoke applications for the securities financing markets.
- * 
+ *
  * <a href="http://www.objectlab.co.uk/open">Click here to learn more</a>
  *           ___  _     _           _   _          _
  *          / _ \| |__ (_) ___  ___| |_| |    __ _| |__
@@ -15,7 +15,7 @@
  *                     www.ObjectLab.co.uk
  *
  * $Id: ColorProvider.java 74 2006-10-24 22:19:05Z benoitx $
- * 
+ *
  * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -45,14 +45,14 @@ import org.jdom.JDOMException;
 
 /**
  * @author xhensevb
- * 
+ *
  */
 public class DelimiterParser extends AbstractDelimiterParser {
     private InputStream pzmapXMLStream = null;
     private File pzmapXML = null;
     private Reader pzmapReader;
 
-    //this InputStream and file can be removed after support for 
+    //this InputStream and file can be removed after support for
     //file and inputstream is removed from the parserfactory.  The
     //methods have been deprecated..pz
     private InputStream dataSourceStream = null;
@@ -93,7 +93,7 @@ public class DelimiterParser extends AbstractDelimiterParser {
 
     protected void init() {
         try {
-            //check to see if the user is using a File or InputStream.  This is 
+            //check to see if the user is using a File or InputStream.  This is
             //here for backwards compatability
             if (dataSourceStream != null) {
                 final Reader r = new InputStreamReader(dataSourceStream);
