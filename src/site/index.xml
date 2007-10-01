@@ -81,9 +81,9 @@
     <section name="How do I use it?">
     <p>Basic Steps</p>
     <ol>
-    	<li>Obtain a PZParser from a parser factory (DefaultPZParserFactory) witha  File, InputStream, or a reader(coming soon)</li>
-    	<li>Set additional PZParser options, PZParser.setAnOption()</li>
-        <li>Obtain a DataSet PZParser.parse()</li>
+    	<li>Obtain a Parser from a parser factory (DefaultParserFactory) witha  File, InputStream, or a reader(coming soon)</li>
+    	<li>Set additional Parser options, Parser.setAnOption()</li>
+        <li>Obtain a DataSet Parser.parse()</li>
     	<li>Call DataSet.next() to advance record pointer</li>
     	<li>Process columns; DataSet.getString("colname"), getInt("colname"), getDouble("colname"), getDate("colname"), etc</li>
         <li>Check for parse errors; DataSet.getErrors()</li>
@@ -94,7 +94,7 @@
     <div class="source"><pre>
     	//Obtain the proper parser for your needs
     	Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
-                new FileReader("map.pzmap.xml"), //xml column mapping
+                new FileReader("map.fpmap.xml"), //xml column mapping
                 new FileReader("DataFile.txt"),  //txt file to parse
                 ',', //delimiter
                 '"', //text qualfier
@@ -135,7 +135,7 @@
     <div class="source"><pre>
 	    //Obtain the proper parser for your needs
         Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
-        		new FileReader("map.pzmap.xml"), //fixed with column map
+        		new FileReader("map.fpmap.xml"), //fixed with column map
                 new FileReader("DataFile.txt"));  //txt file to parse
 
         //obtain DataSet
@@ -154,7 +154,7 @@
     	final String msg = "data     data2     data3     data4"
 	    //Obtain the proper parser for your needs
         Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
-        		new FileReader("map.pzmap.xml"), //fixed with column map to bind col names
+        		new FileReader("map.fpmap.xml"), //fixed with column map to bind col names
                 new StringReader(mag));  //data to parse
 
         //obtain DataSet
