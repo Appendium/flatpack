@@ -160,7 +160,7 @@ public class DefaultParserFactory implements ParserFactory {
 
     public Parser newDelimitedParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
-        return new DelimiterParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
+        return new DelimiterParser(dataSource, pzmapXML, delimiter, qualifier, ignoreFirstRecord);
     }
 
 }
