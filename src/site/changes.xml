@@ -8,8 +8,11 @@
   </properties>
   <body>
   	<release version="3.1.1-SNAPSHOT" date="2007-10-01" description="Fix">
-  		<action dex="zepernick" type="fix">Fixed bug in delimited parse when using Reader for data and map.  Parameters
+  		<action dev="zepernick" type="fix">Fixed bug in delimited parse when using Reader for data and map.  Parameters
   		were being reversed in the code.</action>
+  		<action dev="zepernick" type="fix">Bug 1811210 When parsing multi-line delimited files, blank lines inside the
+  		elements were being removed from the result of the parse.  Blank lines inside a delimited element
+  		were also causing a StringIndexOutOfBoundsException.</action>
   	</release>
 	<release version="3.1.0" date="2007-09-10" description="Name and structure change and new writers">
 		<action dev="benoitx" type="add">Paul and I would like to thank Dirk Holmes and Holger Hoffstatte from MuleSource for the initial contribution to the writer package.
