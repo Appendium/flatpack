@@ -215,11 +215,13 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
     protected String fetchNextRecord(final BufferedReader br, final char qual, final char delim) throws IOException {
         String line = null;
         final StringBuffer lineData = new StringBuffer();
+        final String linebreak = System.getProperty("line.separator");
         boolean processingMultiLine = false;
 
         while ((line = br.readLine()) != null) {
             lineCount++;
             final String trimmed = line.trim();
+            final int trimmedLen = trimmed.length();
             if (!processingMultiLine && trimmed.length() == 0) {
                 //empty line skip past it, as long as it
                 //is not part of the multiline
@@ -240,7 +242,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
             // the record
 
             final String trimmedLineData = lineData.toString().trim();
-            if (processingMultiLine && trimmedLineData.length() > 0) {
+            if (processingMultiLine && trimmedLineData.length() > 0 && trimmedLen > 0) {
                 // need to do one last check here. it is possible that the "
                 // could be part of the data
                 // excel will escape these with another quote; here is some
@@ -250,11 +252,11 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     // it is safe to assume we have reached the end of the
                     // line break
                     processingMultiLine = false;
-                    lineData.append("\r\n").append(line);
+                    lineData.append(linebreak).append(line);
                 } else {
                     // check to see if this is the last line of the record
                     // looking for a qualifier followed by a delimiter
-                    lineData.append("\r\n").append(line);
+                    lineData.append(linebreak).append(line);
                     boolean qualiFound = false;
                     for (int i = 0; i < chrArry.length; i++) {
                         if (qualiFound) {
@@ -296,7 +298,9 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 }
             } else {
                 // throw the line into lineData var.
-                lineData.append(line);
+                //need to check to see if we need to insert a line break.  
+                //The buffered reader excludes the breaks
+                lineData.append(trimmedLen == 0 ? linebreak : line);
                 if (processingMultiLine) {
                     continue; // if we are working on a multiline rec, get
                     // the data on the next line

@@ -85,6 +85,12 @@ public class ParserUtilsSplitLineTest extends TestCase {
                         (String) splitLineResults.get(j));
             }
         }
+        
+        ParserUtils.splitLine("26,\"10726/1996\",551,\"Extra\",08/04/2005 00:00:00,0,0,,\"The unanimous judgement of the Team is that:\n" + 
+        "\n" + 
+        "(i) The members have to pay the amount on time. \n" +
+        "\n" +
+        "(ii) There would be regular meeting biweekly. \"", ',', '"', 10); 
     }
 
     /**
