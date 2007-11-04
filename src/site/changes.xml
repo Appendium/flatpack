@@ -8,9 +8,10 @@
   </properties>
   <body>
   	<release version="3.1.1-SNAPSHOT" date="2007-10-01" description="Fix">
+  		<action dev="zepernick" type="fix">[1818818] ClassCastException when accessing header or trailer records</action>
   		<action dev="zepernick" type="fix">Fixed bug in delimited parse when using Reader for data and map.  Parameters
   		were being reversed in the code.</action>
-  		<action dev="zepernick" type="fix">Bug 1811210 When parsing multi-line delimited files, blank lines inside the
+  		<action dev="zepernick" type="fix">[1811210] When parsing multi-line delimited files, blank lines inside the
   		elements were being removed from the result of the parse.  Blank lines inside a delimited element
   		were also causing a StringIndexOutOfBoundsException.</action>
   	</release>
