@@ -67,7 +67,7 @@ public class MetaData {
     public int getColumnIndex(final String key, final String columnName) {
         int idx = -1;
         if (key != null && !key.equals(FPConstants.DETAIL_ID) && !key.equals(FPConstants.COL_IDX)) {
-            idx = ((XMLRecordElement) getListColumnsForRecord(key)).getColumnIndex(columnName);
+            idx = ((XMLRecordElement) xmlRecordElements.get(key)).getColumnIndex(columnName);
         } else if (key == null || key.equals(FPConstants.DETAIL_ID)) {
             final Integer i = (Integer) columnIndexMap.get(columnName);
             if (i != null) { //happens when the col name does not exist in the mapping
