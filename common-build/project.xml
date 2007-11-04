@@ -27,7 +27,7 @@
    xsi:schemaLocation="http://maven.apache.org/POM/3.0.0 http://maven.apache.org/maven-v3_0_0.xsd">
    <pomVersion>3</pomVersion>
    <groupId>net.sf.flatpack</groupId>
-   <currentVersion>3.1.0</currentVersion>
+   <currentVersion>3.1.1-SNAPSHOT</currentVersion>
    <organization>
       <name>ObjectLab Financial Ltd</name>
       <url>http://www.objectlab.co.uk</url>
@@ -197,6 +197,11 @@
    </reports>
 
    <versions>
+      <version>
+         <id>3.1.1-SNAPSHOT</id>
+         <name>3.1.1-SNAPSHOT</name>
+         <tag>3.1.1-SNAPSHOT</tag>
+      </version>
        <version>
          <id>3.1.0</id>
          <name>3.1.0</name>
