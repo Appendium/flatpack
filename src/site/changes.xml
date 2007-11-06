@@ -7,7 +7,7 @@
     <title>Changes</title>
   </properties>
   <body>
-  	<release version="3.1.1-SNAPSHOT" date="2007-10-01" description="Fix">
+  	<release version="3.1.1" date="2007-10-01" description="Fix">
   		<action dev="zepernick" type="fix">[1818818] ClassCastException when accessing header or trailer records</action>
   		<action dev="zepernick" type="fix">Fixed bug in delimited parse when using Reader for data and map.  Parameters
   		were being reversed in the code.</action>
