@@ -139,6 +139,12 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
                 row.setRowNumber(lineCount);
+                
+                if (isFlagEmptyRows()) {
+                    //user has elected to have the parser flag rows that are empty
+                    row.setEmpty(ParserUtils.isListElementsEmpty(row.getCols()));
+                }
+                
                 // add the row to the array
                 ds.addRow(row);
             }

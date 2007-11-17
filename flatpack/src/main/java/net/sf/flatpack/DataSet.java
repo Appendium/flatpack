@@ -264,7 +264,7 @@ public interface DataSet {
     /**
      * Setting this to True will parse text as is and throw a
      * NumberFormatException. Setting to false, which is the default, will
-     * remove any non numeric charcter from the field. The remaining numeric
+     * remove any non numeric character from the field. The remaining numeric
      * chars's will be returned. If it is an empty string,or there are no
      * numeric chars, 0 will be returned for getInt() and getDouble()
      *
@@ -320,4 +320,12 @@ public interface DataSet {
      * @return boolean
      */
     boolean contains(final String column);
+    
+    /**
+     * Checks to see if there was no data on the row which was parsed.  This
+     * will thrown an exception if Parser.FlagEmptyRows() is not set to true.
+     * 
+     * @return
+     */
+    boolean isRowEmpty();
 }
