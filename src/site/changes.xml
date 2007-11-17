@@ -7,6 +7,11 @@
     <title>Changes</title>
   </properties>
   <body>
+  	<release version="3.2.0-SNAPSHOT" date="2007-11-17" description="New parse options">
+  		<action dev="zepernick" type="change">Added an option on the Paser setFlagEmptyRows().
+  		This will make the DataSet.isRowEmpty() method available.  This method will return
+  		true when there is no data on any columns in the row.</action>
+  	</release>
   	<release version="3.1.1" date="2007-10-01" description="Fix">
   		<action dev="zepernick" type="fix">[1818818] ClassCastException when accessing header or trailer records</action>
   		<action dev="zepernick" type="fix">Fixed bug in delimited parse when using Reader for data and map.  Parameters
