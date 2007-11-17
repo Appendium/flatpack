@@ -70,6 +70,8 @@ public abstract class AbstractParser implements Parser {
 
     private List readersToClose = null;
 
+    private boolean flagEmptyRows;
+
     protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
     }
@@ -242,5 +244,19 @@ public abstract class AbstractParser implements Parser {
 
     public void setPzMetaData(final MetaData pzMap) {
         this.pzMetaData = pzMap;
+    }
+
+    /**
+     * @return the flagEmptyRows
+     */
+    public boolean isFlagEmptyRows() {
+        return flagEmptyRows;
+    }
+
+    /**
+     * @param flagEmptyRows the flagEmptyRows to set
+     */
+    public void setFlagEmptyRows(boolean flagEmptyRows) {
+        this.flagEmptyRows = flagEmptyRows;
     }
 }

@@ -2,9 +2,11 @@ package net.sf.flatpack.parserutils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Properties;
 
 import junit.framework.TestCase;
+import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
 /**
@@ -53,6 +55,12 @@ public class ParserUtilsTest extends TestCase {
         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Double.class), new Double("5.00"));
         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Integer.class), new Integer("5"));
         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.3556", BigDecimal.class), new BigDecimal("5.3556"));
+    }
+    
+    public void testEmptyRow() {
+        final String data = ",,,";
+        final List l = ParserUtils.splitLine(data, ',', FPConstants.NO_QUALIFIER, 4);        
+        assertEquals("list should be empty and is not...", ParserUtils.isListElementsEmpty(l), true);
     }
 
     public static void main(final String[] args) {

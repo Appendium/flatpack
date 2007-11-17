@@ -35,6 +35,7 @@ package net.sf.flatpack;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sf.flatpack.structure.Row;
@@ -45,14 +46,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author xhensevb
- * @author zepernick
+ * @author Benoit Xhenseval
+ * @author Paul Zepernick
  *
  */
 public abstract class AbstractDelimiterParser extends AbstractParser {
     private char delimiter = 0;
+    
     private char qualifier = 0;
+    
     private boolean ignoreFirstRecord = false;
+    
     private int lineCount = 0;
 
     private final Logger logger = LoggerFactory.getLogger(AbstractDelimiterParser.class);
@@ -156,7 +160,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     // Incorrect record length on line log the error. Line
                     // will not be included in the dataset log the error
                     if (isIgnoreExtraColumns()) {
-                        //user has choosen to ignore the fact that we have too many columns in the data from
+                        //user has chosen to ignore the fact that we have too many columns in the data from
                         //what the mapping has described.  sublist the array to remove un-needed columns
                         columns = columns.subList(0, columnCount);
                         addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", lineCount, 1);
@@ -187,6 +191,12 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 row.setRowNumber(lineCount);
                 /** add the row to the array */
                 ds.addRow(row);
+                                
+                if (isFlagEmptyRows()) {
+                    //user has elected to have the parser flag rows that are empty
+                    row.setEmpty(ParserUtils.isListElementsEmpty(columns));
+                }
+                
             }
         } finally {
             if (br != null) {
@@ -206,7 +216,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      *          Open reader being used to read through the file
      * @param qual
      *          Qualifier being used for parse
-     * @parma delim
+     * @param delim
      *          Delimiter being used for parse
      * @return String
      *          Record from delimited file
@@ -267,24 +277,6 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                                 break;
                             }                            
                             qualiFound = false;
-                            //tried to replace the code below due to checkstyle error
-                            //} else {
-                                // not a space, if this char is the
-                                // delimiter, then we have reached the end
-                                // of
-                                // the record
-                           //     if (chrArry[i] == delim) {
-                                    // processingMultiLine = false;
-                                    // fix put in, setting to false caused
-                                    // bug when processing multiple
-                                    // multi-line
-                                    // columns on the same record
-                           //         processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
-                           //         break;
-                           //     }
-                           //     qualiFound = false;
-                           //     continue;
-                           // }
                         } else if (chrArry[i] == qual) {
                             qualiFound = true;
                         }

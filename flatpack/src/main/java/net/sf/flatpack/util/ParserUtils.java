@@ -1004,6 +1004,26 @@ public final class ParserUtils {
 
         return pzConvertProps;
     }
+    
+    /**
+     * Checks a list of <String> elements to see if every element
+     * in the list is empty.
+     * 
+     * @param l
+     *          List of <String>
+     * @return boolean
+     *              true when all elements are empty
+     */
+    public static boolean isListElementsEmpty(final List l) {
+        final Iterator it = l.iterator();
+        while (it.hasNext()) {
+            final String s = (String)it.next();
+            if (s != null && s.trim().length() > 0) {
+                return false;
+            }
+        }        
+        return true;
+    }
 
     /**
      * Converts a String value to the appropriate Object via

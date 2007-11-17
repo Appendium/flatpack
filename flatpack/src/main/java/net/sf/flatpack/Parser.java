@@ -36,15 +36,16 @@ package net.sf.flatpack;
  * PZParser is ready to parse the data and return an object that can then be
  * traversed. The default parser should NOT handle short lines, the user can
  * change it prior to calling parse.
- *
+ * 
  * @author Benoit Xhenseval
+ * @author Paul Zepernick
  */
 public interface Parser {
 
     /**
-     * Start the parsing.  Will return "null" if the
-     * parse fails and the DataSet cannot be created
-     *
+     * Start the parsing. Will return "null" if the parse fails and the DataSet
+     * cannot be created
+     * 
      * @return the data set resulting from parsing
      */
     DataSet parse();
@@ -57,70 +58,97 @@ public interface Parser {
 
     /**
      * @param handleShortLines -
-     *            when flaged as true, lines with less columns then the amount
+     *            when flagged as true, lines with less columns then the amount
      *            of column headers will be added as empty's instead of
      *            producing an error
      */
     void setHandlingShortLines(final boolean handleShortLines);
 
     /**
-     *
+     * 
      * @return true, detail lines with a length or column count > the mapping
-     *         definition will be truncated and the reader will NOT register these
-     *         lines as erros in the DataError collection.
+     *         definition will be truncated and the reader will NOT register
+     *         these lines as errors in the DataError collection.
      */
     boolean isIgnoreExtraColumns();
 
     /**
-     *
-     * @param ignoreExtraColumns when true, detail lines with a length or column
-     *         count > the mapping definition will be truncated and the reader
-     *         will NOT register these lines as erros in the DataError collection.
+     * 
+     * @param ignoreExtraColumns
+     *            when true, detail lines with a length or column count > the
+     *            mapping definition will be truncated and the reader will NOT
+     *            register these lines as errors in the DataError collection.
      */
     void setIgnoreExtraColumns(final boolean ignoreExtraColumns);
 
     /**
      * Default is false
-     *
-     * @return true, column names will have to be an exact match when retrieving the value of a column.
-     *         Example when true: Column name = AColumnName ; getString("acolumnname") would fail
-     *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
+     * 
+     * @return true, column names will have to be an exact match when retrieving
+     *         the value of a column. Example when true: Column name =
+     *         AColumnName ; getString("acolumnname") would fail Example when
+     *         false: Column name = AColumnName ; getString("acolumnname") would
+     *         pass
      */
     boolean isColumnNamesCaseSensitive();
 
     /**
      * Default is false
-     *
-     * @param columnNamesCaseSensitive when true, column names will have to be an exact match when retrieving
-     *         the value of a column.
-     *         Example when true: Column name = AColumnName ; getString("acolumnname") would fail
-     *         Example when false: Column name = AColumnName ; getString("acolumnname") would pass
+     * 
+     * @param columnNamesCaseSensitive
+     *            when true, column names will have to be an exact match when
+     *            retrieving the value of a column. Example when true: Column
+     *            name = AColumnName ; getString("acolumnname") would fail
+     *            Example when false: Column name = AColumnName ;
+     *            getString("acolumnname") would pass
      */
     void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
 
     /**
      * Default is false
-     *
-     * @return true, warnings encountered durring parsing will not be included in the DataSet errors
+     * 
+     * @return true, warnings encountered during parsing will not be included in
+     *         the DataSet errors
      */
     boolean isIgnoreParseWarnings();
 
     /**
-     *
-     * @param ignoreParseWarnings when true, warnings encountered durring parsing will not be included
-     *                            in the DataSet errors
+     * 
+     * @param ignoreParseWarnings
+     *            when true, warnings encountered during parsing will not be
+     *            included in the DataSet errors
      */
     void setIgnoreParseWarnings(final boolean ignoreParseWarnings);
 
     /**
-     *
-     * @return true, empty Strings will get returned as NULL when calling DataSet.getString()
+     * 
+     * @return true, empty Strings will get returned as NULL when calling
+     *         DataSet.getString()
      */
     boolean isNullEmptyStrings();
 
     /**
-     *
-     * @param nullEmptyStrings when true, empty Strings will get returned as NULL when calling DataSet.getString()
+     * 
+     * @param nullEmptyStrings
+     *            when true, empty Strings will get returned as NULL when
+     *            calling DataSet.getString()
      */
     void setNullEmptyStrings(final boolean nullEmptyStrings);
+
+    /**
+     * 
+     * @return flagEmptyRows when true, will analyze the row to see if all
+     *         elements are empty and place a flag on the DataSet indicating if
+     *         the row is empty
+     */
+    boolean isFlagEmptyRows();
+
+    /**
+     * when true, will analyze the row to see if all elements are empty and
+     * place a flag on the DataSet indicating if the row is empty.  This will slow
+     * down the parse and should only be used when necessary.  It is off by default.
+     * 
+     * @param flagEmptyRows
+     */
+    void setFlagEmptyRows(final boolean flagEmptyRows);
 }

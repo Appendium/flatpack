@@ -46,6 +46,7 @@ import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FPInvalidUsageException;
 import net.sf.flatpack.util.FPStringUtils;
 import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.xml.MetaData;
@@ -493,5 +494,18 @@ public class DefaultDataSet implements DataSet {
 
         return false;
 
+    }
+    
+    /**
+     * @throws FPInvalidUsageException
+     */
+    public boolean isRowEmpty() {
+        if (!parser.isFlagEmptyRows()) {
+            //flag empty rows needs to be set for this functionality
+            //throw an exception
+            throw new FPInvalidUsageException("Parser.isFlagEmptyRows(true) must be set before using isRowEmpty()");
+        }
+        
+        return ((Row)rows.get(pointer)).isEmpty();
     }
 }

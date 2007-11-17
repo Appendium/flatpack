@@ -8,6 +8,7 @@ import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
 import net.sf.flatpack.Parser;
 import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FPInvalidUsageException;
 
 /**
  * Test the different options that can be 
@@ -80,6 +81,28 @@ public class PZParserOptsTest extends TestCase {
         } catch (final NoSuchElementException e) {
             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should NOT fail with case sensitivity turned OFF");
         }
+    }
+    
+    public void testEmptyRowCheck() {
+        DataSet ds;
+        final String cols = "column1,column2,column3\r\n,,";
+       
+        //check to see if the flag empty rows works
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p.setFlagEmptyRows(true);
+        ds = p.parse();
+        ds.next();
+        assertEquals("Row should return empty...", ds.isRowEmpty(), true);
+        
+        //do not set to flag empty rows, but make the check anyhow to make sure we get an exception
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        ds = p.parse();
+        ds.next();
+        try {
+            ds.isRowEmpty();
+            fail("should have got FPInvalidUsageException...");
+        } catch(FPInvalidUsageException e){}
+
     }
 
     public static void main(final String[] args) {
