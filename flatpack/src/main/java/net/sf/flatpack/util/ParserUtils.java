@@ -225,7 +225,7 @@ public final class ParserUtils {
 
     /**
      * reads from the specified point in the line and returns how many chars to
-     * the specified delimter
+     * the specified delimiter
      *
      * @param line
      * @param start
@@ -357,7 +357,7 @@ public final class ParserUtils {
      * @param delimiter
      * @param qualifier
      * @param p
-     *          PZParser used to specify additional option when working witht the ColumnMetaData. Can be null
+     *          PZParser used to specify additional option when working with the ColumnMetaData. Can be null
      * @return ArrayList - ColumnMetaData
      * @deprecated use the getPZMetaDataFromFile
      */
@@ -388,7 +388,7 @@ public final class ParserUtils {
      * @param delimiter
      * @param qualifier
      * @param p
-     *          PZParser used to specify additional option when working witht the ColumnMetaData. Can be null
+     *          PZParser used to specify additional option when working with the ColumnMetaData. Can be null
      * @return PZMetaData
      */
     public static MetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
