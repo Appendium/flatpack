@@ -118,7 +118,7 @@ public class DataError {
      * 
      * @return the rawData
      */
-    protected String getRawData() {
+    public String getRawData() {
         return rawData;
     }
 }
