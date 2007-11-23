@@ -115,7 +115,8 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                         line = line.substring(0, recordLength);
                         addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
                     } else {
-                        addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2);
+                        addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2, 
+                                isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
                 } else if (line.length() < recordLength) {
@@ -127,7 +128,8 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                         addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
 
                     } else {
-                        addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2);
+                        addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2, 
+                                isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
                 }
