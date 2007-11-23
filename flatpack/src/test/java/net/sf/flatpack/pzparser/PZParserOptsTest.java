@@ -1,9 +1,11 @@
 package net.sf.flatpack.pzparser;
 
 import java.io.StringReader;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
+import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
 import net.sf.flatpack.Parser;
@@ -103,6 +105,25 @@ public class PZParserOptsTest extends TestCase {
             fail("should have got FPInvalidUsageException...");
         } catch(FPInvalidUsageException e){}
 
+    }
+    
+    public void testStoreRawDataToDataError() {
+        DataSet ds;
+        final String cols = "column1,column2,column3\r\nVAL1,VAL2,VAL3,VAL4";
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p.setStoreRawDataToDataError(true);
+        ds = p.parse();
+        Iterator errors = ds.getErrors().iterator();
+        DataError de = (DataError)errors.next();
+      
+        assertNotNull("DataError should contain line data...", de.getRawData());
+        
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p.setStoreRawDataToDataError(false);
+        ds = p.parse();
+        errors = ds.getErrors().iterator();
+        de = (DataError)errors.next();
+        assertNull("DataError should have <null> line data...", de.getRawData());
     }
 
     public static void main(final String[] args) {
