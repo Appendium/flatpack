@@ -165,7 +165,8 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                         columns = columns.subList(0, columnCount);
                         addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", lineCount, 1);
                     } else {
-                        addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2);
+                        addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2, 
+                                isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
                 } else if (columns.size() < columnCount) {
@@ -179,7 +180,8 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                         addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", lineCount, 1);
 
                     } else {
-                        addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2);
+                        addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2, 
+                                isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
                 }

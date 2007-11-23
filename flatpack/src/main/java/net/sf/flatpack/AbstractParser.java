@@ -71,6 +71,8 @@ public abstract class AbstractParser implements Parser {
     private List readersToClose = null;
 
     private boolean flagEmptyRows;
+    
+    private boolean storeRawDataToDataError;
 
     protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
@@ -178,23 +180,41 @@ public abstract class AbstractParser implements Parser {
     }
 
     /**
-     * Adds a new error to this DataSet. These can be collected, and retreived
+     * Adds a new error to this DataSet. These can be collected, and retrieved
      * after processing
      * 
-     * @param errorDesc -
+     * @param errorDesc
      *            String description of error
-     * @param lineNo -
-     *            int line number error occured on
-     * @param errorLevel -
-     *            int errorLevel 1,2,3 1=warning 2=error 3= severe error
+     * @param lineNo
+     *            line number error occurred on
+     * @param errorLevel
+     *            errorLevel 1,2,3 1=warning 2=error 3= severe error
      */
     protected void addError(final DefaultDataSet ds, final String errorDesc,
             final int lineNo, final int errorLevel) {
+        addError(ds, errorDesc, lineNo, errorLevel, null);
+    }
+    
+    /**
+     * Adds a new error to this DataSet. These can be collected, and retrieved
+     * after processing
+     * 
+     * @param errorDesc
+     *            String description of error
+     * @param lineNo
+     *            line number error occurred on
+     * @param errorLevel
+     *            errorLevel 1,2,3 1=warning 2=error 3= severe error'
+     * @param lineData 
+     *            Data of the line which failed the parse
+     */
+    protected void addError(final DefaultDataSet ds, final String errorDesc,
+            final int lineNo, final int errorLevel, final String lineData) {
         if (errorLevel == 1 && isIgnoreParseWarnings()) {
             // user has selected to not log warnings in the parser
             return;
         }
-        final DataError de = new DataError(errorDesc, lineNo, errorLevel);
+        final DataError de = new DataError(errorDesc, lineNo, errorLevel, lineData);
         ds.addError(de);
     }
 
@@ -258,5 +278,19 @@ public abstract class AbstractParser implements Parser {
      */
     public void setFlagEmptyRows(boolean flagEmptyRows) {
         this.flagEmptyRows = flagEmptyRows;
+    }
+
+    /**
+     * @return the storeRawDataToDataError
+     */
+    public boolean isStoreRawDataToDataError() {
+        return storeRawDataToDataError;
+    }
+
+    /**
+     * @param storeRawDataToDataError the storeRawDataToDataError to set
+     */
+    public void setStoreRawDataToDataError(boolean storeRawDataToDataError) {
+        this.storeRawDataToDataError = storeRawDataToDataError;
     }
 }

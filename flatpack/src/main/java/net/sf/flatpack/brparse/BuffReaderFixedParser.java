@@ -116,12 +116,13 @@ public class BuffReaderFixedParser extends FixedLengthParser {
                 // be included in the
                 // dataset
                 if (isIgnoreExtraColumns()) {
-                    //user has choosen to ignore the fact that we have too many bytes in the fixed
+                    //user has chosen to ignore the fact that we have too many bytes in the fixed
                     //width file.  Truncate the line to the correct length
                     line = line.substring(0, recordLength);
                     addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
                 } else {
-                    addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2);
+                    addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2, 
+                            isStoreRawDataToDataError() ? line : null);
                     continue;
                 }
             } else if (line.length() < recordLength) {
@@ -133,7 +134,8 @@ public class BuffReaderFixedParser extends FixedLengthParser {
                     addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
 
                 } else {
-                    addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2);
+                    addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2, 
+                            isStoreRawDataToDataError() ? line : null);
                     continue;
                 }
             }
@@ -145,6 +147,11 @@ public class BuffReaderFixedParser extends FixedLengthParser {
             row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
 
             row.setRowNumber(lineCount);
+            
+            if (isFlagEmptyRows()) {
+                //user has elected to have the parser flag rows that are empty
+                row.setEmpty(ParserUtils.isListElementsEmpty(row.getCols()));
+            }
 
             return row;
         }

@@ -152,7 +152,8 @@ public class BuffReaderDelimParser extends DelimiterParser {
                     addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
                 } else {
                     //log the error
-                    addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2);
+                    addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2, 
+                            isStoreRawDataToDataError() ? line : null);
                     continue;
                 }
             } else if (columns.size() < columnCount) {
@@ -166,7 +167,8 @@ public class BuffReaderDelimParser extends DelimiterParser {
                     addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
 
                 } else {
-                    addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2);
+                    addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2, 
+                            isStoreRawDataToDataError() ? line : null);
                     continue;
                 }
             }
@@ -177,6 +179,11 @@ public class BuffReaderDelimParser extends DelimiterParser {
             row.setCols(columns);
             row.setRowNumber(getLineCount());
 
+            if (isFlagEmptyRows()) {
+                //user has elected to have the parser flag rows that are empty
+                row.setEmpty(ParserUtils.isListElementsEmpty(columns));
+            }
+            
             return row;
         }
     }

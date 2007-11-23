@@ -151,4 +151,13 @@ public interface Parser {
      * @param flagEmptyRows
      */
     void setFlagEmptyRows(final boolean flagEmptyRows);
+    
+    /**
+     * when true, the parser will place the data of the line which failed the parse and
+     * place it into the DataError object.  DataError.getRawData() can be called to retrieve
+     * the line.
+     * 
+     * @param storeRawDataToDataError
+     */
+    void setStoreRawDataToDataError(final boolean storeRawDataToDataError);
 }
