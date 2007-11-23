@@ -18,7 +18,13 @@ public class AllJunitTests {
         // $JUnit-BEGIN$
         suite.addTest(new TestSuite(net.sf.flatpack.columninfile.DelimitedColumnNamesInFileTest.class));
         suite.addTest(new TestSuite(net.sf.flatpack.delim.tab.TabDelimitedTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.parserutils.FixedWidthParserUtilsTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.parserutils.ParserUtilsLTrimTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.parserutils.ParserUtilsSplitLineTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.parserutils.ParserUtilsTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.pzparser.PZParserOptsTest.class));
         // $JUnit-END$
         return suite;
     }
 }
+
