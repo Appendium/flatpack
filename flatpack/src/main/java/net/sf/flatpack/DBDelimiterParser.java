@@ -68,7 +68,7 @@ public class DBDelimiterParser extends AbstractDelimiterParser {
     protected void init() {
         try {
             //check to see if the user is using a InputStream.  This is
-            //here for backwards compatability
+            //here for backwards compatibility
             if (dataSourceStream != null) {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
