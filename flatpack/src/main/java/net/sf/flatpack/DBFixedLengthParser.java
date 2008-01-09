@@ -110,7 +110,7 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
         }
     }
 
-    public DataSet doParse() {
-        return null;
-    }
+//    public DataSet doParse() {
+//        return null;
+//    }
 }

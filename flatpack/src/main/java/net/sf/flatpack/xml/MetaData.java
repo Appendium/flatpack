@@ -4,6 +4,7 @@
 package net.sf.flatpack.xml;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class MetaData {
     public MetaData(final List columnNames, final Map columnIndexMap) {
         this.columnsNames = Collections.unmodifiableList(columnNames);
         this.columnIndexMap = Collections.unmodifiableMap(columnIndexMap);
+        this.xmlRecordElements = new HashMap();
     }
 
     MetaData(final List columnNames, final Map columnIndexMap, final Map xmlRecordElements) {
