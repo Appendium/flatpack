@@ -169,5 +169,12 @@ public class BuffReaderDataSet extends DefaultDataSet {
     public void setValue(final String column, final String value) {
         throw new UnsupportedOperationException("setValue() is Not Implemented");
     }
+    
+    /**
+     * Not Supported!
+     */
+    public int getRowCount() {
+    	throw new UnsupportedOperationException("getRowCount() is Not Implemented");
+    }
 
 }
