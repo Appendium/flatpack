@@ -37,10 +37,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sf.flatpack.Parser;
@@ -197,6 +199,7 @@ public final class MapParser {
     // helper to retrieve the "COLUMN" elements from the given parent
     private static List getColumnChildren(final Element parent) {
         final List columnResults = new ArrayList();
+        final Set columnNames = new HashSet();
         final Iterator xmlChildren = parent.getChildren("COLUMN").iterator();
 
         while (xmlChildren.hasNext()) {
@@ -204,11 +207,17 @@ public final class MapParser {
             final Element xmlColumn = (Element) xmlChildren.next();
 
             // make sure the name attribute is present on the column
-            if (xmlColumn.getAttributeValue("name") == null) {
+            final String columnName = xmlColumn.getAttributeValue("name");
+            if (columnName == null) {
                 throw new IllegalArgumentException("Name attribute is required on the column tag!");
             }
 
-            cmd.setColName(xmlColumn.getAttributeValue("name"));
+            // make sure the names in columnInfo are unique
+            if (columnNames.contains(columnName)) {
+                throw new IllegalArgumentException("Duplicate name column '" + columnName + "'");
+            }
+            
+            cmd.setColName(columnName);
 
             // check to see if the column length can be set
             if (xmlColumn.getAttributeValue("length") != null) {
