@@ -399,6 +399,9 @@ public final class ParserUtils {
         for (int i = 0; i < lineData.size(); i++) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName((String) lineData.get(i));
+            if (results.contains(cmd)) {
+            	throw new FPException("Duplicate Column Name In File: " + cmd);
+            }
             results.add(cmd);
         }
 
