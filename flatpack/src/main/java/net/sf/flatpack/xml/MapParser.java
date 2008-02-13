@@ -218,6 +218,7 @@ public final class MapParser {
             }
             
             cmd.setColName(columnName);
+            columnNames.add(columnName);
 
             // check to see if the column length can be set
             if (xmlColumn.getAttributeValue("length") != null) {
