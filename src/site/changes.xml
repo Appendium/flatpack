@@ -8,6 +8,8 @@
   </properties>
   <body>
   	<release version="3.2.0-SNAPSHOT" date="2007-11-17" description="New parse options">
+  		<action dev="zepernick" type="fix">Added check for duplicate column names when using file 
+  		header for column names.</action>
   		<action dev="zepernick" type="fix">Applied patch from Dirk Olmes to prevent duplicate
   		column names in the XML mapping.  IllegalArgumentException is now thrown if a duplicate
   		column name exists in the map.  Thanks Dirk...</action>
