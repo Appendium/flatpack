@@ -47,6 +47,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,6 +55,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sf.flatpack.Parser;
@@ -394,15 +396,17 @@ public final class ParserUtils {
     public static MetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
         List lineData = null;
         final List results = new ArrayList();
+        final Set dupCheck = new HashSet();
 
         lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT);
         for (int i = 0; i < lineData.size(); i++) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName((String) lineData.get(i));
-            if (results.contains(cmd)) {
+            if (dupCheck.contains(cmd)) {
             	throw new FPException("Duplicate Column Name In File: " + cmd);
             }
             results.add(cmd);
+            dupCheck.add(cmd);
         }
 
         return new MetaData(results, buidColumnIndexMap(results, p));
