@@ -402,11 +402,11 @@ public final class ParserUtils {
         for (int i = 0; i < lineData.size(); i++) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName((String) lineData.get(i));
-            if (dupCheck.contains(cmd)) {
-            	throw new FPException("Duplicate Column Name In File: " + cmd);
+            if (dupCheck.contains(cmd.getColName())) {
+            	throw new FPException("Duplicate Column Name In File: " + cmd.getColName());
             }
             results.add(cmd);
-            dupCheck.add(cmd);
+            dupCheck.add(cmd.getColName());
         }
 
         return new MetaData(results, buidColumnIndexMap(results, p));
