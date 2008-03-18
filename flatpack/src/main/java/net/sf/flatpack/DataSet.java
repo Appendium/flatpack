@@ -92,15 +92,26 @@ public interface DataSet {
     double getDouble(final String column);
 
     /**
-     * Returns the interger value of a specified column
+     * Returns the integer value of a specified column
      *
      * @param column -
      *            Name of the column
      * @exception NoSuchElementException
      * @exception NumberFormatException
-     * @return double
+     * @return int
      */
     int getInt(final String column);
+    
+    /**
+     * Returns the long value of a specified column
+     *
+     * @param column -
+     *            Name of the column
+     * @exception NoSuchElementException
+     * @exception NumberFormatException
+     * @return long
+     */
+    long getLong(final String column);
 
     /**
      * Returns the date value of a specified column. This assumes the date is in
