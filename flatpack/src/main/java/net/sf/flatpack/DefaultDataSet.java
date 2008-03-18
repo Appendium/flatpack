@@ -235,6 +235,16 @@ public class DefaultDataSet implements DataSet {
 
         return Integer.parseInt(s);
     }
+    
+    public long getLong(final String column) {
+        final String s = getStringValue(column);
+
+        if (!strictNumericParse) {
+            return Long.parseLong(ParserUtils.stripNonLongChars(s));
+        }
+
+        return Long.parseLong(s);
+    }
 
     /*
      * (non-Javadoc)
