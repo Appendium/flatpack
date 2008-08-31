@@ -67,7 +67,9 @@ public final class FixedWidthParserUtils {
             final ColumnMetaData colMetaDataObj = (ColumnMetaData) columnMetaData.get(i);
             final String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);
             recPosition += colMetaDataObj.getColLength();
-            splitResult.add(tempValue.trim());
+            //make sure that we preserve leading spaces as they most likely are there intentionally. 
+            //This was previously issuing a trim() 
+            splitResult.add(ParserUtils.rTrim(tempValue));
         }
 
         return splitResult;
@@ -85,7 +87,7 @@ public final class FixedWidthParserUtils {
      */
     public static String getCMDKey(final Map columnMD, final String line) {
         if (columnMD.size() == 1) {
-            // no <RECORD> elments were specifed for this parse, just return the
+            // no <RECORD> elements were specified for this parse, just return the
             // detail id
             return FPConstants.DETAIL_ID;
         }
@@ -131,7 +133,7 @@ public final class FixedWidthParserUtils {
      */
     public static String getCMDKey(final MetaData columnMD, final String line) {
         if (!columnMD.isAnyRecordFormatSpecified()) {
-            // no <RECORD> elments were specifed for this parse, just return the
+            // no <RECORD> elements were specified for this parse, just return the
             // detail id
             return FPConstants.DETAIL_ID;
         }
