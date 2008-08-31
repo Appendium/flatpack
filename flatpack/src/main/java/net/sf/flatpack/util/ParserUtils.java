@@ -243,7 +243,7 @@ public final class ParserUtils {
     }
 
     /**
-     * Removes empty space from the begining of a string
+     * Removes empty space from the beginning of a string
      *
      * @param value -
      *            to be trimmed
@@ -267,9 +267,10 @@ public final class ParserUtils {
 
         return trimmed;
     }
+    
 
     /**
-     * Removes empty space from the begining of a string, except for tabs
+     * Removes empty space from the beginning of a string, except for tabs
      *
      * @param value -
      *            to be trimmed
@@ -289,6 +290,31 @@ public final class ParserUtils {
 
         if (offset > 0) {
             trimmed = value.substring(offset);
+        }
+
+        return trimmed;
+    }
+    
+    /**
+     * Removes empty space from the end of a string
+     *
+     * @param value -
+     *            to be trimmed
+     * @return String
+     */
+    public static String rTrim(final String value) {
+        if (value == null) {
+            return null;
+        }
+
+        String trimmed = value;
+        int offset = value.length() - 1;
+        while (offset > -1 && (value.charAt(offset) == ' ' || value.charAt(offset) == '\t')) {
+            offset--;
+        }
+
+        if (offset < value.length() - 1) {
+            trimmed = value.substring(0,offset + 1);
         }
 
         return trimmed;
