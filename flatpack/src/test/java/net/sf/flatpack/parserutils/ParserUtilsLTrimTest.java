@@ -74,6 +74,18 @@ public class ParserUtilsLTrimTest extends TestCase {
         assertEquals("\t \t RemoveAll \tSpaces \t\t ", ParserUtils.lTrimKeepTabs(" \t \t RemoveAll \tSpaces \t\t "));
         assertEquals("\t \t RemoveAll \tSpaces \t\t", ParserUtils.lTrimKeepTabs("\t \t RemoveAll \tSpaces \t\t"));
     }
+    
+    /**
+     * Make sure all spaces are properly removed from the end of the String
+     *
+     */
+    public void testTrimTrailingSpaces() {
+        final String testS = "  RemoveAll trailing SpacesFromMe     ";
+        assertEquals("  RemoveAll trailing SpacesFromMe", ParserUtils.rTrim(testS));
+        
+        assertEquals("", ParserUtils.rTrim("     "));
+        assertEquals("test", ParserUtils.rTrim("test"));
+    }
 
     public static void main(final String[] args) {
         junit.textui.TestRunner.run(ParserUtilsLTrimTest.class);
