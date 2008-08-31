@@ -8,6 +8,8 @@
   </properties>
   <body>
   	<release version="3.2.0-SNAPSHOT" date="2007-11-17" description="New parse options">
+  		<action dev="zepernick" type="fix">Stopped the fixed width parser from removing leading spaces in a data element.  
+  		Added the ParserUtils.rTrim() method.</action>
   		<action dev="zepernick" type="change">Added getLong() to DataSet interface</action>
   		<action dev="zepernick" type="fix">Added check for duplicate column names when using file 
   		header for column names.</action>
