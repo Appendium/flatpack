@@ -73,6 +73,8 @@ public abstract class AbstractParser implements Parser {
     private boolean flagEmptyRows;
     
     private boolean storeRawDataToDataError;
+    
+    private boolean storeRawDataToDataSet;
 
     protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
@@ -292,5 +294,19 @@ public abstract class AbstractParser implements Parser {
      */
     public void setStoreRawDataToDataError(boolean storeRawDataToDataError) {
         this.storeRawDataToDataError = storeRawDataToDataError;
+    }
+
+    /**
+     * @return the storeRawDataToDataSet
+     */
+    public boolean isStoreRawDataToDataSet() {
+        return storeRawDataToDataSet;
+    }
+
+    /**
+     * @param storeRawDataToDataSet the storeRawDataToDataSet to set
+     */
+    public void setStoreRawDataToDataSet(boolean storeRawDataToDataSet) {
+        this.storeRawDataToDataSet = storeRawDataToDataSet;
     }
 }

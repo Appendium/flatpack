@@ -52,6 +52,8 @@ public class Row {
     private String mdkey;
     
     private boolean empty;
+    
+    private String rawData;
 
     /**
      * Constructs a new Row
@@ -176,5 +178,23 @@ public class Row {
      */
     public void setEmpty(boolean empty) {
         this.empty = empty;
+    }
+
+    /**
+     * Raw data used to create the columns for the row
+     * 
+     * @return the rawData
+     */
+    public String getRawData() {
+        return rawData;
+    }
+
+    /**
+     * Raw data used to create the columns for the row
+     * 
+     * @param rawData the rawData to set
+     */
+    public void setRawData(String rawData) {
+        this.rawData = rawData;
     }
 }
