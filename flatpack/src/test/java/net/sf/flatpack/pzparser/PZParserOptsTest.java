@@ -125,6 +125,44 @@ public class PZParserOptsTest extends TestCase {
         de = (DataError)errors.next();
         assertNull("DataError should have <null> line data...", de.getRawData());
     }
+    
+    public void testStoreRawData() {
+        DataSet ds;
+        final String cols = "column1,column2,column3\r\nVAL1,VAL2,VAL3";
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p.setStoreRawDataToDataSet(true);
+        ds = p.parse();
+        ds.next();
+        assertEquals("VAL1,VAL2,VAL3", ds.getRawData());
+        
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        ds = p.parse();
+        ds.next();
+        try {
+            ds.getRawData();
+            fail("Should have received an FPExcpetion...");
+        }catch(FPInvalidUsageException e) {            
+        }
+        
+    }
+    
+    public void testEmptyLastColumn() {
+        //this was reported as a bug in the forums check to see
+        //if we actually have a problem
+        DataSet ds;
+        String cols = "column1,column2,column3\r\nVAL1,VAL2,";
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        ds = p.parse();
+        
+        assertEquals(true, ds.next());
+        
+        
+        cols = "column1,column2,column3\r\n\"VAL1\",\"VAL2\",\"\"";
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
+        ds = p.parse();
+        
+        assertEquals(true, ds.next());
+    }
 
     public static void main(final String[] args) {
         junit.textui.TestRunner.run(PZParserOptsTest.class);

@@ -190,14 +190,20 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
                 // to limit the memory use
                 row.setCols(columns);
-                row.setRowNumber(lineCount);
-                /** add the row to the array */
-                ds.addRow(row);
-                                
+                row.setRowNumber(lineCount);                
                 if (isFlagEmptyRows()) {
                     //user has elected to have the parser flag rows that are empty
                     row.setEmpty(ParserUtils.isListElementsEmpty(columns));
                 }
+                if (isStoreRawDataToDataSet()) {
+                    //user told the parser to keep a copy of the raw data in the row
+                    //WARNING potential for high memory usage here
+                    row.setRawData(line);
+                }   
+                
+                //add the row to the array
+                ds.addRow(row);
+                 
                 
             }
         } finally {

@@ -46,6 +46,7 @@ import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FPException;
 import net.sf.flatpack.util.FPInvalidUsageException;
 import net.sf.flatpack.util.FPStringUtils;
 import net.sf.flatpack.util.ParserUtils;
@@ -507,7 +508,8 @@ public class DefaultDataSet implements DataSet {
     }
     
     /**
-     * @throws FPInvalidUsageException
+     * @throws FPInvalidUsageException Parser.isFlagEmptyRows() must be set to true before using this
+     * @throws FPException if cursor is on an invalid row
      */
     public boolean isRowEmpty() {
         if (!parser.isFlagEmptyRows()) {
@@ -516,6 +518,28 @@ public class DefaultDataSet implements DataSet {
             throw new FPInvalidUsageException("Parser.isFlagEmptyRows(true) must be set before using isRowEmpty()");
         }
         
+        if (pointer < 0) {
+            throw new FPException("Cursor on invalid row..  Make sure next() is called and returns true");
+        }
+        
         return ((Row)rows.get(pointer)).isEmpty();
+    }
+
+    /**
+     * @throws FPInvalidUsageException
+     * @throws FPException if cursor is on an invalid row
+     */
+    public String getRawData() {
+        if (!parser.isStoreRawDataToDataSet()) {
+            //option needs to be set for this functionality
+            //throw an exception
+            throw new FPInvalidUsageException("Parser.isStoreRawDataToDataSet(true) must be set before using getRawData()");
+        }
+        
+        if (pointer < 0) {
+            throw new FPException("Cursor on invalid row.. Make sure next() is called and returns true");
+        }
+        
+        return ((Row)rows.get(pointer)).getRawData();
     }
 }

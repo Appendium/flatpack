@@ -92,16 +92,16 @@ public interface DataSet {
     double getDouble(final String column);
 
     /**
-     * Returns the integer value of a specified column
+     * Returns the interger value of a specified column
      *
      * @param column -
      *            Name of the column
      * @exception NoSuchElementException
      * @exception NumberFormatException
-     * @return int
+     * @return double
      */
     int getInt(final String column);
-    
+
     /**
      * Returns the long value of a specified column
      *
@@ -339,4 +339,11 @@ public interface DataSet {
      * @return
      */
     boolean isRowEmpty();
+    
+    /**
+     * 
+     * @return the raw data used to create this Row in the DataSet.  Parser.setStoreRawDataToDataSet(true)
+     * must be specified before calling this method.  
+     */
+    String getRawData();
 }

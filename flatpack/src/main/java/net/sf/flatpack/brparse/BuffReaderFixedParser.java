@@ -152,6 +152,11 @@ public class BuffReaderFixedParser extends FixedLengthParser {
                 //user has elected to have the parser flag rows that are empty
                 row.setEmpty(ParserUtils.isListElementsEmpty(row.getCols()));
             }
+            if (isStoreRawDataToDataSet()) {
+                //user told the parser to keep a copy of the raw data in the row
+                //WARNING potential for high memory usage here
+                row.setRawData(line);
+            }   
 
             return row;
         }
