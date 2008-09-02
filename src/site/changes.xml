@@ -8,6 +8,9 @@
   </properties>
   <body>
   	<release version="3.2.0-SNAPSHOT" date="2007-11-17" description="New parse options">
+  		<action dev="zepernick" type="change">Added optional 3rd parameter to the OrderColumn constructor which
+  		allows the specification of the type of column being sorted: OrderColumn.COLTYPE_STRING, OrderColumn.COLTYPE_DATE,
+  		OrderColumn.COLTYPE_NUMERIC</action>
   		<action dev="zepernick" type="change">New Parser option to log the raw line data of the record in the 
   		DataSet object.  Parser.setStoreRawDataToDataSet()</action>
   		<action dev="zepernick" type="fix">Stopped the fixed width parser from removing leading spaces in a data element.  
