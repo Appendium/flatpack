@@ -239,11 +239,10 @@ public interface DataSet {
      *
      * @param ob -
      *            OrderBy object
-     * @exception Exception
      * @see net.sf.flatpack.ordering.OrderBy
      * @see net.sf.flatpack.ordering.OrderColumn
      */
-    void orderRows(final OrderBy ob) throws Exception;
+    void orderRows(final OrderBy ob);
 
     /**
      * Sets data in the DataSet to lowercase

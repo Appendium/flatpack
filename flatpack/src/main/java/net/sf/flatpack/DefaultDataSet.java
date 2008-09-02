@@ -348,7 +348,7 @@ public class DefaultDataSet implements DataSet {
      *
      * @see net.sf.flatpack.IDataSet#orderRows(net.sf.flatpack.ordering.OrderBy)
      */
-    public void orderRows(final OrderBy ob) throws Exception {
+    public void orderRows(final OrderBy ob) {
         // PZ try to handle other <records> by sending them to
         // the bottom of the sort
         // if (columnMD.size() > 1) {
@@ -358,7 +358,8 @@ public class DefaultDataSet implements DataSet {
         if (ob != null && rows != null) {
             final List cmds = metaData.getColumnsNames();
             //            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
-            ob.setColumnMD(cmds);
+            //ob.setColumnMD(cmds);
+            ob.setMetaData(getMetaData());
             Collections.sort(rows, ob);
             goTop();
         }
