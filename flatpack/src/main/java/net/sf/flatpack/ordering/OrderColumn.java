@@ -41,26 +41,61 @@ package net.sf.flatpack.ordering;
  * @version 2.0
  */
 public class OrderColumn {
-    /** property name to sort by */
-    private String columnName = null;
+    
+    /**Specifies descending sort order*/
+    public static final boolean DESC = true;
+    
+    /**Specifies Ascending sort order*/
+    public static final boolean ASC = false;
+    
+    /**string sort indicator*/
+    public static final int COLTYPE_STRING = 0;
+    
+    /**date sort indicator*/
+    public static final int COLTYPE_DATE = 1;
+    
+    /**numeric sort indicator*/
+    public static final int COLTYPE_NUMERIC = 2;
+    
+    //property name to sort by
+    private String columnName;
 
-    /** 1 = ASC -1 = DESC */
+    //1 = ASC -1 = DESC
     private int sortIndicator = 1;
+    
+    private int selectedColType;
+    
+    private String dateFormatPattern = "yyyyMMdd";
 
     /**
      * Constructs a new order by element
      *
-     * @param columnName -
+     * @param columnName
      *            column to sort by
-     * @param desc -
-     *            boolean sort DESC?
+     * @param desc
+     *            boolean sort DESC.  OrderColumn.DESC, OrderColumn.ASC
+     * @param colType
+     *            Type of column to be sorted: OrderColumn.COLTYPE_STRING,OrderColumn.COLTYPE_DATE, OrderColum.COLTYPE_NUMERIC
      */
-    public OrderColumn(final String columnName, final boolean desc) {
+    public OrderColumn(final String columnName, final boolean desc, final int colType) {
         this.columnName = columnName;
+        this.selectedColType = colType;
 
         if (desc) {
             this.sortIndicator = -1;
         }
+    }
+    
+    /**
+     * Constructs a new order by element
+     *
+     * @param columnName
+     *            column to sort by
+     * @param desc
+     *            boolean sort DESC.  OrderColumn.DESC, OrderColumn.ASC
+     */
+    public OrderColumn(final String columnName, final boolean desc) {
+        this(columnName, desc, OrderColumn.COLTYPE_STRING);
     }
 
     /**
@@ -84,4 +119,39 @@ public class OrderColumn {
     public int getSortIndicator() {
         return sortIndicator;
     }
+
+    /**
+     * @return the selectedColType
+     */
+    public int getSelectedColType() {
+        return selectedColType;
+    }
+
+    /**
+     * @param selectedColType the selectedColType to set
+     */
+    public void setSelectedColType(int selectedColType) {
+        this.selectedColType = selectedColType;
+    }
+
+    /**
+     * Format pattern to use to parse dates for sorting.  Default is yyyyMMdd
+     * 
+     * @return the dateFormatPattern
+     */
+    public String getDateFormatPattern() {
+        return dateFormatPattern;
+    }
+
+    /**
+     * Format pattern to use to parse dates for sorting.  Default is yyyyMMdd
+     * 
+     * @param dateFormatPattern the dateFormatPattern to set
+     * @see java.text.SimpleDateFormat
+
+     */
+    public void setDateFormatPattern(String dateFormatPattern) {
+        this.dateFormatPattern = dateFormatPattern;
+    }
 }
+

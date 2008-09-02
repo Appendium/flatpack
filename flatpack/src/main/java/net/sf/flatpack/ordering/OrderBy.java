@@ -33,14 +33,20 @@
 package net.sf.flatpack.ordering;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
+import net.sf.flatpack.xml.MetaData;
 
 /**
  * @author paul zepernick
@@ -54,10 +60,9 @@ public class OrderBy implements Comparator, Serializable {
     private static final long serialVersionUID = 5622406168247149895L;
 
     /** collection of order elements to sort by */
-    private final ArrayList orderbys = new ArrayList();
-
-    /** column meta data */
-    private List columnMD = null;
+    private final List orderbys = new ArrayList();
+    
+    private MetaData metaData;
 
     /**
      * Adds an order element to the sort.
@@ -80,6 +85,7 @@ public class OrderBy implements Comparator, Serializable {
         final Row row0 = (Row) arg0;
         final Row row1 = (Row) arg1;
         int result = 0;
+        
 
         for (int i = 0; i < orderbys.size(); i++) {
             final OrderColumn oc = (OrderColumn) orderbys.get(i);
@@ -99,8 +105,35 @@ public class OrderBy implements Comparator, Serializable {
 
             // convert to one type of case so the comparator does not take case
             // into account when sorting
-            final Comparable comp0 = row0.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
-            final Comparable comp1 = row1.getValue(ParserUtils.findColumn(oc.getColumnName(), columnMD)).toLowerCase(Locale.getDefault());
+            Comparable comp0 = null;
+            Comparable comp1 = null;
+            String str0 = row0.getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), null)).toLowerCase(Locale.getDefault());
+            String str1 = row1.getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), null)).toLowerCase(Locale.getDefault());
+            switch (oc.getSelectedColType()) {
+                case OrderColumn.COLTYPE_STRING:
+                    comp0 = str0;
+                    comp1 = str1;
+                    break;
+                case OrderColumn.COLTYPE_NUMERIC:
+                    comp0 = Double.valueOf(ParserUtils.stripNonDoubleChars(str0));
+                    comp1 = Double.valueOf(ParserUtils.stripNonDoubleChars(str1));
+                    break;
+                case OrderColumn.COLTYPE_DATE:
+                    final SimpleDateFormat sdf = new SimpleDateFormat(oc.getDateFormatPattern());  
+                    try {
+                        comp0 = sdf.parse(str0);
+                    } catch(ParseException e) {
+                       comp0 = getBadDateDefault();
+                        
+                    }
+                    
+                    try {
+                        comp1 = sdf.parse(str1);
+                    } catch(ParseException e) {
+                        comp1 = getBadDateDefault();
+                    }
+                    break;                    
+            }
 
             // multiply by the sort indicator to get a ASC or DESC result
             result = comp0.compareTo(comp1) * oc.getSortIndicator();
@@ -115,11 +148,27 @@ public class OrderBy implements Comparator, Serializable {
         return result;
     }
 
-    /**
-     * @param columnMD
-     *            The columnMD to set.
-     */
-    public void setColumnMD(final List columnMD) {
-        this.columnMD = columnMD;
+    private Date getBadDateDefault() {
+        final Calendar defaultBadDt = new GregorianCalendar();
+        defaultBadDt.set(Calendar.MONTH, 1);
+        defaultBadDt.set(Calendar.YEAR, 1900);
+        defaultBadDt.set(Calendar.DAY_OF_MONTH, 1);
+        return defaultBadDt.getTime();
     }
+    
+    
+    /**
+     * @return the metaData
+     */
+    public MetaData getMetaData() {
+        return metaData;
+    }
+
+    /**
+     * @param metaData the metaData to set
+     */
+    public void setMetaData(MetaData metaData) {
+        this.metaData = metaData;
+    }
+
 }
