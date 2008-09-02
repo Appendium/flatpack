@@ -121,7 +121,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
      * @see com.pz.reader.ordering.OrderBy
      * @see com.pz.reader.ordering.OrderColumn
      */
-    public void orderRows(final OrderBy ob) throws Exception {
+    public void orderRows(final OrderBy ob) {
         throw new UnsupportedOperationException("orderRows() is Not Implemented");
     }
 
