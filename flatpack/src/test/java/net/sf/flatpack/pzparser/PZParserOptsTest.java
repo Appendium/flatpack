@@ -9,6 +9,8 @@ import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
 import net.sf.flatpack.Parser;
+import net.sf.flatpack.ordering.OrderBy;
+import net.sf.flatpack.ordering.OrderColumn;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.FPInvalidUsageException;
 
@@ -162,6 +164,66 @@ public class PZParserOptsTest extends TestCase {
         ds = p.parse();
         
         assertEquals(true, ds.next());
+    }
+    
+    public void testSorting() {
+        DataSet ds;
+        String cols = "fname,lname,dob,anumber\r\npaul,zepernick,06/21/1981,2\r\nbenoit,xhenseval,05/01/1970,12";
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        ds = p.parse();
+        
+        OrderBy order = new OrderBy();
+        order.addOrderColumn(new OrderColumn("fname",OrderColumn.ASC));
+        ds.orderRows(order);
+        ds.next();
+        assertEquals("benoit", ds.getString("fname"));
+        
+        
+        order = new OrderBy();
+        order.addOrderColumn(new OrderColumn("lname",OrderColumn.DESC));
+        ds.orderRows(order);
+        ds.next();
+        assertEquals("zepernick", ds.getString("lname"));
+        
+        
+        //test date sorting
+        order = new OrderBy();
+        OrderColumn column = new OrderColumn("dob",OrderColumn.ASC, OrderColumn.COLTYPE_DATE);
+        column.setDateFormatPattern("MM/dd/yyyy");
+        order.addOrderColumn(column);        
+        ds.orderRows(order);
+        ds.next();
+        assertEquals("xhenseval", ds.getString("lname"));
+        
+        
+        //test numeric sorting
+        order = new OrderBy();
+        order.addOrderColumn(new OrderColumn("anumber",OrderColumn.DESC, OrderColumn.COLTYPE_NUMERIC));
+        ds.orderRows(order);
+        ds.next();
+        assertEquals("xhenseval", ds.getString("lname"));
+        
+        
+        //test bad date format & bad numeric data
+        //06.21.1981 should default to 01/01/1900 since it does not match our date format
+        cols = "fname,lname,dob,anumber\r\npaul,zepernick,06.21.1981,not a number\r\nbenoit,xhenseval,05/01/1970,12";
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        ds = p.parse();
+        order = new OrderBy();
+        column = new OrderColumn("dob",OrderColumn.ASC, OrderColumn.COLTYPE_DATE);
+        column.setDateFormatPattern("MM/dd/yyyy");
+        order.addOrderColumn(column);        
+        ds.orderRows(order);
+        ds.next();
+        assertEquals("zepernick", ds.getString("lname"));
+        
+        //not a number should get treated as a 0
+        order = new OrderBy();
+        order.addOrderColumn(new OrderColumn("anumber",OrderColumn.ASC, OrderColumn.COLTYPE_NUMERIC));
+        ds.orderRows(order);
+        ds.next();
+        assertEquals("zepernick", ds.getString("lname"));
+        
     }
 
     public static void main(final String[] args) {
