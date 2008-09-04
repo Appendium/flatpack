@@ -43,6 +43,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import net.sf.flatpack.Parser;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
@@ -63,6 +64,8 @@ public class OrderBy implements Comparator, Serializable {
     private final List orderbys = new ArrayList();
     
     private MetaData metaData;
+    
+    private Parser parser;
 
     /**
      * Adds an order element to the sort.
@@ -107,8 +110,8 @@ public class OrderBy implements Comparator, Serializable {
             // into account when sorting
             Comparable comp0 = null;
             Comparable comp1 = null;
-            String str0 = row0.getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), null)).toLowerCase(Locale.getDefault());
-            String str1 = row1.getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), null)).toLowerCase(Locale.getDefault());
+            String str0 = row0.getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser)).toLowerCase(Locale.getDefault());
+            String str1 = row1.getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser)).toLowerCase(Locale.getDefault());
             switch (oc.getSelectedColType()) {
                 case OrderColumn.COLTYPE_STRING:
                     comp0 = str0;
@@ -157,18 +160,20 @@ public class OrderBy implements Comparator, Serializable {
     }
     
     
-    /**
-     * @return the metaData
-     */
-    public MetaData getMetaData() {
-        return metaData;
-    }
 
     /**
      * @param metaData the metaData to set
      */
     public void setMetaData(MetaData metaData) {
         this.metaData = metaData;
+    }
+
+
+    /**
+     * @param parser the parser to set
+     */
+    public void setParser(Parser parser) {
+        this.parser = parser;
     }
 
 }

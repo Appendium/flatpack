@@ -360,6 +360,7 @@ public class DefaultDataSet implements DataSet {
             //            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
             //ob.setColumnMD(cmds);
             ob.setMetaData(getMetaData());
+            ob.setParser(parser);
             Collections.sort(rows, ob);
             goTop();
         }
