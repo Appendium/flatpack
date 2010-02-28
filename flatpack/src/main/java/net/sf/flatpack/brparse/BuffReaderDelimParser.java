@@ -76,7 +76,7 @@ public class BuffReaderDelimParser extends DelimiterParser {
 
     public BuffReaderDelimParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
-        super(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
+        super(dataSource, pzmapXML, delimiter, qualifier, ignoreFirstRecord);
     }
 
     public BuffReaderDelimParser(final Reader dataSourceStream, final char delimiter, final char qualifier, final boolean ignoreFirstRecord) {
