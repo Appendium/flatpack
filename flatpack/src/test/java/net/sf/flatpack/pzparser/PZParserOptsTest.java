@@ -201,6 +201,23 @@ public class PZParserOptsTest extends TestCase {
         assertEquals(true, ds.next());
     }
     
+    public void testBRParseParameters() {
+        DataSet ds;
+        String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" +
+        			"<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n" +
+        			"	<PZMAP>\r\n" +
+        			"		<COLUMN name=\"column1\" /> \r\n" +
+        			"		<COLUMN name=\"column2\" /> \r\n" +
+        			"	</PZMAP>";
+        			
+        String cols = "VAL1,VAL2";
+        
+        Parser p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(xml), new StringReader(cols), ',', FPConstants.NO_QUALIFIER, false);
+        ds = p.parse();
+        
+        assertEquals(true, ds.next());
+    }
+    
     public void testSorting() {
         DataSet ds;
         String cols = "fname,lname,dob,anumber\r\npaul,zepernick,06/21/1981,2\r\nbenoit,xhenseval,05/01/1970,12";
