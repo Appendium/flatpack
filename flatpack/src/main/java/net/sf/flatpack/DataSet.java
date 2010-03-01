@@ -32,10 +32,12 @@
  */
 package net.sf.flatpack;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 
 import net.sf.flatpack.ordering.OrderBy;
@@ -90,6 +92,17 @@ public interface DataSet {
      * @return double
      */
     double getDouble(final String column);
+
+    /**
+     * Returns the BigDecimal value of a specified column
+     *
+     * @param column -
+     *            Name of the column
+     * @exception NoSuchElementException
+     * @exception NumberFormatException
+     * @return BigDecimal
+     */
+    BigDecimal getBigDecimal(final String column);
 
     /**
      * Returns the interger value of a specified column

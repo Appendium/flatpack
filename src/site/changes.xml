@@ -7,7 +7,8 @@
     <title>Changes</title>
   </properties>
   <body>
-  	<release version="3.2.0-SNAPSHOT" date="2007-11-17" description="New parse options">
+  	<release version="3.2.0" date="2010-03-03" description="New parse options">
+  	  	<action dev="benoitx" type="add">Added a getBigDecimal method on DataSet.</action>
   	  	<action dev="zepernick" type="fix">Fixed SF Bug 1869636.  The parameters for the XML Map and 
   	  	data file were reversed in the BuffReaderDelimParser.</action>
   		<action dev="zepernick" type="change">Added optional 3rd parameter to the OrderColumn constructor which

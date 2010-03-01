@@ -32,6 +32,7 @@
  */
 package net.sf.flatpack;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getColumns()
+     * @see net.sf.flatpack.DataSet#getColumns()
      */
     public String[] getColumns() {
         ColumnMetaData column = null;
@@ -121,7 +122,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getColumns(java.lang.String)
+     * @see net.sf.flatpack.DataSet#getColumns(java.lang.String)
      */
     public String[] getColumns(final String recordID) {
         String[] array = null;
@@ -141,7 +142,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getDate(java.lang.String)
+     * @see net.sf.flatpack.DataSet#getDate(java.lang.String)
      */
     public Date getDate(final String column) throws ParseException {
         return getDate(column, new SimpleDateFormat("yyyyMMdd"));
@@ -150,7 +151,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getDate(java.lang.String,
+     * @see net.sf.flatpack.DataSet#getDate(java.lang.String,
      *      java.text.SimpleDateFormat)
      */
     public Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException {
@@ -165,12 +166,11 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getDouble(java.lang.String)
+     * @see net.sf.flatpack.DataSet#getDouble(java.lang.String)
      */
     public double getDouble(final String column) {
         final StringBuffer newString = new StringBuffer();
         final String s = getStringValue(column);
-        //        final String s = row.getValue(ParserUtils.getColumnIndex(row.getMdkey(), columnMD, column, pzparser));
 
         if (!strictNumericParse) {
             newString.append(ParserUtils.stripNonDoubleChars(s));
@@ -179,6 +179,17 @@ public class DefaultDataSet implements DataSet {
         }
 
         return Double.parseDouble(newString.toString());
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see net.sf.flatpack.DataSet#getBigDecimal(java.lang.String)
+     */
+    public BigDecimal getBigDecimal(final String column) {
+        final String s = getStringValue(column);
+
+        return new BigDecimal(s);
     }
 
     private String getStringValue(final String column) {
@@ -194,7 +205,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getErrorCount()
+     * @see net.sf.flatpack.DataSet#getErrorCount()
      */
     public int getErrorCount() {
         if (getErrors() != null) {
@@ -207,7 +218,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getErrors()
+     * @see net.sf.flatpack.DataSet#getErrors()
      */
     public List getErrors() {
         return errors;
@@ -216,7 +227,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getIndex()
+     * @see net.sf.flatpack.DataSet#getIndex()
      */
     public int getIndex() {
         return pointer;
@@ -225,7 +236,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getInt(java.lang.String)
+     * @see net.sf.flatpack.DataSet#getInt(java.lang.String)
      */
     public int getInt(final String column) {
         final String s = getStringValue(column);
@@ -250,7 +261,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getRowCount()
+     * @see net.sf.flatpack.DataSet#getRowCount()
      */
     public int getRowCount() {
         return rows.size();
@@ -259,7 +270,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getRowNo()
+     * @see net.sf.flatpack.DataSet#getRowNo()
      */
     public int getRowNo() {
         return ((Row) rows.get(pointer)).getRowNumber();
@@ -268,7 +279,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#getString(java.lang.String)
+     * @see net.sf.flatpack.DataSet#getString(java.lang.String)
      */
     public String getString(final String column) {
         String s = getStringValue(column);
@@ -301,7 +312,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#goBottom()
+     * @see net.sf.flatpack.DataSet#goBottom()
      */
     public void goBottom() {
         pointer = rows.size() - 1;
@@ -310,7 +321,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#goTop()
+     * @see net.sf.flatpack.DataSet#goTop()
      */
     public void goTop() {
         pointer = -1;
@@ -319,7 +330,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#isAnError(int)
+     * @see net.sf.flatpack.DataSet#isAnError(int)
      */
     public boolean isAnError(final int lineNo) {
         for (int i = 0; i < errors.size(); i++) {
@@ -333,7 +344,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#next()
+     * @see net.sf.flatpack.DataSet#next()
      */
     public boolean next() {
         if (pointer < rows.size() && pointer + 1 != rows.size()) {
@@ -346,7 +357,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#orderRows(net.sf.flatpack.ordering.OrderBy)
+     * @see net.sf.flatpack.DataSet#orderRows(net.sf.flatpack.ordering.OrderBy)
      */
     public void orderRows(final OrderBy ob) {
         // PZ try to handle other <records> by sending them to
@@ -369,7 +380,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#previous()
+     * @see net.sf.flatpack.DataSet#previous()
      */
     public boolean previous() {
         if (pointer <= 0) {
@@ -442,7 +453,7 @@ public class DefaultDataSet implements DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see net.sf.flatpack.IDataSet#remove()
+     * @see net.sf.flatpack.DataSet#remove()
      */
     public void remove() {
         rows.remove(pointer);

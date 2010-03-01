@@ -8,5 +8,6 @@
 	<classpathentry kind="var" path="MAVEN_REPO/org.slf4j/jars/slf4j-api-1.1.0-RC1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org.slf4j/jars/slf4j-simple-1.1.0-RC1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/jexcelapi/jars/jxl-2.4.2.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
