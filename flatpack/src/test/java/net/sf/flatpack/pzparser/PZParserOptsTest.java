@@ -9,6 +9,7 @@ import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
 import net.sf.flatpack.Parser;
+import net.sf.flatpack.brparse.BuffReaderParseFactory;
 import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.ordering.OrderColumn;
 import net.sf.flatpack.util.FPConstants;
@@ -21,6 +22,40 @@ import net.sf.flatpack.util.FPInvalidUsageException;
  * @author Paul Zepernick
  */
 public class PZParserOptsTest extends TestCase {
+	
+	public void testHandleShortLines() {
+        DataSet ds;
+        final String cols = "COLUMN1,column2,Column3\r\n value1";
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p.setHandlingShortLines(true);
+      //  p.setIgnoreParseWarnings(true);
+        ds = p.parse();
+        assertEquals("Should have a row of data", true, ds.next());
+        
+        //re-test the buffered reader
+        p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p.setHandlingShortLines(true);
+      //  p.setIgnoreParseWarnings(true);
+        ds = p.parse();
+        assertEquals("Should have a row of data", true, ds.next());
+	}
+	
+	public void testIgnoreExtraColumns() {
+        DataSet ds;
+        final String cols = "COLUMN1,column2,Column3\r\n \"value1\",value2,value3,value4";
+        Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
+        p.setIgnoreExtraColumns(true);
+      //  p.setIgnoreParseWarnings(true);
+        ds = p.parse();
+        assertEquals("Should have a row of data", true, ds.next());
+        
+        //re-test the buffered reader
+        p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
+        p.setIgnoreExtraColumns(true);
+      //  p.setIgnoreParseWarnings(true);
+        ds = p.parse();
+        assertEquals("Should have a row of data", true, ds.next());
+	}
 
     public void testEmptyToNull() {
         DataSet ds;
