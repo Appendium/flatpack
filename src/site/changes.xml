@@ -8,6 +8,8 @@
   </properties>
   <body>
   	<release version="3.2.0-SNAPSHOT" date="2007-11-17" description="New parse options">
+  	  	<action dev="zepernick" type="fix">Fixed SF Bug 1869636.  The parameters for the XML Map and 
+  	  	data file were reversed in the BuffReaderDelimParser.</action>
   		<action dev="zepernick" type="change">Added optional 3rd parameter to the OrderColumn constructor which
   		allows the specification of the type of column being sorted: OrderColumn.COLTYPE_STRING, OrderColumn.COLTYPE_DATE,
   		OrderColumn.COLTYPE_NUMERIC</action>
