@@ -23,8 +23,10 @@
     <section name="News">
 	<p style="margin-top:10px; margin-bottom:0; padding-bottom:0; text-align:center; line-height:0"><a href="http://feeds.feedburner.com/~r/ObjectlabOpenSourceNews/~6/1"><img src="http://feeds.feedburner.com/ObjectlabOpenSourceNews.1.gif" alt="ObjectLab Open Source News" style="border:0"/></a></p><p style="margin-top:5px; padding-top:0; font-size:x-small; text-align:center"><a href="http://www.feedburner.com/fb/a/headlineanimator/install?id=829470&amp;w=1" onclick="window.open(this.href, 'haHowto', 'width=520,height=600,toolbar=no,address=no,resizable=yes,scrollbars'); return false" target="_blank">Grab this Headline Animator</a></p>
 
-    <p>Sept 14, 2007: FlatPack 3.1.0 is released, it is a very significant release, see the <a href="changes-report.html">change log</a>.</p>
+    <p>March 03, 2010: FlatPack 3.2.0 is released, it is mainly a bug-fix release, see the <a href="changes-report.html">change log</a>.</p>
     </section>
+
+
 
     <section name="FlatPack Introduction">
 
