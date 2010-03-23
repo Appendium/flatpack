@@ -50,7 +50,7 @@ public class ConvertInteger implements Converter {
      * @see net.sf.flatpack.converter#convertValue(java.lang.String)
      */
     public Object convertValue(final String valueToConvert) {
-        return new Integer(ParserUtils.stripNonLongChars(valueToConvert));
+        return Integer.valueOf(ParserUtils.stripNonLongChars(valueToConvert));
     }
 
 }

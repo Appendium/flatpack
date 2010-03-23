@@ -41,10 +41,8 @@ package net.sf.flatpack.converter;
 public class FPConvertException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    /**
-     *
-     */
     public FPConvertException() {
+        super();
     }
 
     /**

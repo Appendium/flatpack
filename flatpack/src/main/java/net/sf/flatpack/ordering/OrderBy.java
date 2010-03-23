@@ -62,9 +62,9 @@ public class OrderBy implements Comparator, Serializable {
 
     /** collection of order elements to sort by */
     private final List orderbys = new ArrayList();
-    
+
     private MetaData metaData;
-    
+
     private Parser parser;
 
     /**
@@ -88,7 +88,6 @@ public class OrderBy implements Comparator, Serializable {
         final Row row0 = (Row) arg0;
         final Row row1 = (Row) arg1;
         int result = 0;
-        
 
         for (int i = 0; i < orderbys.size(); i++) {
             final OrderColumn oc = (OrderColumn) orderbys.get(i);
@@ -113,29 +112,30 @@ public class OrderBy implements Comparator, Serializable {
             String str0 = row0.getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser)).toLowerCase(Locale.getDefault());
             String str1 = row1.getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser)).toLowerCase(Locale.getDefault());
             switch (oc.getSelectedColType()) {
-                case OrderColumn.COLTYPE_STRING:
-                    comp0 = str0;
-                    comp1 = str1;
-                    break;
-                case OrderColumn.COLTYPE_NUMERIC:
-                    comp0 = Double.valueOf(ParserUtils.stripNonDoubleChars(str0));
-                    comp1 = Double.valueOf(ParserUtils.stripNonDoubleChars(str1));
-                    break;
-                case OrderColumn.COLTYPE_DATE:
-                    final SimpleDateFormat sdf = new SimpleDateFormat(oc.getDateFormatPattern());  
-                    try {
-                        comp0 = sdf.parse(str0);
-                    } catch(ParseException e) {
-                       comp0 = getBadDateDefault();
-                        
-                    }
-                    
-                    try {
-                        comp1 = sdf.parse(str1);
-                    } catch(ParseException e) {
-                        comp1 = getBadDateDefault();
-                    }
-                    break;                    
+            case OrderColumn.COLTYPE_STRING:
+            default:
+                comp0 = str0;
+                comp1 = str1;
+                break;
+            case OrderColumn.COLTYPE_NUMERIC:
+                comp0 = Double.valueOf(ParserUtils.stripNonDoubleChars(str0));
+                comp1 = Double.valueOf(ParserUtils.stripNonDoubleChars(str1));
+                break;
+            case OrderColumn.COLTYPE_DATE:
+                final SimpleDateFormat sdf = new SimpleDateFormat(oc.getDateFormatPattern());
+                try {
+                    comp0 = sdf.parse(str0);
+                } catch (ParseException e) {
+                    comp0 = getBadDateDefault();
+
+                }
+
+                try {
+                    comp1 = sdf.parse(str1);
+                } catch (ParseException e) {
+                    comp1 = getBadDateDefault();
+                }
+                break;
             }
 
             // multiply by the sort indicator to get a ASC or DESC result
@@ -158,8 +158,6 @@ public class OrderBy implements Comparator, Serializable {
         defaultBadDt.set(Calendar.DAY_OF_MONTH, 1);
         return defaultBadDt.getTime();
     }
-    
-    
 
     /**
      * @param metaData the metaData to set
@@ -167,7 +165,6 @@ public class OrderBy implements Comparator, Serializable {
     public void setMetaData(MetaData metaData) {
         this.metaData = metaData;
     }
-
 
     /**
      * @param parser the parser to set

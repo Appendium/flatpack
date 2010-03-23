@@ -6,8 +6,30 @@ package net.sf.flatpack.util;
  * @author Paul Zepernick
  */
 public class FPException extends RuntimeException{
-    
-    public FPException(final String msg) {
-        super(msg);
+    private static final long serialVersionUID = -4269317129024968528L;
+
+    public FPException() {
+    }
+
+    /**
+     * @param message
+     */
+    public FPException(String message) {
+        super(message);
+    }
+
+    /**
+     * @param cause
+     */
+    public FPException(Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public FPException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

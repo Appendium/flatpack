@@ -48,7 +48,8 @@ public class FixedLengthWriter extends AbstractWriter {
         super.nextRecord();
     }
 
-    protected char[] formattedValue(Object value, final ColumnMetaData element) {
+    protected char[] formattedValue(final Object val, final ColumnMetaData element) {
+        Object value = val;
         if (value == null) {
             // TODO DO: maybe have a way to substitute default values here?
             value = "";

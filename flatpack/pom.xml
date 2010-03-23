@@ -93,7 +93,7 @@
                         <exclude>**/Abstract*.java</exclude>
                     </excludes>
                     <includes>
-                        <include>**/*Test?.java</include>
+                        <include>**/*Test.java</include>
                     </includes>
                 </configuration>
             </plugin>

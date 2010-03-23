@@ -58,7 +58,7 @@ public class BuffReaderFixedParser extends FixedLengthParser {
 
     private Map recordLengths = null;
 
-    private final Logger logger = LoggerFactory.getLogger(BuffReaderFixedParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BuffReaderFixedParser.class);
 
     public BuffReaderFixedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
         super(pzmapXMLStream, dataSourceStream);
@@ -85,7 +85,7 @@ public class BuffReaderFixedParser extends FixedLengthParser {
             return ds;
 
         } catch (final IOException ex) {
-            logger.error("error accessing/creating inputstream", ex);
+            LOGGER.error("error accessing/creating inputstream", ex);
         }
 
         return null;
@@ -181,7 +181,7 @@ public class BuffReaderFixedParser extends FixedLengthParser {
         try {
             close();
         } catch (final IOException ex) {
-            logger.warn("Problem trying to auto close file handles...", ex);
+            LOGGER.warn("Problem trying to auto close file handles...", ex);
         } finally {
             super.finalize();
         }

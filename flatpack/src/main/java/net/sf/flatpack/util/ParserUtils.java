@@ -49,7 +49,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,8 +58,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sf.flatpack.Parser;
-import net.sf.flatpack.converter.FPConvertException;
 import net.sf.flatpack.converter.Converter;
+import net.sf.flatpack.converter.FPConvertException;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.xml.MetaData;
 import net.sf.flatpack.xml.XMLRecordElement;
@@ -131,7 +130,7 @@ public final class ParserUtils {
         int endBlock = 0;
         boolean blockWasInQualifier = false;
 
-        final String doubleQualifier = String.valueOf(qualifier) + String.valueOf(qualifier);
+        final String doubleQualifier = "" + qualifier + qualifier;
         for (int i = 0; i < size; i++) {
 
             final char currentChar = trimmedLine.charAt(i);
@@ -267,7 +266,6 @@ public final class ParserUtils {
 
         return trimmed;
     }
-    
 
     /**
      * Removes empty space from the beginning of a string, except for tabs
@@ -294,7 +292,7 @@ public final class ParserUtils {
 
         return trimmed;
     }
-    
+
     /**
      * Removes empty space from the end of a string
      *
@@ -314,7 +312,7 @@ public final class ParserUtils {
         }
 
         if (offset < value.length() - 1) {
-            trimmed = value.substring(0,offset + 1);
+            trimmed = value.substring(0, offset + 1);
         }
 
         return trimmed;
@@ -360,52 +358,52 @@ public final class ParserUtils {
         return s.toString();
     }
 
-    /**
-     * Returns a list of ColumnMetaData objects. This is for use with delimited
-     * files. The first line of the file which contains data will be used as the
-     * column names
-     *
-     * @param line
-     * @param delimiter
-     * @param qualifier
-     * @exception Exception
-     * @return ArrayList - ColumnMetaData
-     * @deprecated Use getColumnMDFromFile(String, char, char, PZParser)
-     */
-    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier) {
-        return getColumnMDFromFile(line, delimiter, qualifier, null);
-    }
+    //    /**
+    //     * Returns a list of ColumnMetaData objects. This is for use with delimited
+    //     * files. The first line of the file which contains data will be used as the
+    //     * column names
+    //     *
+    //     * @param line
+    //     * @param delimiter
+    //     * @param qualifier
+    //     * @exception Exception
+    //     * @return ArrayList - ColumnMetaData
+    //     * @deprecated Use getColumnMDFromFile(String, char, char, PZParser)
+    //     */
+    //    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier) {
+    //        return getColumnMDFromFile(line, delimiter, qualifier, null);
+    //    }
 
-    /**
-     * Returns a list of ColumnMetaData objects. This is for use with delimited
-     * files. The first line of the file which contains data will be used as the
-     * column names
-     *
-     * @param line
-     * @param delimiter
-     * @param qualifier
-     * @param p
-     *          PZParser used to specify additional option when working with the ColumnMetaData. Can be null
-     * @return ArrayList - ColumnMetaData
-     * @deprecated use the getPZMetaDataFromFile
-     */
-    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
-        List lineData = null;
-        final List results = new ArrayList();
-        final Map columnMD = new LinkedHashMap();
-
-        lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT);
-        for (int i = 0; i < lineData.size(); i++) {
-            final ColumnMetaData cmd = new ColumnMetaData();
-            cmd.setColName((String) lineData.get(i));
-            results.add(cmd);
-        }
-
-        columnMD.put(FPConstants.DETAIL_ID, results);
-        columnMD.put(FPConstants.COL_IDX, buidColumnIndexMap(results, p));
-
-        return columnMD;
-    }
+    //    /**
+    //     * Returns a list of ColumnMetaData objects. This is for use with delimited
+    //     * files. The first line of the file which contains data will be used as the
+    //     * column names
+    //     *
+    //     * @param line
+    //     * @param delimiter
+    //     * @param qualifier
+    //     * @param p
+    //     *          PZParser used to specify additional option when working with the ColumnMetaData. Can be null
+    //     * @return ArrayList - ColumnMetaData
+    //     * @deprecated use the getPZMetaDataFromFile
+    //     */
+    //    public static Map getColumnMDFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
+    //        List lineData = null;
+    //        final List results = new ArrayList();
+    //        final Map columnMD = new LinkedHashMap();
+    //
+    //        lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT);
+    //        for (int i = 0; i < lineData.size(); i++) {
+    //            final ColumnMetaData cmd = new ColumnMetaData();
+    //            cmd.setColName((String) lineData.get(i));
+    //            results.add(cmd);
+    //        }
+    //
+    //        columnMD.put(FPConstants.DETAIL_ID, results);
+    //        columnMD.put(FPConstants.COL_IDX, buidColumnIndexMap(results, p));
+    //
+    //        return columnMD;
+    //    }
 
     /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited
@@ -429,7 +427,7 @@ public final class ParserUtils {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName((String) lineData.get(i));
             if (dupCheck.contains(cmd.getColName())) {
-            	throw new FPException("Duplicate Column Name In File: " + cmd.getColName());
+                throw new FPException("Duplicate Column Name In File: " + cmd.getColName());
             }
             results.add(cmd);
             dupCheck.add(cmd.getColName());
@@ -488,24 +486,24 @@ public final class ParserUtils {
         return results;
     }
 
-    /**
-     * @param columnName
-     * @param columnMD -
-     *            vector of ColumnMetaData objects
-     * @return int - position of the column in the file
-     * @throws NoSuchElementException
-     * @deprecated surely not...
-     */
-    public static int findColumn(final String columnName, final List columnMD) {
-        for (int i = 0; i < columnMD.size(); i++) {
-            final ColumnMetaData cmd = (ColumnMetaData) columnMD.get(i);
-            if (cmd.getColName().equalsIgnoreCase(columnName)) {
-                return i;
-            }
-        }
-
-        throw new NoSuchElementException("Column Name: " + columnName + " does not exist");
-    }
+    //    /**
+    //     * @param columnName
+    //     * @param columnMD -
+    //     *            vector of ColumnMetaData objects
+    //     * @return int - position of the column in the file
+    //     * @throws NoSuchElementException
+    //     * @deprecated surely not...
+    //     */
+    //    public static int findColumn(final String columnName, final List columnMD) {
+    //        for (int i = 0; i < columnMD.size(); i++) {
+    //            final ColumnMetaData cmd = (ColumnMetaData) columnMD.get(i);
+    //            if (cmd.getColName().equalsIgnoreCase(columnName)) {
+    //                return i;
+    //            }
+    //        }
+    //
+    //        throw new NoSuchElementException("Column Name: " + columnName + " does not exist");
+    //    }
 
     /**
      * Determines if the given line is the first part of a multiline record
@@ -583,39 +581,39 @@ public final class ParserUtils {
         return false;
     }
 
-    /**
-     * Returns a map with the MD id's and their record lengths. This is used for
-     * fixed length parsing
-     *
-     * @param columnMD
-     * @return Map
-     * @deprecated use PZMetaData
-     */
-    public static Map calculateRecordLengths(final Map columnMD) {
-        final Map recordLengths = new HashMap();
-        List cmds = null;
-
-        final Iterator columnMDIt = columnMD.entrySet().iterator();
-        while (columnMDIt.hasNext()) {
-            final Entry entry = (Entry) columnMDIt.next();
-            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
-                cmds = (List) columnMD.get(FPConstants.DETAIL_ID);
-            } else {
-                cmds = ((XMLRecordElement) entry.getValue()).getColumns();
-            }
-
-            int recordLength = 0;
-            for (int i = 0; i < cmds.size(); i++) {
-                recordLength += ((ColumnMetaData) cmds.get(i)).getColLength();
-            }
-
-            recordLengths.put(entry.getKey(), new Integer(recordLength));
-
-        }
-
-        return recordLengths;
-
-    }
+    //    /**
+    //     * Returns a map with the MD id's and their record lengths. This is used for
+    //     * fixed length parsing
+    //     *
+    //     * @param columnMD
+    //     * @return Map
+    //     * @deprecated use PZMetaData
+    //     */
+    //    public static Map calculateRecordLengths(final Map columnMD) {
+    //        final Map recordLengths = new HashMap();
+    //        List cmds = null;
+    //
+    //        final Iterator columnMDIt = columnMD.entrySet().iterator();
+    //        while (columnMDIt.hasNext()) {
+    //            final Entry entry = (Entry) columnMDIt.next();
+    //            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
+    //                cmds = (List) columnMD.get(FPConstants.DETAIL_ID);
+    //            } else {
+    //                cmds = ((XMLRecordElement) entry.getValue()).getColumns();
+    //            }
+    //
+    //            int recordLength = 0;
+    //            for (int i = 0; i < cmds.size(); i++) {
+    //                recordLength += ((ColumnMetaData) cmds.get(i)).getColLength();
+    //            }
+    //
+    //            recordLengths.put(entry.getKey(), new Integer(recordLength));
+    //
+    //        }
+    //
+    //        return recordLengths;
+    //
+    //    }
 
     public static Map calculateRecordLengths(final MetaData columnMD) {
         final Map recordLengths = new HashMap();
@@ -627,23 +625,19 @@ public final class ParserUtils {
             recordLength += ((ColumnMetaData) i.next()).getColLength();
         }
 
-        recordLengths.put(FPConstants.DETAIL_ID, new Integer(recordLength));
+        recordLengths.put(FPConstants.DETAIL_ID, Integer.valueOf(recordLength));
 
         final Iterator columnMDIt = columnMD.xmlRecordIterator();
         while (columnMDIt.hasNext()) {
             final Entry entry = (Entry) columnMDIt.next();
-            //            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
-            //                cmds = (List) columnMD.get(PZConstants.DETAIL_ID);
-            //            } else {
             cmds = ((XMLRecordElement) entry.getValue()).getColumns();
-            //            }
 
             recordLength = 0;
             for (int i = 0; i < cmds.size(); i++) {
                 recordLength += ((ColumnMetaData) cmds.get(i)).getColLength();
             }
 
-            recordLengths.put(entry.getKey(), new Integer(recordLength));
+            recordLengths.put(entry.getKey(), Integer.valueOf(recordLength));
 
         }
 
@@ -651,53 +645,53 @@ public final class ParserUtils {
 
     }
 
-    /**
-     * Returns the key to the list of ColumnMetaData objects. Returns the
-     * correct MetaData per the mapping file and the data contained on the line
-     *
-     *
-     * @param columnMD
-     * @param lineElements
-     * @return List - ColumMetaData
-     * @deprecated use the PZMetaData
-     */
-    public static String getCMDKeyForDelimitedFile(final Map columnMD, final List lineElements) {
-        if (columnMD.size() == 1) {
-            // no <RECORD> elments were specifed for this parse, just return the
-            // detail id
-            return FPConstants.DETAIL_ID;
-        }
-        final Iterator mapEntries = columnMD.entrySet().iterator();
-        // loop through the XMLRecordElement objects and see if we need a
-        // different MD object
-        while (mapEntries.hasNext()) {
-            final Entry entry = (Entry) mapEntries.next();
-            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
-                continue; // skip this key will be assumed if none of the
-                // others match
-            }
-            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
-
-            if (recordXMLElement.getElementCount() > 0 && recordXMLElement.getElementCount() == lineElements.size()) {
-                //determing which <record> mapping to use by the number of elements
-                //contained on the line
-                return (String) entry.getKey();
-            } else if (recordXMLElement.getElementNumber() > lineElements.size()) {
-                // make sure the element referenced in the mapping exists
-                continue;
-            }
-
-            final String lineElement = (String) lineElements.get(recordXMLElement.getElementNumber() - 1);
-            if (lineElement.equals(recordXMLElement.getIndicator())) {
-                // we found the MD object we want to return
-                return (String) entry.getKey();
-            }
-
-        }
-
-        // must be a detail line
-        return FPConstants.DETAIL_ID;
-    }
+    //    /**
+    //     * Returns the key to the list of ColumnMetaData objects. Returns the
+    //     * correct MetaData per the mapping file and the data contained on the line
+    //     *
+    //     *
+    //     * @param columnMD
+    //     * @param lineElements
+    //     * @return List - ColumMetaData
+    //     * @deprecated use the PZMetaData
+    //     */
+    //    public static String getCMDKeyForDelimitedFile(final Map columnMD, final List lineElements) {
+    //        if (columnMD.size() == 1) {
+    //            // no <RECORD> elments were specifed for this parse, just return the
+    //            // detail id
+    //            return FPConstants.DETAIL_ID;
+    //        }
+    //        final Iterator mapEntries = columnMD.entrySet().iterator();
+    //        // loop through the XMLRecordElement objects and see if we need a
+    //        // different MD object
+    //        while (mapEntries.hasNext()) {
+    //            final Entry entry = (Entry) mapEntries.next();
+    //            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
+    //                continue; // skip this key will be assumed if none of the
+    //                // others match
+    //            }
+    //            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
+    //
+    //            if (recordXMLElement.getElementCount() > 0 && recordXMLElement.getElementCount() == lineElements.size()) {
+    //                //determing which <record> mapping to use by the number of elements
+    //                //contained on the line
+    //                return (String) entry.getKey();
+    //            } else if (recordXMLElement.getElementNumber() > lineElements.size()) {
+    //                // make sure the element referenced in the mapping exists
+    //                continue;
+    //            }
+    //
+    //            final String lineElement = (String) lineElements.get(recordXMLElement.getElementNumber() - 1);
+    //            if (lineElement.equals(recordXMLElement.getIndicator())) {
+    //                // we found the MD object we want to return
+    //                return (String) entry.getKey();
+    //            }
+    //
+    //        }
+    //
+    //        // must be a detail line
+    //        return FPConstants.DETAIL_ID;
+    //    }
 
     public static String getCMDKeyForDelimitedFile(final MetaData columnMD, final List lineElements) {
         if (!columnMD.isAnyRecordFormatSpecified()) {
@@ -737,21 +731,21 @@ public final class ParserUtils {
         return FPConstants.DETAIL_ID;
     }
 
-    /**
-     * Returns a list of ColumMetaData objects for the given key
-     *
-     * @param key
-     * @param columnMD
-     * @return List
-     * @deprecated use the PZMetaData
-     */
-    public static List getColumnMetaData(final String key, final Map columnMD) {
-        if (key == null || key.equals(FPConstants.DETAIL_ID) || key.equals(FPConstants.COL_IDX)) {
-            return (List) columnMD.get(FPConstants.DETAIL_ID);
-        }
-
-        return ((XMLRecordElement) columnMD.get(key)).getColumns();
-    }
+    //    /**
+    //     * Returns a list of ColumMetaData objects for the given key
+    //     *
+    //     * @param key
+    //     * @param columnMD
+    //     * @return List
+    //     * @deprecated use the PZMetaData
+    //     */
+    //    public static List getColumnMetaData(final String key, final Map columnMD) {
+    //        if (key == null || key.equals(FPConstants.DETAIL_ID) || key.equals(FPConstants.COL_IDX)) {
+    //            return (List) columnMD.get(FPConstants.DETAIL_ID);
+    //        }
+    //
+    //        return ((XMLRecordElement) columnMD.get(key)).getColumns();
+    //    }
 
     public static List getColumnMetaData(final String key, final MetaData columnMD) {
         if (key == null || key.equals(FPConstants.DETAIL_ID) || key.equals(FPConstants.COL_IDX)) {
@@ -761,40 +755,40 @@ public final class ParserUtils {
         return columnMD.getListColumnsForRecord(key);
     }
 
-    /**
-     * Use this method to find the index of a column.
-     *
-     * @author Benoit Xhenseval
-     * @author Paul Zepernick
-     * @param key
-     * @param columnMD
-     * @param colName
-     * @param p
-     *          Can be null.  Used to specify potential options on how the column should be retrieved
-     * @return -1 if it does not find it
-     * @deprecated use PZMetaData
-     */
-    public static int getColumnIndex(final String key, final Map columnMD, final String colName, final Parser p) {
-        int idx = -1;
-        String column = colName;
-        if (p != null && !p.isColumnNamesCaseSensitive()) {
-            column = colName.toLowerCase(Locale.getDefault());
-        }
-        if (key != null && !key.equals(FPConstants.DETAIL_ID) && !key.equals(FPConstants.COL_IDX)) {
-            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(column);
-        } else if (key == null || key.equals(FPConstants.DETAIL_ID)) {
-            final Map map = (Map) columnMD.get(FPConstants.COL_IDX);
-            final Integer i = (Integer) map.get(column);
-            if (i != null) { //happens when the col name does not exist in the mapping
-                idx = i.intValue();
-            }
-        }
-
-        if (idx < 0) {
-            throw new NoSuchElementException("Column " + colName + " does not exist, check case/spelling. key:" + key);
-        }
-        return idx;
-    }
+    //    /**
+    //     * Use this method to find the index of a column.
+    //     *
+    //     * @author Benoit Xhenseval
+    //     * @author Paul Zepernick
+    //     * @param key
+    //     * @param columnMD
+    //     * @param colName
+    //     * @param p
+    //     *          Can be null.  Used to specify potential options on how the column should be retrieved
+    //     * @return -1 if it does not find it
+    //     * @deprecated use PZMetaData
+    //     */
+    //    public static int getColumnIndex(final String key, final Map columnMD, final String colName, final Parser p) {
+    //        int idx = -1;
+    //        String column = colName;
+    //        if (p != null && !p.isColumnNamesCaseSensitive()) {
+    //            column = colName.toLowerCase(Locale.getDefault());
+    //        }
+    //        if (key != null && !key.equals(FPConstants.DETAIL_ID) && !key.equals(FPConstants.COL_IDX)) {
+    //            idx = ((XMLRecordElement) columnMD.get(key)).getColumnIndex(column);
+    //        } else if (key == null || key.equals(FPConstants.DETAIL_ID)) {
+    //            final Map map = (Map) columnMD.get(FPConstants.COL_IDX);
+    //            final Integer i = (Integer) map.get(column);
+    //            if (i != null) { //happens when the col name does not exist in the mapping
+    //                idx = i.intValue();
+    //            }
+    //        }
+    //
+    //        if (idx < 0) {
+    //            throw new NoSuchElementException("Column " + colName + " does not exist, check case/spelling. key:" + key);
+    //        }
+    //        return idx;
+    //    }
 
     public static int getColumnIndex(final String key, final MetaData columnMD, final String colName, final Parser p) {
         int idx = -1;
@@ -830,9 +824,9 @@ public final class ParserUtils {
      * @return -1 if it does not find it
      * @deprecated use getColumnIndex(String, Map, String, PZParser)
      */
-    public static int getColumnIndex(final String key, final Map columnMD, final String colName) {
-        return getColumnIndex(key, columnMD, colName, null);
-    }
+    //    public static int getColumnIndex(final String key, final Map columnMD, final String colName) {
+    //        return getColumnIndex(key, columnMD, colName, null);
+    //    }
 
     /**
      * Create an InputStream based on a File.
@@ -861,7 +855,7 @@ public final class ParserUtils {
                 reader.close();
             }
         } catch (final IOException ex) {
-            throw new RuntimeException(ex);
+            throw new FPException(ex);
         }
     }
 
@@ -877,7 +871,7 @@ public final class ParserUtils {
                 reader.close();
             }
         } catch (final IOException ex) {
-            throw new RuntimeException(ex);
+            throw new FPException(ex);
         }
     }
 
@@ -944,7 +938,7 @@ public final class ParserUtils {
                     //on lookups
                     colName = colName.toLowerCase(Locale.getDefault());
                 }
-                map.put(colName, new Integer(idx));
+                map.put(colName, Integer.valueOf(idx));
             }
         }
         return map;
@@ -958,9 +952,9 @@ public final class ParserUtils {
      * @return a new Map
      * @deprecated Please use buildColumnIndexMap(List, PZParser)
      */
-    public static Map buidColumnIndexMap(final List columns) {
-        return buidColumnIndexMap(columns, null);
-    }
+    //    public static Map buidColumnIndexMap(final List columns) {
+    //        return buidColumnIndexMap(columns, null);
+    //    }
 
     /**
      * Removes chars from the String that could not
@@ -990,7 +984,7 @@ public final class ParserUtils {
         // just a minus sign
         final int sLen = newString.length();
         final String s = newString.toString();
-        if (sLen == 0 || (sLen == 1 && s.equals("-"))) {
+        if (sLen == 0 || (sLen == 1 && "-".equals(s))) {
             return "0";
         }
 
@@ -1015,7 +1009,7 @@ public final class ParserUtils {
         }
         final int sLen = newString.length();
         final String s = newString.toString();
-        if (sLen == 0 || (sLen == 1 && s.equals(".")) || (sLen == 1 && s.equals("-"))) {
+        if (sLen == 0 || (sLen == 1 && (".".equals(s) || "-".equals(s)))) {
             return "0";
         }
 
@@ -1037,7 +1031,7 @@ public final class ParserUtils {
 
         return pzConvertProps;
     }
-    
+
     /**
      * Checks a list of <String> elements to see if every element
      * in the list is empty.
@@ -1050,11 +1044,11 @@ public final class ParserUtils {
     public static boolean isListElementsEmpty(final List l) {
         final Iterator it = l.iterator();
         while (it.hasNext()) {
-            final String s = (String)it.next();
+            final String s = (String) it.next();
             if (s != null && s.trim().length() > 0) {
                 return false;
             }
-        }        
+        }
         return true;
     }
 
@@ -1105,9 +1099,8 @@ public final class ParserUtils {
         ResultSet rs = null;
         final List cmds = new ArrayList();
         try {
-            final String sql =
-                    "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
-                            + "WHERE DATAFILE.DATAFILE_DESC = ? " + "ORDER BY DATASTRUCTURE_COL_ORDER";
+            final String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
+                    + "WHERE DATAFILE.DATAFILE_DESC = ? " + "ORDER BY DATASTRUCTURE_COL_ORDER";
 
             stmt = con.prepareStatement(sql); // always use PreparedStatement
             // as the DB can do clever things.

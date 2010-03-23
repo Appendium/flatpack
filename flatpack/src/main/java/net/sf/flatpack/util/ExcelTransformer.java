@@ -38,13 +38,9 @@ import net.sf.flatpack.DataSet;
  * @author Paul Zepernick
  */
 public class ExcelTransformer {
-
-    private DataSet ds;
-
-    private File xlsFile;
-
+    private final DataSet ds;
+    private final File xlsFile;
     private String[] exportOnlyColumns;
-
     private String[] excludeFromExportColumns;
 
     /**
@@ -148,7 +144,11 @@ public class ExcelTransformer {
      * @param excludeFromExportColumns the excludeFromExportColumns to set
      */
     public void setExcludeFromExportColumns(final String[] excludeFromExportColumns) {
-        this.excludeFromExportColumns = excludeFromExportColumns;
+        if (excludeFromExportColumns != null) {
+            this.excludeFromExportColumns = (String[]) excludeFromExportColumns.clone();
+        } else {
+            this.excludeFromExportColumns = null;
+        }
     }
 
     /**
@@ -158,7 +158,10 @@ public class ExcelTransformer {
      * @param exportOnlyColumns the exportOnlyColumns to set
      */
     public void setExportOnlyColumns(final String[] exportOnlyColumns) {
-        this.exportOnlyColumns = exportOnlyColumns;
+        if (exportOnlyColumns != null) {
+            this.exportOnlyColumns = (String[]) exportOnlyColumns.clone();
+        } else {
+            this.exportOnlyColumns = null;
+        }
     }
-
 }

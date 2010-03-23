@@ -59,6 +59,8 @@ import net.sf.flatpack.xml.MetaData;
  *
  */
 public class DefaultDataSet implements DataSet {
+    private static final String NEW_LINE = System.getProperty("line.separator");
+
     private final List rows = new ArrayList();
 
     private final List errors = new ArrayList();
@@ -247,7 +249,7 @@ public class DefaultDataSet implements DataSet {
 
         return Integer.parseInt(s);
     }
-    
+
     public long getLong(final String column) {
         final String s = getStringValue(column);
 
@@ -291,7 +293,7 @@ public class DefaultDataSet implements DataSet {
             // return row.getValue(ParserUtils.findColumn(column,
             // cmds)).toUpperCase(Locale.getDefault());
             s = s.toUpperCase(Locale.getDefault());
-        }else if (lowerCase) {
+        } else if (lowerCase) {
             // convert data to lowercase before returning
             // return row.getValue(ParserUtils.findColumn(column,
             // cmds)).toLowerCase(Locale.getDefault());
@@ -367,7 +369,7 @@ public class DefaultDataSet implements DataSet {
         // with <RECORD> mappings");
         // }
         if (ob != null && rows != null) {
-            final List cmds = metaData.getColumnsNames();
+            //            final List cmds = metaData.getColumnsNames();
             //            final List cmds = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
             //ob.setColumnMD(cmds);
             ob.setMetaData(getMetaData());
@@ -495,11 +497,11 @@ public class DefaultDataSet implements DataSet {
 
     public String toString() {
         final StringBuffer buf = new StringBuffer();
-        buf.append("Errors:").append(errors.size()).append(System.getProperty("line.separator"));
-        buf.append("Rows:").append(rows.size()).append(System.getProperty("line.separator"));
-        buf.append("Position:").append(pointer).append(System.getProperty("line.separator"));
-        buf.append("Conversion Props:").append(pzConvertProps).append(System.getProperty("line.separator"));
-        buf.append("MetaData:").append(metaData).append(System.getProperty("line.separator"));
+        buf.append("Errors:").append(errors.size()).append(NEW_LINE);
+        buf.append("Rows:").append(rows.size()).append(NEW_LINE);
+        buf.append("Position:").append(pointer).append(NEW_LINE);
+        buf.append("Conversion Props:").append(pzConvertProps).append(NEW_LINE);
+        buf.append("MetaData:").append(metaData).append(NEW_LINE);
         return buf.toString();
     }
 
@@ -519,7 +521,7 @@ public class DefaultDataSet implements DataSet {
         return false;
 
     }
-    
+
     /**
      * @throws FPInvalidUsageException Parser.isFlagEmptyRows() must be set to true before using this
      * @throws FPException if cursor is on an invalid row
@@ -530,12 +532,12 @@ public class DefaultDataSet implements DataSet {
             //throw an exception
             throw new FPInvalidUsageException("Parser.isFlagEmptyRows(true) must be set before using isRowEmpty()");
         }
-        
+
         if (pointer < 0) {
             throw new FPException("Cursor on invalid row..  Make sure next() is called and returns true");
         }
-        
-        return ((Row)rows.get(pointer)).isEmpty();
+
+        return ((Row) rows.get(pointer)).isEmpty();
     }
 
     /**
@@ -548,11 +550,11 @@ public class DefaultDataSet implements DataSet {
             //throw an exception
             throw new FPInvalidUsageException("Parser.isStoreRawDataToDataSet(true) must be set before using getRawData()");
         }
-        
+
         if (pointer < 0) {
             throw new FPException("Cursor on invalid row.. Make sure next() is called and returns true");
         }
-        
-        return ((Row)rows.get(pointer)).getRawData();
+
+        return ((Row) rows.get(pointer)).getRawData();
     }
 }

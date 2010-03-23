@@ -102,15 +102,15 @@ public class XMLRecordElement {
         return columns;
     }
 
-    /**
-     * @param columns
-     *            The columns to set.
-     * @deprecated  Please use setColumns(List, PZParser)
-     */
-    public void setColumns(final List columns) {
-        this.columns = columns;
-        this.columnIndex = ParserUtils.buidColumnIndexMap(columns, null);
-    }
+//    /**
+//     * @param columns
+//     *            The columns to set.
+//     * @deprecated  Please use setColumns(List, PZParser)
+//     */
+//    public void setColumns(final List columns) {
+//        this.columns = columns;
+//        this.columnIndex = ParserUtils.buidColumnIndexMap(columns, null);
+//    }
 
     /**
      * @param columnsToUse

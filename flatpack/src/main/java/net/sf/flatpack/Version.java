@@ -18,6 +18,7 @@ package net.sf.flatpack;
  *
  * Static class which stores the version of this FlatPack
  */
-public class Version {
-    public static final String VERSION = "3.2.0";
+public final class Version {
+    public static final String VERSION = "3.3.0";
+    private Version() {}
 }

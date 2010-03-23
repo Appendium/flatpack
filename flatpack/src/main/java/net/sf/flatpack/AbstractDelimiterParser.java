@@ -51,14 +51,11 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractDelimiterParser extends AbstractParser {
     private char delimiter = 0;
-    
     private char qualifier = 0;
-    
     private boolean ignoreFirstRecord = false;
-    
     private int lineCount = 0;
 
-    private final Logger logger = LoggerFactory.getLogger(AbstractDelimiterParser.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractDelimiterParser.class);
 
     public AbstractDelimiterParser(final Reader dataSourceReader, final String dataDefinition, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
@@ -80,7 +77,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
             lineCount = 0;
             return doDelimitedFile(getDataSourceReader(), shouldCreateMDFromFile());
         } catch (final IOException e) {
-            logger.error("error accessing/creating inputstream", e);
+            LOGGER.error("error accessing/creating inputstream", e);
         }
         return null;
     }
@@ -124,7 +121,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      */
     private DataSet doDelimitedFile(final Reader dataSource, final boolean createMDFromFile) throws IOException {
         if (dataSource == null) {
-            throw new NullPointerException("dataSource is null");
+            throw new IllegalArgumentException("dataSource is null");
         }
         BufferedReader br = null;
         final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);

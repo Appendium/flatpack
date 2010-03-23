@@ -54,7 +54,7 @@ public class BuffReaderDelimParser extends DelimiterParser {
 
     private boolean processedFirst = false;
 
-    private final Logger logger = LoggerFactory.getLogger(BuffReaderDelimParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BuffReaderDelimParser.class);
 
     public BuffReaderDelimParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
@@ -95,7 +95,7 @@ public class BuffReaderDelimParser extends DelimiterParser {
             return ds;
 
         } catch (final IOException ex) {
-            logger.error("error accessing/creating inputstream", ex);
+            LOGGER.error("error accessing/creating inputstream", ex);
         }
 
         return null;
@@ -211,7 +211,7 @@ public class BuffReaderDelimParser extends DelimiterParser {
         try {
             close();
         } catch (final IOException ex) {
-            logger.warn("Problem trying to auto close file handles...", ex);
+            LOGGER.warn("Problem trying to auto close file handles...", ex);
         } finally {
             super.finalize();
         }

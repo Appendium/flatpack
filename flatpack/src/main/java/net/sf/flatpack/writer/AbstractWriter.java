@@ -10,7 +10,7 @@ import java.util.Map;
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
 public abstract class AbstractWriter extends Object implements Writer {
-    private BufferedWriter writer;
+    private final BufferedWriter writer;
     private Map rowMap;
 
     public AbstractWriter(final java.io.Writer output) {
@@ -53,7 +53,8 @@ public abstract class AbstractWriter extends Object implements Writer {
         writer.newLine();
     }
 
-    protected void write(Object value) throws IOException {
+    protected void write(final Object val) throws IOException {
+        Object value = val;
         if (value == null) {
             value = "";
         }

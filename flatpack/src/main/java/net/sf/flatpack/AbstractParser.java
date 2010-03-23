@@ -71,17 +71,16 @@ public abstract class AbstractParser implements Parser {
     private List readersToClose = null;
 
     private boolean flagEmptyRows;
-    
+
     private boolean storeRawDataToDataError;
-    
+
     private boolean storeRawDataToDataSet;
 
     protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
     }
 
-    protected AbstractParser(final Reader dataSourceReader,
-            final String dataDefinition) {
+    protected AbstractParser(final Reader dataSourceReader, final String dataDefinition) {
         this.dataSourceReader = dataSourceReader;
         this.dataDefinition = dataDefinition;
     }
@@ -123,9 +122,9 @@ public abstract class AbstractParser implements Parser {
 
     protected abstract void init();
 
-    /**
-     * @deprecated
-     */
+    //    /**
+    //     * @deprecated
+    //     */
     // protected void setColumnMD(final Map map) {
     // columnMD = map;
     // }
@@ -156,12 +155,10 @@ public abstract class AbstractParser implements Parser {
 
     protected void addToMetaData(final List columns) {
         if (pzMetaData == null) {
-            pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(
-                    columns, this));
+            pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(columns, this));
         } else {
             pzMetaData.setColumnsNames(columns);
-            pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(
-                    columns, this));
+            pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(columns, this));
         }
     }
 
@@ -192,11 +189,10 @@ public abstract class AbstractParser implements Parser {
      * @param errorLevel
      *            errorLevel 1,2,3 1=warning 2=error 3= severe error
      */
-    protected void addError(final DefaultDataSet ds, final String errorDesc,
-            final int lineNo, final int errorLevel) {
+    protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel) {
         addError(ds, errorDesc, lineNo, errorLevel, null);
     }
-    
+
     /**
      * Adds a new error to this DataSet. These can be collected, and retrieved
      * after processing
@@ -210,8 +206,7 @@ public abstract class AbstractParser implements Parser {
      * @param lineData 
      *            Data of the line which failed the parse
      */
-    protected void addError(final DefaultDataSet ds, final String errorDesc,
-            final int lineNo, final int errorLevel, final String lineData) {
+    protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel, final String lineData) {
         if (errorLevel == 1 && isIgnoreParseWarnings()) {
             // user has selected to not log warnings in the parser
             return;
@@ -239,8 +234,7 @@ public abstract class AbstractParser implements Parser {
         return columnNamesCaseSensitive;
     }
 
-    public void setColumnNamesCaseSensitive(
-            final boolean columnNamesCaseSensitive) {
+    public void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive) {
         this.columnNamesCaseSensitive = columnNamesCaseSensitive;
     }
 

@@ -43,6 +43,7 @@ public class InitialisationException extends RuntimeException {
      *
      */
     public InitialisationException() {
+        super();
     }
 
     /**

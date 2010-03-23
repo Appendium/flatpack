@@ -177,7 +177,7 @@ public final class MapParser {
         }
 
         if (showDebug) {
-            showDebug(mdIndex);
+            setShowDebug(mdIndex);
         }
 
         return mdIndex;
@@ -226,7 +226,7 @@ public final class MapParser {
                     cmd.setColLength(Integer.parseInt(xmlColumn.getAttributeValue("length")));
                 } catch (final Exception ex) {
                     throw new IllegalArgumentException("LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: "
-                            + xmlColumn.getAttributeValue("length"));
+                            + xmlColumn.getAttributeValue("length"), ex);
                 }
             }
             columnResults.add(cmd);
@@ -245,7 +245,7 @@ public final class MapParser {
         showDebug = b;
     }
 
-    private static void showDebug(final Map xmlResults) {
+    private static void setShowDebug(final Map xmlResults) {
         final Iterator mapIt = xmlResults.entrySet().iterator();
         while (mapIt.hasNext()) {
             XMLRecordElement xmlrecEle = null;

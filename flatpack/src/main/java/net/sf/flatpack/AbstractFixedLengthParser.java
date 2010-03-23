@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public abstract class AbstractFixedLengthParser extends AbstractParser {
-    private final Logger logger = LoggerFactory.getLogger(AbstractFixedLengthParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFixedLengthParser.class);
 
     protected AbstractFixedLengthParser(final Reader dataSourceReader, final String dataDefinition) {
         super(dataSourceReader, dataDefinition);
@@ -65,7 +65,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
         try {
             return doFixedLengthFile(getDataSourceReader());
         } catch (final IOException e) {
-            logger.error("error accessing/reading data", e);
+            LOGGER.error("error accessing/reading data", e);
         }
         return null;
     }

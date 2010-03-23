@@ -93,7 +93,7 @@ public class DelimiterWriter extends AbstractWriter {
         }
     }
 
-    public void nextRecord() throws IOException {
+    public final void nextRecord() throws IOException {
         if (!columnTitlesWritten) {
             this.writeColumnTitles();
             columnTitlesWritten = true;
