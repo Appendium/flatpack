@@ -1146,6 +1146,10 @@ public final class ParserUtils {
 
                 cmds.add(column);
             }
+            
+            if (cmds.isEmpty()) {
+            	throw new FPException("Data File Key [" + dataDefinition + "] Is Not In The database OR No Columns Specified In Table");
+            }
         } finally {
             if (rs != null) {
                 rs.close();
