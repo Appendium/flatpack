@@ -1082,6 +1082,7 @@ public final class ParserUtils {
         }
     }
 
+    
     /**
      * Returns a definition of pz column metadata from a given
      * pz datastructure held in an SQL database
@@ -1095,14 +1096,38 @@ public final class ParserUtils {
      * @return List
      */
     public static List buildMDFromSQLTable(final Connection con, final String dataDefinition) throws SQLException {
+        return buildMDFromSQLTable(con, dataDefinition, null);
+    }
+    
+    
+    /**
+     * Returns a definition of pz column metadata from a given
+     * pz datastructure held in an SQL database
+     *
+     * @param con
+     *          Database connection containing the Datafile and Datastructure
+     *          tables
+     * @param dataDefinition
+     *          Name of the data definition stored in the Datafile table
+     * @param parser
+     * 			Instance of the parser being used for the file.  It will be checked to get the table names 
+     * 			for the DATASTRUCTURE table and DATAFILE table.
+     * @throws SQLException
+     * @return List
+     */
+    public static List buildMDFromSQLTable(final Connection con, final String dataDefinition, final Parser parser) throws SQLException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         final List cmds = new ArrayList();
+        String dfTbl = parser != null ? parser.getDataFileTable() : "DATAFILE";
+        String dsTbl = parser != null ? parser.getDataStructureTable() : "DATASTRUCTURE";
         try {
-            final String sql = "SELECT * FROM DATAFILE INNER JOIN DATASTRUCTURE ON " + "DATAFILE.DATAFILE_NO = DATASTRUCTURE.DATAFILE_NO "
-                    + "WHERE DATAFILE.DATAFILE_DESC = ? " + "ORDER BY DATASTRUCTURE_COL_ORDER";
+        	final StringBuffer sqlSb = new StringBuffer();
+        	
+        	sqlSb.append("SELECT * FROM ").append(dfTbl).append(" INNER JOIN ").append(dsTbl).append(" ON ").append(dfTbl).append(".DATAFILE_NO = ").append(dsTbl).append(".DATAFILE_NO " +
+                            "WHERE DATAFILE_DESC = ? ORDER BY DATASTRUCTURE_COL_ORDER");
 
-            stmt = con.prepareStatement(sql); // always use PreparedStatement
+            stmt = con.prepareStatement(sqlSb.toString()); // always use PreparedStatement
             // as the DB can do clever things.
             stmt.setString(1, dataDefinition);
             rs = stmt.executeQuery();

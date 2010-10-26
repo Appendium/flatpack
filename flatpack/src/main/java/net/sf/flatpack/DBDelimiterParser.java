@@ -75,7 +75,7 @@ public class DBDelimiterParser extends AbstractDelimiterParser {
                 addToCloseReaderList(r);
             }
 
-            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
+            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
             //            addToColumnMD(PZConstants.DETAIL_ID, cmds);
             //            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));

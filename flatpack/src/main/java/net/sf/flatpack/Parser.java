@@ -185,5 +185,55 @@ public interface Parser {
      */
     void setStoreRawDataToDataSet(final boolean storeRawDataToDataError);
     
+    /**
+     * Returns the table name that will be used to read the MetaData from the db.  The
+     * default table name is DATAFILE.  This may be problimatic for some who are using case
+     * sensistive db table names or who wish to provide a different table name in the db.
+     * 
+     * This is only applicable when using a database for file mappings.
+     * 
+     * @return the DATAFILE table name
+     */
+	 String getDataFileTable();
+	
+    /**
+     * Sets the table name that will be used to read the MetaData from the db.  The
+     * default table name is DATAFILE.  This may be problimatic for some who are using case
+     * sensistive db table names or who wish to provide a different table name in the db.
+     * 
+     * This is only applicable when using a database for file mappings.
+     * 
+     * @param dataFileTable
+     * 			Name of the table name to use in place of "DATAFILE"
+     */
+	void setDataFileTable(final String dataFileTable);
+
+    /**
+     * Returns the table name that will be used to read the MetaData from the db.  The
+     * default table name is DATASTRUCTURE.  This may be problimatic for some who are using case
+     * sensistive db table names or who wish to provide a different table name in the db.
+     * 
+     * This is only applicable when using a database for file mappings.
+     * 
+     * @return the DATASTRUCTURE table name
+     */
+	String getDataStructureTable();
+
+
+	
+    /**
+     * Sets the table name that will be used to read the MetaData from the db.  The
+     * default table name is DATASTRUCTURE.  This may be problimatic for some who are using case
+     * sensistive db table names or who wish to provide a different table name in the db.
+     * 
+     * This is only applicable when using a database for file mappings.
+     * 
+     * @param dataStructureTable
+     * 			Name of the table name to us in placfe of "DATASTRUCTURE"
+     * 
+     */
+	void setDataStructureTable(String dataStructureTable);
+
+    
     
 }

@@ -92,7 +92,7 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
                 addToCloseReaderList(r);
             }
 
-            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition());
+            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
 
             //            addToColumnMD(PZConstants.DETAIL_ID, cmds);

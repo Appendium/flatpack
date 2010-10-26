@@ -75,6 +75,10 @@ public abstract class AbstractParser implements Parser {
     private boolean storeRawDataToDataError;
 
     private boolean storeRawDataToDataSet;
+    
+    private String dataFileTable = "DATAFILE";
+    
+    private String dataStructureTable = "DATASTRUCTURE";
 
     protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
@@ -303,4 +307,22 @@ public abstract class AbstractParser implements Parser {
     public void setStoreRawDataToDataSet(boolean storeRawDataToDataSet) {
         this.storeRawDataToDataSet = storeRawDataToDataSet;
     }
+
+	public String getDataFileTable() {
+		return dataFileTable;
+	}
+
+	public void setDataFileTable(String dataFileTable) {
+		this.dataFileTable = dataFileTable;
+	}
+
+	public String getDataStructureTable() {
+		return dataStructureTable;
+	}
+
+	public void setDataStructureTable(String dataStructureTable) {
+		this.dataStructureTable = dataStructureTable;
+	}
+
+
 }
