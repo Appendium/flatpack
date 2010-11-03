@@ -10,7 +10,10 @@
   	<release version="3.3.0" date="in svn" description="Maintenance">
   	  	<action dev="benoitx" type="fix">Use JDK 1.5.</action>
   	  	<action dev="zepernick" type="add">Ability to over ride the table names for DATAFILE and
-  			DATASTRUCTURE when using the DB for the MetaData.</action> 
+  		DATASTRUCTURE when using the DB for the MetaData.</action> 
+  		<action dev="zepernick" type="fix">DBDelimitedParser was trying to build column names from
+  		the first record when ignore first was set to false.  Column mappings should always come
+  		from the DB for this class.</action>
   	</release>
   	<release version="3.2.0" date="2010-03-03" description="New parse options">
   	  	<action dev="benoitx" type="add">Added a getBigDecimal method on DataSet.</action>
