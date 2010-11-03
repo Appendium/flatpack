@@ -92,6 +92,7 @@ public class DBDelimiterParser extends AbstractDelimiterParser {
     }
 
     protected boolean shouldCreateMDFromFile() {
-        return true;
+    	//The MetaData should always be pulled from the DB for this implementation
+        return false;
     }
 }
