@@ -85,10 +85,12 @@ public class DelimiterWriter extends AbstractWriter {
         final Iterator titlesIter = columnTitles.iterator();
         while (titlesIter.hasNext()) {
             final String columnTitle = (String) titlesIter.next();
-            if (titlesIter.hasNext()) {
-                this.writeWithDelimiter(this.getRowMap().get(columnTitle));
-            } else {
-                this.write(this.getRowMap().get(columnTitle));
+            if (getRowMap() != null) {
+                if (titlesIter.hasNext()) {
+                    writeWithDelimiter(getRowMap().get(columnTitle));
+                } else {
+                    write(getRowMap().get(columnTitle));
+                }
             }
         }
     }
