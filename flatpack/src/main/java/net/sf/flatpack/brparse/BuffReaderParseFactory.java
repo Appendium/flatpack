@@ -84,11 +84,9 @@ public class BuffReaderParseFactory implements ParserFactory {
         return new BuffReaderFixedParser(pzmapXML, dataSource);
     }
 
-    /**
-     * Not supported at this time.
-     */
+
     public Parser newFixedLengthParser(final Connection con, final Reader dataSource, final String dataDefinition) {
-        throw new UnsupportedOperationException("Not supported...");
+    	return new DBBuffReaderFixedParser(con, dataSource, dataDefinition);
     }
 
     public Parser newFixedLengthParser(final Reader pzmapXMLStream, final Reader dataSource) {
@@ -105,12 +103,10 @@ public class BuffReaderParseFactory implements ParserFactory {
         return new BuffReaderFixedParser(pzmapXMLStream, dataSourceStream);
     }
 
-    /**
-     * Not supported at this time.
-     */
+    
     public Parser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        throw new UnsupportedOperationException("Not supported...");
+        throw new UnsupportedOperationException("Not supported.  Use 'Reader' Constructor Instead Of InputStream.");
     }
 
     /*
@@ -160,7 +156,8 @@ public class BuffReaderParseFactory implements ParserFactory {
      */
     public Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        throw new UnsupportedOperationException("Not supported...");
+        //throw new UnsupportedOperationException("Not supported...");
+    	return new DBBuffReaderDelimParser(con, dataSource, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
     }
 
     public Parser newDelimitedParser(final Reader dataSource, final char delimiter, final char qualifier) {

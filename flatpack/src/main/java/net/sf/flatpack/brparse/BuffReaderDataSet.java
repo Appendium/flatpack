@@ -32,9 +32,9 @@
  */
 package net.sf.flatpack.brparse;
 
-import java.io.IOException;
-
+import net.sf.flatpack.AbstractParser;
 import net.sf.flatpack.DefaultDataSet;
+import net.sf.flatpack.Parser;
 import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.xml.MetaData;
@@ -42,56 +42,48 @@ import net.sf.flatpack.xml.MetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ *
+ * @author Paul Zepernick
+ */
 public class BuffReaderDataSet extends DefaultDataSet {
     private static final Logger LOGGER = LoggerFactory.getLogger(BuffReaderDataSet.class);
-    private final BuffReaderDelimParser brDelimPzParser;
-    private final BuffReaderFixedParser brFixedPzParser;
+    
+    private final InterfaceBuffReaderParse brParser;
 
-    public BuffReaderDataSet(final MetaData columnMD2, final BuffReaderDelimParser brDelimPzParser) {
-        super(columnMD2, brDelimPzParser);
+    /**
+     * 
+     * @param columnMD2
+     * @param brParser
+     */
+    public BuffReaderDataSet(final MetaData columnMD2, final InterfaceBuffReaderParse brParser) {
+        super(columnMD2, (Parser)brParser);
         //register the parser with the dataset so we can fetch rows from 
         //the bufferedreader as needed
-        this.brDelimPzParser = brDelimPzParser;
-        this.brFixedPzParser = null;
-    }
-
-    public BuffReaderDataSet(final MetaData columnMD2, final BuffReaderFixedParser brFixedPzParser) {
-        super(columnMD2, brFixedPzParser);
-        //register the parser with the dataset so we can fetch rows from 
-        //the bufferedreader as needed
-        this.brFixedPzParser = brFixedPzParser;
-        this.brDelimPzParser = null;
+        this.brParser = brParser;
     }
 
     public boolean next() {
-        try {
+  
             Row r = null;
-
-            if (brDelimPzParser != null) {
-                r = brDelimPzParser.buildRow(this);
-            } else if (brFixedPzParser != null) {
-                r = brFixedPzParser.buildRow(this);
+            
+            if (brParser != null) {
+                r = brParser.buildRow(this);
             } else {
                 //this should not happen, throw exception
                 throw new RuntimeException("No parser available to fetch row");
             }
 
+            if (getMetaData() == null) {
+                setMetaData(((AbstractParser)brParser).getPzMetaData());
+            }            
+            
             if (r == null) {
                 setPointer(-1);
                 return false;
             }
-
-            //make sure we have some MD
-            //            if (getColumnMD() == null) {
-            //                //create a new map so the user cannot change the internal 
-            //                //DataSet representation of the MD through the parser
-            //                setColumnMD(new LinkedHashMap(brDelimPzParser.getColumnMD()));
-            //            }
-
-            if (getMetaData() == null) {
-                setMetaData(brDelimPzParser.getPzMetaData());
-            }
-
+            
             clearRows();
             addRow(r);
 
@@ -99,11 +91,6 @@ public class BuffReaderDataSet extends DefaultDataSet {
 
             return true;
 
-        } catch (final IOException ex) {
-            LOGGER.error("error building Row on next()", ex);
-        }
-
-        return false;
     }
 
     /**

@@ -78,6 +78,10 @@ public class FixedLengthParser extends AbstractFixedLengthParser {
         super(dataSourceReader);
         this.pzmapReader = pzmapReader;
     }
+    
+    protected FixedLengthParser(final Reader dataSourceReader, final String dataDefinition) {
+        super(dataSourceReader, dataDefinition);
+    }
 
     protected void init() {
         try {

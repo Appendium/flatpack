@@ -49,7 +49,7 @@ import net.sf.flatpack.util.ParserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BuffReaderDelimParser extends DelimiterParser {
+public class BuffReaderDelimParser extends DelimiterParser implements InterfaceBuffReaderParse{
     private BufferedReader br;
 
     private boolean processedFirst = false;
@@ -108,10 +108,15 @@ public class BuffReaderDelimParser extends DelimiterParser {
      * @return Row
      * @throws IOException
      */
-    public Row buildRow(final DefaultDataSet ds) throws IOException {
+    public Row buildRow(final DefaultDataSet ds)  {
         /** loop through each line in the file */
         while (true) {
-            final String line = fetchNextRecord(br, getQualifier(), getDelimiter());
+            String line;
+			try {
+				line = fetchNextRecord(br, getQualifier(), getDelimiter());
+			} catch (IOException e) {
+				throw new RuntimeException("Error Fetching Record From File...", e);
+			}
 
             if (line == null) {
                 return null;
