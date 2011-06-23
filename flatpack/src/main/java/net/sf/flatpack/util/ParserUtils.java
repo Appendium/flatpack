@@ -506,7 +506,8 @@ public final class ParserUtils {
     //    }
 
     /**
-     * Determines if the given line is the first part of a multiline record
+     * Determines if the given line is the first part of a multiline record.  It does this by verifying that the
+     * qualifer on the last element is not closed
      *
      * @param chrArry -
      *            char data of the line
@@ -524,21 +525,20 @@ public final class ParserUtils {
             // could be a potential line break
             boolean qualiFound = false;
             for (int i = chrArry.length - 1; i >= 0; i--) {
+            	//System.out.println(chrArry[i]);
+                if (chrArry[i] == ' ') {
+                    continue;
+                }
+                
                 // check to see if we can find a qualifier followed by a
                 // delimiter
                 // remember we are working are way backwards on the line
                 if (qualiFound) {
-                    if (chrArry[i] == ' ') {
-                        continue;
-                    } else {
-                        // not a space, if this char is the delimiter, then we
-                        // have a line break in the record
-                        if (chrArry[i] == delimiter) {
-                            return true;
-                        }
-                        qualiFound = false;
-                        continue;
+                    if (chrArry[i] == delimiter) {
+                        return true;
                     }
+                    //guard against multiple qualifiers in the sequence [ ,""We  ]
+                    qualiFound = chrArry[i] == qualifier;
                 } else if (chrArry[i] == delimiter) {
                     // if we have a delimiter followed by a qualifier, then we
                     // have moved on to a new element and this could not be multiline.

@@ -145,7 +145,6 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     ds.setMetaData(getPzMetaData());
                     continue;
                 }
-
                 // column values
                 List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
@@ -248,7 +247,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
             // be checked if we have specified a delimiter
             // ********************************************************
             final char[] chrArry = trimmed.toCharArray();
-            if (!processingMultiLine && delim > 0) {
+            if (!processingMultiLine && delim > 0 && qual != FPConstants.NO_QUALIFIER) {
                 processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
             }
 
