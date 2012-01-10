@@ -153,6 +153,16 @@ public class ParserUtilsSplitLineTest extends TestCase {
         check(" \t \t ", '\t', FPConstants.NO_QUALIFIER, new String[] { "", "", "" });
         check("  ", ' ', '"', new String[] { "", "", "" });
         check("  ", ' ', FPConstants.NO_QUALIFIER, new String[] { "", "", "" });
+        
+        check("\"3881\",\"2272\",\"\",\"\"We don't have any medical records on file, but claim was precerted under PME 5490-6125-0000.  I'm following up with Jeri and Megan regarding the Never Event question.  based upon the ICD 9 procedure codes on the sample claim & the diagnosis codes and claim history, appears patient had a laminotomy on 6/4/2010.  Based upon the sample claim, appears that there was post-op infection + a laceration of the dura.  Based on the EWM screen information from INQ62, the post-op infection diagnosis and staph infection diagnosis were indicated as yes, these conditions were present on admission.  This doesn't mean that the patient got the infection during the outpatient surgery on 6/4/2010--it doesn't mean he didn't either.\r\n" +  
+          "Based upon the Never event wording in e.Policies, we do not consider a diagnosis of post-op infection or laceration during a procedure a Never event.  Therefore, we would not deny charges.  For purposes of this policy,  Aetna has determined the following events to be “Never Events:”\r\n" + 
+          "*\",\"1\",\"2011-06-17\",\"1\"", ',', '"', 
+          
+          new String[]{"3881", "2272", "", 
+        		"\"We don't have any medical records on file, but claim was precerted under PME 5490-6125-0000.  I'm following up with Jeri and Megan regarding the Never Event question.  based upon the ICD 9 procedure codes on the sample claim & the diagnosis codes and claim history, appears patient had a laminotomy on 6/4/2010.  Based upon the sample claim, appears that there was post-op infection + a laceration of the dura.  Based on the EWM screen information from INQ62, the post-op infection diagnosis and staph infection diagnosis were indicated as yes, these conditions were present on admission.  This doesn't mean that the patient got the infection during the outpatient surgery on 6/4/2010--it doesn't mean he didn't either.\r\n" +  
+          "Based upon the Never event wording in e.Policies, we do not consider a diagnosis of post-op infection or laceration during a procedure a Never event.  Therefore, we would not deny charges.  For purposes of this policy,  Aetna has determined the following events to be “Never Events:”\r\n" +
+          "*", 
+          "1", "2011-06-17", "1"});
 
     }
 
