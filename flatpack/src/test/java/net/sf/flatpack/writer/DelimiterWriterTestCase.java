@@ -106,15 +106,19 @@ public class DelimiterWriterTestCase extends PZWriterTestCase {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
         factory.addColumnTitle("col1");
         factory.addColumnTitle("col2");
+        factory.addColumnTitle("col3");
+        factory.addColumnTitle("col4");
 
         final StringWriter out = new StringWriter();
         final Writer writer = factory.createWriter(out);
         writer.addRecordEntry("col1", "value;with;delimiter");
         writer.addRecordEntry("col2", "normal value");
+        writer.addRecordEntry("col3", "value \"with qualifier\"");
+        writer.addRecordEntry("col4", "value \"with qualifier\" and ;delimiter;");
         writer.nextRecord();
         writer.flush();
 
-        final String expected = this.joinLines("col1;col2", "\"value;with;delimiter\";normal value");
+        final String expected = this.joinLines("col1;col2;col3;col4", "\"value;with;delimiter\";normal value;\"value \"with qualifier\"\";\"value \"with qualifier\" and ;delimiter;\"");
         Assert.assertEquals(expected, out.toString());
     }
 }

@@ -56,7 +56,7 @@ public class DelimiterWriter extends AbstractWriter {
 			}
 		}
 
-		final boolean needsQuoting = (stringValue.indexOf(delimiter) != -1);
+		final boolean needsQuoting = stringValue.indexOf(delimiter) != -1 || (qualifier != FPConstants.NO_QUALIFIER && stringValue.indexOf(qualifier) != -1);
 
 		if (needsQuoting) {
 			super.write(qualifier);
