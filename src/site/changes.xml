@@ -17,6 +17,8 @@
   		<action dev="zepernick" type="add">BuffReader Parser now support Database Column Mappings</action>
   		<action dev="zepernick" type="fix">DelimiterWriter now also quotes elements that contain a
   		qualifier.  It was previously only checking to see if the data contained a delmiter.</action>
+  		<action dev="zepernick" type="add">Added a setNumericColumns(String[]) to the ExcelTransformer. 
+  		Any columns contained in the array will be written to Excel as a Numeric instead of a Text field.</action>
   	</release>
   	<release version="3.2.0" date="2010-03-03" description="New parse options">
   	  	<action dev="benoitx" type="add">Added a getBigDecimal method on DataSet.</action>
