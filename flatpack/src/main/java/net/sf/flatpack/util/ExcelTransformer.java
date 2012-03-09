@@ -16,11 +16,14 @@ package net.sf.flatpack.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import jxl.Workbook;
 import jxl.write.Label;
+import jxl.write.Number;
+import jxl.write.WritableCell;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
@@ -39,9 +42,14 @@ import net.sf.flatpack.DataSet;
  */
 public class ExcelTransformer {
     private final DataSet ds;
+    
     private final File xlsFile;
+    
     private String[] exportOnlyColumns;
+    
     private String[] excludeFromExportColumns;
+    
+    private String[] numericColumns;
 
     /**
      * Constructs a new Excel transformer
@@ -68,9 +76,9 @@ public class ExcelTransformer {
 
         try {
             final String[] columnNames = ds.getColumns();
-            final List exportOnlyColumnsList = exportOnlyColumns != null ? Arrays.asList(exportOnlyColumns) : null;
-
-            final List excludeFromExportColumnsList = excludeFromExportColumns != null ? Arrays.asList(excludeFromExportColumns) : null;
+            final List exportOnlyColumnsList = getExportOnlyColumns() != null ? Arrays.asList(exportOnlyColumns) : null;
+            final List excludeFromExportColumnsList = getExcludeFromExportColumns() != null ? Arrays.asList(excludeFromExportColumns) : null;
+            final List numericColumnList = getNumericColumns() != null ? Arrays.asList(getNumericColumns()) : new ArrayList();
             // get the current position of the DataSet. We have to go to the top
             // to do this write,
             // and we will put the pionter back where it was after we are done
@@ -93,6 +101,8 @@ public class ExcelTransformer {
                     colOffset++;
                     continue;
                 }
+                
+                
                 final Label xlsTextLbl = new Label(i - colOffset, 0, columnNames[i], cellFormat);
                 wrkSheet.addCell(xlsTextLbl);
             }
@@ -114,8 +124,14 @@ public class ExcelTransformer {
                         continue;
                     }
 
-                    final Label xlsTextLbl = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
-                    wrkSheet.addCell(xlsTextLbl);
+                    WritableCell wc = null;
+                    if (numericColumnList.contains(columnNames[i])) {
+                    	wc = new Number(i - colOffset, row, ds.getDouble(columnNames[i]), cellFormat);
+                    } else {
+                    	wc = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
+                    }
+                    
+                    wrkSheet.addCell(wc);
                 }
 
                 row++;
@@ -164,4 +180,34 @@ public class ExcelTransformer {
             this.exportOnlyColumns = null;
         }
     }
+
+	/**
+	 * @return the numericColumns
+	 */
+	public String[] getNumericColumns() {
+		return numericColumns;
+	}
+
+	/**
+	 * Columns contained in this array will be writen as numerics to Excel instead of Text
+	 * 
+	 * @param numericColumns the numericColumns to set
+	 */
+	public void setNumericColumns(String[] numericColumns) {
+		this.numericColumns = numericColumns;
+	}
+
+	/**
+	 * @return the exportOnlyColumns
+	 */
+	public String[] getExportOnlyColumns() {
+		return exportOnlyColumns;
+	}
+
+	/**
+	 * @return the excludeFromExportColumns
+	 */
+	public String[] getExcludeFromExportColumns() {
+		return excludeFromExportColumns;
+	}
 }
