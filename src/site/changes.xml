@@ -19,6 +19,10 @@
   		qualifier.  It was previously only checking to see if the data contained a delmiter.</action>
   		<action dev="zepernick" type="add">Added a setNumericColumns(String[]) to the ExcelTransformer. 
   		Any columns contained in the array will be written to Excel as a Numeric instead of a Text field.</action>
+  		<action dev="zepernick" type="add">Added the ability to use the DelimiterWriter with no column
+  		mappings.  Added new class DelimiterWriterOptions to achieve this.</action>
+  		<action dev="zepernick" type="add">Fixed and Delimiter writers now support multiple record
+  		types in the same file.</action>
   	</release>
   	<release version="3.2.0" date="2010-03-03" description="New parse options">
   	  	<action dev="benoitx" type="add">Added a getBigDecimal method on DataSet.</action>
