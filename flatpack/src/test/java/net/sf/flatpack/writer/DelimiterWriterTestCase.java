@@ -101,6 +101,29 @@ public class DelimiterWriterTestCase extends PZWriterTestCase {
             // this one was expected
         }
     }
+    
+    public void testAllowWriteWithNoMapping() throws Exception {
+         final StringWriter sw = new StringWriter();
+         
+         final DelimiterWriterOptions writerOpts = new DelimiterWriterOptions();
+         writerOpts.setNoColumnMappings(true);
+    	 final DelimiterWriterFactory factory = new DelimiterWriterFactory(',', '"');
+    	 final DelimiterWriter dwriter = (DelimiterWriter)factory.createWriter(sw, writerOpts);
+    	 
+    	 dwriter.addRecordEntry("Column1Data");
+    	 dwriter.addRecordEntry("Column2,Data");
+    	 dwriter.addRecordEntry("Column3Data");
+    	 dwriter.nextRecord();
+    	 dwriter.flush();
+    	 
+    	 final String ls = System.getProperty("line.separator");
+    	 final StringBuilder expected = new StringBuilder();
+    	 expected.append("Column1Data").append(",");
+    	 expected.append("\"").append("Column2,Data").append("\"").append(",");
+    	 expected.append("Column3Data").append(ls);
+    	 
+    	 assertEquals("Testing writer with no colum mapping", expected.toString(), sw.toString());
+    }
 
     public void testWriteValueWithQualifier() throws Exception {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');

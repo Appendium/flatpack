@@ -3,6 +3,7 @@ package net.sf.flatpack.writer;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 import junit.framework.Assert;
@@ -95,9 +96,48 @@ public class FixedLengthWriterTestCase extends PZWriterTestCase {
                         .normalizeLineEnding("                                   DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH44035");
         Assert.assertEquals(expected, out.toString());
     }
+    
+    public void testWriteDifferentRecords() throws Exception{
+    	 final String ls = System.getProperty("line.separator");
+		 final StringWriter out = new StringWriter();
+	     final Writer writer = new FixedWriterFactory(getMappingDiffRecordTypes()).createWriter(out);
+	     writer.setRecordId("header");
+	     writer.addRecordEntry("recordtype", "H");
+	     writer.addRecordEntry("headerdata1", "header data");
+	     writer.nextRecord();
+	     
+	     writer.addRecordEntry("recordtype", "D");
+	     writer.addRecordEntry("detaildata1", "detail data");
+	     writer.nextRecord();
+	     writer.flush();
+	     
+	     final StringBuilder expected = new StringBuilder();
+	     expected.append("H");
+	     expected.append("header data         ").append(ls);
+	     expected.append("D");
+	     expected.append("detail data         ").append(ls);
+	     
+	     assertEquals("Checking writer for different record types...", expected.toString(), out.toString());
+         
+    }
 
     private Reader getMapping() {
         final InputStream mapping = this.getClass().getClassLoader().getResourceAsStream("FixedLength.pzmap.xml");
         return new InputStreamReader(mapping);
+    }
+    
+    private Reader getMappingDiffRecordTypes() {
+        String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" +
+		"<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n" +
+		"	<PZMAP>\r\n" +
+		"		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">" +
+		"			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" +
+		"			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n" +
+		"		</RECORD>" +
+		"		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" +
+		"		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" +
+		"	</PZMAP>";
+        
+        return new StringReader(xml);
     }
 }

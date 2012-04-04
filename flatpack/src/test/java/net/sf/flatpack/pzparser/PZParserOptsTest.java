@@ -218,6 +218,38 @@ public class PZParserOptsTest extends TestCase {
         assertEquals(true, ds.next());
     }
     
+    public void testFixedWidthMultipleRecordElementsInMapping() {
+        DataSet ds;
+        String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" +
+        			"<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n" +
+        			"	<PZMAP>\r\n" +
+        			"		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">" +
+        			"			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" +
+        			"			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n" +
+        			"		</RECORD>" +
+        			"		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" +
+        			"		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" +
+        			"	</PZMAP>";
+        			
+        String cols = "HHEADER DATA         \r\n" +
+        			  "DDETAIL DATA         \r\n";
+        
+        Parser p = DefaultParserFactory.getInstance().newFixedLengthParser(new StringReader(xml), new StringReader(cols));
+        ds = p.parse();
+        int i = 0;
+        while (ds.next()) {
+        	if (i == 0 ) {
+        		assertEquals("Checking to see if we have the header record...", ds.isRecordID("header"), true);
+        		assertEquals("Checking header data", ds.getString("headerdata1"), "HEADER DATA");
+        	} else {
+        		assertEquals("Checking detail data", ds.getString("detaildata1"), "DETAIL DATA");
+        	}
+        	
+        	i++;
+        }
+       
+    }
+    
     public void testSorting() {
         DataSet ds;
         String cols = "fname,lname,dob,anumber\r\npaul,zepernick,06/21/1981,2\r\nbenoit,xhenseval,05/01/1970,12";

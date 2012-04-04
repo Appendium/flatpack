@@ -174,12 +174,14 @@ public final class MapParser {
             xmlre.setEndPositition(convertAttributeToInt(xmlElement.getAttribute("endPosition")));
             xmlre.setElementCount(convertAttributeToInt(xmlElement.getAttribute("elementCount")));
             mdIndex.put(xmlElement.getAttributeValue("id"), xmlre);
+            //make a column index for non detail records
+            mdIndex.put(FPConstants.COL_IDX + "_" + xmlElement.getAttributeValue("id"), ParserUtils.buidColumnIndexMap(columns, pzparser));
         }
 
         if (showDebug) {
             setShowDebug(mdIndex);
         }
-
+        
         return mdIndex;
     }
 
@@ -292,6 +294,20 @@ public final class MapParser {
 
         final Map m = (Map) map.get(FPConstants.COL_IDX);
         map.remove(FPConstants.COL_IDX);
+        
+        //loop through the map and remove anything else that is an index of FPConstancts.COL_IDX + _
+        //these were put in for the writer.  
+        //TODO maybe these shoudld be thrown into the MetaData instead of just discarded, but they are unused
+        //in the Reader the moment.  This parseMap is not utilized in the writer so it is safe to remove them here
+        final Iterator entrySetIt = map.entrySet().iterator();
+        while (entrySetIt.hasNext()) {
+        	final Entry e = (Entry)entrySetIt.next();
+        	if (((String)e.getKey()).startsWith(FPConstants.COL_IDX + "_")) {
+        		entrySetIt.remove();
+        	}
+        }
+        
+       // System.out.println(map);
         return new MetaData(col, m, map);
     }
 }
