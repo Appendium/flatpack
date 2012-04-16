@@ -2,14 +2,11 @@ package net.sf.flatpack.writer;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
-import net.sf.flatpack.xml.XMLRecordElement;
 
 import org.jdom.JDOMException;
 
@@ -23,7 +20,6 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
 
     private final char delimiter;
     private final char qualifier;
-    
 
     public DelimiterWriterFactory(final char delimiter, final char qualifier) {
         super();
@@ -66,76 +62,26 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
     public char getQualifier() {
         return qualifier;
     }
-    
 
-	public Writer createWriter(final java.io.Writer out) throws IOException {
-    	return createWriter(out, new DelimiterWriterOptions());
-    
-    }
-    
-    /**
-     * Create an instance of the DelimterWriter
-     * 
-     * @param out
-     * @param delimiterWriterOptions
-     * 			Options for Writing
-     * @return {@link DelimiterWriter}
-     * @throws IOException
-     */
-    public Writer createWriter(final java.io.Writer out, final DelimiterWriterOptions delimiterWriterOptions) throws IOException {
-   		return new DelimiterWriter(this.getColumnMapping(), out, delimiter, qualifier, delimiterWriterOptions);
+    public Writer createWriter(final java.io.Writer out, final WriterOptions options) throws IOException {
+        return new DelimiterWriter(this.getColumnMapping(), out, delimiter, qualifier, options);
     }
 
-	/**
-	 * Add column titles for mapping. This can be done in lieu of using an XML Mapping. This needs to be done before calling createWriter()
-	 * 
-	 * @param columnTitle
-	 * @param recordId
-	 */
-    public void addColumnTitle(final String columnTitle, final String recordId) {
-    	final String colIdxKey = FPConstants.DETAIL_ID.equals(recordId) ? FPConstants.COL_IDX : FPConstants.COL_IDX + "_" + recordId;
+    public Writer createWriter(final java.io.Writer out) throws IOException {
+        return new DelimiterWriter(this.getColumnMapping(), out, delimiter, qualifier, WriterOptions.getInstance());
+    }
+
+    // TODO DO: check that no column titles can be added after first nextRecord
+    public void addColumnTitle(final String columnTitle) {
         final Map columnMapping = this.getColumnMapping();
-        List columnMetaDatas = null;
-        if (FPConstants.DETAIL_ID.equals(recordId)) {
-        	//the detail record will always be there.  It is being setup by the AbstractWriter if it 
-        	//is not coming off of the XML
-        	columnMetaDatas = (List) columnMapping.get(FPConstants.DETAIL_ID);
-        } else {
-        	//this has a XMLRecord in the map, for anything other than the detail id
-        	XMLRecordElement xmlRec = (XMLRecordElement)columnMapping.get(recordId);
-        	if (xmlRec == null) {
-        		columnMetaDatas = new ArrayList();
-        		xmlRec = new XMLRecordElement();
-        		xmlRec.setColumns(columnMetaDatas, null);
-        		columnMapping.put(recordId, xmlRec);
-        	} else {
-        		columnMetaDatas = xmlRec.getColumns();
-        	}
-        }
-        
-        Map columnIndices = (Map) columnMapping.get(colIdxKey);
-        if (columnIndices == null) {
-        	columnIndices = new HashMap();
-        	columnMapping.put(recordId, columnIndices);
-        }
+        final List columnMetaDatas = (List) columnMapping.get(FPConstants.DETAIL_ID);
+        final Map columnIndices = (Map) columnMapping.get(FPConstants.COL_IDX);
 
         final ColumnMetaData metaData = new ColumnMetaData();
         metaData.setColName(columnTitle);
         columnMetaDatas.add(metaData);
 
         final Integer columnIndex = Integer.valueOf(columnMetaDatas.indexOf(metaData));
-        columnIndices.put(columnTitle, columnIndex);
+        columnIndices.put(columnIndex, columnTitle);
     }
-    
-    /**
-     * Add column titles for mapping.  This can be done in lieu of using an XML Mapping.  This needs to be done before calling createWriter()
-     * 
-     * @param string
-     */
-	public void addColumnTitle(final String string) {
-		addColumnTitle(string, FPConstants.DETAIL_ID);
-	}
-
-
-
 }

@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
-import net.sf.flatpack.xml.XMLRecordElement;
 
 /**
  * 
@@ -97,15 +96,19 @@ public class FixedLengthWriter extends AbstractWriter {
 	}
 
 	protected boolean validateColumnTitle(final String columnTitle) {
-		//the column index for <record> elements is stored in the Map as the COL_IDX constant_<record id attribute>
 		final Map columnNameToIndex = (Map) columnMapping
-				.get(getRecordId().equals(FPConstants.DETAIL_ID) ? FPConstants.COL_IDX : FPConstants.COL_IDX + "_" + getRecordId());
-		if (columnNameToIndex == null) {
-			//TODO this needs to be moved to the AbstractWriter, but the columnMapping is not exposed to it currently
-			//This should only happen if the getRecordId() contained an invalid record id
-			throw new RuntimeException("The record ID[" + getRecordId() + "] Is Not Mapped");
-		}
+				.get(FPConstants.COL_IDX);
 		return columnNameToIndex.keySet().contains(columnTitle);
+	}
+
+	public void printFooter() {
+		// TODO DO: implement footer handling
+
+	}
+
+	public void printHeader() {
+		// TODO DO: implement header handling
+
 	}
 
 	/**
@@ -113,11 +116,7 @@ public class FixedLengthWriter extends AbstractWriter {
 	 *         the XML file.
 	 */
 	private List getColumnMetaData() {
-		if (getRecordId().equals(FPConstants.DETAIL_ID)) {
-			return (List) columnMapping.get(getRecordId());
-		}
-		
-		return ((XMLRecordElement)columnMapping.get(getRecordId())).getColumns();
+		return (List) columnMapping.get(FPConstants.DETAIL_ID);
 	}
 
 	private ColumnMetaData getColumnMetaData(final String columnName) {
@@ -129,7 +128,7 @@ public class FixedLengthWriter extends AbstractWriter {
 			}
 		}
 
-		throw new IllegalArgumentException("Record ID[" + getRecordId() + "] Column \"" + columnName
+		throw new IllegalArgumentException("Column \"" + columnName
 				+ "\" unknown");
 	}
 }

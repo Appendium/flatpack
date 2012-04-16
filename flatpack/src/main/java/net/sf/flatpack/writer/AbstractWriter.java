@@ -4,21 +4,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import net.sf.flatpack.util.FPConstants;
 
 /**
  * This class encapsulates the writer that's used to output the data.
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
-public abstract class AbstractWriter extends Object implements Writer {
+public abstract class AbstractWriter implements Writer {
     private final BufferedWriter writer;
-    
-    private Map rowMap; //used when using column headers
-    
-    //the record ID that is currently being written. The default is the DETAIL_ID which are <columns> that are mapped outside of <record> elements
-    private String recordId = FPConstants.DETAIL_ID;
+    private Map rowMap;
 
     public AbstractWriter(final java.io.Writer output) {
         super();
@@ -35,20 +28,6 @@ public abstract class AbstractWriter extends Object implements Writer {
         }
         rowMap.put(columnName, value);
     }
-    
-    //TODO implement writing for no column titles
-//    public void addRecordEntry(final Object value) {
-//    	if (
-//    	
-//        if (rowMap == null) {
-//            rowMap = new HashMap();
-//        }
-//
-//        if (!validateColumnTitle(columnName)) {
-//            throw new IllegalArgumentException("unknown column: \"" + columnName + "\"");
-//        }
-//        rowMap.put(columnName, value);
-//    }
 
     /**
      * Subclasses must implement this method to perform validation of
@@ -71,8 +50,6 @@ public abstract class AbstractWriter extends Object implements Writer {
         // the row should have been written out by the subclass so it's safe to
         // discard it here
         rowMap = null;
-        //default the recordId when we go to the next record
-        recordId = FPConstants.DETAIL_ID;
         writer.newLine();
     }
 
@@ -101,30 +78,8 @@ public abstract class AbstractWriter extends Object implements Writer {
         writer.flush();
         writer.close();
     }
-    
 
     protected Map getRowMap() {
         return rowMap;
     }
-
-	/**
-	 * @return the recordId
-	 */
-	public String getRecordId() {
-		return recordId;
-	}
-
-	/**
-	 * Sets the record ID for the record that is being written.  This should be used when mapping <record> elements.  
-	 * The "id" attribute of the record element should be specified here and needs to be called before calling addRecordEntry().
-	 * This will throw an exception if addRecordEntry() has been called for the record currently being processed.
-	 * 
-	 * @param recordId the recordId to set
-	 */
-	public void setRecordId(String recordId) {
-		if (rowMap != null && !rowMap.isEmpty()) {
-			throw new RuntimeException("addRecordEntry() has already been called for this row.  Please set the record id prior to adding data to this row.");
-		}
-		this.recordId = recordId;
-	}
 }
