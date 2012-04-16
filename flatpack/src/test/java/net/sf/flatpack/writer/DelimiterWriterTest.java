@@ -16,7 +16,7 @@ import net.sf.flatpack.writer.Writer;
  * 
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
-public class DelimiterWriterTestCase extends PZWriterTestCase {
+public class DelimiterWriterTest extends PZWriterTestCase {
     public void testWriteCsvNoMappingFile() throws Exception {
         final StringWriter out = new StringWriter();
 
@@ -105,24 +105,25 @@ public class DelimiterWriterTestCase extends PZWriterTestCase {
     public void testAllowWriteWithNoMapping() throws Exception {
          final StringWriter sw = new StringWriter();
          
-         final DelimiterWriterOptions writerOpts = new DelimiterWriterOptions();
-         writerOpts.setNoColumnMappings(true);
-    	 final DelimiterWriterFactory factory = new DelimiterWriterFactory(',', '"');
-    	 final DelimiterWriter dwriter = (DelimiterWriter)factory.createWriter(sw, writerOpts);
+    	 final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
+//    	 final DelimiterWriter dwriter = (DelimiterWriter)factory.createWriter(sw);
     	 
-    	 dwriter.addRecordEntry("Column1Data");
-    	 dwriter.addRecordEntry("Column2,Data");
-    	 dwriter.addRecordEntry("Column3Data");
-    	 dwriter.nextRecord();
-    	 dwriter.flush();
-    	 
-    	 final String ls = System.getProperty("line.separator");
-    	 final StringBuilder expected = new StringBuilder();
-    	 expected.append("Column1Data").append(",");
-    	 expected.append("\"").append("Column2,Data").append("\"").append(",");
-    	 expected.append("Column3Data").append(ls);
-    	 
-    	 assertEquals("Testing writer with no colum mapping", expected.toString(), sw.toString());
+         factory.addColumnTitle("col1");
+         factory.addColumnTitle("col2");
+         factory.addColumnTitle("col3");
+         factory.addColumnTitle("col4");
+
+
+         final StringWriter out = new StringWriter();
+         final Writer writer = factory.createWriter(out, WriterOptions.getInstance().autoPrintHeader(false));
+         writer.addRecordEntry("col1", "a");
+         writer.addRecordEntry("col2", "b");
+         writer.addRecordEntry("col3", "c");
+         writer.addRecordEntry("col4", "d");
+         writer.nextRecord();
+         writer.flush();
+
+         Assert.assertTrue(out.toString().startsWith("a;b;c;d"));
     }
 
     public void testWriteValueWithQualifier() throws Exception {

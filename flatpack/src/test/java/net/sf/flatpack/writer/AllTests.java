@@ -12,8 +12,8 @@ public class AllTests {
     public static Test suite() {
         final TestSuite suite = new TestSuite("Test for net.sf.flatpack.writer");
         //$JUnit-BEGIN$
-        suite.addTestSuite(DelimiterWriterTestCase.class);
-        suite.addTestSuite(FixedLengthWriterTestCase.class);
+        suite.addTestSuite(DelimiterWriterTest.class);
+        suite.addTestSuite(FixedLengthWriterTest.class);
         //$JUnit-END$
         return suite;
     }
