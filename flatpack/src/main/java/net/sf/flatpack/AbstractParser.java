@@ -103,16 +103,18 @@ public abstract class AbstractParser implements Parser {
      * 
      * @see net.sf.flatpack.PZParser#setHandlingShortLines(boolean)
      */
-    public void setHandlingShortLines(final boolean handleShortLines) {
+    public Parser setHandlingShortLines(final boolean handleShortLines) {
         this.handlingShortLines = handleShortLines;
+        return this;
     }
 
     public boolean isIgnoreExtraColumns() {
         return ignoreExtraColumns;
     }
 
-    public void setIgnoreExtraColumns(final boolean ignoreExtraColumns) {
+    public Parser setIgnoreExtraColumns(final boolean ignoreExtraColumns) {
         this.ignoreExtraColumns = ignoreExtraColumns;
+        return this;
     }
 
     public final DataSet parse() {
@@ -238,24 +240,27 @@ public abstract class AbstractParser implements Parser {
         return columnNamesCaseSensitive;
     }
 
-    public void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive) {
+    public Parser setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive) {
         this.columnNamesCaseSensitive = columnNamesCaseSensitive;
+        return this;
     }
 
     public boolean isIgnoreParseWarnings() {
         return ignoreParseWarnings;
     }
 
-    public void setIgnoreParseWarnings(final boolean ignoreParseWarnings) {
+    public Parser setIgnoreParseWarnings(final boolean ignoreParseWarnings) {
         this.ignoreParseWarnings = ignoreParseWarnings;
+        return this;
     }
 
     public boolean isNullEmptyStrings() {
         return nullEmptyStrings;
     }
 
-    public void setNullEmptyStrings(final boolean nullEmptyStrings) {
+    public Parser setNullEmptyStrings(final boolean nullEmptyStrings) {
         this.nullEmptyStrings = nullEmptyStrings;
+        return this;
     }
 
     public MetaData getPzMetaData() {
@@ -276,8 +281,9 @@ public abstract class AbstractParser implements Parser {
     /**
      * @param flagEmptyRows the flagEmptyRows to set
      */
-    public void setFlagEmptyRows(boolean flagEmptyRows) {
+    public Parser setFlagEmptyRows(boolean flagEmptyRows) {
         this.flagEmptyRows = flagEmptyRows;
+        return this;
     }
 
     /**
@@ -290,8 +296,9 @@ public abstract class AbstractParser implements Parser {
     /**
      * @param storeRawDataToDataError the storeRawDataToDataError to set
      */
-    public void setStoreRawDataToDataError(boolean storeRawDataToDataError) {
+    public Parser setStoreRawDataToDataError(boolean storeRawDataToDataError) {
         this.storeRawDataToDataError = storeRawDataToDataError;
+        return this;
     }
 
     /**
@@ -304,25 +311,26 @@ public abstract class AbstractParser implements Parser {
     /**
      * @param storeRawDataToDataSet the storeRawDataToDataSet to set
      */
-    public void setStoreRawDataToDataSet(boolean storeRawDataToDataSet) {
+    public Parser setStoreRawDataToDataSet(boolean storeRawDataToDataSet) {
         this.storeRawDataToDataSet = storeRawDataToDataSet;
+        return this;
     }
 
 	public String getDataFileTable() {
 		return dataFileTable;
 	}
 
-	public void setDataFileTable(String dataFileTable) {
+	public Parser setDataFileTable(String dataFileTable) {
 		this.dataFileTable = dataFileTable;
+		return this;
 	}
 
 	public String getDataStructureTable() {
 		return dataStructureTable;
 	}
 
-	public void setDataStructureTable(String dataStructureTable) {
+	public Parser setDataStructureTable(String dataStructureTable) {
 		this.dataStructureTable = dataStructureTable;
+		return this;
 	}
-
-
 }

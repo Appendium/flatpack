@@ -62,7 +62,7 @@ public interface Parser {
      *            of column headers will be added as empty's instead of
      *            producing an error
      */
-    void setHandlingShortLines(final boolean handleShortLines);
+    Parser setHandlingShortLines(final boolean handleShortLines);
 
     /**
      * 
@@ -79,7 +79,7 @@ public interface Parser {
      *            mapping definition will be truncated and the reader will NOT
      *            register these lines as errors in the DataError collection.
      */
-    void setIgnoreExtraColumns(final boolean ignoreExtraColumns);
+    Parser setIgnoreExtraColumns(final boolean ignoreExtraColumns);
 
     /**
      * Default is false
@@ -102,7 +102,7 @@ public interface Parser {
      *            Example when false: Column name = AColumnName ;
      *            getString("acolumnname") would pass
      */
-    void setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
+    Parser setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive);
 
     /**
      * Default is false
@@ -118,7 +118,7 @@ public interface Parser {
      *            when true, warnings encountered during parsing will not be
      *            included in the DataSet errors
      */
-    void setIgnoreParseWarnings(final boolean ignoreParseWarnings);
+    Parser setIgnoreParseWarnings(final boolean ignoreParseWarnings);
 
     /**
      * 
@@ -133,7 +133,7 @@ public interface Parser {
      *            when true, empty Strings will get returned as NULL when
      *            calling DataSet.getString()
      */
-    void setNullEmptyStrings(final boolean nullEmptyStrings);
+    Parser setNullEmptyStrings(final boolean nullEmptyStrings);
 
     /**
      * 
@@ -150,7 +150,7 @@ public interface Parser {
      * 
      * @param flagEmptyRows
      */
-    void setFlagEmptyRows(final boolean flagEmptyRows);
+    Parser setFlagEmptyRows(final boolean flagEmptyRows);
     
     /**
      * @return when true, the parser will place the data of the line which failed the parse and
@@ -166,7 +166,7 @@ public interface Parser {
      * 
      * @param storeRawDataToDataError
      */
-    void setStoreRawDataToDataError(final boolean storeRawDataToDataError);
+    Parser setStoreRawDataToDataError(final boolean storeRawDataToDataError);
     
     
     /**
@@ -183,7 +183,7 @@ public interface Parser {
      * 
      * @param storeRawDataToDataError
      */
-    void setStoreRawDataToDataSet(final boolean storeRawDataToDataError);
+    Parser setStoreRawDataToDataSet(final boolean storeRawDataToDataError);
     
     /**
      * Returns the table name that will be used to read the MetaData from the db.  The
@@ -206,7 +206,7 @@ public interface Parser {
      * @param dataFileTable
      * 			Name of the table name to use in place of "DATAFILE"
      */
-	void setDataFileTable(final String dataFileTable);
+	 Parser setDataFileTable(final String dataFileTable);
 
     /**
      * Returns the table name that will be used to read the MetaData from the db.  The
@@ -232,8 +232,5 @@ public interface Parser {
      * 			Name of the table name to us in placfe of "DATASTRUCTURE"
      * 
      */
-	void setDataStructureTable(String dataStructureTable);
-
-    
-    
+	Parser setDataStructureTable(String dataStructureTable);
 }
