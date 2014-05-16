@@ -37,7 +37,7 @@ import java.util.Properties;
 
 import net.sf.flatpack.ordering.OrderBy;
 
-public interface DataSet extends Record {
+public interface DataSet extends Record, RecordDataSet {
 
     /**
      * Goes to the top of the data set. This will put the pointer one record
@@ -50,14 +50,6 @@ public interface DataSet extends Record {
      * Goes to the last record in the dataset
      */
     void goBottom();
-
-    /**
-     * Moves to the next record in the set. Returns true if move was a success,
-     * false if not
-     *
-     * @return boolean
-     */
-    boolean next();
 
     /**
      * Moves back to the previous record in the set return true if move was a
@@ -197,6 +189,4 @@ public interface DataSet extends Record {
      * 
      */
     void clearAll();
-    
-    Record getRecord();
 }
