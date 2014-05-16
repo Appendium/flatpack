@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class AbstractWriter implements Writer {
     private final BufferedWriter writer;
-    private Map rowMap;
+    private Map<String,Object> rowMap;
 
     public AbstractWriter(final java.io.Writer output) {
         super();
@@ -20,7 +20,7 @@ public abstract class AbstractWriter implements Writer {
 
     public void addRecordEntry(final String columnName, final Object value) {
         if (rowMap == null) {
-            rowMap = new HashMap();
+            rowMap = new HashMap<String,Object>();
         }
 
         if (!validateColumnTitle(columnName)) {
@@ -79,7 +79,7 @@ public abstract class AbstractWriter implements Writer {
         writer.close();
     }
 
-    protected Map getRowMap() {
+    protected Map<String,Object> getRowMap() {
         return rowMap;
     }
 }

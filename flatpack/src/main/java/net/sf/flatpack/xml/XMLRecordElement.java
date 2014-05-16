@@ -33,7 +33,7 @@ public class XMLRecordElement {
     private int elementCount = 0;
     private String indicator;
     private List<ColumnMetaData> columns;
-    private Map columnIndex;
+    private Map<String, Integer> columnIndex;
 
     /**
      * @return Returns the elementNumber.
@@ -103,16 +103,6 @@ public class XMLRecordElement {
         return columns;
     }
 
-//    /**
-//     * @param columns
-//     *            The columns to set.
-//     * @deprecated  Please use setColumns(List, PZParser)
-//     */
-//    public void setColumns(final List columns) {
-//        this.columns = columns;
-//        this.columnIndex = ParserUtils.buidColumnIndexMap(columns, null);
-//    }
-
     /**
      * @param columnsToUse
      *            The columns to set.
@@ -134,7 +124,7 @@ public class XMLRecordElement {
     public int getColumnIndex(final String colName) {
         int idx = -1;
         if (columnIndex != null) {
-            final Integer i = (Integer) columnIndex.get(colName);
+            final Integer i = columnIndex.get(colName);
             if (i != null) {
                 idx = i.intValue();
             }

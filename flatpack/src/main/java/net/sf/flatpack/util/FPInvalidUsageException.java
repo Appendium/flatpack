@@ -6,7 +6,8 @@ package net.sf.flatpack.util;
  * @author Paul Zepernick
  */
 public class FPInvalidUsageException extends RuntimeException{
-    
+    private static final long serialVersionUID = 1L;
+
     public FPInvalidUsageException(final String msg) {
         super(msg);
     }

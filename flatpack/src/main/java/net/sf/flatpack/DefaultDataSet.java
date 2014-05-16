@@ -38,18 +38,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Properties;
 
 import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.FPException;
 import net.sf.flatpack.util.FPInvalidUsageException;
-import net.sf.flatpack.util.FPStringUtils;
 import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.xml.MetaData;
 

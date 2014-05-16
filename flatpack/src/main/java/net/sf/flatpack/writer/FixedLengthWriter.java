@@ -1,11 +1,10 @@
 package net.sf.flatpack.writer;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.math.BigDecimal;
 
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
