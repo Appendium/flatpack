@@ -48,8 +48,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Zepernick
  */
 public class BuffReaderDataSet extends DefaultDataSet {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BuffReaderDataSet.class);
-    
     private final InterfaceBuffReaderParse brParser;
 
     /**

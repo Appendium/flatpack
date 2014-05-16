@@ -790,10 +790,10 @@ public final class ParserUtils {
     //        return idx;
     //    }
 
-    public static int getColumnIndex(final String key, final MetaData columnMD, final String colName, final Parser p) {
+    public static int getColumnIndex(final String key, final MetaData columnMD, final String colName, final boolean columNameCaseSensitive) {
         int idx = -1;
         String column = colName;
-        if (p != null && !p.isColumnNamesCaseSensitive()) {
+        if (!columNameCaseSensitive) {
             column = colName.toLowerCase(Locale.getDefault());
         }
         idx = columnMD.getColumnIndex(key, column);

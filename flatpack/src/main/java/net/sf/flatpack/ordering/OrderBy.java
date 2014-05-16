@@ -109,8 +109,8 @@ public class OrderBy implements Comparator, Serializable {
             // into account when sorting
             Comparable comp0 = null;
             Comparable comp1 = null;
-            String str0 = row0.getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser)).toLowerCase(Locale.getDefault());
-            String str1 = row1.getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser)).toLowerCase(Locale.getDefault());
+            String str0 = row0.getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(Locale.getDefault());
+            String str1 = row1.getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(Locale.getDefault());
             switch (oc.getSelectedColType()) {
             case OrderColumn.COLTYPE_STRING:
             default:

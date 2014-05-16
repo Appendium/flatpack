@@ -32,17 +32,12 @@
  */
 package net.sf.flatpack;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Properties;
 
 import net.sf.flatpack.ordering.OrderBy;
 
-public interface DataSet {
+public interface DataSet extends Record {
 
     /**
      * Goes to the top of the data set. This will put the pointer one record
@@ -72,130 +67,6 @@ public interface DataSet {
      */
     boolean previous();
 
-    /**
-     * Returns the string value of a specified column
-     *
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @return String
-     */
-    String getString(final String column);
-
-    /**
-     * Returns the double value of a specified column
-     *
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return double
-     */
-    double getDouble(final String column);
-
-    /**
-     * Returns the BigDecimal value of a specified column
-     *
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return BigDecimal
-     */
-    BigDecimal getBigDecimal(final String column);
-
-    /**
-     * Returns the interger value of a specified column
-     *
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return double
-     */
-    int getInt(final String column);
-
-    /**
-     * Returns the long value of a specified column
-     *
-     * @param column -
-     *            Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return long
-     */
-    long getLong(final String column);
-
-    /**
-     * Returns the date value of a specified column. This assumes the date is in
-     * yyyyMMdd. If your date is not in this format, see
-     * getDate(String,SimpleDateFormat)
-     *
-     * Will return "null" on empty Strings
-     *
-     * @param column -
-     *            Name of the column
-     * @exception ParseException
-     * @return Date
-     */
-    Date getDate(final String column) throws ParseException;
-
-    /**
-     * Returns the date value of a specified column. This should be used if the
-     * date is NOT in yyyyMMdd format. The SimpleDateFormat object will specify
-     * what kind of format the date is in.
-     *
-     * Will return "null" on empty Strings
-     *
-     * @param column -
-     *            Name of the column
-     * @param sdf -
-     *            SimpleDateFormat of the date
-     * @exception ParseException
-     * @see java.text.SimpleDateFormat
-     * @return Date
-     */
-    Date getDate(final String column, final SimpleDateFormat sdf) throws ParseException;
-
-    /**
-     *  Returns the value of the column with the type of object
-     *  specified
-     *
-     * @param column
-     *             Name of the column
-     * @param classToConvertTo
-     *              Class type to convert to
-     * @return Object
-     *             Value of the column in the specified object
-     */
-    Object getObject(final String column, final Class classToConvertTo);
-
-    /**
-     * Returns a String array of column names in the DataSet. This will assume
-     * 'detail' <RECORD> ID.
-     *
-     * @return String[]
-     */
-    String[] getColumns();
-
-    /**
-     * Returns a String array of column names in the DataSet for a given
-     * <RECORD> id
-     *
-     * @param recordID
-     * @return String[]
-     */
-    String[] getColumns(final String recordID);
-
-    /**
-     * Returns the line number the pointer is on. These are the actual line
-     * numbers from the flat file, before any sorting.
-     *
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
-     * @return int
-     */
-    int getRowNo();
 
     /**
      * Returns A Collection Of DataErrors that happened during processing
@@ -242,7 +113,7 @@ public interface DataSet {
      *            int line number
      * @return boolean
      */
-    boolean isAnError(final int lineNo);
+    boolean isAnError(int lineNo);
 
     /**
      * Orders the data by column(s) specified. This will reposition the cursor
@@ -255,7 +126,7 @@ public interface DataSet {
      * @see net.sf.flatpack.ordering.OrderBy
      * @see net.sf.flatpack.ordering.OrderColumn
      */
-    void orderRows(final OrderBy ob);
+    void orderRows(OrderBy ob);
 
     /**
      * Sets data in the DataSet to lowercase
@@ -268,21 +139,13 @@ public interface DataSet {
     void setUpperCase();
 
     /**
-     * Checks to see if the row has the given <RECORD> id
-     *
-     * @param recordID
-     * @return boolean
-     */
-    boolean isRecordID(final String recordID);
-
-    /**
      * Sets the absolute position of the record pointer
      *
      * @param localPointer -
      *            int
      * @exception IndexOutOfBoundsException
      */
-    void absolute(final int localPointer);
+    void absolute(int localPointer);
 
     /**
      * Setting this to True will parse text as is and throw a
@@ -294,7 +157,7 @@ public interface DataSet {
      * @param strictNumericParse
      *            The strictNumericParse to set.
      */
-    void setStrictNumericParse(final boolean strictNumericParse);
+    void setStrictNumericParse(boolean strictNumericParse);
 
     /**
      * Sets the properties from the pzconvert.properties file.
@@ -315,7 +178,7 @@ public interface DataSet {
      * @param value
      *          Value to change the column to
      */
-    void setValue(final String column, final String value);
+    void setValue(String column, String value);
     
     /**
      * Clears out the rows in memory from the last parse.
@@ -335,27 +198,5 @@ public interface DataSet {
      */
     void clearAll();
     
-    /**
-     * Does this DataSet contain a column with the given name?
-     * 
-     * @param column
-     *          Column name to check for
-     * @return boolean
-     */
-    boolean contains(final String column);
-    
-    /**
-     * Checks to see if there was no data on the row which was parsed.  This
-     * will thrown an exception if Parser.FlagEmptyRows() is not set to true.
-     * 
-     * @return
-     */
-    boolean isRowEmpty();
-    
-    /**
-     * 
-     * @return the raw data used to create this Row in the DataSet.  Parser.setStoreRawDataToDataSet(true)
-     * must be specified before calling this method.  
-     */
-    String getRawData();
+    Record getRecord();
 }
