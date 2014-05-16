@@ -112,8 +112,8 @@ public final class MapParser {
      * @throws IOException
      * @throws JDOMException
      */
-    public static Map parse(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
-        //use for debug when JDOM complains about the xml
+    public static Map<String,Object> parse(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
+        // use for debug when JDOM complains about the xml
         /* final BufferedReader br = new BufferedReader(xmlStreamReader);
          final FileWriter fw = new FileWriter("c:/test.pz");
          final PrintWriter out = new PrintWriter(fw);
@@ -144,8 +144,8 @@ public final class MapParser {
 
         // lets first get all of the columns that are declared directly under
         // the PZMAP
-        List columns = getColumnChildren(root);
-        final Map mdIndex = new LinkedHashMap(); // retain the same order
+        List<ColumnMetaData> columns = getColumnChildren(root);
+        final Map<String, Object> mdIndex = new LinkedHashMap<String, Object>(); // retain the same order
         // specified in the mapping
         mdIndex.put(FPConstants.DETAIL_ID, columns); // always force detail
         // to the top of
@@ -153,9 +153,9 @@ public final class MapParser {
         mdIndex.put(FPConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns, pzparser));
 
         // get all of the "record" elements and the columns under them
-        final Iterator recordDescriptors = root.getChildren("RECORD").iterator();
+        final Iterator<Element> recordDescriptors = root.getChildren("RECORD").iterator();
         while (recordDescriptors.hasNext()) {
-            final Element xmlElement = (Element) recordDescriptors.next();
+            final Element xmlElement = recordDescriptors.next();
 
             if (xmlElement.getAttributeValue("id").equals(FPConstants.DETAIL_ID)) {
                 // make sure the id attribute does not have a value of "detail" this
@@ -174,14 +174,14 @@ public final class MapParser {
             xmlre.setEndPositition(convertAttributeToInt(xmlElement.getAttribute("endPosition")));
             xmlre.setElementCount(convertAttributeToInt(xmlElement.getAttribute("elementCount")));
             mdIndex.put(xmlElement.getAttributeValue("id"), xmlre);
-            //make a column index for non detail records
+            // make a column index for non detail records
             mdIndex.put(FPConstants.COL_IDX + "_" + xmlElement.getAttributeValue("id"), ParserUtils.buidColumnIndexMap(columns, pzparser));
         }
 
         if (showDebug) {
             setShowDebug(mdIndex);
         }
-        
+
         return mdIndex;
     }
 
@@ -199,14 +199,14 @@ public final class MapParser {
     }
 
     // helper to retrieve the "COLUMN" elements from the given parent
-    private static List getColumnChildren(final Element parent) {
-        final List columnResults = new ArrayList();
-        final Set columnNames = new HashSet();
-        final Iterator xmlChildren = parent.getChildren("COLUMN").iterator();
+    private static List<ColumnMetaData> getColumnChildren(final Element parent) {
+        final List<ColumnMetaData> columnResults = new ArrayList<ColumnMetaData>();
+        final Set<String> columnNames = new HashSet<String>();
+        final Iterator<Element> xmlChildren = parent.getChildren("COLUMN").iterator();
 
         while (xmlChildren.hasNext()) {
             final ColumnMetaData cmd = new ColumnMetaData();
-            final Element xmlColumn = (Element) xmlChildren.next();
+            final Element xmlColumn = xmlChildren.next();
 
             // make sure the name attribute is present on the column
             final String columnName = xmlColumn.getAttributeValue("name");
@@ -218,7 +218,7 @@ public final class MapParser {
             if (columnNames.contains(columnName)) {
                 throw new IllegalArgumentException("Duplicate name column '" + columnName + "'");
             }
-            
+
             cmd.setColName(columnName);
             columnNames.add(columnName);
 
@@ -247,18 +247,16 @@ public final class MapParser {
         showDebug = b;
     }
 
-    private static void setShowDebug(final Map xmlResults) {
-        final Iterator mapIt = xmlResults.entrySet().iterator();
-        while (mapIt.hasNext()) {
+    private static void setShowDebug(final Map<String, Object> xmlResults) {
+        for (Entry<String, Object> entry : xmlResults.entrySet()) {
             XMLRecordElement xmlrecEle = null;
-            final Entry entry = (Entry) mapIt.next();
-            final String recordID = (String) entry.getKey();
-            Iterator columns = null;
+            final String recordID = entry.getKey();
+            List<ColumnMetaData> columns = null;
             if (recordID.equals(FPConstants.DETAIL_ID)) {
-                columns = ((List) entry.getValue()).iterator();
+                columns = ((List<ColumnMetaData>) entry.getValue());
             } else {
                 xmlrecEle = (XMLRecordElement) entry.getValue();
-                columns = xmlrecEle.getColumns().iterator();
+                columns = xmlrecEle.getColumns();
             }
 
             LOGGER.debug(">>>>Column MD Id: " + recordID);
@@ -266,8 +264,7 @@ public final class MapParser {
                 LOGGER.debug("Start Position: " + xmlrecEle.getStartPosition() + " " + "End Position: " + xmlrecEle.getEndPositition() + " "
                         + "Element Number: " + xmlrecEle.getElementNumber() + " " + "Indicator: " + xmlrecEle.getIndicator());
             }
-            while (columns.hasNext()) {
-                final ColumnMetaData cmd = (ColumnMetaData) columns.next();
+            for (ColumnMetaData cmd : columns) {
                 LOGGER.debug("Column Name: " + cmd.getColName() + " LENGTH: " + cmd.getColLength());
 
             }
@@ -289,25 +286,25 @@ public final class MapParser {
     public static MetaData parseMap(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
         final Map map = parse(xmlStreamReader, pzparser);
 
-        final List col = (List) map.get(FPConstants.DETAIL_ID);
+        final List<ColumnMetaData> col = (List<ColumnMetaData>) map.get(FPConstants.DETAIL_ID);
         map.remove(FPConstants.DETAIL_ID);
 
         final Map m = (Map) map.get(FPConstants.COL_IDX);
         map.remove(FPConstants.COL_IDX);
-        
-        //loop through the map and remove anything else that is an index of FPConstancts.COL_IDX + _
-        //these were put in for the writer.  
-        //TODO maybe these shoudld be thrown into the MetaData instead of just discarded, but they are unused
-        //in the Reader the moment.  This parseMap is not utilized in the writer so it is safe to remove them here
+
+        // loop through the map and remove anything else that is an index of FPConstancts.COL_IDX + _
+        // these were put in for the writer.
+        // TODO maybe these shoudld be thrown into the MetaData instead of just discarded, but they are unused
+        // in the Reader the moment. This parseMap is not utilized in the writer so it is safe to remove them here
         final Iterator entrySetIt = map.entrySet().iterator();
         while (entrySetIt.hasNext()) {
-        	final Entry e = (Entry)entrySetIt.next();
-        	if (((String)e.getKey()).startsWith(FPConstants.COL_IDX + "_")) {
-        		entrySetIt.remove();
-        	}
+            final Entry e = (Entry) entrySetIt.next();
+            if (((String) e.getKey()).startsWith(FPConstants.COL_IDX + "_")) {
+                entrySetIt.remove();
+            }
         }
-        
-       // System.out.println(map);
+
+        // System.out.println(map);
         return new MetaData(col, m, map);
     }
 }

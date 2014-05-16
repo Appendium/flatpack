@@ -35,9 +35,9 @@ package net.sf.flatpack;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.xml.MetaData;
 
@@ -68,7 +68,7 @@ public abstract class AbstractParser implements Parser {
 
     private Reader dataSourceReader = null;
 
-    private List readersToClose = null;
+    private List<Reader> readersToClose = null;
 
     private boolean flagEmptyRows;
 
@@ -134,16 +134,14 @@ public abstract class AbstractParser implements Parser {
     // protected void setColumnMD(final Map map) {
     // columnMD = map;
     // }
-    // this is used for backward compatability. We are instantiating Readers
+    // this is used for backward compatibility. We are instantiating Readers
     // from
     // InputStream and File from previous versions. Close out any Readers in the
     // readersToClose list. This can be removed after we remove the deprecated
     // methods
     protected void closeReaders() throws IOException {
         if (readersToClose != null) {
-            final Iterator readersToCloseIt = readersToClose.iterator();
-            while (readersToCloseIt.hasNext()) {
-                final Reader r = (Reader) readersToCloseIt.next();
+            for(Reader r : readersToClose) {
                 r.close();
             }
         }
@@ -154,12 +152,12 @@ public abstract class AbstractParser implements Parser {
     // completed.
     protected void addToCloseReaderList(final Reader r) {
         if (readersToClose == null) {
-            readersToClose = new ArrayList();
+            readersToClose = new ArrayList<Reader>();
         }
         readersToClose.add(r);
     }
 
-    protected void addToMetaData(final List columns) {
+    protected void addToMetaData(final List<ColumnMetaData> columns) {
         if (pzMetaData == null) {
             pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(columns, this));
         } else {

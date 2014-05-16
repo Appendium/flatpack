@@ -27,7 +27,7 @@ public class FixedWidthParserUtilsTest extends TestCase {
     }
 
     private void check(final String[] columnData, final int[] lengths, final String[] expected) {
-        final List columnMetaData = new ArrayList();
+        final List<ColumnMetaData> columnMetaData = new ArrayList<ColumnMetaData>();
 
         assertEquals("data and col lengths different size...", columnData.length, lengths.length);
 
@@ -37,13 +37,13 @@ public class FixedWidthParserUtilsTest extends TestCase {
             columnMetaData.add(cmd);
         }
 
-        final StringBuffer lineToParse = new StringBuffer();
+        final StringBuilder lineToParse = new StringBuilder();
         for (int i = 0; i < columnData.length; i++) {
             // padd each column
             lineToParse.append(columnData[i]).append(ParserUtils.padding(lengths[i] - columnData[i].length(), ' '));
         }
 
-        final List splitResult = FixedWidthParserUtils.splitFixedText(columnMetaData, lineToParse.toString());
+        final List<String> splitResult = FixedWidthParserUtils.splitFixedText(columnMetaData, lineToParse.toString());
 
         //compare the parse results to the expected results
         assertEquals("did not return correct number of cols...", expected.length, splitResult.size());

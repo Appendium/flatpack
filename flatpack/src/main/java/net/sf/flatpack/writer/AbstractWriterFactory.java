@@ -18,17 +18,17 @@ import org.jdom.JDOMException;
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
 public abstract class AbstractWriterFactory extends Object implements WriterFactory {
-    private Map mapping;
+    private Map<String,Object> mapping;
 
     protected AbstractWriterFactory() {
         super();
 
-        mapping = new HashMap();
+        mapping = new HashMap<String,Object>();
         mapping.put(FPConstants.DETAIL_ID, new ArrayList());
         mapping.put(FPConstants.COL_IDX, new HashMap());
     }
 
-    protected AbstractWriterFactory(final Map mapping) {
+    protected AbstractWriterFactory(final Map<String,Object> mapping) {
         super();
         this.mapping = mapping;
     }
@@ -43,7 +43,7 @@ public abstract class AbstractWriterFactory extends Object implements WriterFact
         }
     }
 
-    protected Map getColumnMapping() {
+    protected Map<String,Object> getColumnMapping() {
         // TODO DO: return deep mutable clone here or better: make the Map a first class
         // citizen of the library
         return Collections.unmodifiableMap(mapping);

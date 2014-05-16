@@ -76,9 +76,9 @@ public class ExcelTransformer {
 
         try {
             final String[] columnNames = ds.getColumns();
-            final List exportOnlyColumnsList = getExportOnlyColumns() != null ? Arrays.asList(exportOnlyColumns) : null;
-            final List excludeFromExportColumnsList = getExcludeFromExportColumns() != null ? Arrays.asList(excludeFromExportColumns) : null;
-            final List numericColumnList = getNumericColumns() != null ? Arrays.asList(getNumericColumns()) : new ArrayList();
+            final List<String> exportOnlyColumnsList = getExportOnlyColumns() != null ? Arrays.asList(exportOnlyColumns) : null;
+            final List<String> excludeFromExportColumnsList = getExcludeFromExportColumns() != null ? Arrays.asList(excludeFromExportColumns) : null;
+            final List<String> numericColumnList = getNumericColumns() != null ? Arrays.asList(getNumericColumns()) : new ArrayList<String>();
             // get the current position of the DataSet. We have to go to the top
             // to do this write,
             // and we will put the pionter back where it was after we are done

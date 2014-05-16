@@ -14,7 +14,7 @@ public abstract class PZWriterTestCase extends TestCase {
             throw new IllegalArgumentException("parameter string1 may not be null");
         }
 
-        final StringBuffer result = new StringBuffer(line1);
+        final StringBuilder result = new StringBuilder(line1);
         result.append(lineSeparator);
         if (line2 != null) {
             result.append(line2);

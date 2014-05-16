@@ -129,7 +129,7 @@ public class RowRecord implements Record {
 	}
 
 	public double getDouble(final String column) {
-		final StringBuffer newString = new StringBuffer();
+		final StringBuilder newString = new StringBuilder();
 		final String s = getStringValue(column);
 
 		if (!strictNumericParse) {
@@ -166,7 +166,7 @@ public class RowRecord implements Record {
 				metaData, column, columnCaseSensitive));
 	}
 
-	public Object getObject(final String column, final Class classToConvertTo) {
+	public Object getObject(final String column, final Class<?> classToConvertTo) {
 		final String s = getStringValue(column);
 		return ParserUtils.runPzConverter(pzConvertProps, s, classToConvertTo);
 	}

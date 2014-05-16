@@ -59,67 +59,19 @@ public final class FixedWidthParserUtils {
      *            Line of text to be parsed against the ColumnMetaData
      * @return List Collection of Strings. Each element representing a column
      */
-    public static List splitFixedText(final List columnMetaData, final String lineToParse) {
-        final List splitResult = new ArrayList();
+    public static List<String> splitFixedText(final List<ColumnMetaData> columnMetaData, final String lineToParse) {
+        final List<String> splitResult = new ArrayList<String>();
         int recPosition = 1;
-        for (int i = 0; i < columnMetaData.size(); i++) {
-            final ColumnMetaData colMetaDataObj = (ColumnMetaData) columnMetaData.get(i);
+        for (ColumnMetaData colMetaDataObj : columnMetaData) {
             final String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);
             recPosition += colMetaDataObj.getColLength();
-            //make sure that we preserve leading spaces as they most likely are there intentionally. 
-            //This was previously issuing a trim() 
+            // make sure that we preserve leading spaces as they most likely are there intentionally.
+            // This was previously issuing a trim()
             splitResult.add(ParserUtils.rTrim(tempValue));
         }
 
         return splitResult;
     }
-
-//    /**
-//     * Returns the key to the list of ColumnMetaData objects. Returns the
-//     * correct MetaData per the mapping file and the data contained on the line
-//     *
-//     *
-//     * @param columnMD
-//     * @param line
-//     * @return List - ColumMetaData
-//     * @deprecated use the PZMetaData
-//     */
-//    public static String getCMDKey(final Map columnMD, final String line) {
-//        if (columnMD.size() == 1) {
-//            // no <RECORD> elements were specified for this parse, just return the
-//            // detail id
-//            return FPConstants.DETAIL_ID;
-//        }
-//        final Iterator mapEntries = columnMD.entrySet().iterator();
-//        // loop through the XMLRecordElement objects and see if we need a
-//        // different MD object
-//        while (mapEntries.hasNext()) {
-//            final Entry entry = (Entry) mapEntries.next();
-//            if (entry.getKey().equals(FPConstants.DETAIL_ID) || entry.getKey().equals(FPConstants.COL_IDX)) {
-//                continue; // skip this key will be assumed if none of the
-//                // others match
-//            }
-//            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
-//
-//            if (recordXMLElement.getEndPositition() > line.length()) {
-//                // make sure our substring is not going to fail
-//                continue;
-//            }
-//            final int subfrm = recordXMLElement.getStartPosition() - 1; // convert
-//            // to 0
-//            // based
-//            final int subto = recordXMLElement.getEndPositition();
-//            if (line.substring(subfrm, subto).equals(recordXMLElement.getIndicator())) {
-//                // we found the MD object we want to return
-//                return (String) entry.getKey();
-//            }
-//
-//        }
-//
-//        // must be a detail line
-//        return FPConstants.DETAIL_ID;
-//
-//    }
 
     /**
      * Returns the key to the list of ColumnMetaData objects. Returns the
@@ -136,16 +88,16 @@ public final class FixedWidthParserUtils {
             // detail id
             return FPConstants.DETAIL_ID;
         }
-        final Iterator mapEntries = columnMD.xmlRecordIterator();
+        Iterator<Entry<String, XMLRecordElement>> mapEntries = columnMD.xmlRecordIterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (mapEntries.hasNext()) {
-            final Entry entry = (Entry) mapEntries.next();
-            //            if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
-            //                continue; // skip this key will be assumed if none of the
+            final Entry<String, XMLRecordElement> entry = mapEntries.next();
+            // if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
+            // continue; // skip this key will be assumed if none of the
             // others match
-            //            }
-            final XMLRecordElement recordXMLElement = (XMLRecordElement) entry.getValue();
+            // }
+            final XMLRecordElement recordXMLElement = entry.getValue();
 
             if (recordXMLElement.getEndPositition() > line.length()) {
                 // make sure our substring is not going to fail
@@ -157,7 +109,7 @@ public final class FixedWidthParserUtils {
             final int subto = recordXMLElement.getEndPositition();
             if (line.substring(subfrm, subto).equals(recordXMLElement.getIndicator())) {
                 // we found the MD object we want to return
-                return (String) entry.getKey();
+                return entry.getKey();
             }
 
         }

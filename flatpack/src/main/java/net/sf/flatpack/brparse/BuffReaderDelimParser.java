@@ -42,6 +42,7 @@ import java.util.List;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultDataSet;
 import net.sf.flatpack.DelimiterParser;
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
@@ -139,11 +140,11 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             //is it going to create too much overhead to do a null check here as well???
             //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
             // column values
-            List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
+            List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
             //            final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
             final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
             //            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
-            final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
+            final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
             final int columnCount = cmds.size();
             // DEBUG
 

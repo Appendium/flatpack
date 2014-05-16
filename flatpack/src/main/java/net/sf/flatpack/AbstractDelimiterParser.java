@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
@@ -146,9 +147,9 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     continue;
                 }
                 // column values
-                List columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
+                List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
-                final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
+                final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 final int columnCount = cmds.size();
 
                 if (columns.size() > columnCount) {
@@ -227,7 +228,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      */
     protected String fetchNextRecord(final BufferedReader br, final char qual, final char delim) throws IOException {
         String line = null;
-        final StringBuffer lineData = new StringBuffer();
+        final StringBuilder lineData = new StringBuilder();
         final String linebreak = System.getProperty("line.separator");
         boolean processingMultiLine = false;
 

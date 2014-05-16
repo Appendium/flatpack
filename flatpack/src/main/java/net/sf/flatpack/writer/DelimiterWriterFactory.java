@@ -41,15 +41,15 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
         this.qualifier = qualifier;
     }
 
-    public DelimiterWriterFactory(final Map mapping) {
+    public DelimiterWriterFactory(final Map<String,Object> mapping) {
         this(mapping, DEFAULT_DELIMITER, DEFAULT_QUALIFIER);
     }
 
-    public DelimiterWriterFactory(final Map mapping, final char delimiter) {
+    public DelimiterWriterFactory(final Map<String,Object> mapping, final char delimiter) {
         this(mapping, delimiter, DEFAULT_QUALIFIER);
     }
 
-    public DelimiterWriterFactory(final Map mapping, final char delimiter, final char qualifier) {
+    public DelimiterWriterFactory(final Map<String,Object> mapping, final char delimiter, final char qualifier) {
         super(mapping);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
@@ -73,9 +73,9 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
 
     // TODO DO: check that no column titles can be added after first nextRecord
     public void addColumnTitle(final String columnTitle) {
-        final Map columnMapping = this.getColumnMapping();
-        final List columnMetaDatas = (List) columnMapping.get(FPConstants.DETAIL_ID);
-        final Map columnIndices = (Map) columnMapping.get(FPConstants.COL_IDX);
+        final Map<String,Object> columnMapping = this.getColumnMapping();
+        final List<ColumnMetaData> columnMetaDatas = (List<ColumnMetaData>) columnMapping.get(FPConstants.DETAIL_ID);
+        final Map<Integer, String> columnIndices = (Map<Integer, String>) columnMapping.get(FPConstants.COL_IDX);
 
         final ColumnMetaData metaData = new ColumnMetaData();
         metaData.setColName(columnTitle);

@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
 
 /**
@@ -16,29 +18,29 @@ import net.sf.flatpack.util.FPConstants;
  *
  */
 public class MetaData {
-    private List columnsNames;
+    private List<ColumnMetaData> columnsNames;
     private Map columnIndexMap;
-    private Map xmlRecordElements;
+    private Map<String, XMLRecordElement> xmlRecordElements;
 
     public MetaData(final Map fullMapFromPZParser) {
-        columnsNames = (List) fullMapFromPZParser.get(FPConstants.DETAIL_ID);
+        columnsNames = (List<ColumnMetaData>) fullMapFromPZParser.get(FPConstants.DETAIL_ID);
         columnIndexMap = (Map) fullMapFromPZParser.get(FPConstants.COL_IDX);
         xmlRecordElements = fullMapFromPZParser;
     }
 
-    public MetaData(final List columnNames, final Map columnIndexMap) {
+    public MetaData(final List<ColumnMetaData> columnNames, final Map columnIndexMap) {
         this.columnsNames = Collections.unmodifiableList(columnNames);
         this.columnIndexMap = Collections.unmodifiableMap(columnIndexMap);
         this.xmlRecordElements = new HashMap();
     }
 
-    MetaData(final List columnNames, final Map columnIndexMap, final Map xmlRecordElements) {
+    MetaData(final List<ColumnMetaData> columnNames, final Map columnIndexMap, final Map<String, XMLRecordElement> xmlRecordElements) {
         this.columnsNames = Collections.unmodifiableList(columnNames);
         this.columnIndexMap = columnIndexMap;
         this.xmlRecordElements = xmlRecordElements;
     }
 
-    public List getColumnsNames() {
+    public List<ColumnMetaData> getColumnsNames() {
         return columnsNames;
     }
 
@@ -50,7 +52,7 @@ public class MetaData {
         this.columnIndexMap = columnIndexMap;
     }
 
-    public void setColumnsNames(final List columnsNames) {
+    public void setColumnsNames(final List<ColumnMetaData> columnsNames) {
         this.columnsNames = Collections.unmodifiableList(columnsNames);
     }
 
@@ -58,11 +60,11 @@ public class MetaData {
         return xmlRecordElements != null && !xmlRecordElements.isEmpty();
     }
 
-    public Iterator xmlRecordIterator() {
+    public Iterator<Entry<String, XMLRecordElement>> xmlRecordIterator() {
         return xmlRecordElements.entrySet().iterator();
     }
 
-    public List getListColumnsForRecord(final String key) {
+    public List<ColumnMetaData> getListColumnsForRecord(final String key) {
         return ((XMLRecordElement) xmlRecordElements.get(key)).getColumns();
     }
 
@@ -72,7 +74,8 @@ public class MetaData {
             idx = ((XMLRecordElement) xmlRecordElements.get(key)).getColumnIndex(columnName);
         } else if (key == null || key.equals(FPConstants.DETAIL_ID)) {
             final Integer i = (Integer) columnIndexMap.get(columnName);
-            if (i != null) { //happens when the col name does not exist in the mapping
+            if (i != null) { // happens when the col name does not exist in the
+                             // mapping
                 idx = i.intValue();
             }
         }
@@ -80,7 +83,7 @@ public class MetaData {
     }
 
     public String toString() {
-        final StringBuffer buf = new StringBuffer();
+        final StringBuilder buf = new StringBuilder();
         buf.append("Col Names:").append(columnsNames).append(System.getProperty("line.separator"));
         buf.append("Col Index Map:").append(columnIndexMap).append(System.getProperty("line.separator"));
         buf.append("XML Record Elements:").append(xmlRecordElements).append(System.getProperty("line.separator"));

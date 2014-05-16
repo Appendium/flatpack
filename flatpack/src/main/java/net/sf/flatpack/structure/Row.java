@@ -43,16 +43,16 @@ import java.util.List;
  */
 public class Row {
     /** List to hold all columns that exist in the row */
-    private List cols;
+    private List<String> cols;
 
     /** Row number in flat file */
     private int rowNumber;
 
     /** key to the MD for this row, null will indicate it is "detail" MD */
     private String mdkey;
-    
+
     private boolean empty;
-    
+
     private String rawData;
 
     /**
@@ -60,7 +60,7 @@ public class Row {
      *
      */
     public Row() {
-        cols = new ArrayList();
+        cols = new ArrayList<String>();
     }
 
     /**
@@ -79,9 +79,9 @@ public class Row {
      * @param columns -
      *            List of Strings to append to the row
      */
-    public void addColumn(final List columns) {
+    public void addColumn(final List<String> columns) {
         if (cols == null) {
-            cols = new ArrayList();
+            cols = new ArrayList<String>();
         }
         cols.addAll(columns);
     }
@@ -94,7 +94,7 @@ public class Row {
      * @return String value of column
      */
     public String getValue(final int colPosition) {
-        return (String) cols.get(colPosition);
+        return cols.get(colPosition);
     }
 
     /**
@@ -133,7 +133,7 @@ public class Row {
      * 
      * @return Vector
      */
-    public List getCols() {
+    public List<String> getCols() {
         return cols;
     }
 
@@ -143,7 +143,7 @@ public class Row {
      * @param cols -
      *            Vector of Strings
      */
-    public void setCols(final List cols) {
+    public void setCols(final List<String> cols) {
         this.cols = cols;
     }
 

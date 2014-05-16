@@ -101,7 +101,7 @@ public interface Record {
 	 *            Class type to convert to
 	 * @return Object Value of the column in the specified object
 	 */
-	Object getObject(String column, Class classToConvertTo);
+	Object getObject(String column, Class<?> classToConvertTo);
 
 	/**
 	 * Returns a String array of column names in the DataSet. This will assume
@@ -160,5 +160,4 @@ public interface Record {
      * must be specified before calling this method.  
      */
     String getRawData();
-
 }

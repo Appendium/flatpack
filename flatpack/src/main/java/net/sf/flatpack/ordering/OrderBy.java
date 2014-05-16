@@ -61,7 +61,7 @@ public class OrderBy implements Comparator, Serializable {
     private static final long serialVersionUID = 5622406168247149895L;
 
     /** collection of order elements to sort by */
-    private final List orderbys = new ArrayList();
+    private final List<OrderColumn> orderbys = new ArrayList<OrderColumn>();
 
     private MetaData metaData;
 

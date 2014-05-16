@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.flatpack.Parser;
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.ParserUtils;
 
 /**
@@ -31,7 +32,7 @@ public class XMLRecordElement {
     private int elementNumber = 0;
     private int elementCount = 0;
     private String indicator;
-    private List columns;
+    private List<ColumnMetaData> columns;
     private Map columnIndex;
 
     /**
@@ -98,7 +99,7 @@ public class XMLRecordElement {
      * @return List Collection of ColumnMetaData objects
      * @see net.sf.flatpack.structure.ColumnMetaData
      */
-    public List getColumns() {
+    public List<ColumnMetaData> getColumns() {
         return columns;
     }
 
@@ -118,7 +119,7 @@ public class XMLRecordElement {
      * @param p
      *          PZParser being used.  Can be null.
      */
-    public void setColumns(final List columnsToUse, final Parser p) {
+    public void setColumns(final List<ColumnMetaData> columnsToUse, final Parser p) {
         this.columns = columnsToUse;
         this.columnIndex = ParserUtils.buidColumnIndexMap(columns, p);
     }

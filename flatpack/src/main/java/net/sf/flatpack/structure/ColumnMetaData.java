@@ -122,7 +122,7 @@ public class ColumnMetaData {
     }
 
     public String toString() {
-        final StringBuffer buf = new StringBuffer();
+        final StringBuilder buf = new StringBuilder();
         buf.append("Name:").append(colName).append(" Length:").append(colLength).append(" Start:").append(startPosition);
         buf.append(" End:").append(endPosition).append(System.getProperty("line.separator"));
         return buf.toString();

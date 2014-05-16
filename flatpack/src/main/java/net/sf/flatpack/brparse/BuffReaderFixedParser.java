@@ -43,9 +43,10 @@ import java.util.Map;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultDataSet;
 import net.sf.flatpack.FixedLengthParser;
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.util.FixedWidthParserUtils;
 import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FixedWidthParserUtils;
 import net.sf.flatpack.util.ParserUtils;
 
 import org.slf4j.Logger;
@@ -171,7 +172,7 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
 	            final Row row = new Row();
 	            row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey);
 	
-	            final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
+	            final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
 	            row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
 	
 	            row.setRowNumber(lineCount);

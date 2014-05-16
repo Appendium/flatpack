@@ -38,9 +38,10 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
-import net.sf.flatpack.util.FixedWidthParserUtils;
 import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FixedWidthParserUtils;
 import net.sf.flatpack.util.ParserUtils;
 
 import org.slf4j.Logger;
@@ -138,7 +139,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 final Row row = new Row();
                 row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
 
-                final List cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
+                final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
                 row.setRowNumber(lineCount);
                 
