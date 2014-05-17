@@ -49,6 +49,13 @@ public interface Parser {
      * @return the data set resulting from parsing
      */
     DataSet parse();
+    
+    /**
+     * Parse the data and return an interface where one can extract one record at a time, until
+     * next returns false;
+     * @since 3.4
+     */
+    StreamingDataSet parseAsStream();
 
     /**
      * @return true, lines with less columns then the amount of column headers

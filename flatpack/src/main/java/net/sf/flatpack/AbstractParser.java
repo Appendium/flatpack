@@ -124,6 +124,11 @@ public abstract class AbstractParser implements Parser {
         return doParse();
     }
 
+    public final StreamingDataSet parseAsStream() {
+        return new StreamingRecord(parse());
+    }
+    
+    
     protected abstract DataSet doParse();
 
     protected abstract void init();
