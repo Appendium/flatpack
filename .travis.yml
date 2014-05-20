@@ -2,6 +2,8 @@ language: java
 jdk:
   - oraclejdk7
 notifications:
-  email: true
-    - opensource@appendium.com
-    
+  email:
+    recipients:
+      - opensource@appendium.com
+    on_success: always
+    on_failure: always
