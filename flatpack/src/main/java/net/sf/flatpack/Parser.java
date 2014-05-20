@@ -73,7 +73,7 @@ public interface Parser {
 
     /**
      * 
-     * @return true, detail lines with a length or column count > the mapping
+     * @return true, detail lines with a length or column count &gt; the mapping
      *         definition will be truncated and the reader will NOT register
      *         these lines as errors in the DataError collection.
      */
@@ -82,7 +82,7 @@ public interface Parser {
     /**
      * 
      * @param ignoreExtraColumns
-     *            when true, detail lines with a length or column count > the
+     *            when true, detail lines with a length or column count &gt; the
      *            mapping definition will be truncated and the reader will NOT
      *            register these lines as errors in the DataError collection.
      */

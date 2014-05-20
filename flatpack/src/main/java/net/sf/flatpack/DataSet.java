@@ -110,7 +110,7 @@ public interface DataSet extends Record, RecordDataSet {
     /**
      * Orders the data by column(s) specified. This will reposition the cursor
      * to the top of the DataSet when executed. This is currently not supported
-     * when specying <RECORD> elements in the mapping. An exception will be
+     * when specifying &lt;RECORD&gt; elements in the mapping. An exception will be
      * thrown if this situation occurs
      *
      * @param ob -

@@ -339,7 +339,7 @@ public class DefaultDataSet implements DataSet {
     }
 
     /**
-     * Checks to see if the row has the given <RECORD> id
+     * Checks to see if the row has the given &lt;RECORD&gt; id
      *
      * @param recordID
      * @return boolean

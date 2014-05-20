@@ -107,7 +107,6 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
      *
      * @param ds
      * @return Row
-     * @throws IOException
      */
     public Row buildRow(final DefaultDataSet ds)  {
         /** loop through each line in the file */

@@ -660,8 +660,7 @@ public final class ParserUtils {
      * Note: this method doesn't not support padding with <a
      * href="http://www.unicode.org/glossary/#supplementary_character">Unicode
      * Supplementary Characters</a> as they require a pair of <code>char</code>s
-     * to be represented. If you are needing to support full I18N of your
-     * applications consider using {@link #repeat(String, int)} instead.
+     * to be represented. 
      * </p>
      *
      * @param repeat
@@ -670,8 +669,6 @@ public final class ParserUtils {
      *            character to repeat
      * @return String with repeated character
      * @throws IndexOutOfBoundsException
-     *             if <code>repeat &lt; 0</code>
-     * @see #repeat(String, int)
      */
     public static String padding(final int repeat, final char padChar) {
         if (repeat < 0) {
@@ -790,11 +787,11 @@ public final class ParserUtils {
     }
 
     /**
-     * Checks a list of <String> elements to see if every element
+     * Checks a list of &lt;String&gt; elements to see if every element
      * in the list is empty.
      * 
      * @param l
-     *          List of <String>
+     *          List of &lt;String&gt;
      * @return boolean
      *              true when all elements are empty
      */
@@ -817,7 +814,7 @@ public final class ParserUtils {
      *             Value to be converted to the Object
      * @param typeToReturn
      *             Type of object to be returned
-     * @throws PZConvertExeption
+     * @throws FPConvertException
      * @return Object
      */
     public static Object runPzConverter(final Properties classXref, final String value, final Class<?> typeToReturn) {

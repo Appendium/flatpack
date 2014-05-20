@@ -35,7 +35,7 @@ import net.sf.flatpack.DataSet;
  * Converts a DataSet object into an excel spreadsheet.
  * 
  * Only detail records will be contained in the export.
- * Header / Trailer records defined by <record> tags in the 
+ * Header / Trailer records defined by &lt;record&gt; tags in the 
  * pzmap will be ignored on the export.
  * 
  * @author Paul Zepernick

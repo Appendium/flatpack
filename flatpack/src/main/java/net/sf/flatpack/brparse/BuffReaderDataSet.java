@@ -102,9 +102,8 @@ public class BuffReaderDataSet extends DefaultDataSet {
     /**
      * Not Supported! 
      * @param ob - OrderBy object
-     * @exception Exception
-     * @see com.pz.reader.ordering.OrderBy
-     * @see com.pz.reader.ordering.OrderColumn
+     * @see net.sf.flatpack.ordering.OrderBy
+     * @see net.sf.flatpack.ordering.OrderColumn
      */
     public void orderRows(final OrderBy ob) {
         throw new UnsupportedOperationException("orderRows() is Not Implemented");

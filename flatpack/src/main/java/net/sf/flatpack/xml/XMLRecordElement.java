@@ -24,7 +24,7 @@ import net.sf.flatpack.util.ParserUtils;
 /**
  * @author Paul Zepernick
  * 
- * Definition for a <RECORD> element in a pzmap file
+ * Definition for a &lt;RECORD&gt; element in a pzmap file
  */
 public class XMLRecordElement {
     private int startPosition = 0;
@@ -58,8 +58,8 @@ public class XMLRecordElement {
     }
 
     /**
-     * @param endPostition
-     *            The endPostition to set.
+     * @param endPositition
+     *            The endPositition to set.
      */
     public void setEndPositition(final int endPositition) {
         this.endPositition = endPositition;
@@ -133,8 +133,8 @@ public class XMLRecordElement {
     }
 
     /**
-     * Used to determine the <record> mapping the row belongs to.  Will
-     * only be evaluated if > 0.
+     * Used to determine the &lt;record&gt; mapping the row belongs to.  Will
+     * only be evaluated if &gt; 0.
      * 
      * @return the elementCount
      */
@@ -143,8 +143,8 @@ public class XMLRecordElement {
     }
 
     /**
-     * Used to determine the <record> mapping the row belongs to.  Will
-     * only be evaluated if > 0.
+     * Used to determine the &lt;record&gt; mapping the row belongs to.  Will
+     * only be evaluated if &gt; 0.
      * 
      * @param elementCount the elementCount to set
      */

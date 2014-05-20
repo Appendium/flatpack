@@ -79,11 +79,11 @@ public final class MapParser {
 
     /**
      * Method based on InputStream. Reads the XMLDocument for a PZMetaData
-     * file from an InputStream, WebStart combatible. Parses the XML file, and
+     * file from an InputStream, WebStart compatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
      *
      * @param xmlStream
-     * @return Map <records> with their corrisponding
+     * @return Map &lt;records&gt; with their corresponding
      * @throws IOException
      * @throws JDOMException
      * @deprecated please use parse(Reader)
@@ -102,13 +102,13 @@ public final class MapParser {
 
     /**
      * New method based on Reader. Reads the XMLDocument for a PZMetaData
-     * file from an InputStream, WebStart combatible. Parses the XML file, and
+     * file from an InputStream, WebStart compatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
      *
      * @param xmlStreamReader
      * @param pzparser
-     *          Can be null.  Allows additional opts to be set durring the XML map read
-     * @return Map <records> with their corrisponding
+     *          Can be null.  Allows additional opts to be set during the XML map read
+     * @return Map &lt;records&gt; with their corresponding
      * @throws IOException
      * @throws JDOMException
      */
@@ -273,13 +273,13 @@ public final class MapParser {
 
     /**
      * New method based on Reader. Reads the XMLDocument for a PZMetaData
-     * file from an InputStream, WebStart combatible. Parses the XML file, and
+     * file from an InputStream, WebStart compatible. Parses the XML file, and
      * returns a Map containing Lists of ColumnMetaData.
      *
      * @param xmlStreamReader
      * @param pzparser
-     *          Can be null.  Allows additional opts to be set durring the XML map read
-     * @return Map <records> with their corrisponding
+     *          Can be null.  Allows additional opts to be set during the XML map read
+     * @return Map &lt;records&gt; with their corresponding
      * @throws IOException
      * @throws JDOMException
      */

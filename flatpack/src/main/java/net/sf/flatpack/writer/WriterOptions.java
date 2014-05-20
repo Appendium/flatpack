@@ -35,7 +35,7 @@ public class WriterOptions {
 	 * When this is set to true, the addRecordEntry(column, value) will throw an exception.  You
 	 * must use addRecordEntry(value).
 	 * 
-	 * @param noColumnMappings the noColumnMappings to set
+	 * @param autoPrintHeader the autoPrintHeader to set
 	 */
 	public WriterOptions autoPrintHeader(boolean autoPrintHeader) {
 		this.autoPrintHeader = autoPrintHeader;

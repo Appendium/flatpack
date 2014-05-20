@@ -105,7 +105,7 @@ public interface Record {
 
 	/**
 	 * Returns a String array of column names in the DataSet. This will assume
-	 * 'detail' <RECORD> ID.
+	 * 'detail' &lt;RECORD&gt; ID.
 	 *
 	 * @return String[]
 	 */
@@ -113,7 +113,7 @@ public interface Record {
 
 	/**
 	 * Returns a String array of column names in the DataSet for a given
-	 * <RECORD> id
+	 *  &lt;RECORD&gt; id
 	 *
 	 * @param recordID
 	 * @return String[]
@@ -131,7 +131,7 @@ public interface Record {
 	int getRowNo();
 
 	/**
-	 * Checks to see if the row has the given <RECORD> id
+	 * Checks to see if the row has the given  &lt;RECORD&gt; id
 	 *
 	 * @param recordID
 	 * @return boolean

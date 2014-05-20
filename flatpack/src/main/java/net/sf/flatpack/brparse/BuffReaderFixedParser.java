@@ -125,7 +125,6 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
      *
      * @param ds
      * @return Row
-     * @throws IOException
      */
     public Row buildRow(final DefaultDataSet ds) {
         String line = null;
