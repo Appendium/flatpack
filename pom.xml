@@ -39,23 +39,6 @@
 		</license>
 	</licenses>
 
-<!-- 
-	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<name>nexus</name>
-			<url>http://192.168.171.12:8081/nexus/content/repositories/thirdparty/</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>snapshots</name>
-			<url>http://192.168.171.12:8081/nexus/content/repositories/thirdparty_snapshots/</url>
-		</snapshotRepository>
-
-	</distributionManagement>
- -->
-
-
 	<developers>
 		<developer>
 			<name>Paul Zepernick</name>
@@ -148,11 +131,20 @@
 		<configuration> <archive> <manifest> <addClasspath>true</addClasspath> </manifest> 
 		</archive> </configuration> </plugin> </plugins> </build> -->
 
+
+	<scm>
+		<connection>scm:git:git@github.com:appendium/flatpack.git</connection>
+		<developerConnection>scm:git:git@github.com:/Appendium/flatpack.git</developerConnection>
+		<url>git@github.com:/Appendium/flatpack.git</url>
+	</scm>
+
+<!-- 
 	<scm>
 		<connection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/</connection>
 		<developerConnection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/</developerConnection>
 		<url>http://flatpack.svn.sourceforge.net/viewvc/flatpack/</url>
 	</scm>
+ -->
 	<!-- <reporting> <plugins> <plugin> <artifactId>maven-changelog-plugin</artifactId> 
 		</plugin> <plugin> <artifactId>maven-changes-plugin</artifactId> <configuration> 
 		<xmlPath>${basedir}/xdocs/changes.xml</xmlPath> </configuration> </plugin> 
@@ -200,10 +192,12 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
 			</plugin>
+			<!-- 
 			<plugin>
 				<groupId>net.sf</groupId>
 				<artifactId>stat-scm</artifactId>
 			</plugin>
+			 -->
 		</plugins>
 	</reporting>
 
