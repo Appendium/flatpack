@@ -213,8 +213,8 @@
 
 	<scm>
 		<connection>scm:git:git@github.com:appendium/flatpack.git</connection>
-		<developerConnection>scm:git:git@github.com:/Appendium/flatpack.git</developerConnection>
-		<url>git@github.com:/Appendium/flatpack.git</url>
+		<url>scm:git:git@github.com:appendium/flatpack.git</url>
+		<developerConnection>scm:git:git@github.com:appendium/flatpack.git</developerConnection>
 	</scm>
 
 	<distributionManagement>
