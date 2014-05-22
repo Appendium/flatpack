@@ -229,10 +229,12 @@
 			<plugin>
 				<artifactId>maven-changelog-plugin</artifactId>
 			</plugin>
+			<!-- 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
 			</plugin>
+			 -->
 			<!-- <plugin> <groupId>net.sf</groupId> <artifactId>stat-scm</artifactId> 
 				</plugin> -->
 		</plugins>
