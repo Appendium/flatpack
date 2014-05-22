@@ -53,8 +53,6 @@
 
 	<li><strong>Problem Sorting Data Prior To File Processing?</strong></li>
 	<ul><li>FlatPack provides a sorting mechanism for your flat files.  This allows for your data to be properly sorted before processing your business logic.</li></ul>
-
-
     	<li><strong>Bad Numeric Data?</strong></li>
     	<ul><li>Do you often receive numeric data with dollar signs, or commas?  FlatPack has the ability to strip these out and return as a double or int.
             Even empty elements or hard spaces can be converted to a numeric without issue.</li></ul>
@@ -85,16 +83,16 @@
     <subsection name="New way to Read Delimited File With Immutable Record">
 
     <div class="source"><pre>
-    	// Obtain the proper parser for your needs: basic CSV Parser with column Header
-    	Parser parser = DefaultParserFactory.newCsvParser(new FileReader("DataFile.csv"));
+    // Obtain the proper parser for your needs: basic CSV Parser with column Header
+    Parser parser = DefaultParserFactory.newCsvParser(new FileReader("DataFile.csv"));
 
-        //obtain DataSet
-        StreamingDataSet ds = parser.parseAsStream();
+    //obtain DataSet
+    StreamingDataSet ds = parser.parseAsStream();
 
-        while (ds.next()){ //loop through file
-            Record record = ds.getRecord(); // immutable object, you can give it to a thread.
-            String value = record.getString("mycolumnName"); // columns name are case INsensitive
-        }
+    while (ds.next()){ //loop through file
+        Record record = ds.getRecord(); // immutable object, you can give it to a thread.
+        String value = record.getString("mycolumnName"); // columns name are case INsensitive
+    }
     </pre></div>
 
     </subsection>
@@ -102,20 +100,20 @@
     <subsection name="Reading Delimited File With Column Mapping">
 
     <div class="source"><pre>
-    	//Obtain the proper parser for your needs
-    	Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
-                new FileReader("map.fpmap.xml"), //xml column mapping
-                new FileReader("DataFile.txt"),  //txt file to parse
-                ',', //delimiter
-                '"', //text qualfier
-                false); //ignore the first record (may need to be done if first record contain column names)
+    //Obtain the proper parser for your needs
+    Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+        new FileReader("map.fpmap.xml"), //xml column mapping
+        new FileReader("DataFile.txt"),  //txt file to parse
+        ',', //delimiter
+        '"', //text qualfier
+        false); //ignore the first record (may need to be done if first record contain column names)
 
-        //obtain DataSet
-        DataSet ds = parser.parse();
+    //obtain DataSet
+    DataSet ds = parser.parse();
 
-        while (ds.next()){ //loop through file
-            ds.getString("mycolumnName");
-        }
+    while (ds.next()){ //loop through file
+       ds.getString("mycolumnName");
+    }
     </pre></div>
 
     </subsection>
@@ -123,18 +121,18 @@
     <subsection name="Reading Delimited File Column Names In First Record Of File">
 
     <div class="source"><pre>
-    	//Obtain the proper parser for your needs
-    	Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
-                new FileReader("DataFile.txt"),  //txt file to parse
-                ',', //delimiter
-                '"'); //text qualifier
+    //Obtain the proper parser for your needs
+    Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+        new FileReader("DataFile.txt"),  //txt file to parse
+        ',', //delimiter
+        '"'); //text qualifier
 
-        //obtain DataSet
-        DataSet ds = parser.parse();
+    //obtain DataSet
+    DataSet ds = parser.parse();
 
-        while (ds.next()){ //loop through file
-            ds.getString("mycolumnName");
-        }
+    while (ds.next()){ //loop through file
+        ds.getString("mycolumnName");
+    }
     </pre></div>
 
     </subsection>
@@ -143,17 +141,17 @@
     <subsection name="Reading Fixed Width File">
 
     <div class="source"><pre>
-	    //Obtain the proper parser for your needs
-        Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
-        		new FileReader("map.fpmap.xml"), //fixed with column map
-                new FileReader("DataFile.txt"));  //txt file to parse
+    //Obtain the proper parser for your needs
+    Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
+    	new FileReader("map.fpmap.xml"), //fixed with column map
+        new FileReader("DataFile.txt"));  //txt file to parse
 
-        //obtain DataSet
-        DataSet ds = parser.parse();
+    //obtain DataSet
+    DataSet ds = parser.parse();
 
-        while (ds.next()){ //loop through file
-            ds.getString("mycolumnName");
-        }
+    while (ds.next()){ //loop through file
+        ds.getString("mycolumnName");
+    }
     </pre></div>
 
     </subsection>
@@ -161,18 +159,18 @@
     <subsection name="Reading a Message of Fixed Width">
 
     <div class="source"><pre>
-    	final String msg = "data     data2     data3     data4"
-	    //Obtain the proper parser for your needs
-        Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
-        		new FileReader("map.fpmap.xml"), //fixed with column map to bind col names
-                new StringReader(mag));  //data to parse
+	final String msg = "data     data2     data3     data4"
+	//Obtain the proper parser for your needs
+    Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
+    	new FileReader("map.fpmap.xml"), //fixed with column map to bind col names
+        new StringReader(mag));  //data to parse
 
-        //obtain DataSet
-        DataSet ds = parser.parse();
+    //obtain DataSet
+    DataSet ds = parser.parse();
 
-        while (ds.next()){ //loop through file
-            ds.getString("mycolumnName");
-        }
+    while (ds.next()){ //loop through file
+       ds.getString("mycolumnName");
+    }
     </pre></div>
 
     </subsection>
@@ -180,19 +178,18 @@
     <subsection name="Using SLF4J With FlatPack">
 
     <div class="source"><pre>
-		Slf4j is utilized to capture logging information that occurred during a parse.
-		By default, this information will be logged to the console.  SLF supports the following loggers; log4j, jcl, nop, and jdk1.4.
-		Please go to http://www.slf4j.org to download the proper jar for your logging preference.  Here is a typical SLF4j setup:
+Slf4j is utilized to capture logging information that occurred during a parse.
+By default, this information will be logged to the console.  SLF supports the following loggers; log4j, jcl, nop, and jdk1.4.
+Please go to http://www.slf4j.org to download the proper jar for your logging preference.  Here is a typical SLF4j setup:
 
-		SLF-api-XXX.jar + SLF-MyLoggerPreference.jar + MyLogger.jar (lo4j.jar for example)
+SLF-api-XXX.jar + SLF-MyLoggerPreference.jar + MyLogger.jar (lo4j.jar for example)
 
-		Here are the steps that would need to be taken for log4j:
+Here are the steps that would need to be taken for log4j:
 
-		1.	Install log4j.jar
-		2.	Setup log4j.properties or log4j.xml
-		3.	Install SLF-api-XXX.jar
-		4.	Install SLF-log4j12-XXX.jar
-
+1.	Install log4j.jar
+2.	Setup log4j.properties or log4j.xml
+3.	Install SLF-api-XXX.jar
+4.	Install SLF-log4j12-XXX.jar
     </pre></div>
 
     </subsection>
