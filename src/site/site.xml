@@ -34,6 +34,11 @@
          <item name="FlatPack on SourceForge.net"
             href="http://sourceforge.net/projects/flatpack" />
       </links> -->
+      
+    <links>
+      <item name="FlatPack Lib" href="flatpack/index.html" />
+      <item name="sf.net/projects/flatpack" href="https://sourceforge.net/projects/flatpack/" />
+    </links>
 
 
 

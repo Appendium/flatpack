@@ -7,7 +7,8 @@
     <title>Changes</title>
   </properties>
   <body>
-  	<release version="3.3.0" date="in svn" description="Maintenance">
+  	<release version="3.4.0" date="2014-05-23" description="Maintenance, JDK1.5 and fluent">
+  	  	<action dev="benoitx" type="add">Make interface more 'fluent'.</action>
   	  	<action dev="benoitx" type="fix">Use JDK 1.5.</action>
   	  	<action dev="zepernick" type="add">Ability to over ride the table names for DATAFILE and
   		DATASTRUCTURE when using the DB for the MetaData.</action> 
@@ -145,12 +146,9 @@
 
     <release version="2.1.0" date="2006-02-26" description="Maintenance">
       <action dev="zepernick" type="fix">A VERY Special Thanks to Roland Klein for contributing the following enchancements:
-	<br/>- Ability to read a file from an InputStream, File object support still exists.  This enhancement makes pzfilereader
-	Java Web Start friendly :)
-
-	<br/>- Added a method in ParserUtils to create an InputStream from a File object.
-
-	<br/>- Changed all ArrayLists and Vectors to List objects.  This affects the getErrors() method which was returning
+	- Ability to read a file from an InputStream, File object support still exists.  This enhancement makes pzfilereader Java Web Start friendly :)
+	- Added a method in ParserUtils to create an InputStream from a File object.
+	- Changed all ArrayLists and Vectors to List objects.  This affects the getErrors() method which was returning
 	a Vector.  This may potentially cause compilation errors if migrating from a previous version..</action>
       <action dev="zepernick" type="add">Implemented Roland's changed in cvs HEAD</action>
       <action dev="zepernick" type="fix">Removed constructors deprecated in 2.0.0</action>
@@ -250,8 +248,8 @@
     <release version="1.0.2" date="2005-01-27" description="Maintenance">
       <action dev="zepernick" type="add">Changed parsing logic for delimited files with text qualifiers.  The parser will now parse lines that are qualified
 		and not qualified.  For example:
-		<br/>"here",1234,"test",50,test
-		<br/>This will now parse into 5 seperate columns.  However if the text contains a delimiter or seperator inside the text, it must be qualified to work correctly.
+		"here",1234,"test",50,test
+		This will now parse into 5 seperate columns.  However if the text contains a delimiter or seperator inside the text, it must be qualified to work correctly.
       </action>
     </release>
 

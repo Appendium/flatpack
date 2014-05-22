@@ -4,7 +4,7 @@
   <body>
       <menu name="FlatPack">
          <item name="Main Page"
-            href=".../index.html" />
+            href="../index.html" />
          <item name="Examples"
             href="../flatpack-examples/index.html" />
          <item name="Documentation"

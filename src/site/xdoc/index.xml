@@ -23,7 +23,7 @@
     <section name="News">
 	<p style="margin-top:10px; margin-bottom:0; padding-bottom:0; text-align:center; line-height:0"><a href="http://feeds.feedburner.com/~r/ObjectlabOpenSourceNews/~6/1"><img src="http://feeds.feedburner.com/ObjectlabOpenSourceNews.1.gif" alt="ObjectLab Open Source News" style="border:0"/></a></p><p style="margin-top:5px; padding-top:0; font-size:x-small; text-align:center"><a href="http://www.feedburner.com/fb/a/headlineanimator/install?id=829470&amp;w=1" onclick="window.open(this.href, 'haHowto', 'width=520,height=600,toolbar=no,address=no,resizable=yes,scrollbars'); return false" target="_blank">Grab this Headline Animator</a></p>
 
-    <p>March 03, 2010: FlatPack 3.2.0 is released, it is mainly a bug-fix release, see the <a href="changes-report.html">change log</a>.</p>
+    <p>May 23, 2014: FlatPack 3.4.0 is released, it is mainly a bug-fix release with some fluent changes, see the <a href="changes-report.html">change log</a>.</p>
     </section>
 
 
@@ -67,15 +67,7 @@
     </subsection>
 
     <subsection name="Which JDK?">
-        <p>1.4 and up</p>
-    </subsection>
-
-    <subsection name="UML?">
-    <p>We are using yDoc to generate a 'javadoc-like' documentation per module with the added twist of UML diagrams:</p>
-    <ul>
-       <li><a href="multiproject/flatpack/apidocs/index.html">UML for FlatPack</a></li>
-       <li><a href="multiproject/flatpack-examples/apidocs/index.html">UML for Examples</a></li>
-    </ul>
+        <p>1.5 and up</p>
     </subsection>
 
     </section>
@@ -83,13 +75,35 @@
     <section name="How do I use it?">
     <p>Basic Steps</p>
     <ol>
-    	<li>Obtain a Parser from a parser factory (DefaultParserFactory) witha  File, InputStream, or a reader(coming soon)</li>
+    	<li>Obtain a Parser from a parser factory (DefaultParserFactory) with a  File, InputStream, or a reader(coming soon)</li>
     	<li>Set additional Parser options, Parser.setAnOption()</li>
         <li>Obtain a DataSet Parser.parse()</li>
     	<li>Call DataSet.next() to advance record pointer</li>
     	<li>Process columns; DataSet.getString("colname"), getInt("colname"), getDouble("colname"), getDate("colname"), etc</li>
         <li>Check for parse errors; DataSet.getErrors()</li>
     </ol>
+
+    <subsection name="New way to Read Delimited File With Immutable Record">
+
+    <div class="source"><pre>
+    	//Obtain the proper parser for your needs
+    	Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+                new FileReader("map.fpmap.xml"), //xml column mapping
+                new FileReader("DataFile.txt"),  //txt file to parse
+                ',', //delimiter
+                '"', //text qualfier
+                false); //ignore the first record (may need to be done if first record contain column names)
+
+        //obtain DataSet
+        StreamingDataSet ds = parser.parseAsStream();
+
+        while (ds.next()){ //loop through file
+        	Record record = ds.getRecord(); // immutable object, you can give it to a thread.
+            String value = record.getString("mycolumnName");
+        }
+    </pre></div>
+
+    </subsection>
 
     <subsection name="Reading Delimited File With Column Mapping">
 

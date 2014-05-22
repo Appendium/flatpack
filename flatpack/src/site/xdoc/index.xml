@@ -1,7 +1,6 @@
 <document>
   <properties>
     <author email="Kit@objectlab.co.uk">Benoit Xhenseval</author>
-    <title>FlatPack Into</title>
   </properties>
   <head>
     <meta name="description"
@@ -21,7 +20,7 @@
     <!-- The body of the document contains a number of sections -->
     <section name="FlatPack Introduction">
 
-    <p>Check out the <a href="apidocs/index.html">UML diagrams here</a></p>
+    <p>Check out the <a href="apidocs/index.html">JavaDoc here</a></p>
     <p>Also look at the <a href="maven-reports.html">Project Reports</a> menu on the left for project specific items, unit tests, QA etc.</p>
     </section>
 
