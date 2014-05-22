@@ -17,6 +17,10 @@
 	<description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters. 
        Bind delimited or fixed width text to column names via XML mappings.  Support for header and trailer records.  Optionally, column names can be retrieved from the first record of a delimited file.</description>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<site.deploy.url>file:///tmp/site</site.deploy.url>
+	</properties>
 
 	<modules>
 		<module>flatpack</module>
@@ -95,6 +99,40 @@
 					<target>1.4</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>aggregate</id>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+						<phase>site</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -138,13 +176,16 @@
 		<url>git@github.com:/Appendium/flatpack.git</url>
 	</scm>
 
-<!-- 
-	<scm>
-		<connection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/</connection>
-		<developerConnection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/</developerConnection>
-		<url>http://flatpack.svn.sourceforge.net/viewvc/flatpack/</url>
-	</scm>
- -->
+	<distributionManagement>
+		<site>
+			<id>net.sf.flatpack</id>
+			<url>${site.deploy.url}</url>
+		</site>
+	</distributionManagement>
+
+	<!-- <scm> <connection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/</connection> 
+		<developerConnection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/</developerConnection> 
+		<url>http://flatpack.svn.sourceforge.net/viewvc/flatpack/</url> </scm> -->
 	<!-- <reporting> <plugins> <plugin> <artifactId>maven-changelog-plugin</artifactId> 
 		</plugin> <plugin> <artifactId>maven-changes-plugin</artifactId> <configuration> 
 		<xmlPath>${basedir}/xdocs/changes.xml</xmlPath> </configuration> </plugin> 
@@ -192,12 +233,8 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
 			</plugin>
-			<!-- 
-			<plugin>
-				<groupId>net.sf</groupId>
-				<artifactId>stat-scm</artifactId>
-			</plugin>
-			 -->
+			<!-- <plugin> <groupId>net.sf</groupId> <artifactId>stat-scm</artifactId> 
+				</plugin> -->
 		</plugins>
 	</reporting>
 

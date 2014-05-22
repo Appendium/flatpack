@@ -1,29 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="FlatPack">
-   <title>FlatPack</title>
+  <bannerLeft>
+    <name>Appendium Ltd</name>
+    <src>images/appendium_logo.jpg</src>
+    <href>http://www.appendium.com</href>
+  </bannerLeft>
+  <bannerRight>
+    <name>ObjectLab Ltd</name>
+    <src>images/objectlab_logo.jpg</src>
+    <href>http://www.objectlab.co.uk/</href>
+  </bannerRight>
+
+  <poweredBy>
+    <logo name="Hosted on SourceForge.net" href="http://sourceforge.net"
+        img="http://sflogo.sourceforge.net/sflogo.php?group_id=175139&amp;type=2"/>
+    <logo name="Built by Maven" href="http://maven.apache.org/"
+        img="http://maven.apache.org/images/logos/maven-feather.png"/>
+  </poweredBy>
+    
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-stylus-skin</artifactId>
+    <version>1.2</version>
+  </skin>
+  
+  <publishDate position="left" format="yyyy-MM-dd" />
+  <version position="left" />
+
+
    <body>
-      <links>
+<!--       <links>
          <item name="FlatPack on SourceForge.net"
             href="http://sourceforge.net/projects/flatpack" />
-      </links>
+      </links> -->
+
+
 
       <menu name="FlatPack">
-         <item name="Main library" href="multiproject/flatpack/index.html" />
+         <item name="Main library" href="flatpack/index.html" />
          <item name="Documentation" href="documentation/index.html" />
          <item name="Examples" href="parsing.html" />
          <item name="History"  href="history.html" />
          <item name="Features" href="features.html" />
-         <item name="Examples" href="multiproject/flatpack-examples/index.html" />
-         <item name="JavaDoc" class="newWindow" target="_new" href="apidocs/index.html" />
+         <item name="Examples" href="flatpack-examples/index.html" />
+         <item name="JavaDoc" target="_new" href="apidocs/index.html" />
          <item name="In the press" href="press/index.html" />
          <!-- 
          <item name="StatSvn" href="statsvn/index.html" />
-          -->
          <item name="Sitemap" href="sitemap.html" />
+          -->
       </menu>
-      <sitemap/>
-      <search/>
+      
+          <menu ref="modules" />
+    
+        <menu ref="reports" />
+      <!-- <sitemap/> -->
+      <!-- <search/> -->
       <menu name="Links">
          <item name="QALab"  href="http://qalab.sourceforge.net/" />
          <item name="ObjectLab Kit"  href="http://objectlabkit.sourceforge.net/" />
@@ -31,6 +64,8 @@
          <item name="StatSVN" href="http://www.statsvn.org/" />
          <item name="ObjectLab"  href="http://www.objectlab.co.uk" />
       </menu>
+      
+      
       <footer>
       <div style="vertical-align:middle">
          <p style="margin-top:10px; margin-bottom:0; padding-bottom:0; text-align:center; line-height:0"><a href="http://sourceforge.net/projects/flatpack"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=127761&amp;type=13" width="120" height="30" border="0" alt="Get FlatPack Java API For Flat Files at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
