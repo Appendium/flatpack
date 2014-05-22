@@ -52,3 +52,5 @@ Thumbs.db
 *.swp
 
 flatpack/.project
+
+release.properties
