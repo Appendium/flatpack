@@ -10,12 +10,6 @@
          <item name="Documentation"
             href="../documentation/index.html" />
       </menu>
-    <links>
-         <item name="FlatPack on SourceForge.net"
-            href="http://sourceforge.net/projects/flatpack" />
-      <item name="Overall project" href="../index.html" />
-      <item name="main" href="../flatpack/index.html" />
-    </links>
       <menu name="Links">
          <item name="QALab"  href="http://qalab.sourceforge.net/" />
          <item name="ObjectLab Kit"  href="http://objectlabkit.sourceforge.net/" />

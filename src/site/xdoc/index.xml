@@ -32,7 +32,7 @@
 
     <p>FlatPack came out of the frustration of having to mix file parsing logic with business logic.</p>
 
-    <p>FlatPack on SourceForge: a Java (1.4+) flat file parser that handles CSV, fixed length and custom delimiters. The formats are configured in XML, it is fast and released under Apache license 2.0.</p>
+    <p>FlatPack on SourceForge: a Java (1.5+) flat file parser that handles CSV, fixed length and custom delimiters. The formats are configured in XML, it is fast and released under Apache license 2.0.</p>
 
 	<p>Starting at release 3.1, FlatPack introduces <b>exporters</b> via the writer package. This mechanism allows you to export a DataSet to a fixed length or delimited format. A big thank you to Dirk and Holger from the <a href="http://www.mulesource.org">Mule project</a>
 	for the initial code contribution. FlatPack should integrate nicely with Mule, the open source choice for integration and SOA.</p>
