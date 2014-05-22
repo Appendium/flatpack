@@ -8,6 +8,7 @@
   </properties>
   <body>
   	<release version="3.4.0" date="2014-05-23" description="Maintenance, JDK1.5 and fluent">
+  	  	<action dev="benoitx" type="add">Add convenience method DefaultParserFactory.newCsvParser.</action>
   	  	<action dev="benoitx" type="add">Make interface more 'fluent'.</action>
   	  	<action dev="benoitx" type="fix">Use JDK 1.5.</action>
   	  	<action dev="zepernick" type="add">Ability to over ride the table names for DATAFILE and

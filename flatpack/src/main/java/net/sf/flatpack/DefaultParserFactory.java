@@ -139,6 +139,24 @@ public class DefaultParserFactory implements ParserFactory {
         return new DelimiterParser(dataSource, delimiter, qualifier, false);
     }
 
+
+    /**
+     * Convenience method using conventional CSV separated by , and using " for qualifier if required.
+     * @param dataSourceStream
+     * @return a csv parser
+     */
+    public static Parser newCsvParser(final InputStream dataSourceStream) {
+    	return INSTANCE.newDelimitedParser(dataSourceStream, ',', '"');
+    }
+
+    /**
+     * Convenience method using conventional CSV separated by , and using " for qualifier if required.
+     * @param dataSource
+     * @return a csv parser
+     */
+    public static Parser newCsvParser(final Reader dataSource) {
+    	return INSTANCE.newDelimitedParser(dataSource, ',', '"');
+    }
     /*
      * (non-Javadoc)
      *
