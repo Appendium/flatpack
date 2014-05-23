@@ -27,3 +27,23 @@ ssb   2048R/B9A710D1 2014-01-01
 
 sec   2048R/8F656881 2014-05-22
 uid                  Benoit Xhenseval (For Open Source Projects) <kit@objectlab.co.uk>
+
+DOING the RELEASE
+==================
+
+1) replace settings.xml with only 
+	<servers>
+        <server>
+            <id>sonatype-nexus-snapshots</id>
+            <username>benoitx</username>
+            <password>XXXXXXX</password>
+        </server>
+        <server>
+            <id>sonatype-nexus-staging</id>
+            <username>benoitx</username>
+            <password>XXXXXXX</password>
+        </server>
+	</servers>
+
+2)
+mvn release:prepare release:perform -DrepositoryId=sonatype-nexus-staging -Darguments="-Dgpg.passphrase=0bjectlabKit -Dgpg.keyname=8F656881" -DconnectionUrl=scm:git:git@github.com:appendium/flatpack.git
