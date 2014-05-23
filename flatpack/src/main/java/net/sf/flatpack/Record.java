@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
+/**
+ * @since 3.4
+ */
 public interface Record {
 	/**
 	 * Returns the string value of a specified column
