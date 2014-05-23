@@ -15,10 +15,6 @@
 
     <description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
        Maps column positions in the file to user friendly names via XML. See FlatPack Feature List under News for complete feature list.</description>
-    <!--
-        <scm> <connection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/flatpack</connection>
-        <developerConnection>scm:svn:https://flatpack.svn.sourceforge.net/svnroot/flatpack/trunk/flatpack</developerConnection> </scm>
-    -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -140,21 +136,6 @@
           <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
         </configuration>
       </plugin>
-      <!-- 
-      <plugin>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <configLocation>${basedir}/../common-build/objectlab_checks.xml</configLocation>
-          <headerLocation>${basedir}/../checkstyle-license.txt</headerLocation>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <configuration>
-          <targetJdk>1.4</targetJdk>
-        </configuration>
-      </plugin>
-       -->
     </plugins>
   </reporting>
 </project>
