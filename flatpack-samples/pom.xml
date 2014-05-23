@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sf.flatpack</groupId>
         <artifactId>flatpack-parent</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
+        <version>3.4.0</version>
     </parent>
 
 
@@ -98,7 +98,7 @@
         <dependency>
             <groupId>net.sf.flatpack</groupId>
             <artifactId>flatpack</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <version>3.4.0</version>
         </dependency>
         <dependency>
             <groupId>jdom</groupId>
