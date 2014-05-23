@@ -10,7 +10,7 @@
 	<groupId>net.sf.flatpack</groupId>
 	<artifactId>flatpack-parent</artifactId>
 	<name>FlatPack</name>
-	<version>3.4.0</version>
+	<version>4.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters. 
