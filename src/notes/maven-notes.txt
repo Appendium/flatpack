@@ -28,22 +28,77 @@ ssb   2048R/B9A710D1 2014-01-01
 sec   2048R/8F656881 2014-05-22
 uid                  Benoit Xhenseval (For Open Source Projects) <kit@objectlab.co.uk>
 
-DOING the RELEASE
-==================
+DOING the RELEASE See http://j.mp/TC8Fdy
+========================================
 
-1) replace settings.xml with only 
+1) replace ~/.m2/settings.xml with only 
+
+It seems that the release will try to download the new release FROM central only!
+So you need to add the staging repo in settings.xml.
+
+	<profiles>
+        <profile>
+            <id>sonatype-nexus-staging</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>staging</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>snapshots</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
 	<servers>
         <server>
             <id>sonatype-nexus-snapshots</id>
-            <username>benoitx</username>
+            <username>OSS-JIRA_NAME</username>
             <password>XXXXXXX</password>
         </server>
         <server>
             <id>sonatype-nexus-staging</id>
-            <username>benoitx</username>
+            <username>OSS-JIRA_NAME</username>
             <password>XXXXXXX</password>
         </server>
 	</servers>
 
 2)
-mvn release:prepare release:perform -DrepositoryId=sonatype-nexus-staging -Darguments="-Dgpg.passphrase=0bjectlabKit -Dgpg.keyname=8F656881" -DconnectionUrl=scm:git:git@github.com:appendium/flatpack.git
+mvn release:prepare release:perform -DrepositoryId=sonatype-nexus-staging 
+	-Darguments="-Dgpg.passphrase=XXXXXXXXX -Dgpg.keyname=8F656881" 
+	-DconnectionUrl=scm:git:git@github.com:appendium/flatpack.git
+	 -Psonatype-nexus-staging
+	 
+3) Go to target/checkout (where the latest release was checked out)
+mvn site site:stage
+	 
