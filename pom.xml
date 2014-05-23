@@ -184,29 +184,26 @@
 			</build>
 		</profile>
 
+			<!-- 
 		<profile>
 			<id>deploy-site</id>
-			<!-- 
 			<activation>
 				<property>
 					<name>performRelease</name>
 					<value>true</value>
 				</property>
 			</activation>
-			 -->
 			<properties>
-				<!-- the real site deploy url, this is a hack because site:stage (v2.1) 
-					doesn't work properly -->
 				<site.deploy.url>scp://shell.sourceforge.net/home/groups/f/fl/flatpack/htdocs</site.deploy.url>
 			</properties>
 		</profile>
 		<profile>
 			<id>stage-site</id>
 			<properties>
-				<!-- stage the site in the /test folder on sourceforge -->
 				<site.deploy.url>scp://shell.sourceforge.net/home/groups/f/fl/flatpack/htdocs/test</site.deploy.url>
 			</properties>
 		</profile>
+			 -->
 
 	</profiles>
 
