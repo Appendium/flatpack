@@ -1,0 +1,7 @@
+Build site:
+from the flatpack root dir:
+mvn clean install site site:stage
+
+SIGN as part of release
+mvn release:prepare -DdryRun=true -Darguments="-Dgpg.passphrase=0bjectlabKit -Dgpg.keyname=8F656881"
+
