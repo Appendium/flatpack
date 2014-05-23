@@ -32,6 +32,8 @@
  */
 package net.sf.flatpack;
 
+import java.util.stream.Stream;
+
 /**
  * PZParser is ready to parse the data and return an object that can then be
  * traversed. The default parser should NOT handle short lines, the user can
@@ -56,6 +58,12 @@ public interface Parser {
      * @since 3.4
      */
     StreamingDataSet parseAsStream();
+    
+    /**
+     * Parse the data and return a stream or records;
+     * @since 4.0
+     */
+    Stream<Record> stream();
 
     /**
      * @return true, lines with less columns then the amount of column headers

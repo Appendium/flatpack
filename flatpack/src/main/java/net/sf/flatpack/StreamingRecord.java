@@ -13,6 +13,6 @@ public class StreamingRecord implements StreamingDataSet {
     }
 
     public boolean next() {
-        return dataSet.next();
+        return dataSet!=null ? dataSet.next() : false;
     }
 }
