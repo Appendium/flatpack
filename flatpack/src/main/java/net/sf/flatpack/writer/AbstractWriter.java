@@ -77,10 +77,9 @@ public abstract class AbstractWriter implements Writer {
         return this;
     }
 
-    public Writer close() throws IOException {
+    public void close() throws IOException {
         writer.flush();
         writer.close();
-        return this;
     }
 
     protected Map<String,Object> getRowMap() {

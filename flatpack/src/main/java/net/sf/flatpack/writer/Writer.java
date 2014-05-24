@@ -6,7 +6,7 @@ import java.io.IOException;
  * 
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
-public interface Writer {
+public interface Writer extends AutoCloseable{
     /** Export header */
 	Writer printHeader() throws IOException;
 
@@ -19,5 +19,5 @@ public interface Writer {
 
 	Writer flush() throws IOException;
 
-	Writer close() throws IOException;
+	void close() throws IOException;
 }
