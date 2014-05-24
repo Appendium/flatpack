@@ -8,16 +8,16 @@ import java.io.IOException;
  */
 public interface Writer {
     /** Export header */
-    void printHeader() throws IOException;
+	Writer printHeader() throws IOException;
 
     /** Export footer */
-    void printFooter() throws IOException;
+	Writer printFooter() throws IOException;
 
-    void addRecordEntry(String columnName, Object value);
+	Writer addRecordEntry(String columnName, Object value);
 
-    void nextRecord() throws IOException;
+	Writer nextRecord() throws IOException;
 
-    void flush() throws IOException;
+	Writer flush() throws IOException;
 
-    void close() throws IOException;
+	Writer close() throws IOException;
 }

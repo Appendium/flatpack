@@ -41,15 +41,15 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
         this.qualifier = qualifier;
     }
 
-    public DelimiterWriterFactory(final Map<String,Object> mapping) {
+    public DelimiterWriterFactory(final Map<String, Object> mapping) {
         this(mapping, DEFAULT_DELIMITER, DEFAULT_QUALIFIER);
     }
 
-    public DelimiterWriterFactory(final Map<String,Object> mapping, final char delimiter) {
+    public DelimiterWriterFactory(final Map<String, Object> mapping, final char delimiter) {
         this(mapping, delimiter, DEFAULT_QUALIFIER);
     }
 
-    public DelimiterWriterFactory(final Map<String,Object> mapping, final char delimiter, final char qualifier) {
+    public DelimiterWriterFactory(final Map<String, Object> mapping, final char delimiter, final char qualifier) {
         super(mapping);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
@@ -71,9 +71,24 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
         return new DelimiterWriter(this.getColumnMapping(), out, delimiter, qualifier, WriterOptions.getInstance());
     }
 
+    /**
+     * Convenience method to add a series of cols in one go.
+     * 
+     * @param columnTitles
+     * @return this
+     */
+    public DelimiterWriterFactory addColumnTitles(final String... columnTitles) {
+        if (columnTitles != null) {
+            for (String columnTitle : columnTitles) {
+                addColumnTitle(columnTitle);
+            }
+        }
+        return this;
+    }
+
     // TODO DO: check that no column titles can be added after first nextRecord
-    public void addColumnTitle(final String columnTitle) {
-        final Map<String,Object> columnMapping = this.getColumnMapping();
+    public DelimiterWriterFactory addColumnTitle(final String columnTitle) {
+        final Map<String, Object> columnMapping = this.getColumnMapping();
         final List<ColumnMetaData> columnMetaDatas = (List<ColumnMetaData>) columnMapping.get(FPConstants.DETAIL_ID);
         final Map<Integer, String> columnIndices = (Map<Integer, String>) columnMapping.get(FPConstants.COL_IDX);
 
@@ -83,5 +98,6 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
 
         final Integer columnIndex = Integer.valueOf(columnMetaDatas.indexOf(metaData));
         columnIndices.put(columnIndex, columnTitle);
+        return this;
     }
 }

@@ -18,7 +18,7 @@ public abstract class AbstractWriter implements Writer {
         writer = new BufferedWriter(output);
     }
 
-    public void addRecordEntry(final String columnName, final Object value) {
+    public Writer addRecordEntry(final String columnName, final Object value) {
         if (rowMap == null) {
             rowMap = new HashMap<String,Object>();
         }
@@ -27,6 +27,7 @@ public abstract class AbstractWriter implements Writer {
             throw new IllegalArgumentException("unknown column: \"" + columnName + "\"");
         }
         rowMap.put(columnName, value);
+        return this;
     }
 
     /**
@@ -46,11 +47,12 @@ public abstract class AbstractWriter implements Writer {
      * stored in <code>rowMap</code>. Overriders <b>must</b> call
      * <code>super.nextRecord()</code> as the last call in their implementation.
      */
-    public void nextRecord() throws IOException {
+    public Writer nextRecord() throws IOException {
         // the row should have been written out by the subclass so it's safe to
         // discard it here
         rowMap = null;
         writer.newLine();
+        return this;
     }
 
     protected void write(final Object val) throws IOException {
@@ -70,13 +72,15 @@ public abstract class AbstractWriter implements Writer {
         writer.write(characters);
     }
 
-    public void flush() throws IOException {
+    public Writer flush() throws IOException {
         writer.flush();
+        return this;
     }
 
-    public void close() throws IOException {
+    public Writer close() throws IOException {
         writer.flush();
         writer.close();
+        return this;
     }
 
     protected Map<String,Object> getRowMap() {
