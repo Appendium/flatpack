@@ -41,15 +41,15 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
         this.qualifier = qualifier;
     }
 
-    public DelimiterWriterFactory(final Map<String, Object> mapping) {
+    public DelimiterWriterFactory(final Map<String, ?> mapping) {
         this(mapping, DEFAULT_DELIMITER, DEFAULT_QUALIFIER);
     }
 
-    public DelimiterWriterFactory(final Map<String, Object> mapping, final char delimiter) {
+    public DelimiterWriterFactory(final Map<String, ?> mapping, final char delimiter) {
         this(mapping, delimiter, DEFAULT_QUALIFIER);
     }
 
-    public DelimiterWriterFactory(final Map<String, Object> mapping, final char delimiter, final char qualifier) {
+    public DelimiterWriterFactory(final Map<String, ?> mapping, final char delimiter, final char qualifier) {
         super(mapping);
         this.delimiter = delimiter;
         this.qualifier = qualifier;

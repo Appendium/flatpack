@@ -18,7 +18,7 @@ import org.jdom.JDOMException;
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
 public abstract class AbstractWriterFactory implements WriterFactory {
-	private Map<String, Object> mapping;
+	private Map mapping;
 
 	protected AbstractWriterFactory() {
 		super();
@@ -28,7 +28,7 @@ public abstract class AbstractWriterFactory implements WriterFactory {
 		mapping.put(FPConstants.COL_IDX, new HashMap());
 	}
 
-	protected AbstractWriterFactory(final Map<String, Object> mapping) {
+	protected AbstractWriterFactory(final Map<String, ?> mapping) {
 		super();
 		this.mapping = mapping;
 	}
