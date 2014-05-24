@@ -41,13 +41,13 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
-    <distributionManagement>
-        <site>
-            <id>flatpack.sf.net</id>
-            <url>${site.deploy.url}</url>
-        </site>
-    </distributionManagement>
+
+	<distributionManagement>
+		<site>
+			<id>flatpack.sf.net</id>
+			<url>${site.deploy.url}</url>
+		</site>
+	</distributionManagement>
 
 	<developers>
 		<developer>
@@ -188,26 +188,26 @@
 			</build>
 		</profile>
 
-			<!-- 
-		<profile>
+		<!--
+			<profile>
 			<id>deploy-site</id>
 			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
+			<property>
+			<name>performRelease</name>
+			<value>true</value>
+			</property>
 			</activation>
 			<properties>
-				<site.deploy.url>scp://shell.sourceforge.net/home/groups/f/fl/flatpack/htdocs</site.deploy.url>
+			<site.deploy.url>scp://shell.sourceforge.net/home/groups/f/fl/flatpack/htdocs</site.deploy.url>
 			</properties>
-		</profile>
-		<profile>
+			</profile>
+			<profile>
 			<id>stage-site</id>
 			<properties>
-				<site.deploy.url>scp://shell.sourceforge.net/home/groups/f/fl/flatpack/htdocs/test</site.deploy.url>
+			<site.deploy.url>scp://shell.sourceforge.net/home/groups/f/fl/flatpack/htdocs/test</site.deploy.url>
 			</properties>
-		</profile>
-			 -->
+			</profile>
+		-->
 
 	</profiles>
 
@@ -227,7 +227,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
 					<code>javadoc:aggregate</code>
-					<source>1.5</source>
+					<source>1.8</source>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -235,8 +235,13 @@
 				<artifactId>maven-changes-plugin</artifactId>
 				<version>2.10</version>
 				<configuration>
+					<configuration>
+						<githubAPIScheme>https</githubAPIScheme>
+						<githubAPIPort>443</githubAPIPort>
+					</configuration>
 					<issueManagementSystems>
 						<issueManagementSystem>GitHub</issueManagementSystem>
+						<url>https://github.com/appendium/flatpack/issues/</url>
 					</issueManagementSystems>
 				</configuration>
 				<reportSets>

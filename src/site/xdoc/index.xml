@@ -23,6 +23,8 @@
     <section name="News">
 	<p style="margin-top:10px; margin-bottom:0; padding-bottom:0; text-align:center; line-height:0"><a href="http://feeds.feedburner.com/~r/ObjectlabOpenSourceNews/~6/1"><img src="http://feeds.feedburner.com/ObjectlabOpenSourceNews.1.gif" alt="ObjectLab Open Source News" style="border:0"/></a></p><p style="margin-top:5px; padding-top:0; font-size:x-small; text-align:center"><a href="http://www.feedburner.com/fb/a/headlineanimator/install?id=829470&amp;w=1" onclick="window.open(this.href, 'haHowto', 'width=520,height=600,toolbar=no,address=no,resizable=yes,scrollbars'); return false" target="_blank">Grab this Headline Animator</a></p>
 
+	<p>Reminder: we have moved to <a href="http://www.github.com/appendium/flatpack">GitHub</a>.</p>
+
     <p>May 23, 2014: FlatPack 3.4.0 is released, it is mainly a bug-fix release with some fluent changes, see the <a href="changes-report.html">change log</a> Note that this is the
     <b>LAST RELEASE to support JDK1.5</b>, next one... Java8!</p>
     </section>
@@ -32,7 +34,9 @@
 
     <p>FlatPack came out of the frustration of having to mix file parsing logic with business logic.</p>
 
-    <p>FlatPack on SourceForge: a Java (1.5+) flat file parser that handles CSV, fixed length and custom delimiters. The formats are configured in XML, it is fast and released under Apache license 2.0.</p>
+    <p>FlatPack on SourceForge: a Java (1.8+) flat file parser that handles CSV (including values containing ','), 
+    fixed length and custom delimiters. 
+    The formats can be configured in XML, it is fast and released under Apache license 2.0.</p>
 
 	<p>Starting at release 3.1, FlatPack introduces <b>exporters</b> via the writer package. This mechanism allows you to export a DataSet to a fixed length or delimited format. A big thank you to Dirk and Holger from the <a href="http://www.mulesource.org">Mule project</a>
 	for the initial code contribution. FlatPack should integrate nicely with Mule, the open source choice for integration and SOA.</p>
@@ -80,6 +84,56 @@
         <li>Check for parse errors; DataSet.getErrors()</li>
     </ol>
 
+    <subsection name="New JDK8 to Read Delimited File">
+	<a href="https://gist.github.com/benoitx/3e40808566d62c724232">Code Available on Gist.</a>
+    <div class="source"><pre>
+    // Obtain the proper parser for your needs: basic CSV Parser with column Header
+   private static class Test {
+        private String itemName;
+        private BigDecimal price;
+
+        public String getItemName() {
+            return itemName;
+        }
+
+        public void setItemName(String itemName) {
+            this.itemName = itemName;
+        }
+
+        public BigDecimal getPrice() {
+            return price;
+        }
+
+        public void setPrice(BigDecimal price) {
+            this.price = price;
+        }
+    }
+
+    public void test() {
+        final String cols = "item,price,purchaseDate\r\n"//
+                + "MacBook,1890.20,20140523\r\n"//
+                + "Surface3,850.00,20140524\r\n"//
+        ;
+        final Parser p = DefaultParserFactory.newCsvParser(new StringReader(cols));
+        List&lt;Test&gt; ds = p.stream() //
+                .map(t -> {
+                    Test r = new Test();
+                    r.setItemName(t.getString("item"));
+                    r.setPrice(t.getBigDecimal("price"));
+                    return r;
+                })// Mapping from Record to Test
+                .filter(t -> "Surface3".equals(t.getItemName())) // only keep greetings hello2
+                .collect(Collectors.toList());
+
+        // test record 1 with Data in file!
+        assertEquals("Size", 1, ds.size());
+        assertEquals("Item", "Surface3", ds.get(0).getItemName());
+        assertTrue("Price", new BigDecimal("850").compareTo(ds.get(0).getPrice()) == 0);
+    }
+    </pre></div>
+
+    </subsection>
+
     <subsection name="New way to Read Delimited File With Immutable Record">
 
     <div class="source"><pre>
@@ -96,6 +150,8 @@
     </pre></div>
 
     </subsection>
+
+
 
     <subsection name="Reading Delimited File With Column Mapping">
 

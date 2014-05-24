@@ -33,6 +33,7 @@
 		<links>
 			<item name="Main" href="index.html" />
 			<item name="FlatPack Lib" href="flatpack/index.html" />
+			<item name="GitHub" href="https://github.com/flatpack/flatpack/" />
 			<item name="sf.net/projects/flatpack" href="https://sourceforge.net/projects/flatpack/" />
 		</links>
 
@@ -45,6 +46,7 @@
 			<item name="Examples" href="flatpack-examples/index.html" />
 			<item name="JavaDoc" target="_new" href="apidocs/index.html" />
 			<item name="In the press" href="press/index.html" />
+			<item name="at Ohloh.net" href="https://www.ohloh.net/p/flatpack" />
 			<!-- <item name="StatSvn" href="statsvn/index.html" /> <item name="Sitemap" 
 				href="sitemap.html" /> -->
 		</menu>
@@ -60,6 +62,7 @@
 			<item name="JTreeMap" href="http://jtreemap.sourceforge.net/" />
 			<item name="StatSVN" href="http://www.statsvn.org/" />
 			<item name="ObjectLab" href="http://www.objectlab.co.uk" />
+			<item name="Appendium" href="http://www.appendium.com" />
 		</menu>
 
 
