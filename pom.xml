@@ -217,6 +217,14 @@
 		<developerConnection>scm:git:git@github.com:appendium/flatpack.git</developerConnection>
 	</scm>
 
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/appendium/flatpack/issues/</url>
+		<!--
+			<url>https://sourceforge.net/tracker/?group_id=175139</url>
+		-->
+	</issueManagement>
+
 	<reporting>
 		<plugins>
 			<plugin>
