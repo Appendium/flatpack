@@ -46,7 +46,7 @@
 			<item name="Examples" href="flatpack-examples/index.html" />
 			<item name="JavaDoc" target="_new" href="apidocs/index.html" />
 			<item name="In the press" href="press/index.html" />
-			<item name="at Ohloh.net" href="https://www.ohloh.net/p/flatpack" />
+			<item name="Code Metrics" href="code-metrics.html" />
 			<!-- <item name="StatSvn" href="statsvn/index.html" /> <item name="Sitemap" 
 				href="sitemap.html" /> -->
 		</menu>
