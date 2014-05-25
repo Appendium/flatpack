@@ -18,7 +18,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<site.deploy.url>file:///tmp/site</site.deploy.url>
+		<site.deploy.url>http://flatpack.sf.net</site.deploy.url>
 	</properties>
 
 	<modules>
@@ -75,6 +75,16 @@
 		</developer>
 		<developer>
 			<name>Marcin Jekot</name>
+			<id>marchy</id>
+			<email>marcin at jekot DOt net</email>
+			<organization>ObjectLab Financial Ltd</organization>
+			<roles>
+				<role>Subversion mig</role>
+			</roles>
+			<timezone>+0</timezone>
+		</developer>
+		<developer>
+			<name>Kenny Shing</name>
 			<id>marchy</id>
 			<email>marcin at jekot DOt net</email>
 			<organization>ObjectLab Financial Ltd</organization>
