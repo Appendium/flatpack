@@ -41,30 +41,30 @@ package net.sf.flatpack.ordering;
  * @version 2.0
  */
 public class OrderColumn {
-    
+
     /**Specifies descending sort order*/
     public static final boolean DESC = true;
-    
+
     /**Specifies Ascending sort order*/
     public static final boolean ASC = false;
-    
+
     /**string sort indicator*/
     public static final int COLTYPE_STRING = 0;
-    
+
     /**date sort indicator*/
     public static final int COLTYPE_DATE = 1;
-    
+
     /**numeric sort indicator*/
     public static final int COLTYPE_NUMERIC = 2;
-    
-    //property name to sort by
+
+    // property name to sort by
     private String columnName;
 
-    //1 = ASC -1 = DESC
+    // 1 = ASC -1 = DESC
     private int sortIndicator = 1;
-    
+
     private int selectedColType;
-    
+
     private String dateFormatPattern = "yyyyMMdd";
 
     /**
@@ -85,7 +85,7 @@ public class OrderColumn {
             this.sortIndicator = -1;
         }
     }
-    
+
     /**
      * Constructs a new order by element
      *
@@ -130,13 +130,13 @@ public class OrderColumn {
     /**
      * @param selectedColType the selectedColType to set
      */
-    public void setSelectedColType(int selectedColType) {
+    public void setSelectedColType(final int selectedColType) {
         this.selectedColType = selectedColType;
     }
 
     /**
      * Format pattern to use to parse dates for sorting.  Default is yyyyMMdd
-     * 
+     *
      * @return the dateFormatPattern
      */
     public String getDateFormatPattern() {
@@ -145,13 +145,12 @@ public class OrderColumn {
 
     /**
      * Format pattern to use to parse dates for sorting.  Default is yyyyMMdd
-     * 
+     *
      * @param dateFormatPattern the dateFormatPattern to set
      * @see java.text.SimpleDateFormat
 
      */
-    public void setDateFormatPattern(String dateFormatPattern) {
+    public void setDateFormatPattern(final String dateFormatPattern) {
         this.dateFormatPattern = dateFormatPattern;
     }
 }
-

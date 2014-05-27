@@ -1,16 +1,16 @@
 /*
  Copyright 2006 Paul Zepernick
 
- Licensed under the Apache License, Version 2.0 (the "License"); 
- you may not use this file except in compliance with the License. 
- You may obtain a copy of the License at 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
- http://www.apache.org/licenses/LICENSE-2.0 
+ http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software distributed 
- under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
- CONDITIONS OF ANY KIND, either express or implied. See the License for 
- the specific language governing permissions and limitations under the License.  
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ CONDITIONS OF ANY KIND, either express or implied. See the License for
+ the specific language governing permissions and limitations under the License.
  */
 package net.sf.flatpack.xml;
 
@@ -23,7 +23,7 @@ import net.sf.flatpack.util.ParserUtils;
 
 /**
  * @author Paul Zepernick
- * 
+ *
  * Definition for a &lt;RECORD&gt; element in a pzmap file
  */
 public class XMLRecordElement {
@@ -116,7 +116,7 @@ public class XMLRecordElement {
 
     /**
      * Returns the index of the column name.
-     * 
+     *
      * @author Benoit Xhenseval
      * @param colName
      * @return -1 if the column name does not exist.
@@ -135,7 +135,7 @@ public class XMLRecordElement {
     /**
      * Used to determine the &lt;record&gt; mapping the row belongs to.  Will
      * only be evaluated if &gt; 0.
-     * 
+     *
      * @return the elementCount
      */
     public int getElementCount() {
@@ -145,7 +145,7 @@ public class XMLRecordElement {
     /**
      * Used to determine the &lt;record&gt; mapping the row belongs to.  Will
      * only be evaluated if &gt; 0.
-     * 
+     *
      * @param elementCount the elementCount to set
      */
     public void setElementCount(final int elementCount) {

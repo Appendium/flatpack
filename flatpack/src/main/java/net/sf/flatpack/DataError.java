@@ -44,7 +44,7 @@ public class DataError {
     private final int lineNo;
 
     private final int errorLevel;
-    
+
     private final String rawData;
 
     /**
@@ -59,24 +59,24 @@ public class DataError {
     public DataError(final String errorDesc, final int lineNo, final int errorLevel) {
         this(errorDesc, lineNo, errorLevel, null);
     }
-    
+
     /**
-    *
-    * @param errorDesc
-    *          Text description of the error that occurred
-    * @param lineNo
-    *          Line number in the data file the error occurred on
-    * @param errorLevel
-    *          Level of the error (1=warning, 2=moderate, 3=severe)
-    * @param rawData
-    *          String of data which the parse failed on
-    */
-   public DataError(final String errorDesc, final int lineNo, final int errorLevel, final String rawData) {
-       this.errorDesc = errorDesc;
-       this.lineNo = lineNo;
-       this.errorLevel = errorLevel;
-       this.rawData = rawData;
-   }
+     *
+     * @param errorDesc
+     *          Text description of the error that occurred
+     * @param lineNo
+     *          Line number in the data file the error occurred on
+     * @param errorLevel
+     *          Level of the error (1=warning, 2=moderate, 3=severe)
+     * @param rawData
+     *          String of data which the parse failed on
+     */
+    public DataError(final String errorDesc, final int lineNo, final int errorLevel, final String rawData) {
+        this.errorDesc = errorDesc;
+        this.lineNo = lineNo;
+        this.errorLevel = errorLevel;
+        this.rawData = rawData;
+    }
 
     /**
      * Returns the errorDesc.
@@ -105,17 +105,18 @@ public class DataError {
         return lineNo;
     }
 
+    @Override
     public String toString() {
         final StringBuilder buf = new StringBuilder();
-        buf.append("Line:").append(lineNo).append(" Level:").append(errorLevel).append(" Desc:").append(errorDesc).append(
-                System.getProperty("line.separator"));
+        buf.append("Line:").append(lineNo).append(" Level:").append(errorLevel).append(" Desc:").append(errorDesc)
+                .append(System.getProperty("line.separator"));
         return buf.toString();
     }
 
     /**
-     * Option must be set on parser, otherwise this is 
+     * Option must be set on parser, otherwise this is
      * null by default
-     * 
+     *
      * @return the rawData
      */
     public String getRawData() {

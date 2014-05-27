@@ -52,9 +52,9 @@ public class DelimiterParser extends AbstractDelimiterParser {
     private File pzmapXML = null;
     private Reader pzmapReader;
 
-    //this InputStream and file can be removed after support for
-    //file and inputstream is removed from the parserfactory.  The
-    //methods have been deprecated..pz
+    // this InputStream and file can be removed after support for
+    // file and inputstream is removed from the parserfactory. The
+    // methods have been deprecated..pz
     private InputStream dataSourceStream = null;
     private File dataSource = null;
 
@@ -91,10 +91,11 @@ public class DelimiterParser extends AbstractDelimiterParser {
         this.pzmapReader = pzmapReader;
     }
 
+    @Override
     protected void init() {
         try {
-            //check to see if the user is using a File or InputStream.  This is
-            //here for backwards compatability
+            // check to see if the user is using a File or InputStream. This is
+            // here for backwards compatability
             if (dataSourceStream != null) {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
@@ -116,12 +117,12 @@ public class DelimiterParser extends AbstractDelimiterParser {
 
             if (this.pzmapReader != null) {
                 try {
-                    //                    setColumnMD(PZMapParser.parse(this.pzmapReader, this));
+                    // setColumnMD(PZMapParser.parse(this.pzmapReader, this));
                     setPzMetaData(MapParser.parseMap(this.pzmapReader, this));
                 } finally {
                     if (closeMapReader) {
-                        //only close the reader if it is one we created
-                        //otherwise we will let the user handle it
+                        // only close the reader if it is one we created
+                        // otherwise we will let the user handle it
                         this.pzmapReader.close();
                     }
                 }
@@ -135,6 +136,7 @@ public class DelimiterParser extends AbstractDelimiterParser {
         }
     }
 
+    @Override
     protected boolean shouldCreateMDFromFile() {
         return pzmapReader == null;
     }

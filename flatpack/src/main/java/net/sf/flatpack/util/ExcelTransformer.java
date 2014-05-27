@@ -1,16 +1,16 @@
 /*
  Copyright 2006 Paul Zepernick
 
- Licensed under the Apache License, Version 2.0 (the "License"); 
- you may not use this file except in compliance with the License. 
- You may obtain a copy of the License at 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
- http://www.apache.org/licenses/LICENSE-2.0 
+ http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software distributed 
- under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
- CONDITIONS OF ANY KIND, either express or implied. See the License for 
- the specific language governing permissions and limitations under the License.  
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ CONDITIONS OF ANY KIND, either express or implied. See the License for
+ the specific language governing permissions and limitations under the License.
  */
 package net.sf.flatpack.util;
 
@@ -33,27 +33,27 @@ import net.sf.flatpack.DataSet;
 
 /**
  * Converts a DataSet object into an excel spreadsheet.
- * 
+ *
  * Only detail records will be contained in the export.
- * Header / Trailer records defined by &lt;record&gt; tags in the 
+ * Header / Trailer records defined by &lt;record&gt; tags in the
  * pzmap will be ignored on the export.
- * 
+ *
  * @author Paul Zepernick
  */
 public class ExcelTransformer {
     private final DataSet ds;
-    
+
     private final File xlsFile;
-    
+
     private String[] exportOnlyColumns;
-    
+
     private String[] excludeFromExportColumns;
-    
+
     private String[] numericColumns;
 
     /**
      * Constructs a new Excel transformer
-     * 
+     *
      * @param ds
      *            DataSet to convert
      * @param xlsFile
@@ -66,7 +66,7 @@ public class ExcelTransformer {
 
     /**
      * Writes the Excel file to disk
-     * 
+     *
      * @throws IOException
      * @throws WriteException
      */
@@ -101,8 +101,7 @@ public class ExcelTransformer {
                     colOffset++;
                     continue;
                 }
-                
-                
+
                 final Label xlsTextLbl = new Label(i - colOffset, 0, columnNames[i], cellFormat);
                 wrkSheet.addCell(xlsTextLbl);
             }
@@ -126,11 +125,11 @@ public class ExcelTransformer {
 
                     WritableCell wc = null;
                     if (numericColumnList.contains(columnNames[i])) {
-                    	wc = new Number(i - colOffset, row, ds.getDouble(columnNames[i]), cellFormat);
+                        wc = new Number(i - colOffset, row, ds.getDouble(columnNames[i]), cellFormat);
                     } else {
-                    	wc = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
+                        wc = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
                     }
-                    
+
                     wrkSheet.addCell(wc);
                 }
 
@@ -152,16 +151,16 @@ public class ExcelTransformer {
 
     /**
      * The columns names contained in the array will be igored if
-     * setExportOnlyColumns() is called.  
-     * 
+     * setExportOnlyColumns() is called.
+     *
      * Any columns names contained in this list will be excluded from
      * the export in Excel.
-     * 
+     *
      * @param excludeFromExportColumns the excludeFromExportColumns to set
      */
     public void setExcludeFromExportColumns(final String[] excludeFromExportColumns) {
         if (excludeFromExportColumns != null) {
-            this.excludeFromExportColumns = (String[]) excludeFromExportColumns.clone();
+            this.excludeFromExportColumns = excludeFromExportColumns.clone();
         } else {
             this.excludeFromExportColumns = null;
         }
@@ -170,44 +169,44 @@ public class ExcelTransformer {
     /**
      * When set, only columns contained in the String[] will
      * be exported out to Excel.
-     * 
+     *
      * @param exportOnlyColumns the exportOnlyColumns to set
      */
     public void setExportOnlyColumns(final String[] exportOnlyColumns) {
         if (exportOnlyColumns != null) {
-            this.exportOnlyColumns = (String[]) exportOnlyColumns.clone();
+            this.exportOnlyColumns = exportOnlyColumns.clone();
         } else {
             this.exportOnlyColumns = null;
         }
     }
 
-	/**
-	 * @return the numericColumns
-	 */
-	public String[] getNumericColumns() {
-		return numericColumns;
-	}
+    /**
+     * @return the numericColumns
+     */
+    public String[] getNumericColumns() {
+        return numericColumns;
+    }
 
-	/**
-	 * Columns contained in this array will be writen as numerics to Excel instead of Text
-	 * 
-	 * @param numericColumns the numericColumns to set
-	 */
-	public void setNumericColumns(String[] numericColumns) {
-		this.numericColumns = numericColumns;
-	}
+    /**
+     * Columns contained in this array will be writen as numerics to Excel instead of Text
+     * 
+     * @param numericColumns the numericColumns to set
+     */
+    public void setNumericColumns(final String[] numericColumns) {
+        this.numericColumns = numericColumns;
+    }
 
-	/**
-	 * @return the exportOnlyColumns
-	 */
-	public String[] getExportOnlyColumns() {
-		return exportOnlyColumns;
-	}
+    /**
+     * @return the exportOnlyColumns
+     */
+    public String[] getExportOnlyColumns() {
+        return exportOnlyColumns;
+    }
 
-	/**
-	 * @return the excludeFromExportColumns
-	 */
-	public String[] getExcludeFromExportColumns() {
-		return excludeFromExportColumns;
-	}
+    /**
+     * @return the excludeFromExportColumns
+     */
+    public String[] getExcludeFromExportColumns() {
+        return excludeFromExportColumns;
+    }
 }

@@ -49,6 +49,7 @@ public class ConvertInteger implements Converter {
      *
      * @see net.sf.flatpack.converter#convertValue(java.lang.String)
      */
+    @Override
     public Object convertValue(final String valueToConvert) {
         return Integer.valueOf(ParserUtils.stripNonLongChars(valueToConvert));
     }

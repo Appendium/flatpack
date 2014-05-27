@@ -2,14 +2,14 @@ package net.sf.flatpack.utilities;
 
 /**
  * Static utility methods for Junit tests
- * 
+ *
  * @author Paul Zepernick
  */
 public class UnitTestUtils {
 
     /**
      * Builds a delimited qualified string containing the elements passed in
-     * 
+     *
      * @param elements
      *            Elements To Include In Delimited String
      * @param delimiter

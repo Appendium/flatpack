@@ -45,313 +45,327 @@ import net.sf.flatpack.xml.MetaData;
 /**
  * @author xhensevb
  * @author zepernick
- * 
+ *
  */
 public abstract class AbstractParser implements Parser {
 
-	private boolean handlingShortLines = false;
+    private boolean handlingShortLines = false;
 
-	private boolean ignoreExtraColumns = false;
+    private boolean ignoreExtraColumns = false;
 
-	private boolean columnNamesCaseSensitive = false;
+    private boolean columnNamesCaseSensitive = false;
 
-	private boolean initialised = false;
+    private boolean initialised = false;
 
-	private boolean ignoreParseWarnings = false;
+    private boolean ignoreParseWarnings = false;
 
-	private boolean nullEmptyStrings = false;
+    private boolean nullEmptyStrings = false;
 
-	/** Map of column metadata's */
-	// private Map columnMD = null;
-	private MetaData pzMetaData = null;
+    /** Map of column metadata's */
+    // private Map columnMD = null;
+    private MetaData pzMetaData = null;
 
-	private String dataDefinition = null;
+    private String dataDefinition = null;
 
-	private Reader dataSourceReader = null;
+    private Reader dataSourceReader = null;
 
-	private List<Reader> readersToClose = null;
+    private List<Reader> readersToClose = null;
 
-	private boolean flagEmptyRows;
+    private boolean flagEmptyRows;
 
-	private boolean storeRawDataToDataError;
+    private boolean storeRawDataToDataError;
 
-	private boolean storeRawDataToDataSet;
+    private boolean storeRawDataToDataSet;
 
-	private String dataFileTable = "DATAFILE";
+    private String dataFileTable = "DATAFILE";
 
-	private String dataStructureTable = "DATASTRUCTURE";
+    private String dataStructureTable = "DATASTRUCTURE";
 
-	protected AbstractParser(final Reader dataSourceReader) {
-		this.dataSourceReader = dataSourceReader;
-	}
+    protected AbstractParser(final Reader dataSourceReader) {
+        this.dataSourceReader = dataSourceReader;
+    }
 
-	protected AbstractParser(final Reader dataSourceReader,
-			final String dataDefinition) {
-		this.dataSourceReader = dataSourceReader;
-		this.dataDefinition = dataDefinition;
-	}
+    protected AbstractParser(final Reader dataSourceReader, final String dataDefinition) {
+        this.dataSourceReader = dataSourceReader;
+        this.dataDefinition = dataDefinition;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.flatpack.PZParser#isHandlingShortLines()
-	 */
-	public boolean isHandlingShortLines() {
-		return handlingShortLines;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.sf.flatpack.PZParser#isHandlingShortLines()
+     */
+    @Override
+    public boolean isHandlingShortLines() {
+        return handlingShortLines;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.flatpack.PZParser#setHandlingShortLines(boolean)
-	 */
-	public Parser setHandlingShortLines(final boolean handleShortLines) {
-		this.handlingShortLines = handleShortLines;
-		return this;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.sf.flatpack.PZParser#setHandlingShortLines(boolean)
+     */
+    @Override
+    public Parser setHandlingShortLines(final boolean handleShortLines) {
+        this.handlingShortLines = handleShortLines;
+        return this;
+    }
 
-	public boolean isIgnoreExtraColumns() {
-		return ignoreExtraColumns;
-	}
+    @Override
+    public boolean isIgnoreExtraColumns() {
+        return ignoreExtraColumns;
+    }
 
-	public Parser setIgnoreExtraColumns(final boolean ignoreExtraColumns) {
-		this.ignoreExtraColumns = ignoreExtraColumns;
-		return this;
-	}
+    @Override
+    public Parser setIgnoreExtraColumns(final boolean ignoreExtraColumns) {
+        this.ignoreExtraColumns = ignoreExtraColumns;
+        return this;
+    }
 
-	public final DataSet parse() {
-		if (!initialised) {
-			init();
-		}
-		return doParse();
-	}
+    @Override
+    public final DataSet parse() {
+        if (!initialised) {
+            init();
+        }
+        return doParse();
+    }
 
-	@Override
-	public final StreamingDataSet parseAsStream() {
-		return new StreamingRecord(parse());
-	}
+    @Override
+    public final StreamingDataSet parseAsStream() {
+        return new StreamingRecord(parse());
+    }
 
-	@Override
-	public final Stream<Record> stream() {
-		return new StreamingRecord(parse()).stream();
-	}
+    @Override
+    public final Stream<Record> stream() {
+        return new StreamingRecord(parse()).stream();
+    }
 
-	protected abstract DataSet doParse();
+    protected abstract DataSet doParse();
 
-	protected abstract void init();
+    protected abstract void init();
 
-	// /**
-	// * @deprecated
-	// */
-	// protected void setColumnMD(final Map map) {
-	// columnMD = map;
-	// }
-	// this is used for backward compatibility. We are instantiating Readers
-	// from
-	// InputStream and File from previous versions. Close out any Readers in the
-	// readersToClose list. This can be removed after we remove the deprecated
-	// methods
-	protected void closeReaders() throws IOException {
-		if (readersToClose != null) {
-			for (Reader r : readersToClose) {
-				r.close();
-			}
-		}
-	}
+    // /**
+    // * @deprecated
+    // */
+    // protected void setColumnMD(final Map map) {
+    // columnMD = map;
+    // }
+    // this is used for backward compatibility. We are instantiating Readers
+    // from
+    // InputStream and File from previous versions. Close out any Readers in the
+    // readersToClose list. This can be removed after we remove the deprecated
+    // methods
+    protected void closeReaders() throws IOException {
+        if (readersToClose != null) {
+            for (final Reader r : readersToClose) {
+                r.close();
+            }
+        }
+    }
 
-	// adds a reader to the close list. the list will be processed after parsing
-	// is
-	// completed.
-	protected void addToCloseReaderList(final Reader r) {
-		if (readersToClose == null) {
-			readersToClose = new ArrayList<Reader>();
-		}
-		readersToClose.add(r);
-	}
+    // adds a reader to the close list. the list will be processed after parsing
+    // is
+    // completed.
+    protected void addToCloseReaderList(final Reader r) {
+        if (readersToClose == null) {
+            readersToClose = new ArrayList<Reader>();
+        }
+        readersToClose.add(r);
+    }
 
-	protected void addToMetaData(final List<ColumnMetaData> columns) {
-		if (pzMetaData == null) {
-			pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(
-					columns, this));
-		} else {
-			pzMetaData.setColumnsNames(columns);
-			pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(
-					columns, this));
-		}
-	}
+    protected void addToMetaData(final List<ColumnMetaData> columns) {
+        if (pzMetaData == null) {
+            pzMetaData = new MetaData(columns, ParserUtils.buidColumnIndexMap(columns, this));
+        } else {
+            pzMetaData.setColumnsNames(columns);
+            pzMetaData.setColumnIndexMap(ParserUtils.buidColumnIndexMap(columns, this));
+        }
+    }
 
-	protected boolean isInitialised() {
-		return initialised;
-	}
+    protected boolean isInitialised() {
+        return initialised;
+    }
 
-	protected void setInitialised(final boolean initialised) {
-		this.initialised = initialised;
-	}
+    protected void setInitialised(final boolean initialised) {
+        this.initialised = initialised;
+    }
 
-	protected String getDataDefinition() {
-		return dataDefinition;
-	}
+    protected String getDataDefinition() {
+        return dataDefinition;
+    }
 
-	protected void setDataDefinition(final String dataDefinition) {
-		this.dataDefinition = dataDefinition;
-	}
+    protected void setDataDefinition(final String dataDefinition) {
+        this.dataDefinition = dataDefinition;
+    }
 
-	/**
-	 * Adds a new error to this DataSet. These can be collected, and retrieved
-	 * after processing
-	 * 
-	 * @param ds
-	 *            the dataset
-	 * @param errorDesc
-	 *            String description of error
-	 * @param lineNo
-	 *            line number error occurred on
-	 * @param errorLevel
-	 *            errorLevel 1,2,3 1=warning 2=error 3= severe error
-	 */
-	protected void addError(final DefaultDataSet ds, final String errorDesc,
-			final int lineNo, final int errorLevel) {
-		addError(ds, errorDesc, lineNo, errorLevel, null);
-	}
+    /**
+     * Adds a new error to this DataSet. These can be collected, and retrieved
+     * after processing
+     * 
+     * @param ds
+     *            the dataset
+     * @param errorDesc
+     *            String description of error
+     * @param lineNo
+     *            line number error occurred on
+     * @param errorLevel
+     *            errorLevel 1,2,3 1=warning 2=error 3= severe error
+     */
+    protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel) {
+        addError(ds, errorDesc, lineNo, errorLevel, null);
+    }
 
-	/**
-	 * Adds a new error to this DataSet. These can be collected, and retrieved
-	 * after processing
-	 * 
-	 * @param errorDesc
-	 *            String description of error
-	 * @param lineNo
-	 *            line number error occurred on
-	 * @param errorLevel
-	 *            errorLevel 1,2,3 1=warning 2=error 3= severe error'
-	 * @param lineData
-	 *            Data of the line which failed the parse
-	 */
-	protected void addError(final DefaultDataSet ds, final String errorDesc,
-			final int lineNo, final int errorLevel, final String lineData) {
-		if (errorLevel == 1 && isIgnoreParseWarnings()) {
-			// user has selected to not log warnings in the parser
-			return;
-		}
-		final DataError de = new DataError(errorDesc, lineNo, errorLevel,
-				lineData);
-		ds.addError(de);
-	}
+    /**
+     * Adds a new error to this DataSet. These can be collected, and retrieved
+     * after processing
+     * 
+     * @param errorDesc
+     *            String description of error
+     * @param lineNo
+     *            line number error occurred on
+     * @param errorLevel
+     *            errorLevel 1,2,3 1=warning 2=error 3= severe error'
+     * @param lineData
+     *            Data of the line which failed the parse
+     */
+    protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel, final String lineData) {
+        if (errorLevel == 1 && isIgnoreParseWarnings()) {
+            // user has selected to not log warnings in the parser
+            return;
+        }
+        final DataError de = new DataError(errorDesc, lineNo, errorLevel, lineData);
+        ds.addError(de);
+    }
 
-	/**
-	 * @return the dataSourceReader
-	 */
-	protected Reader getDataSourceReader() {
-		return dataSourceReader;
-	}
+    /**
+     * @return the dataSourceReader
+     */
+    protected Reader getDataSourceReader() {
+        return dataSourceReader;
+    }
 
-	/**
-	 * @param dataSourceReader
-	 *            the dataSourceReader to set
-	 */
-	protected void setDataSourceReader(final Reader dataSourceReader) {
-		this.dataSourceReader = dataSourceReader;
-	}
+    /**
+     * @param dataSourceReader
+     *            the dataSourceReader to set
+     */
+    protected void setDataSourceReader(final Reader dataSourceReader) {
+        this.dataSourceReader = dataSourceReader;
+    }
 
-	public boolean isColumnNamesCaseSensitive() {
-		return columnNamesCaseSensitive;
-	}
+    @Override
+    public boolean isColumnNamesCaseSensitive() {
+        return columnNamesCaseSensitive;
+    }
 
-	public Parser setColumnNamesCaseSensitive(
-			final boolean columnNamesCaseSensitive) {
-		this.columnNamesCaseSensitive = columnNamesCaseSensitive;
-		return this;
-	}
+    @Override
+    public Parser setColumnNamesCaseSensitive(final boolean columnNamesCaseSensitive) {
+        this.columnNamesCaseSensitive = columnNamesCaseSensitive;
+        return this;
+    }
 
-	public boolean isIgnoreParseWarnings() {
-		return ignoreParseWarnings;
-	}
+    @Override
+    public boolean isIgnoreParseWarnings() {
+        return ignoreParseWarnings;
+    }
 
-	public Parser setIgnoreParseWarnings(final boolean ignoreParseWarnings) {
-		this.ignoreParseWarnings = ignoreParseWarnings;
-		return this;
-	}
+    @Override
+    public Parser setIgnoreParseWarnings(final boolean ignoreParseWarnings) {
+        this.ignoreParseWarnings = ignoreParseWarnings;
+        return this;
+    }
 
-	public boolean isNullEmptyStrings() {
-		return nullEmptyStrings;
-	}
+    @Override
+    public boolean isNullEmptyStrings() {
+        return nullEmptyStrings;
+    }
 
-	public Parser setNullEmptyStrings(final boolean nullEmptyStrings) {
-		this.nullEmptyStrings = nullEmptyStrings;
-		return this;
-	}
+    @Override
+    public Parser setNullEmptyStrings(final boolean nullEmptyStrings) {
+        this.nullEmptyStrings = nullEmptyStrings;
+        return this;
+    }
 
-	public MetaData getPzMetaData() {
-		return pzMetaData;
-	}
+    public MetaData getPzMetaData() {
+        return pzMetaData;
+    }
 
-	public void setPzMetaData(final MetaData pzMap) {
-		this.pzMetaData = pzMap;
-	}
+    public void setPzMetaData(final MetaData pzMap) {
+        this.pzMetaData = pzMap;
+    }
 
-	/**
-	 * @return the flagEmptyRows
-	 */
-	public boolean isFlagEmptyRows() {
-		return flagEmptyRows;
-	}
+    /**
+     * @return the flagEmptyRows
+     */
+    @Override
+    public boolean isFlagEmptyRows() {
+        return flagEmptyRows;
+    }
 
-	/**
-	 * @param flagEmptyRows
-	 *            the flagEmptyRows to set
-	 */
-	public Parser setFlagEmptyRows(boolean flagEmptyRows) {
-		this.flagEmptyRows = flagEmptyRows;
-		return this;
-	}
+    /**
+     * @param flagEmptyRows
+     *            the flagEmptyRows to set
+     */
+    @Override
+    public Parser setFlagEmptyRows(final boolean flagEmptyRows) {
+        this.flagEmptyRows = flagEmptyRows;
+        return this;
+    }
 
-	/**
-	 * @return the storeRawDataToDataError
-	 */
-	public boolean isStoreRawDataToDataError() {
-		return storeRawDataToDataError;
-	}
+    /**
+     * @return the storeRawDataToDataError
+     */
+    @Override
+    public boolean isStoreRawDataToDataError() {
+        return storeRawDataToDataError;
+    }
 
-	/**
-	 * @param storeRawDataToDataError
-	 *            the storeRawDataToDataError to set
-	 */
-	public Parser setStoreRawDataToDataError(boolean storeRawDataToDataError) {
-		this.storeRawDataToDataError = storeRawDataToDataError;
-		return this;
-	}
+    /**
+     * @param storeRawDataToDataError
+     *            the storeRawDataToDataError to set
+     */
+    @Override
+    public Parser setStoreRawDataToDataError(final boolean storeRawDataToDataError) {
+        this.storeRawDataToDataError = storeRawDataToDataError;
+        return this;
+    }
 
-	/**
-	 * @return the storeRawDataToDataSet
-	 */
-	public boolean isStoreRawDataToDataSet() {
-		return storeRawDataToDataSet;
-	}
+    /**
+     * @return the storeRawDataToDataSet
+     */
+    @Override
+    public boolean isStoreRawDataToDataSet() {
+        return storeRawDataToDataSet;
+    }
 
-	/**
-	 * @param storeRawDataToDataSet
-	 *            the storeRawDataToDataSet to set
-	 */
-	public Parser setStoreRawDataToDataSet(boolean storeRawDataToDataSet) {
-		this.storeRawDataToDataSet = storeRawDataToDataSet;
-		return this;
-	}
+    /**
+     * @param storeRawDataToDataSet
+     *            the storeRawDataToDataSet to set
+     */
+    @Override
+    public Parser setStoreRawDataToDataSet(final boolean storeRawDataToDataSet) {
+        this.storeRawDataToDataSet = storeRawDataToDataSet;
+        return this;
+    }
 
-	public String getDataFileTable() {
-		return dataFileTable;
-	}
+    @Override
+    public String getDataFileTable() {
+        return dataFileTable;
+    }
 
-	public Parser setDataFileTable(String dataFileTable) {
-		this.dataFileTable = dataFileTable;
-		return this;
-	}
+    @Override
+    public Parser setDataFileTable(final String dataFileTable) {
+        this.dataFileTable = dataFileTable;
+        return this;
+    }
 
-	public String getDataStructureTable() {
-		return dataStructureTable;
-	}
+    @Override
+    public String getDataStructureTable() {
+        return dataStructureTable;
+    }
 
-	public Parser setDataStructureTable(String dataStructureTable) {
-		this.dataStructureTable = dataStructureTable;
-		return this;
-	}
+    @Override
+    public Parser setDataStructureTable(final String dataStructureTable) {
+        this.dataStructureTable = dataStructureTable;
+        return this;
+    }
 }

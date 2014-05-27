@@ -40,8 +40,8 @@ public class TabDelimited {
         colNames = ds.getColumns();
 
         while (ds.next()) {
-            for (int i = 0; i < colNames.length; i++) {
-                System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+            for (final String colName : colNames) {
+                System.out.println("COLUMN NAME: " + colName + " VALUE: " + ds.getString(colName));
             }
 
             System.out.println("===========================================================================");
@@ -60,14 +60,13 @@ public class TabDelimited {
     // used for Junit test
 
     public DataSet getDsForTest() throws Exception {
-        final Parser parser =
-                DefaultParserFactory.getInstance().newDelimitedParser(
-                        new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
+        final Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+                new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
 
         parser.setHandlingShortLines(true);
 
         return parser.parse();
 
-        //        return new DataSet(new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
+        // return new DataSet(new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), "\t", "\"", true);
     }
 }

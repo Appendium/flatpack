@@ -10,8 +10,8 @@ import net.sf.flatpack.util.ParserUtils;
 
 /**
  * Test the functionality of a fixed width parse
- * 
- * @author Paul Zepernick 
+ *
+ * @author Paul Zepernick
  */
 public class FixedWidthParserUtilsTest extends TestCase {
 
@@ -23,7 +23,7 @@ public class FixedWidthParserUtilsTest extends TestCase {
         check(new String[] { "test", "test", "test" }, new int[] { 5, 10, 20 }, new String[] { "test", "test", "test" });
 
         check(new String[] { "test with some space", "test", "test" }, new int[] { 300, 10, 20 }, new String[] { "test with some space", "test",
-                "test" });
+        "test" });
     }
 
     private void check(final String[] columnData, final int[] lengths, final String[] expected) {
@@ -31,9 +31,9 @@ public class FixedWidthParserUtilsTest extends TestCase {
 
         assertEquals("data and col lengths different size...", columnData.length, lengths.length);
 
-        for (int i = 0; i < lengths.length; i++) {
+        for (final int length : lengths) {
             final ColumnMetaData cmd = new ColumnMetaData();
-            cmd.setColLength(lengths[i]);
+            cmd.setColLength(length);
             columnMetaData.add(cmd);
         }
 
@@ -45,11 +45,11 @@ public class FixedWidthParserUtilsTest extends TestCase {
 
         final List<String> splitResult = FixedWidthParserUtils.splitFixedText(columnMetaData, lineToParse.toString());
 
-        //compare the parse results to the expected results
+        // compare the parse results to the expected results
         assertEquals("did not return correct number of cols...", expected.length, splitResult.size());
 
         for (int i = 0; i < expected.length; i++) {
-            assertEquals("col values don't match...", expected[i], (String) splitResult.get(i));
+            assertEquals("col values don't match...", expected[i], splitResult.get(i));
         }
 
     }

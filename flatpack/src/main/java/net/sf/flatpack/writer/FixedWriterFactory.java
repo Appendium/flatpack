@@ -7,7 +7,7 @@ import java.util.Map;
 import org.jdom.JDOMException;
 
 /**
- * 
+ *
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
 public class FixedWriterFactory extends AbstractWriterFactory {
@@ -29,6 +29,7 @@ public class FixedWriterFactory extends AbstractWriterFactory {
         this.pad = fillChar;
     }
 
+    @Override
     public Writer createWriter(final java.io.Writer output) throws IOException {
         return new FixedLengthWriter(this.getColumnMapping(), output, pad);
     }

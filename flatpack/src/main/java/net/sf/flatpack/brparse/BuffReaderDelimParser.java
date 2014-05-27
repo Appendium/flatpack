@@ -50,7 +50,7 @@ import net.sf.flatpack.util.ParserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BuffReaderDelimParser extends DelimiterParser implements InterfaceBuffReaderParse{
+public class BuffReaderDelimParser extends DelimiterParser implements InterfaceBuffReaderParse {
     private BufferedReader br;
 
     private boolean processedFirst = false;
@@ -84,11 +84,12 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
         super(dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 
+    @Override
     protected DataSet doParse() {
-        //        final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
+        // final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
         final DataSet ds = new BuffReaderDataSet(getPzMetaData(), this);
         try {
-            //gather the conversion properties
+            // gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
 
             br = new BufferedReader(getDataSourceReader());
@@ -108,15 +109,16 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
      * @param ds
      * @return Row
      */
-    public Row buildRow(final DefaultDataSet ds)  {
+    @Override
+    public Row buildRow(final DefaultDataSet ds) {
         /** loop through each line in the file */
         while (true) {
             String line;
-			try {
-				line = fetchNextRecord(br, getQualifier(), getDelimiter());
-			} catch (IOException e) {
-				throw new RuntimeException("Error Fetching Record From File...", e);
-			}
+            try {
+                line = fetchNextRecord(br, getQualifier(), getDelimiter());
+            } catch (final IOException e) {
+                throw new RuntimeException("Error Fetching Record From File...", e);
+            }
 
             if (line == null) {
                 return null;
@@ -129,20 +131,20 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             } else if (!processedFirst && shouldCreateMDFromFile()) {
                 processedFirst = true;
                 setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, getDelimiter(), getQualifier(), this));
-                //                setColumnMD(ParserUtils.getColumnMDFromFile(line, getDelimiter(), getQualifier(), this));
+                // setColumnMD(ParserUtils.getColumnMDFromFile(line, getDelimiter(), getQualifier(), this));
                 continue;
             }
 
-            //TODO
-            //seems like we may want to try doing something like this.  I have my reservations because
-            //it is possible that we don't get a "detail" id and this might generate NPE
-            //is it going to create too much overhead to do a null check here as well???
-            //final int intialSize =  ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
+            // TODO
+            // seems like we may want to try doing something like this. I have my reservations because
+            // it is possible that we don't get a "detail" id and this might generate NPE
+            // is it going to create too much overhead to do a null check here as well???
+            // final int intialSize = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
             // column values
             List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
-            //            final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
+            // final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
             final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
-            //            final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
+            // final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
             final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
             final int columnCount = cmds.size();
             // DEBUG
@@ -151,13 +153,13 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             // will not be included in the dataset
             if (columns.size() > columnCount) {
                 if (isIgnoreExtraColumns()) {
-                    //user has choosen to ignore the fact that we have too many columns in the data from
-                    //what the mapping has described.  sublist the array to remove un-needed columns
+                    // user has choosen to ignore the fact that we have too many columns in the data from
+                    // what the mapping has described. sublist the array to remove un-needed columns
                     columns = columns.subList(0, columnCount);
                     addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
                 } else {
-                    //log the error
-                    addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2, 
+                    // log the error
+                    addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
                             isStoreRawDataToDataError() ? line : null);
                     continue;
                 }
@@ -172,7 +174,7 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
                     addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
 
                 } else {
-                    addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2, 
+                    addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
                             isStoreRawDataToDataError() ? line : null);
                     continue;
                 }
@@ -185,15 +187,15 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             row.setRowNumber(getLineCount());
 
             if (isFlagEmptyRows()) {
-                //user has elected to have the parser flag rows that are empty
+                // user has elected to have the parser flag rows that are empty
                 row.setEmpty(ParserUtils.isListElementsEmpty(columns));
             }
             if (isStoreRawDataToDataSet()) {
-                //user told the parser to keep a copy of the raw data in the row
-                //WARNING potential for high memory usage here
+                // user told the parser to keep a copy of the raw data in the row
+                // WARNING potential for high memory usage here
                 row.setRawData(line);
-            }   
-            
+            }
+
             return row;
         }
     }
@@ -210,8 +212,9 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
         }
     }
 
-    //try to clean up the file handles automatically if
-    //the close was not called
+    // try to clean up the file handles automatically if
+    // the close was not called
+    @Override
     protected void finalize() throws Throwable {
         try {
             close();

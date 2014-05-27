@@ -48,7 +48,7 @@ import net.sf.flatpack.util.ParserUtils;
  *
  */
 public class DBDelimiterParser extends AbstractDelimiterParser {
-    private Connection con;
+    private final Connection con;
 
     private InputStream dataSourceStream;
 
@@ -65,10 +65,11 @@ public class DBDelimiterParser extends AbstractDelimiterParser {
         this.con = con;
     }
 
+    @Override
     protected void init() {
         try {
-            //check to see if the user is using a InputStream.  This is
-            //here for backwards compatibility
+            // check to see if the user is using a InputStream. This is
+            // here for backwards compatibility
             if (dataSourceStream != null) {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
@@ -77,8 +78,8 @@ public class DBDelimiterParser extends AbstractDelimiterParser {
 
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
-            //            addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            //            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
+            // addToColumnMD(PZConstants.DETAIL_ID, cmds);
+            // addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
@@ -91,8 +92,9 @@ public class DBDelimiterParser extends AbstractDelimiterParser {
         }
     }
 
+    @Override
     protected boolean shouldCreateMDFromFile() {
-    	//The MetaData should always be pulled from the DB for this implementation
+        // The MetaData should always be pulled from the DB for this implementation
         return false;
     }
 }

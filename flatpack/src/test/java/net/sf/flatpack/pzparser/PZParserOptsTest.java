@@ -16,46 +16,46 @@ import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.FPInvalidUsageException;
 
 /**
- * Test the different options that can be 
+ * Test the different options that can be
  * set on the parser
- * 
+ *
  * @author Paul Zepernick
  */
 public class PZParserOptsTest extends TestCase {
-	
-	public void testHandleShortLines() {
+
+    public void testHandleShortLines() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setHandlingShortLines(true);
-      //  p.setIgnoreParseWarnings(true);
+        // p.setIgnoreParseWarnings(true);
         ds = p.parse();
         assertEquals("Should have a row of data", true, ds.next());
-        
-        //re-test the buffered reader
+
+        // re-test the buffered reader
         p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setHandlingShortLines(true);
-      //  p.setIgnoreParseWarnings(true);
+        // p.setIgnoreParseWarnings(true);
         ds = p.parse();
         assertEquals("Should have a row of data", true, ds.next());
-	}
-	
-	public void testIgnoreExtraColumns() {
+    }
+
+    public void testIgnoreExtraColumns() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n \"value1\",value2,value3,value4";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
         p.setIgnoreExtraColumns(true);
-      //  p.setIgnoreParseWarnings(true);
+        // p.setIgnoreParseWarnings(true);
         ds = p.parse();
         assertEquals("Should have a row of data", true, ds.next());
-        
-        //re-test the buffered reader
+
+        // re-test the buffered reader
         p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
         p.setIgnoreExtraColumns(true);
-      //  p.setIgnoreParseWarnings(true);
+        // p.setIgnoreParseWarnings(true);
         ds = p.parse();
         assertEquals("Should have a row of data", true, ds.next());
-	}
+    }
 
     public void testEmptyToNull() {
         DataSet ds;
@@ -99,7 +99,7 @@ public class PZParserOptsTest extends TestCase {
         final String cols = "COLUMN1,column2,Column3\r\n value1,value2,value3";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
 
-        //check that column names are case sensitive
+        // check that column names are case sensitive
         p.setColumnNamesCaseSensitive(true);
         ds = p.parse();
         ds.next();
@@ -107,10 +107,10 @@ public class PZParserOptsTest extends TestCase {
             ds.getString("COLUMN2");
             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
         } catch (final NoSuchElementException e) {
-            //this should happen since we are matching case
+            // this should happen since we are matching case
         }
 
-        //check that column names are NOT case sensitive
+        // check that column names are NOT case sensitive
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setColumnNamesCaseSensitive(false);
         ds = p.parse();
@@ -121,29 +121,30 @@ public class PZParserOptsTest extends TestCase {
             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should NOT fail with case sensitivity turned OFF");
         }
     }
-    
+
     public void testEmptyRowCheck() {
         DataSet ds;
         final String cols = "column1,column2,column3\r\n,,";
-       
-        //check to see if the flag empty rows works
+
+        // check to see if the flag empty rows works
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setFlagEmptyRows(true);
         ds = p.parse();
         ds.next();
         assertEquals("Row should return empty...", ds.isRowEmpty(), true);
-        
-        //do not set to flag empty rows, but make the check anyhow to make sure we get an exception
+
+        // do not set to flag empty rows, but make the check anyhow to make sure we get an exception
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
         ds.next();
         try {
             ds.isRowEmpty();
             fail("should have got FPInvalidUsageException...");
-        } catch(FPInvalidUsageException e){}
+        } catch (final FPInvalidUsageException e) {
+        }
 
     }
-    
+
     public void testStoreRawDataToDataError() {
         DataSet ds;
         final String cols = "column1,column2,column3\r\nVAL1,VAL2,VAL3,VAL4";
@@ -151,18 +152,18 @@ public class PZParserOptsTest extends TestCase {
         p.setStoreRawDataToDataError(true);
         ds = p.parse();
         Iterator errors = ds.getErrors().iterator();
-        DataError de = (DataError)errors.next();
-      
+        DataError de = (DataError) errors.next();
+
         assertNotNull("DataError should contain line data...", de.getRawData());
-        
+
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setStoreRawDataToDataError(false);
         ds = p.parse();
         errors = ds.getErrors().iterator();
-        de = (DataError)errors.next();
+        de = (DataError) errors.next();
         assertNull("DataError should have <null> line data...", de.getRawData());
     }
-    
+
     public void testStoreRawData() {
         DataSet ds;
         final String cols = "column1,column2,column3\r\nVAL1,VAL2,VAL3";
@@ -171,143 +172,128 @@ public class PZParserOptsTest extends TestCase {
         ds = p.parse();
         ds.next();
         assertEquals("VAL1,VAL2,VAL3", ds.getRawData());
-        
+
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
         ds.next();
         try {
             ds.getRawData();
             fail("Should have received an FPExcpetion...");
-        }catch(FPInvalidUsageException e) {            
+        } catch (final FPInvalidUsageException e) {
         }
-        
+
     }
-    
+
     public void testEmptyLastColumn() {
-        //this was reported as a bug in the forums check to see
-        //if we actually have a problem
+        // this was reported as a bug in the forums check to see
+        // if we actually have a problem
         DataSet ds;
         String cols = "column1,column2,column3\r\nVAL1,VAL2,";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
-        
+
         assertEquals(true, ds.next());
-        
-        
+
         cols = "column1,column2,column3\r\n\"VAL1\",\"VAL2\",\"\"";
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
         ds = p.parse();
-        
+
         assertEquals(true, ds.next());
     }
-    
+
     public void testBRParseParameters() {
         DataSet ds;
-        String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" +
-        			"<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n" +
-        			"	<PZMAP>\r\n" +
-        			"		<COLUMN name=\"column1\" /> \r\n" +
-        			"		<COLUMN name=\"column2\" /> \r\n" +
-        			"	</PZMAP>";
-        			
-        String cols = "VAL1,VAL2";
-        
-        Parser p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(xml), new StringReader(cols), ',', FPConstants.NO_QUALIFIER, false);
+        final String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" + "<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n"
+                + "	<PZMAP>\r\n" + "		<COLUMN name=\"column1\" /> \r\n" + "		<COLUMN name=\"column2\" /> \r\n" + "	</PZMAP>";
+
+        final String cols = "VAL1,VAL2";
+
+        final Parser p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(xml), new StringReader(cols), ',',
+                FPConstants.NO_QUALIFIER, false);
         ds = p.parse();
-        
+
         assertEquals(true, ds.next());
     }
-    
+
     public void testFixedWidthMultipleRecordElementsInMapping() {
         DataSet ds;
-        String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" +
-        			"<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n" +
-        			"	<PZMAP>\r\n" +
-        			"		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">" +
-        			"			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" +
-        			"			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n" +
-        			"		</RECORD>" +
-        			"		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" +
-        			"		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" +
-        			"	</PZMAP>";
-        			
-        String cols = "HHEADER DATA         \r\n" +
-        			  "DDETAIL DATA         \r\n";
-        
-        Parser p = DefaultParserFactory.getInstance().newFixedLengthParser(new StringReader(xml), new StringReader(cols));
+        final String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" + "<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n"
+                + "	<PZMAP>\r\n" + "		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">"
+                + "			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" + "			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n" + "		</RECORD>"
+                + "		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" + "		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" + "	</PZMAP>";
+
+        final String cols = "HHEADER DATA         \r\n" + "DDETAIL DATA         \r\n";
+
+        final Parser p = DefaultParserFactory.getInstance().newFixedLengthParser(new StringReader(xml), new StringReader(cols));
         ds = p.parse();
         int i = 0;
         while (ds.next()) {
-        	if (i == 0 ) {
-        		assertEquals("Checking to see if we have the header record...", ds.isRecordID("header"), true);
-        		assertEquals("Checking header data", ds.getString("headerdata1"), "HEADER DATA");
-        	} else {
-        		assertEquals("Checking detail data", ds.getString("detaildata1"), "DETAIL DATA");
-        	}
-        	
-        	i++;
+            if (i == 0) {
+                assertEquals("Checking to see if we have the header record...", ds.isRecordID("header"), true);
+                assertEquals("Checking header data", ds.getString("headerdata1"), "HEADER DATA");
+            } else {
+                assertEquals("Checking detail data", ds.getString("detaildata1"), "DETAIL DATA");
+            }
+
+            i++;
         }
-       
+
     }
-    
+
     public void testSorting() {
         DataSet ds;
         String cols = "fname,lname,dob,anumber\r\npaul,zepernick,06/21/1981,2\r\nbenoit,xhenseval,05/01/1970,12";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
-        
+
         OrderBy order = new OrderBy();
-        order.addOrderColumn(new OrderColumn("fname",OrderColumn.ASC));
+        order.addOrderColumn(new OrderColumn("fname", OrderColumn.ASC));
         ds.orderRows(order);
         ds.next();
         assertEquals("benoit", ds.getString("fname"));
-        
-        
+
         order = new OrderBy();
-        order.addOrderColumn(new OrderColumn("lname",OrderColumn.DESC));
+        order.addOrderColumn(new OrderColumn("lname", OrderColumn.DESC));
         ds.orderRows(order);
         ds.next();
         assertEquals("zepernick", ds.getString("lname"));
-        
-        
-        //test date sorting
+
+        // test date sorting
         order = new OrderBy();
-        OrderColumn column = new OrderColumn("dob",OrderColumn.ASC, OrderColumn.COLTYPE_DATE);
+        OrderColumn column = new OrderColumn("dob", OrderColumn.ASC, OrderColumn.COLTYPE_DATE);
         column.setDateFormatPattern("MM/dd/yyyy");
-        order.addOrderColumn(column);        
+        order.addOrderColumn(column);
         ds.orderRows(order);
         ds.next();
         assertEquals("xhenseval", ds.getString("lname"));
-        
-        
-        //test numeric sorting
+
+        // test numeric sorting
         order = new OrderBy();
-        order.addOrderColumn(new OrderColumn("anumber",OrderColumn.DESC, OrderColumn.COLTYPE_NUMERIC));
+        order.addOrderColumn(new OrderColumn("anumber", OrderColumn.DESC, OrderColumn.COLTYPE_NUMERIC));
         ds.orderRows(order);
         ds.next();
         assertEquals("xhenseval", ds.getString("lname"));
-        
-        
-        //test bad date format & bad numeric data
-        //06.21.1981 should default to 01/01/1900 since it does not match our date format
+
+        // test bad date format & bad numeric data
+        // 06.21.1981 should default to 01/01/1900 since it does not match our date format
         cols = "fname,lname,dob,anumber\r\npaul,zepernick,06.21.1981,not a number\r\nbenoit,xhenseval,05/01/1970,12";
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
         order = new OrderBy();
-        column = new OrderColumn("dob",OrderColumn.ASC, OrderColumn.COLTYPE_DATE);
+        column = new OrderColumn("dob", OrderColumn.ASC, OrderColumn.COLTYPE_DATE);
         column.setDateFormatPattern("MM/dd/yyyy");
-        order.addOrderColumn(column);        
+        order.addOrderColumn(column);
         ds.orderRows(order);
         ds.next();
         assertEquals("zepernick", ds.getString("lname"));
-        
-        //not a number should get treated as a 0
+
+        // not a number should get treated as a 0
         order = new OrderBy();
-        order.addOrderColumn(new OrderColumn("anumber",OrderColumn.ASC, OrderColumn.COLTYPE_NUMERIC));
+        order.addOrderColumn(new OrderColumn("anumber", OrderColumn.ASC, OrderColumn.COLTYPE_NUMERIC));
         ds.orderRows(order);
         ds.next();
         assertEquals("zepernick", ds.getString("lname"));
-        
+
     }
 
     public static void main(final String[] args) {

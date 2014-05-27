@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * This holds a collection of columns and their values along with the actual
  * row number they appear in the flat file
- * 
+ *
  * @author Paul Zepernick
  */
 public class Row {
@@ -65,7 +65,7 @@ public class Row {
 
     /**
      * Adds a column to a row
-     * 
+     *
      * @param colValue -
      *            String value to add to the row
      */
@@ -75,7 +75,7 @@ public class Row {
 
     /**
      * Appends the List of Strings to the existing columns in the row
-     * 
+     *
      * @param columns -
      *            List of Strings to append to the row
      */
@@ -88,7 +88,7 @@ public class Row {
 
     /**
      * Returns the value of a column for a specified column name
-     * 
+     *
      * @param colPosition -
      *            int position of the column in the array
      * @return String value of column
@@ -99,7 +99,7 @@ public class Row {
 
     /**
      * Set the value of a column for a specified column name
-     * 
+     *
      * @param columnIndex -
      *            column number to change
      * @param value -
@@ -111,7 +111,7 @@ public class Row {
 
     /**
      * Returns the rowNumber.
-     * 
+     *
      * @return int
      */
     public int getRowNumber() {
@@ -120,7 +120,7 @@ public class Row {
 
     /**
      * Sets the rowNumber.
-     * 
+     *
      * @param rowNumber
      *            The rowNumber to set
      */
@@ -130,7 +130,7 @@ public class Row {
 
     /**
      * Returns the cols for the row.
-     * 
+     *
      * @return Vector
      */
     public List<String> getCols() {
@@ -139,7 +139,7 @@ public class Row {
 
     /**
      * Set the columns for the row.
-     * 
+     *
      * @param cols -
      *            Vector of Strings
      */
@@ -164,7 +164,7 @@ public class Row {
 
     /**
      * All columns in the row are empty
-     * 
+     *
      * @return the empty
      */
     public boolean isEmpty() {
@@ -173,16 +173,16 @@ public class Row {
 
     /**
      * When true, all columns in the row are empty
-     * 
+     *
      * @param empty the empty to set
      */
-    public void setEmpty(boolean empty) {
+    public void setEmpty(final boolean empty) {
         this.empty = empty;
     }
 
     /**
      * Raw data used to create the columns for the row
-     * 
+     *
      * @return the rawData
      */
     public String getRawData() {
@@ -191,10 +191,10 @@ public class Row {
 
     /**
      * Raw data used to create the columns for the row
-     * 
+     *
      * @param rawData the rawData to set
      */
-    public void setRawData(String rawData) {
+    public void setRawData(final String rawData) {
         this.rawData = rawData;
     }
 }

@@ -11,16 +11,17 @@ import java.util.Map;
  */
 public abstract class AbstractWriter implements Writer {
     private final BufferedWriter writer;
-    private Map<String,Object> rowMap;
+    private Map<String, Object> rowMap;
 
     public AbstractWriter(final java.io.Writer output) {
         super();
         writer = new BufferedWriter(output);
     }
 
+    @Override
     public Writer addRecordEntry(final String columnName, final Object value) {
         if (rowMap == null) {
-            rowMap = new HashMap<String,Object>();
+            rowMap = new HashMap<String, Object>();
         }
 
         if (!validateColumnTitle(columnName)) {
@@ -33,7 +34,7 @@ public abstract class AbstractWriter implements Writer {
     /**
      * Subclasses must implement this method to perform validation of
      * <code>columnTitle</code>.
-     * 
+     *
      * @param columnTitle title of the column to be filled
      * @return <code>true</code> if the column title is valid else return
      *         <code>false</code>.
@@ -47,6 +48,7 @@ public abstract class AbstractWriter implements Writer {
      * stored in <code>rowMap</code>. Overriders <b>must</b> call
      * <code>super.nextRecord()</code> as the last call in their implementation.
      */
+    @Override
     public Writer nextRecord() throws IOException {
         // the row should have been written out by the subclass so it's safe to
         // discard it here
@@ -72,17 +74,19 @@ public abstract class AbstractWriter implements Writer {
         writer.write(characters);
     }
 
+    @Override
     public Writer flush() throws IOException {
         writer.flush();
         return this;
     }
 
+    @Override
     public void close() throws IOException {
         writer.flush();
         writer.close();
     }
 
-    protected Map<String,Object> getRowMap() {
+    protected Map<String, Object> getRowMap() {
         return rowMap;
     }
 }

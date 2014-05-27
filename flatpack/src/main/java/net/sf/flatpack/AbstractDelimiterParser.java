@@ -73,6 +73,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         this.ignoreFirstRecord = ignoreFirstRecord;
     }
 
+    @Override
     protected DataSet doParse() {
         try {
             lineCount = 0;
@@ -127,7 +128,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         BufferedReader br = null;
         final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);
         try {
-            //gather the conversion properties
+            // gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
 
             br = new BufferedReader(dataSource);
@@ -156,12 +157,12 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     // Incorrect record length on line log the error. Line
                     // will not be included in the dataset log the error
                     if (isIgnoreExtraColumns()) {
-                        //user has chosen to ignore the fact that we have too many columns in the data from
-                        //what the mapping has described.  sublist the array to remove un-needed columns
+                        // user has chosen to ignore the fact that we have too many columns in the data from
+                        // what the mapping has described. sublist the array to remove un-needed columns
                         columns = columns.subList(0, columnCount);
                         addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", lineCount, 1);
                     } else {
-                        addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2, 
+                        addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
@@ -176,7 +177,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                         addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", lineCount, 1);
 
                     } else {
-                        addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2, 
+                        addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
@@ -186,21 +187,20 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
                 // to limit the memory use
                 row.setCols(columns);
-                row.setRowNumber(lineCount);                
+                row.setRowNumber(lineCount);
                 if (isFlagEmptyRows()) {
-                    //user has elected to have the parser flag rows that are empty
+                    // user has elected to have the parser flag rows that are empty
                     row.setEmpty(ParserUtils.isListElementsEmpty(columns));
                 }
                 if (isStoreRawDataToDataSet()) {
-                    //user told the parser to keep a copy of the raw data in the row
-                    //WARNING potential for high memory usage here
+                    // user told the parser to keep a copy of the raw data in the row
+                    // WARNING potential for high memory usage here
                     row.setRawData(line);
-                }   
-                
-                //add the row to the array
+                }
+
+                // add the row to the array
                 ds.addRow(row);
-                 
-                
+
             }
         } finally {
             if (br != null) {
@@ -237,8 +237,8 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
             final String trimmed = line.trim();
             final int trimmedLen = trimmed.length();
             if (!processingMultiLine && trimmed.length() == 0) {
-                //empty line skip past it, as long as it
-                //is not part of the multiline
+                // empty line skip past it, as long as it
+                // is not part of the multiline
                 continue;
             }
 
@@ -272,20 +272,20 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     // looking for a qualifier followed by a delimiter
                     lineData.append(linebreak).append(line);
                     boolean qualiFound = false;
-                    for (int i = 0; i < chrArry.length; i++) {
+                    for (final char element : chrArry) {
                         if (qualiFound) {
-                            if (chrArry[i] == ' ') {
+                            if (element == ' ') {
                                 continue;
-                            }else if (chrArry[i] == delim) {
+                            } else if (element == delim) {
                                 processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
                                 break;
-                            }                            
+                            }
                             qualiFound = false;
-                        } else if (chrArry[i] == qual) {
+                        } else if (element == qual) {
                             qualiFound = true;
                         }
                     }
-                    
+
                     // check to see if we are still in multi line mode, if
                     // so grab the next line
                     if (processingMultiLine) {
@@ -294,8 +294,8 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 }
             } else {
                 // throw the line into lineData var.
-                //need to check to see if we need to insert a line break.  
-                //The buffered reader excludes the breaks
+                // need to check to see if we need to insert a line break.
+                // The buffered reader excludes the breaks
                 lineData.append(trimmedLen == 0 ? linebreak : line);
                 if (processingMultiLine) {
                     continue; // if we are working on a multiline rec, get
@@ -307,7 +307,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         }
 
         if (line == null && lineData.length() == 0) {
-            //eof
+            // eof
             return null;
         }
 

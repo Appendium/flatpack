@@ -28,9 +28,8 @@ public class DelimitedColumnNamesInFile {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser =
-                DefaultParserFactory.getInstance().newDelimitedParser(
-                        new File("net/sf/flatpack/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(
+                new File("net/sf/flatpack/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
         final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
@@ -42,8 +41,8 @@ public class DelimitedColumnNamesInFile {
         colNames = ds.getColumns();
 
         while (ds.next()) {
-            for (int i = 0; i < colNames.length; i++) {
-                System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+            for (final String colName : colNames) {
+                System.out.println("COLUMN NAME: " + colName + " VALUE: " + ds.getString(colName));
             }
 
             System.out.println("===========================================================================");
@@ -63,9 +62,8 @@ public class DelimitedColumnNamesInFile {
 
     public DataSet getDsForTest() throws Exception {
 
-        final Parser parser =
-                DefaultParserFactory.getInstance().newDelimitedParser(
-                        new File("src/test/java/net/sf/flatpack/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
+        final Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+                new File("src/test/java/net/sf/flatpack/columninfile/PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '\"');
 
         return parser.parse();
 

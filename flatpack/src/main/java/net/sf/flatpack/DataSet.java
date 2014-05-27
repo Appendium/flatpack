@@ -59,7 +59,6 @@ public interface DataSet extends Record, RecordDataSet {
      */
     boolean previous();
 
-
     /**
      * Returns A Collection Of DataErrors that happened during processing
      *
@@ -171,22 +170,22 @@ public interface DataSet extends Record, RecordDataSet {
      *          Value to change the column to
      */
     void setValue(String column, String value);
-    
+
     /**
      * Clears out the rows in memory from the last parse.
      *
      */
     void clearRows();
-    
+
     /**
      * Clears out the parse errors from memory
      *
      */
     void clearErrors();
-    
+
     /**
-     * Clears both the errors and rows from memory 
-     * 
+     * Clears both the errors and rows from memory
+     *
      */
     void clearAll();
 }

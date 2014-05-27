@@ -3,7 +3,7 @@ package net.sf.flatpack.writer;
 import junit.framework.TestCase;
 
 /**
- * 
+ *
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
 public abstract class PZWriterTestCase extends TestCase {

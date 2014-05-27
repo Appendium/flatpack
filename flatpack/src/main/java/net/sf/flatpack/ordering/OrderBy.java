@@ -84,13 +84,14 @@ public class OrderBy implements Comparator, Serializable {
      *
      * @return int
      */
+    @Override
     public int compare(final Object arg0, final Object arg1) {
         final Row row0 = (Row) arg0;
         final Row row1 = (Row) arg1;
         int result = 0;
 
         for (int i = 0; i < orderbys.size(); i++) {
-            final OrderColumn oc = (OrderColumn) orderbys.get(i);
+            final OrderColumn oc = orderbys.get(i);
             // null indicates "detail" record which is what the parser assigns
             // to <column> 's setup outside of <record> elements
             final String mdkey0 = row0.getMdkey() == null ? FPConstants.DETAIL_ID : row0.getMdkey();
@@ -109,8 +110,12 @@ public class OrderBy implements Comparator, Serializable {
             // into account when sorting
             Comparable comp0 = null;
             Comparable comp1 = null;
-            String str0 = row0.getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(Locale.getDefault());
-            String str1 = row1.getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(Locale.getDefault());
+            final String str0 = row0.getValue(
+                    ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(
+                    Locale.getDefault());
+            final String str1 = row1.getValue(
+                    ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(
+                    Locale.getDefault());
             switch (oc.getSelectedColType()) {
             case OrderColumn.COLTYPE_STRING:
             default:
@@ -125,14 +130,14 @@ public class OrderBy implements Comparator, Serializable {
                 final SimpleDateFormat sdf = new SimpleDateFormat(oc.getDateFormatPattern());
                 try {
                     comp0 = sdf.parse(str0);
-                } catch (ParseException e) {
+                } catch (final ParseException e) {
                     comp0 = getBadDateDefault();
 
                 }
 
                 try {
                     comp1 = sdf.parse(str1);
-                } catch (ParseException e) {
+                } catch (final ParseException e) {
                     comp1 = getBadDateDefault();
                 }
                 break;
@@ -162,14 +167,14 @@ public class OrderBy implements Comparator, Serializable {
     /**
      * @param metaData the metaData to set
      */
-    public void setMetaData(MetaData metaData) {
+    public void setMetaData(final MetaData metaData) {
         this.metaData = metaData;
     }
 
     /**
      * @param parser the parser to set
      */
-    public void setParser(Parser parser) {
+    public void setParser(final Parser parser) {
         this.parser = parser;
     }
 

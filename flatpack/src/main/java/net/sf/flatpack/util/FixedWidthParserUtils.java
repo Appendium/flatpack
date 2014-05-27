@@ -62,7 +62,7 @@ public final class FixedWidthParserUtils {
     public static List<String> splitFixedText(final List<ColumnMetaData> columnMetaData, final String lineToParse) {
         final List<String> splitResult = new ArrayList<String>();
         int recPosition = 1;
-        for (ColumnMetaData colMetaDataObj : columnMetaData) {
+        for (final ColumnMetaData colMetaDataObj : columnMetaData) {
             final String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);
             recPosition += colMetaDataObj.getColLength();
             // make sure that we preserve leading spaces as they most likely are there intentionally.
@@ -88,7 +88,7 @@ public final class FixedWidthParserUtils {
             // detail id
             return FPConstants.DETAIL_ID;
         }
-        Iterator<Entry<String, XMLRecordElement>> mapEntries = columnMD.xmlRecordIterator();
+        final Iterator<Entry<String, XMLRecordElement>> mapEntries = columnMD.xmlRecordIterator();
         // loop through the XMLRecordElement objects and see if we need a
         // different MD object
         while (mapEntries.hasNext()) {

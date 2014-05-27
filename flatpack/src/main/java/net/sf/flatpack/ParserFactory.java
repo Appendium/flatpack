@@ -63,6 +63,7 @@ public interface ParserFactory {
      *            wrapped in a "new FileReader(File)"
      * @return PZParser
      */
+    @Deprecated
     Parser newFixedLengthParser(Connection con, File dataSource, String dataDefinition);
 
     /**
@@ -83,6 +84,7 @@ public interface ParserFactory {
      *            wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
+    @Deprecated
     Parser newFixedLengthParser(Connection con, InputStream dataSourceStream, String dataDefinition);
 
     /**
@@ -97,6 +99,7 @@ public interface ParserFactory {
      *            wrapped in a "new FileReader(InputStream)"
      * @return PZParser
      */
+    @Deprecated
     Parser newFixedLengthParser(File pzmapXML, File dataSource);
 
     /**
@@ -115,6 +118,7 @@ public interface ParserFactory {
      *            wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
+    @Deprecated
     Parser newFixedLengthParser(InputStream pzmapXMLStream, InputStream dataSourceStream);
 
     /**
@@ -187,8 +191,8 @@ public interface ParserFactory {
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
-    Parser newDelimitedParser(Connection con, InputStream dataSource, String dataDefinition, char delimiter,
-            char qualifier, boolean ignoreFirstRecord);
+    @Deprecated
+    Parser newDelimitedParser(Connection con, InputStream dataSource, String dataDefinition, char delimiter, char qualifier, boolean ignoreFirstRecord);
 
     /**
      * New constructor based on Reader. Constructs a new DataSet using the
@@ -218,8 +222,7 @@ public interface ParserFactory {
      *            skips the first line that contains data in the file
      * @return PZParser
      */
-    Parser newDelimitedParser(Connection con, Reader dataSource, String dataDefinition, char delimiter,
-            char qualifier, boolean ignoreFirstRecord);
+    Parser newDelimitedParser(Connection con, Reader dataSource, String dataDefinition, char delimiter, char qualifier, boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is
@@ -244,8 +247,8 @@ public interface ParserFactory {
      *            The File can be wrapped in a "new FileReader(File)"
      * @return PZParser
      */
-    Parser newDelimitedParser(File pzmapXML, File dataSource, char delimiter, char qualifier,
-            boolean ignoreFirstRecord);
+    @Deprecated
+    Parser newDelimitedParser(File pzmapXML, File dataSource, char delimiter, char qualifier, boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the PZMAP XML file layout method. This is
@@ -268,8 +271,7 @@ public interface ParserFactory {
      *            skips the first line that contains data in the file
      * @return PZParser
      */
-    Parser newDelimitedParser(Reader pzmapXML, Reader dataSource, char delimiter, char qualifier,
-            boolean ignoreFirstRecord);
+    Parser newDelimitedParser(Reader pzmapXML, Reader dataSource, char delimiter, char qualifier, boolean ignoreFirstRecord);
 
     /**
      * New constructor based on InputStream. Constructs a new DataSet using the
@@ -298,8 +300,8 @@ public interface ParserFactory {
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
-    Parser newDelimitedParser(InputStream pzmapXMLStream, InputStream dataSourceStream, char delimiter, char qualifier,
-            boolean ignoreFirstRecord);
+    @Deprecated
+    Parser newDelimitedParser(InputStream pzmapXMLStream, InputStream dataSourceStream, char delimiter, char qualifier, boolean ignoreFirstRecord);
 
     /**
      * Constructs a new DataSet using the first line of data found in the text
@@ -320,6 +322,7 @@ public interface ParserFactory {
      *            The InputStream can be wrapped in a "new FileReader(File)"
      * @return PZParser
      */
+    @Deprecated
     Parser newDelimitedParser(File dataSource, char delimiter, char qualifier);
 
     /**
@@ -363,5 +366,6 @@ public interface ParserFactory {
      *            The InputStream can be wrapped in a "new InputStreamReader(InputStream)"
      * @return PZParser
      */
+    @Deprecated
     Parser newDelimitedParser(InputStream dataSource, char delimiter, char qualifier);
 }

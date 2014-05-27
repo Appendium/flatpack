@@ -42,8 +42,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sf.flatpack.Parser;
 import net.sf.flatpack.structure.ColumnMetaData;
@@ -88,6 +88,7 @@ public final class MapParser {
      * @throws JDOMException
      * @deprecated please use parse(Reader)
      */
+    @Deprecated
     public static Map parse(final InputStream xmlStream) throws JDOMException, IOException {
         InputStreamReader isr = null;
         try {
@@ -112,7 +113,7 @@ public final class MapParser {
      * @throws IOException
      * @throws JDOMException
      */
-    public static Map<String,Object> parse(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
+    public static Map<String, Object> parse(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
         // use for debug when JDOM complains about the xml
         /* final BufferedReader br = new BufferedReader(xmlStreamReader);
          final FileWriter fw = new FileWriter("c:/test.pz");
@@ -248,12 +249,12 @@ public final class MapParser {
     }
 
     private static void setShowDebug(final Map<String, Object> xmlResults) {
-        for (Entry<String, Object> entry : xmlResults.entrySet()) {
+        for (final Entry<String, Object> entry : xmlResults.entrySet()) {
             XMLRecordElement xmlrecEle = null;
             final String recordID = entry.getKey();
             List<ColumnMetaData> columns = null;
             if (recordID.equals(FPConstants.DETAIL_ID)) {
-                columns = ((List<ColumnMetaData>) entry.getValue());
+                columns = (List<ColumnMetaData>) entry.getValue();
             } else {
                 xmlrecEle = (XMLRecordElement) entry.getValue();
                 columns = xmlrecEle.getColumns();
@@ -264,7 +265,7 @@ public final class MapParser {
                 LOGGER.debug("Start Position: " + xmlrecEle.getStartPosition() + " " + "End Position: " + xmlrecEle.getEndPositition() + " "
                         + "Element Number: " + xmlrecEle.getElementNumber() + " " + "Indicator: " + xmlrecEle.getIndicator());
             }
-            for (ColumnMetaData cmd : columns) {
+            for (final ColumnMetaData cmd : columns) {
                 LOGGER.debug("Column Name: " + cmd.getColName() + " LENGTH: " + cmd.getColLength());
 
             }

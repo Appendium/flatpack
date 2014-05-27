@@ -18,17 +18,17 @@ import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.xml.MetaData;
 
 public class RowRecord implements Record {
-    private Row row;
-    private boolean columnCaseSensitive;
-    private MetaData metaData;
+    private final Row row;
+    private final boolean columnCaseSensitive;
+    private final MetaData metaData;
     private Properties pzConvertProps = null;
-    private boolean strictNumericParse;
-    private boolean upperCase;
-    private boolean lowerCase;
-    private boolean nullEmptyString;
+    private final boolean strictNumericParse;
+    private final boolean upperCase;
+    private final boolean lowerCase;
+    private final boolean nullEmptyString;
 
-    public RowRecord(Row row, MetaData metaData, boolean columnCaseSensitive, Properties pzConvertProps, boolean strictNumericParse,
-            boolean upperCase, boolean lowerCase, boolean nullEmptyString) {
+    public RowRecord(final Row row, final MetaData metaData, final boolean columnCaseSensitive, final Properties pzConvertProps,
+            final boolean strictNumericParse, final boolean upperCase, final boolean lowerCase, final boolean nullEmptyString) {
         super();
         this.row = row;
         this.metaData = metaData;
@@ -76,7 +76,7 @@ public class RowRecord implements Record {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.DataSet#getColumns()
      */
     @Override
@@ -86,7 +86,7 @@ public class RowRecord implements Record {
 
         if (/* columnMD != null || */metaData != null) {
             final List cmds = metaData.getColumnsNames();// ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID,
-                                                         // columnMD);
+            // columnMD);
 
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
@@ -100,7 +100,7 @@ public class RowRecord implements Record {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.DataSet#getColumns(java.lang.String)
      */
     @Override
@@ -120,17 +120,17 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public Date getDate(String column, SimpleDateFormat sdf, Supplier<Date> defaultSupplier) throws ParseException {
-        Date d = getDate(column, sdf);
+    public Date getDate(final String column, final SimpleDateFormat sdf, final Supplier<Date> defaultSupplier) throws ParseException {
+        final Date d = getDate(column, sdf);
         if (d == null) {
             return defaultSupplier.get();
         }
         return d;
     }
-    
+
     @Override
-    public Date getDate(String column, Supplier<Date> defaultSupplier) throws ParseException {
-        Date d = getDate(column);
+    public Date getDate(final String column, final Supplier<Date> defaultSupplier) throws ParseException {
+        final Date d = getDate(column);
         if (d == null) {
             return defaultSupplier.get();
         }
@@ -153,7 +153,7 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public double getDouble(String column, Supplier<Double> defaultSupplier) {
+    public double getDouble(final String column, final Supplier<Double> defaultSupplier) {
         final String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
             return defaultSupplier.get();
@@ -176,7 +176,7 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public int getInt(String column, Supplier<Integer> defaultSupplier) {
+    public int getInt(final String column, final Supplier<Integer> defaultSupplier) {
         final String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
             return defaultSupplier.get();
@@ -196,7 +196,7 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public long getLong(String column, Supplier<Long> defaultSupplier) {
+    public long getLong(final String column, final Supplier<Long> defaultSupplier) {
         final String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
             return defaultSupplier.get();
@@ -226,8 +226,8 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public BigDecimal getBigDecimal(String column, Supplier<BigDecimal> defaultSupplier) {
-        BigDecimal bd = getBigDecimal(column);
+    public BigDecimal getBigDecimal(final String column, final Supplier<BigDecimal> defaultSupplier) {
+        final BigDecimal bd = getBigDecimal(column);
         if (bd == null) {
             return defaultSupplier.get();
         }
@@ -246,7 +246,7 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public String getString(String column, Supplier<String> defaultSupplier) {
+    public String getString(final String column, final Supplier<String> defaultSupplier) {
         final String s = getString(column);
         if (FPStringUtils.isBlank(s)) {
             return defaultSupplier.get();

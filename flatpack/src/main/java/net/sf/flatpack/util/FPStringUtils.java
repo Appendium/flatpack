@@ -2,7 +2,7 @@ package net.sf.flatpack.util;
 
 /**
  * Thanks to the Apache Commons Contributors.
- * 
+ *
  * @author Jakarta Commons
  */
 public final class FPStringUtils {
@@ -25,7 +25,7 @@ public final class FPStringUtils {
      * @since 2.0
      */
     public static boolean isBlank(final String str) {
-        int strLen = str == null ? 0 : str.length();        
+        final int strLen = str == null ? 0 : str.length();
         if (strLen == 0) {
             return true;
         }

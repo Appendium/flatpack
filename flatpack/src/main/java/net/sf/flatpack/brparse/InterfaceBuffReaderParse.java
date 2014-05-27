@@ -10,13 +10,13 @@ import net.sf.flatpack.structure.Row;
  * @author Paul Zepernick
  */
 public interface InterfaceBuffReaderParse {
-	
-	/**
-	 * Builds a row into the DataSet using the current record from the File
-	 * 
-	 * @param ds
-	 * @return Row object
-	 */
-	 public Row buildRow(final DefaultDataSet ds);
+
+    /**
+     * Builds a row into the DataSet using the current record from the File
+     * 
+     * @param ds
+     * @return Row object
+     */
+    public Row buildRow(final DefaultDataSet ds);
 
 }

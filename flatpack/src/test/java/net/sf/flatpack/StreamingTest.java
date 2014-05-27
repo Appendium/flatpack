@@ -21,7 +21,7 @@ public class StreamingTest extends TestCase {
             return itemName;
         }
 
-        public void setItemName(String itemName) {
+        public void setItemName(final String itemName) {
             this.itemName = itemName;
         }
 
@@ -29,7 +29,7 @@ public class StreamingTest extends TestCase {
             return price;
         }
 
-        public void setPrice(BigDecimal price) {
+        public void setPrice(final BigDecimal price) {
             this.price = price;
         }
     }
@@ -38,11 +38,11 @@ public class StreamingTest extends TestCase {
         final String cols = "item,price,purchaseDate\r\n"//
                 + "MacBook,1890.20,20140523\r\n"//
                 + "Surface3,850.00,20140524\r\n"//
-        ;
+                ;
         final Parser p = DefaultParserFactory.newCsvParser(new StringReader(cols));
-        List<Test> ds = p.stream() //
+        final List<Test> ds = p.stream() //
                 .map(t -> {
-                    Test r = new Test();
+                    final Test r = new Test();
                     r.setItemName(t.getString("item"));
                     r.setPrice(t.getBigDecimal("price"));
                     return r;

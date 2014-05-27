@@ -27,4 +27,3 @@ public class AllJunitTests {
         return suite;
     }
 }
-

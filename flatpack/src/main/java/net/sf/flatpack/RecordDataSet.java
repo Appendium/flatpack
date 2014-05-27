@@ -13,6 +13,5 @@ public interface RecordDataSet {
      */
     boolean next();
 
-    
     Record getRecord();
 }

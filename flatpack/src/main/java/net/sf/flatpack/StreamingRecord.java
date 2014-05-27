@@ -8,11 +8,13 @@ public class StreamingRecord implements StreamingDataSet {
         this.dataSet = dataSet;
     }
 
+    @Override
     public Record getRecord() {
         return dataSet.getRecord();
     }
 
+    @Override
     public boolean next() {
-        return dataSet!=null ? dataSet.next() : false;
+        return dataSet != null ? dataSet.next() : false;
     }
 }

@@ -177,7 +177,7 @@ public interface Record {
      * @since 4.0
      */
     Date getDate(String column, SimpleDateFormat sdf, Supplier<Date> defaultSupplier) throws ParseException;
-    
+
     /**
      * Returns the date value of a specified column. This should be used if the
      * date is NOT in yyyyMMdd format. The SimpleDateFormat object will specify
@@ -243,7 +243,7 @@ public interface Record {
 
     /**
      * Does this DataSet contain a column with the given name?
-     * 
+     *
      * @param column
      *          Column name to check for
      * @return boolean
@@ -253,15 +253,15 @@ public interface Record {
     /**
      * Checks to see if there was no data on the row which was parsed.  This
      * will thrown an exception if Parser.FlagEmptyRows() is not set to true.
-     * 
+     *
      * @return
      */
     boolean isRowEmpty();
 
     /**
-     * 
+     *
      * @return the raw data used to create this Row in the DataSet.  Parser.setStoreRawDataToDataSet(true)
-     * must be specified before calling this method.  
+     * must be specified before calling this method.
      */
     String getRawData();
 }

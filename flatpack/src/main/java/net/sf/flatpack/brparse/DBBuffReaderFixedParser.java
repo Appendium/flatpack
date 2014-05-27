@@ -10,21 +10,21 @@ import net.sf.flatpack.InitialisationException;
 import net.sf.flatpack.util.ParserUtils;
 
 public class DBBuffReaderFixedParser extends BuffReaderFixedParser implements InterfaceBuffReaderParse {
-	private Connection con;
+    private final Connection con;
 
-	
     public DBBuffReaderFixedParser(final Connection con, final Reader dataSourceReader, final String dataDefinition) {
-        super(dataSourceReader, dataDefinition);  
-        this.con = con; 
+        super(dataSourceReader, dataDefinition);
+        this.con = con;
     }
-	
+
+    @Override
     protected void init() {
         try {
-            
+
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
-            //            addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            //            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
+            // addToColumnMD(PZConstants.DETAIL_ID, cmds);
+            // addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
@@ -38,7 +38,7 @@ public class DBBuffReaderFixedParser extends BuffReaderFixedParser implements In
     }
 
     protected boolean shouldCreateMDFromFile() {
-    	//The MetaData should always be pulled from the DB for this implementation
+        // The MetaData should always be pulled from the DB for this implementation
         return false;
     }
 }

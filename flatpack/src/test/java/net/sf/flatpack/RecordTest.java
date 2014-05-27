@@ -11,7 +11,7 @@ import net.sf.flatpack.util.FPConstants;
 
 /**
  * Test methods in the DataSet
- * 
+ *
  * @author Paul Zepernick
  */
 public class RecordTest extends TestCase {
@@ -20,18 +20,18 @@ public class RecordTest extends TestCase {
         final String cols = "stringCol,doubleCol,dateCol,bigDecimalCol,intCol\r\n"//
                 + "hello,2.20,20140523,123.45,6\r\n"//
                 + ",,,,"//
-                ;
+        ;
         final Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
-        StreamingDataSet ds = p.parseAsStream();
+        final StreamingDataSet ds = p.parseAsStream();
         ds.next();
-        Record record1 = ds.getRecord();
+        final Record record1 = ds.getRecord();
 
         // test record 1 with Data in file!
         assertEquals("rec1 string", "hello", record1.getString("stringCol"));
         assertTrue("rec1 doubleCol", Double.compare(2.2, record1.getDouble("doubleCol")) == 0);
         try {
             assertEquals("rec1 dateCol", new Date(114, Calendar.MAY, 23), record1.getDate("dateCol"));
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             fail();
         }
         assertEquals("rec1 intCol", 6, record1.getInt("intCol"));
@@ -39,12 +39,12 @@ public class RecordTest extends TestCase {
 
         // NOW RECORD 2 with ALL defaults
         ds.next();
-        Record record2 = ds.getRecord();
+        final Record record2 = ds.getRecord();
         assertEquals("rec2 string", "Hi", record2.getString("stringCol", () -> "Hi"));
         assertTrue("rec2 doubleCol", Double.compare(3.76, record2.getDouble("doubleCol", () -> 3.76d)) == 0);
         try {
             assertEquals("rec2 dateCol", new Date(114, Calendar.JUNE, 11), record2.getDate("dateCol", () -> new Date(114, Calendar.JUNE, 11)));
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             fail();
         }
         assertEquals("rec2 intCol", 8, record2.getInt("intCol", () -> 8));

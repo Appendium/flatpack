@@ -2,6 +2,7 @@ package net.sf.flatpack.writer;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import net.sf.flatpack.util.FPConstants;
 import org.jdom.JDOMException;
 
 /**
- * 
+ *
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
 public class DelimiterWriterFactory extends AbstractWriterFactory {
@@ -67,19 +68,37 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
         return new DelimiterWriter(this.getColumnMapping(), out, delimiter, qualifier, options);
     }
 
+    @Override
     public Writer createWriter(final java.io.Writer out) throws IOException {
         return new DelimiterWriter(this.getColumnMapping(), out, delimiter, qualifier, WriterOptions.getInstance());
     }
 
     /**
      * Convenience method to add a series of cols in one go.
-     * 
+     *
      * @param columnTitles
      * @return this
+     * @since 4.0
+     */
+    public DelimiterWriterFactory addColumnTitles(final Collection<String> columnTitles) {
+        if (columnTitles != null) {
+            for (final String columnTitle : columnTitles) {
+                addColumnTitle(columnTitle);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Convenience method to add a series of cols in one go.
+     *
+     * @param columnTitles
+     * @return this
+     * @since 4.0
      */
     public DelimiterWriterFactory addColumnTitles(final String... columnTitles) {
         if (columnTitles != null) {
-            for (String columnTitle : columnTitles) {
+            for (final String columnTitle : columnTitles) {
                 addColumnTitle(columnTitle);
             }
         }

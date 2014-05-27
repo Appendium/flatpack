@@ -54,6 +54,7 @@ public final class ResolveLocalDTD implements EntityResolver {
      * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public InputSource resolveEntity(final String publicId, final String systemId) throws SAXException, IOException {
         if (!systemId.toLowerCase(Locale.getDefault()).startsWith("http://")) {
             final URL resource = getClass().getResource("flatpack.dtd");
@@ -61,8 +62,8 @@ public final class ResolveLocalDTD implements EntityResolver {
             if (resource != null) {
                 return new InputSource(resource.openStream());
             } else {
-                //should probably not happen, this may indicate that the dtd has been
-                //removed from the jar for some reason
+                // should probably not happen, this may indicate that the dtd has been
+                // removed from the jar for some reason
                 throw new IOException("could not load dtd resource from jar!!");
             }
         }

@@ -54,6 +54,7 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newFixedWidthParser(java.sql.Connection,
      *      java.io.File, java.lang.String)
      */
+    @Override
     public Parser newFixedLengthParser(final Connection con, final File dataSource, final String dataDefinition) {
         return new DBFixedLengthParser(con, dataSource, dataDefinition);
     }
@@ -64,6 +65,7 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newFixedWidthParser(java.sql.Connection,
      *      java.io.InputStream, java.lang.String)
      */
+    @Override
     public Parser newFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
         return new DBFixedLengthParser(con, dataSourceStream, dataDefinition);
     }
@@ -74,6 +76,7 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File)
      */
+    @Override
     public Parser newFixedLengthParser(final File pzmapXML, final File dataSource) {
         return new FixedLengthParser(pzmapXML, dataSource);
     }
@@ -84,14 +87,17 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream)
      */
+    @Override
     public Parser newFixedLengthParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream) {
         return new FixedLengthParser(pzmapXMLStream, dataSourceStream);
     }
 
+    @Override
     public Parser newFixedLengthParser(final Connection con, final Reader dataSource, final String dataDefinition) {
         return new DBFixedLengthParser(con, dataSource, dataDefinition);
     }
 
+    @Override
     public Parser newFixedLengthParser(final Reader pzmapXMLStream, final Reader dataSource) {
         return new FixedLengthParser(pzmapXMLStream, dataSource);
     }
@@ -102,6 +108,7 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newParser(java.sql.Connection,
      *      java.io.InputStream, java.lang.String, char, char, boolean)
      */
+    @Override
     public Parser newDelimitedParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
         return new DBDelimiterParser(con, dataSourceStream, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
@@ -113,6 +120,7 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File,
      *      java.io.File, char, char, boolean)
      */
+    @Override
     public Parser newDelimitedParser(final File pzmapXML, final File dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         return new DelimiterParser(pzmapXML, dataSource, delimiter, qualifier, ignoreFirstRecord);
@@ -124,6 +132,7 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      java.io.InputStream, char, char, boolean)
      */
+    @Override
     public Parser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
         return new DelimiterParser(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
@@ -135,10 +144,10 @@ public class DefaultParserFactory implements ParserFactory {
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.File, char,
      *      char)
      */
+    @Override
     public Parser newDelimitedParser(final File dataSource, final char delimiter, final char qualifier) {
         return new DelimiterParser(dataSource, delimiter, qualifier, false);
     }
-
 
     /**
      * Convenience method using conventional CSV separated by , and using " for qualifier if required.
@@ -146,7 +155,7 @@ public class DefaultParserFactory implements ParserFactory {
      * @return a csv parser
      */
     public static Parser newCsvParser(final InputStream dataSourceStream) {
-    	return INSTANCE.newDelimitedParser(dataSourceStream, ',', '"');
+        return INSTANCE.newDelimitedParser(dataSourceStream, ',', '"');
     }
 
     /**
@@ -155,27 +164,32 @@ public class DefaultParserFactory implements ParserFactory {
      * @return a csv parser
      */
     public static Parser newCsvParser(final Reader dataSource) {
-    	return INSTANCE.newDelimitedParser(dataSource, ',', '"');
+        return INSTANCE.newDelimitedParser(dataSource, ',', '"');
     }
+
     /*
      * (non-Javadoc)
      *
      * @see net.sf.flatpack.PZParserFactory#newParser(java.io.InputStream,
      *      char, char)
      */
+    @Override
     public Parser newDelimitedParser(final InputStream dataSourceStream, final char delimiter, final char qualifier) {
         return new DelimiterParser(dataSourceStream, delimiter, qualifier, false);
     }
 
+    @Override
     public Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
         return new DBDelimiterParser(con, dataSource, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
     }
 
+    @Override
     public Parser newDelimitedParser(final Reader dataSource, final char delimiter, final char qualifier) {
         return new DelimiterParser(dataSource, delimiter, qualifier, false);
     }
 
+    @Override
     public Parser newDelimitedParser(final Reader pzmapXML, final Reader dataSource, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
         return new DelimiterParser(dataSource, pzmapXML, delimiter, qualifier, ignoreFirstRecord);

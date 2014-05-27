@@ -38,7 +38,7 @@ import java.util.stream.Stream;
  * PZParser is ready to parse the data and return an object that can then be
  * traversed. The default parser should NOT handle short lines, the user can
  * change it prior to calling parse.
- * 
+ *
  * @author Benoit Xhenseval
  * @author Paul Zepernick
  */
@@ -47,18 +47,18 @@ public interface Parser {
     /**
      * Start the parsing. Will return "null" if the parse fails and the DataSet
      * cannot be created
-     * 
+     *
      * @return the data set resulting from parsing
      */
     DataSet parse();
-    
+
     /**
      * Parse the data and return an interface where one can extract one record at a time, until
      * next returns false;
      * @since 3.4
      */
     StreamingDataSet parseAsStream();
-    
+
     /**
      * Parse the data and return a stream or records;
      * @since 4.0
@@ -80,7 +80,7 @@ public interface Parser {
     Parser setHandlingShortLines(boolean handleShortLines);
 
     /**
-     * 
+     *
      * @return true, detail lines with a length or column count &gt; the mapping
      *         definition will be truncated and the reader will NOT register
      *         these lines as errors in the DataError collection.
@@ -88,7 +88,7 @@ public interface Parser {
     boolean isIgnoreExtraColumns();
 
     /**
-     * 
+     *
      * @param ignoreExtraColumns
      *            when true, detail lines with a length or column count &gt; the
      *            mapping definition will be truncated and the reader will NOT
@@ -98,7 +98,7 @@ public interface Parser {
 
     /**
      * Default is false
-     * 
+     *
      * @return true, column names will have to be an exact match when retrieving
      *         the value of a column. Example when true: Column name =
      *         AColumnName ; getString("acolumnname") would fail Example when
@@ -109,7 +109,7 @@ public interface Parser {
 
     /**
      * Default is false
-     * 
+     *
      * @param columnNamesCaseSensitive
      *            when true, column names will have to be an exact match when
      *            retrieving the value of a column. Example when true: Column
@@ -121,14 +121,14 @@ public interface Parser {
 
     /**
      * Default is false
-     * 
+     *
      * @return true, warnings encountered during parsing will not be included in
      *         the DataSet errors
      */
     boolean isIgnoreParseWarnings();
 
     /**
-     * 
+     *
      * @param ignoreParseWarnings
      *            when true, warnings encountered during parsing will not be
      *            included in the DataSet errors
@@ -136,14 +136,14 @@ public interface Parser {
     Parser setIgnoreParseWarnings(boolean ignoreParseWarnings);
 
     /**
-     * 
+     *
      * @return true, empty Strings will get returned as NULL when calling
      *         DataSet.getString()
      */
     boolean isNullEmptyStrings();
 
     /**
-     * 
+     *
      * @param nullEmptyStrings
      *            when true, empty Strings will get returned as NULL when
      *            calling DataSet.getString()
@@ -151,7 +151,7 @@ public interface Parser {
     Parser setNullEmptyStrings(boolean nullEmptyStrings);
 
     /**
-     * 
+     *
      * @return flagEmptyRows when true, will analyze the row to see if all
      *         elements are empty and place a flag on the DataSet indicating if
      *         the row is empty
@@ -162,90 +162,87 @@ public interface Parser {
      * when true, will analyze the row to see if all elements are empty and
      * place a flag on the DataSet indicating if the row is empty.  This will slow
      * down the parse and should only be used when necessary.  It is off by default.
-     * 
+     *
      * @param flagEmptyRows
      */
     Parser setFlagEmptyRows(boolean flagEmptyRows);
-    
+
     /**
      * @return when true, the parser will place the data of the line which failed the parse and
      * place it into the DataError object.  DataError.getRawData() can be called to retrieve
-     * the line. 
+     * the line.
      */
     boolean isStoreRawDataToDataError();
-    
+
     /**
      * when true, the parser will place the data of the line which failed the parse and
      * place it into the DataError object.  DataError.getRawData() can be called to retrieve
      * the line.
-     * 
+     *
      * @param storeRawDataToDataError
      */
     Parser setStoreRawDataToDataError(boolean storeRawDataToDataError);
-    
-    
+
     /**
-     * @return when true, the parser will place the data of the line into the DataSet object.  
+     * @return when true, the parser will place the data of the line into the DataSet object.
      * DataSet.getRawData() can be called to retrieve the line.
      */
     boolean isStoreRawDataToDataSet();
-    
+
     /**
      * WARNING!!  Setting this option has potential to cause high memory usage.
-     * 
-     * when true, the parser will place the data of the line into the DataSet object.  
+     *
+     * when true, the parser will place the data of the line into the DataSet object.
      * DataSet.getRawData() can be called to retrieve the line.
-     * 
+     *
      * @param storeRawDataToDataError
      */
     Parser setStoreRawDataToDataSet(boolean storeRawDataToDataError);
-    
+
     /**
      * Returns the table name that will be used to read the MetaData from the db.  The
      * default table name is DATAFILE.  This may be problimatic for some who are using case
      * sensistive db table names or who wish to provide a different table name in the db.
-     * 
+     *
      * This is only applicable when using a database for file mappings.
-     * 
+     *
      * @return the DATAFILE table name
      */
-	 String getDataFileTable();
-	
+    String getDataFileTable();
+
     /**
      * Sets the table name that will be used to read the MetaData from the db.  The
      * default table name is DATAFILE.  This may be problimatic for some who are using case
      * sensistive db table names or who wish to provide a different table name in the db.
-     * 
+     *
      * This is only applicable when using a database for file mappings.
-     * 
+     *
      * @param dataFileTable
      * 			Name of the table name to use in place of "DATAFILE"
      */
-	 Parser setDataFileTable(String dataFileTable);
+    Parser setDataFileTable(String dataFileTable);
 
     /**
      * Returns the table name that will be used to read the MetaData from the db.  The
      * default table name is DATASTRUCTURE.  This may be problimatic for some who are using case
      * sensistive db table names or who wish to provide a different table name in the db.
-     * 
+     *
      * This is only applicable when using a database for file mappings.
-     * 
+     *
      * @return the DATASTRUCTURE table name
      */
-	String getDataStructureTable();
+    String getDataStructureTable();
 
-
-	
     /**
      * Sets the table name that will be used to read the MetaData from the db.  The
      * default table name is DATASTRUCTURE.  This may be problimatic for some who are using case
      * sensistive db table names or who wish to provide a different table name in the db.
-     * 
+     *
      * This is only applicable when using a database for file mappings.
-     * 
+     *
      * @param dataStructureTable
      * 			Name of the table name to us in placfe of "DATASTRUCTURE"
-     * 
+     *
      */
-	Parser setDataStructureTable(String dataStructureTable);
+    Parser setDataStructureTable(String dataStructureTable);
 }

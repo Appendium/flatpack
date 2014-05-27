@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.sf.flatpack.xml;
 
@@ -20,7 +20,7 @@ import net.sf.flatpack.util.FPConstants;
 public class MetaData {
     private List<ColumnMetaData> columnsNames;
     private Map columnIndexMap;
-    private Map<String, XMLRecordElement> xmlRecordElements;
+    private final Map<String, XMLRecordElement> xmlRecordElements;
 
     public MetaData(final Map fullMapFromPZParser) {
         columnsNames = (List<ColumnMetaData>) fullMapFromPZParser.get(FPConstants.DETAIL_ID);
@@ -65,23 +65,24 @@ public class MetaData {
     }
 
     public List<ColumnMetaData> getListColumnsForRecord(final String key) {
-        return ((XMLRecordElement) xmlRecordElements.get(key)).getColumns();
+        return xmlRecordElements.get(key).getColumns();
     }
 
     public int getColumnIndex(final String key, final String columnName) {
         int idx = -1;
         if (key != null && !key.equals(FPConstants.DETAIL_ID) && !key.equals(FPConstants.COL_IDX)) {
-            idx = ((XMLRecordElement) xmlRecordElements.get(key)).getColumnIndex(columnName);
+            idx = xmlRecordElements.get(key).getColumnIndex(columnName);
         } else if (key == null || key.equals(FPConstants.DETAIL_ID)) {
             final Integer i = (Integer) columnIndexMap.get(columnName);
             if (i != null) { // happens when the col name does not exist in the
-                             // mapping
+                // mapping
                 idx = i.intValue();
             }
         }
         return idx;
     }
 
+    @Override
     public String toString() {
         final StringBuilder buf = new StringBuilder();
         buf.append("Col Names:").append(columnsNames).append(System.getProperty("line.separator"));

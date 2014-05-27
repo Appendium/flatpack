@@ -62,6 +62,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
         super(dataSourceReader);
     }
 
+    @Override
     protected DataSet doParse() {
         try {
             return doFixedLengthFile(getDataSourceReader());
@@ -84,7 +85,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
         final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);
 
         try {
-            //gather the conversion properties
+            // gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
 
             final Map recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
@@ -111,12 +112,12 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                     // be included in the
                     // dataset
                     if (isIgnoreExtraColumns()) {
-                        //user has choosen to ignore the fact that we have too many bytes in the fixed
-                        //width file.  Truncate the line to the correct length
+                        // user has choosen to ignore the fact that we have too many bytes in the fixed
+                        // width file. Truncate the line to the correct length
                         line = line.substring(0, recordLength);
                         addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
                     } else {
-                        addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2, 
+                        addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
@@ -129,7 +130,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                         addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
 
                     } else {
-                        addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2, 
+                        addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
@@ -142,17 +143,17 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
                 row.setRowNumber(lineCount);
-                
+
                 if (isFlagEmptyRows()) {
-                    //user has elected to have the parser flag rows that are empty
+                    // user has elected to have the parser flag rows that are empty
                     row.setEmpty(ParserUtils.isListElementsEmpty(row.getCols()));
                 }
                 if (isStoreRawDataToDataSet()) {
-                    //user told the parser to keep a copy of the raw data in the row
-                    //WARNING potential for high memory usage here
+                    // user told the parser to keep a copy of the raw data in the row
+                    // WARNING potential for high memory usage here
                     row.setRawData(line);
-                }   
-                
+                }
+
                 // add the row to the array
                 ds.addRow(row);
             }

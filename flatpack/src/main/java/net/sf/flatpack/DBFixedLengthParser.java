@@ -50,18 +50,18 @@ import net.sf.flatpack.util.ParserUtils;
  *
  */
 public class DBFixedLengthParser extends AbstractFixedLengthParser {
-    private Connection con;
+    private final Connection con;
 
-    //this InputStream and file can be removed after support for
-    //file and inputstream is removed from the parserfactory.  The
-    //methods have been deprecated..pz
+    // this InputStream and file can be removed after support for
+    // file and inputstream is removed from the parserfactory. The
+    // methods have been deprecated..pz
     private InputStream dataSourceStream = null;
 
     private File dataSource = null;
 
     public DBFixedLengthParser(final Connection con, final InputStream dataSourceStream, final String dataDefinition) {
-        //Reader will be setup in the init(), passing null for now.
-        //this constructor will eventually be deleted
+        // Reader will be setup in the init(), passing null for now.
+        // this constructor will eventually be deleted
         super(null, dataDefinition);
         this.con = con;
         this.dataSourceStream = dataSourceStream;
@@ -78,10 +78,11 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
         this.con = con;
     }
 
+    @Override
     protected void init() {
         try {
-            //check to see if the user is using a File or InputStream.  This is
-            //here for backwards compatability
+            // check to see if the user is using a File or InputStream. This is
+            // here for backwards compatability
             if (dataSourceStream != null) {
                 final Reader r = new InputStreamReader(dataSourceStream);
                 setDataSourceReader(r);
@@ -95,8 +96,8 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
 
-            //            addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            //            addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
+            // addToColumnMD(PZConstants.DETAIL_ID, cmds);
+            // addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
@@ -110,7 +111,7 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
         }
     }
 
-//    public DataSet doParse() {
-//        return null;
-//    }
+    // public DataSet doParse() {
+    // return null;
+    // }
 }
