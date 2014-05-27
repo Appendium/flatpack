@@ -1,5 +1,7 @@
 package net.sf.flatpack;
 
+import java.util.List;
+
 /**
  * Rather than treating a DataSet as a stateful class whereby we need to extract each column one by
  * one, this interface allows you to extract a record at a time.
@@ -14,4 +16,20 @@ public interface RecordDataSet {
     boolean next();
 
     Record getRecord();
+
+    /**
+     * Returns A Collection Of DataErrors that happened during processing
+     *
+     * @return Vector
+     */
+    List getErrors();
+
+    /**
+     * Returns total number of records which contained a parse error in the
+     * file.
+     *
+     * @return int - Record Error Count
+     */
+    int getErrorCount();
+
 }

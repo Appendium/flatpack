@@ -32,7 +32,6 @@
  */
 package net.sf.flatpack;
 
-import java.util.List;
 import java.util.Properties;
 
 import net.sf.flatpack.ordering.OrderBy;
@@ -60,13 +59,6 @@ public interface DataSet extends Record, RecordDataSet {
     boolean previous();
 
     /**
-     * Returns A Collection Of DataErrors that happened during processing
-     *
-     * @return Vector
-     */
-    List getErrors();
-
-    /**
      * Removes a row from the dataset. Once the row is removed the pointer will
      * be sitting on the record previous to the deleted row.
      */
@@ -86,14 +78,6 @@ public interface DataSet extends Record, RecordDataSet {
      * @return int - Row Count
      */
     int getRowCount();
-
-    /**
-     * Returns total number of records which contained a parse error in the
-     * file.
-     *
-     * @return int - Record Error Count
-     */
-    int getErrorCount();
 
     /**
      * Returns true or false as to whether or not the line number contains an

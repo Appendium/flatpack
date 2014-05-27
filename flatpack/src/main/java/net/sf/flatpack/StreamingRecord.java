@@ -1,5 +1,8 @@
 package net.sf.flatpack;
 
+import java.util.Collections;
+import java.util.List;
+
 public class StreamingRecord implements StreamingDataSet {
     private final DataSet dataSet;
 
@@ -16,5 +19,15 @@ public class StreamingRecord implements StreamingDataSet {
     @Override
     public boolean next() {
         return dataSet != null ? dataSet.next() : false;
+    }
+
+    @Override
+    public int getErrorCount() {
+        return dataSet != null ? dataSet.getErrorCount() : 0;
+    }
+
+    @Override
+    public List getErrors() {
+        return dataSet != null ? dataSet.getErrors() : Collections.emptyList();
     }
 }
