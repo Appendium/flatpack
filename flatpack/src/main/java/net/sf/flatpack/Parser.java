@@ -89,6 +89,32 @@ public interface Parser {
     Parser setIgnoreExtraColumns(boolean ignoreExtraColumns);
 
     /**
+     * Defaults to <code>true</code>.
+     * @return true, the parser will preserve leading whitespace in each column when splitting a line
+     */
+    boolean isPreserveLeadingWhitespace();
+
+    /**
+     * Defaults to <code>true</code>.
+     * @param preserveLeadingWhitespace
+     *            when true, the parser will preserve leading whitespace in each column when splitting a line
+     */
+    Parser setPreserveLeadingWhitespace(boolean preserveLeadingWhitespace);
+
+    /**
+     * Defaults to <code>false</code>.
+     * @return true, the parser will preserve trailing whitespace in each column when splitting a line
+     */
+    boolean isPreserveTrailingWhitespace();
+
+    /**
+     * Defaults to <code>false</code>.
+     * @param preserveTrailingWhitespace
+     *            when true, the parser will preserve trailing whitespace in each column when splitting a line
+     */
+    Parser setPreserveTrailingWhitespace(boolean preserveTrailingWhitespace);
+
+    /**
      * Default is false
      * 
      * @return true, column names will have to be an exact match when retrieving

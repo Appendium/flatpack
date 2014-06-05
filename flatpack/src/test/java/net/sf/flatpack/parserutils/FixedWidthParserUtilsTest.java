@@ -20,13 +20,18 @@ public class FixedWidthParserUtilsTest extends TestCase {
      *
      */
     public void testFixedParse() {
-        check(new String[] { "test", "test", "test" }, new int[] { 5, 10, 20 }, new String[] { "test", "test", "test" });
+        check(new String[] { "test", "test", "test" }, new int[] { 5, 10, 20 }, new String[] { "test", "test", "test" }, true, false);
 
         check(new String[] { "test with some space", "test", "test" }, new int[] { 300, 10, 20 }, new String[] { "test with some space", "test",
-                "test" });
+                "test" }, true, false);
+
+        String[] textWithLeadingAndTrailing = {"  test with leading and trailing    ", "  test ", "test"};
+        check(textWithLeadingAndTrailing, new int[]{36, 7, 4}, textWithLeadingAndTrailing, true, true);
+        check(textWithLeadingAndTrailing, new int[]{36, 7, 4}, new String[]{"  test with leading and trailing", "  test", "test"}, true, false);
+        check(textWithLeadingAndTrailing, new int[]{36, 7, 4}, new String[]{"test with leading and trailing    ", "test ", "test"}, false, true);
     }
 
-    private void check(final String[] columnData, final int[] lengths, final String[] expected) {
+    private void check(final String[] columnData, final int[] lengths, final String[] expected, final boolean preserveLeading, final boolean preserveTrailing) {
         final List<ColumnMetaData> columnMetaData = new ArrayList<ColumnMetaData>();
 
         assertEquals("data and col lengths different size...", columnData.length, lengths.length);
@@ -43,7 +48,7 @@ public class FixedWidthParserUtilsTest extends TestCase {
             lineToParse.append(columnData[i]).append(ParserUtils.padding(lengths[i] - columnData[i].length(), ' '));
         }
 
-        final List<String> splitResult = FixedWidthParserUtils.splitFixedText(columnMetaData, lineToParse.toString());
+        final List<String> splitResult = FixedWidthParserUtils.splitFixedText(columnMetaData, lineToParse.toString(), preserveLeading, preserveTrailing);
 
         //compare the parse results to the expected results
         assertEquals("did not return correct number of cols...", expected.length, splitResult.size());
