@@ -6,9 +6,10 @@
 	</properties>
 
 	<head>
-		<meta name="description" content="ObjectLab Kit offers free and open source Date calculators, released under the business-friendly Apache 2.0 license." />
-		<meta name="keywords" content="Date calculator, IMM Dates, Period Calculator, Financial Calendar, Business Calendar, java, open source" />
-		<meta name="Subject" content="Date Calculators" />
+		<meta name="description" content="FlatPack offers configurable flat file CSV and fixed length parser, released under the business-friendly Apache 2.0 license." />
+
+		<meta name="keywords" content="CSV, Fixed length file parser" />
+		<meta name="Subject" content="Fixed Length parser" />
 		<meta name="Copyright" content="ObjectLab Financial Ltd" />
 		<meta name="Language" content="English" />
 		<meta name="Designer" content="ObjectLab Financial Ltd" />
@@ -35,13 +36,13 @@
 		<subsection name="Ohloh Stats">
 			<div id="ohloh">
 				<div id="cocomo">
-					<script type="text/javascript" src="http://www.ohloh.net/p/8290/widgets/project_cocomo.js"></script>
+					<script type="text/javascript" src="http://www.ohloh.net/p/4682/widgets/project_cocomo.js"></script>
 				</div>
 				<div id="factoids">
-					<script type="text/javascript" src="http://www.ohloh.net/p/8290/widgets/project_factoids_stats.js"></script>
+					<script type="text/javascript" src="http://www.ohloh.net/p/4682/widgets/project_factoids_stats.js"></script>
 				</div>
 				<div id="iuseit">
-					<script type="text/javascript" src="http://www.ohloh.net/p/8290/widgets/project_users.js?style=green"></script>
+					<script type="text/javascript" src="http://www.ohloh.net/p/4682/widgets/project_users.js?style=green"></script>
 				</div>
 			</div>
 		</subsection>
