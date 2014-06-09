@@ -62,7 +62,6 @@ public abstract class AbstractParser implements Parser {
     private boolean nullEmptyStrings = false;
 
     /** Map of column metadata's */
-    // private Map columnMD = null;
     private MetaData pzMetaData = null;
 
     private String dataDefinition = null;
@@ -144,17 +143,6 @@ public abstract class AbstractParser implements Parser {
 
     protected abstract void init();
 
-    // /**
-    // * @deprecated
-    // */
-    // protected void setColumnMD(final Map map) {
-    // columnMD = map;
-    // }
-    // this is used for backward compatibility. We are instantiating Readers
-    // from
-    // InputStream and File from previous versions. Close out any Readers in the
-    // readersToClose list. This can be removed after we remove the deprecated
-    // methods
     protected void closeReaders() throws IOException {
         if (readersToClose != null) {
             for (final Reader r : readersToClose) {
@@ -164,8 +152,7 @@ public abstract class AbstractParser implements Parser {
     }
 
     // adds a reader to the close list. the list will be processed after parsing
-    // is
-    // completed.
+    // is completed.
     protected void addToCloseReaderList(final Reader r) {
         if (readersToClose == null) {
             readersToClose = new ArrayList<Reader>();

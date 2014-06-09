@@ -346,17 +346,7 @@ public class DefaultDataSet implements DataSet {
      */
     @Override
     public void orderRows(final OrderBy ob) {
-        // PZ try to handle other <records> by sending them to
-        // the bottom of the sort
-        // if (columnMD.size() > 1) {
-        // throw new Exception("orderRows does not currently support ordering
-        // with <RECORD> mappings");
-        // }
         if (ob != null && rows != null) {
-            // final List cmds = metaData.getColumnsNames();
-            // final List cmds =
-            // ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, columnMD);
-            // ob.setColumnMD(cmds);
             ob.setMetaData(getMetaData());
             ob.setParser(parser);
             Collections.sort(rows, ob);

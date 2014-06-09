@@ -108,7 +108,6 @@ public class FixedLengthParser extends AbstractFixedLengthParser {
             }
 
             try {
-                // setColumnMD(PZMapParser.parse(this.pzmapReader, this));
                 setPzMetaData(MapParser.parseMap(this.pzmapReader, this));
             } finally {
                 if (closeMapReader) {
@@ -117,8 +116,6 @@ public class FixedLengthParser extends AbstractFixedLengthParser {
                     this.pzmapReader.close();
                 }
             }
-
-            // setInitialised(true);
         } catch (final JDOMException e) {
             throw new InitialisationException(e);
         } catch (final IOException e) {

@@ -85,8 +85,7 @@ public class RowRecord implements Record {
         String[] array = null;
 
         if (/* columnMD != null || */metaData != null) {
-            final List cmds = metaData.getColumnsNames();// ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID,
-            // columnMD);
+            final List cmds = metaData.getColumnsNames();
 
             array = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
@@ -261,14 +260,8 @@ public class RowRecord implements Record {
         if (nullEmptyString && FPStringUtils.isBlank(s)) {
             s = null;
         } else if (upperCase) {
-            // convert data to uppercase before returning
-            // return row.getValue(ParserUtils.findColumn(column,
-            // cmds)).toUpperCase(Locale.getDefault());
             s = s.toUpperCase(Locale.getDefault());
         } else if (lowerCase) {
-            // convert data to lowercase before returning
-            // return row.getValue(ParserUtils.findColumn(column,
-            // cmds)).toLowerCase(Locale.getDefault());
             s = s.toLowerCase(Locale.getDefault());
         }
 

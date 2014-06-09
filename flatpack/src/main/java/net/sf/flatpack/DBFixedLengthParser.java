@@ -96,9 +96,6 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
             final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
 
-            // addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            // addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
-
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
             }
@@ -110,8 +107,4 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
             throw new InitialisationException(e);
         }
     }
-
-    // public DataSet doParse() {
-    // return null;
-    // }
 }

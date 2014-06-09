@@ -194,7 +194,7 @@ public final class MapParser {
 
         try {
             return attribute.getIntValue();
-        } catch (final Exception ex) {
+        } catch (final Exception ignore) {
             return 0;
         }
     }

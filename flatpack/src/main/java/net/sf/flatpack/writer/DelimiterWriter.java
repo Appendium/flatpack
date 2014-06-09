@@ -71,13 +71,6 @@ public class DelimiterWriter extends AbstractWriter {
         }
     }
 
-    protected void addColumnTitle(final String string) {
-        if (string == null) {
-            throw new IllegalArgumentException("column title may not be null");
-        }
-        columnTitles.add(string);
-    }
-
     protected void writeColumnTitles() throws IOException {
         final Iterator<String> titleIter = columnTitles.iterator();
         while (titleIter.hasNext()) {
@@ -107,12 +100,7 @@ public class DelimiterWriter extends AbstractWriter {
 
     @Override
     public final Writer nextRecord() throws IOException {
-        // if (!columnTitlesWritten) {
-        // this.writeColumnTitles();
-        // columnTitlesWritten = true;
-        // } else {
         this.writeRow();
-        // }
 
         return super.nextRecord();
     }

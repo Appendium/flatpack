@@ -94,9 +94,8 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
             br = new BufferedReader(dataSource);
             String line = null;
             int lineCount = 0;
-            // map of record lengths corrisponding to the ID's in the columnMD
-            // array
-            // loop through each line in the file
+            // map of record lengths corresponding to the ID's in the columnMD
+            // array loop through each line in the file
             while ((line = br.readLine()) != null) {
                 lineCount++;
                 // empty line skip past it

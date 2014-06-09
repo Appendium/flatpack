@@ -33,6 +33,7 @@
 package net.sf.flatpack;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,16 +96,8 @@ public class DelimiterParser extends AbstractDelimiterParser {
     protected void init() {
         try {
             // check to see if the user is using a File or InputStream. This is
-            // here for backwards compatability
-            if (dataSourceStream != null) {
-                final Reader r = new InputStreamReader(dataSourceStream);
-                setDataSourceReader(r);
-                addToCloseReaderList(r);
-            } else if (dataSource != null) {
-                final Reader r = new FileReader(dataSource);
-                setDataSourceReader(r);
-                addToCloseReaderList(r);
-            }
+            // here for backwards compatibility
+            initStreamOrSource();
 
             boolean closeMapReader = false;
             if (pzmapXML != null) {
@@ -117,7 +110,6 @@ public class DelimiterParser extends AbstractDelimiterParser {
 
             if (this.pzmapReader != null) {
                 try {
-                    // setColumnMD(PZMapParser.parse(this.pzmapReader, this));
                     setPzMetaData(MapParser.parseMap(this.pzmapReader, this));
                 } finally {
                     if (closeMapReader) {
@@ -133,6 +125,18 @@ public class DelimiterParser extends AbstractDelimiterParser {
             throw new InitialisationException(e);
         } catch (final IOException e) {
             throw new InitialisationException(e);
+        }
+    }
+
+    private void initStreamOrSource() throws FileNotFoundException {
+        if (dataSourceStream != null) {
+            final Reader r = new InputStreamReader(dataSourceStream);
+            setDataSourceReader(r);
+            addToCloseReaderList(r);
+        } else if (dataSource != null) {
+            final Reader r = new FileReader(dataSource);
+            setDataSourceReader(r);
+            addToCloseReaderList(r);
         }
     }
 
