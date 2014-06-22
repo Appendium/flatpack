@@ -11,6 +11,7 @@
 			<action dev="benoitx" type="add" issue="1">Writer is now Autocloseable.</action>
 			<action dev="benoitx" type="add" issue="2">StreamingDataSet has stream() method for JDK8 manipulation.</action>
 			<action dev="benoitx" type="add" issue="3">Records interface defines getXXX methods with a Supplier interface.</action>
+			<action dev="benoitx" due-to="ovstetun" type="add" issue="6" >Preserve leading/trailing whitespace, Thanks to Trond Ovstetun.</action>
 		</release>
 		<release version="3.4.0" date="2014-05-23" description="Maintenance, JDK1.5 and fluent">
 			<action dev="benoitx" type="add">Add convenience method
