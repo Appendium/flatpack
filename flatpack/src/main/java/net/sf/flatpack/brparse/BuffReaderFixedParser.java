@@ -171,7 +171,7 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                 row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey);
 
                 final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
-                row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
+                row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line, isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
 
                 row.setRowNumber(lineCount);
 

@@ -57,17 +57,27 @@ public final class FixedWidthParserUtils {
      *            Collection of ColumnMetaData to parse the line
      * @param lineToParse
      *            Line of text to be parsed against the ColumnMetaData
+     * @param preserveLeadingWhitespace
+     *            Keep any leading spaces
+     * @param preserveTrailingWhitespace
+     *            Keep any trailing spaces
      * @return List Collection of Strings. Each element representing a column
      */
-    public static List<String> splitFixedText(final List<ColumnMetaData> columnMetaData, final String lineToParse) {
+    public static List<String> splitFixedText(final List<ColumnMetaData> columnMetaData, final String lineToParse,
+            final boolean preserveLeadingWhitespace, final boolean preserveTrailingWhitespace) {
         final List<String> splitResult = new ArrayList<String>();
         int recPosition = 1;
-        for (final ColumnMetaData colMetaDataObj : columnMetaData) {
-            final String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);
+        for (ColumnMetaData colMetaDataObj : columnMetaData) {
+            String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);
             recPosition += colMetaDataObj.getColLength();
-            // make sure that we preserve leading spaces as they most likely are there intentionally.
+            // make sure that we preserve leading and trailing spaces as user has requested
             // This was previously issuing a trim()
-            splitResult.add(ParserUtils.rTrim(tempValue));
+            if (!preserveLeadingWhitespace)
+                tempValue = ParserUtils.lTrim(tempValue);
+            if (!preserveTrailingWhitespace)
+                tempValue = ParserUtils.rTrim(tempValue);
+
+            splitResult.add(tempValue);
         }
 
         return splitResult;

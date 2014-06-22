@@ -140,7 +140,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
 
                 final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
-                row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line));
+                row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line, isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
                 row.setRowNumber(lineCount);
 
                 if (isFlagEmptyRows()) {

@@ -53,6 +53,10 @@ public abstract class AbstractParser implements Parser {
 
     private boolean ignoreExtraColumns = false;
 
+    private boolean preserveLeadingWhitespace = true; // this is the old default value
+
+    private boolean preserveTrailingWhitespace = false;
+
     private boolean columnNamesCaseSensitive = false;
 
     private boolean initialised = false;
@@ -118,6 +122,24 @@ public abstract class AbstractParser implements Parser {
     @Override
     public Parser setIgnoreExtraColumns(final boolean ignoreExtraColumns) {
         this.ignoreExtraColumns = ignoreExtraColumns;
+        return this;
+    }
+
+    public boolean isPreserveLeadingWhitespace() {
+        return preserveLeadingWhitespace;
+    }
+
+    public Parser setPreserveLeadingWhitespace(boolean preserveLeadingWhitespace) {
+        this.preserveLeadingWhitespace = preserveLeadingWhitespace;
+        return this;
+    }
+
+    public boolean isPreserveTrailingWhitespace() {
+        return preserveTrailingWhitespace;
+    }
+
+    public Parser setPreserveTrailingWhitespace(boolean preserveTrailingWhitespace) {
+        this.preserveTrailingWhitespace = preserveTrailingWhitespace;
         return this;
     }
 
