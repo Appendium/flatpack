@@ -41,6 +41,13 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	
+	<distributionManagement>
+		<site>
+			<id>flatpack.sf.net</id>
+			<url>${site.deploy.url}</url>
+		</site>
+	</distributionManagement>
 
 	<developers>
 		<developer>
