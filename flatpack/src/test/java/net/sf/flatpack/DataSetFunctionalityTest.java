@@ -26,12 +26,58 @@ public class DataSetFunctionalityTest extends TestCase {
     }
 
     public void testContainsForStream() {
-        final String cols = "column1,column2,column3\r\n value1,value2,value3";
+        final String cols = "column1,column2,column3\r\n value1  ,value2,value3";
         final Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         final StreamingDataSet ds = p.parseAsStream();
         assertTrue(ds.next());
         assertEquals("column should NOT be found...", false, ds.getRecord().contains("shouldnotcontain"));
         assertEquals("column should be found...", true, ds.getRecord().contains("column1"));
+        assertEquals("column should be found...", " value1", ds.getRecord().getString("column1"));
+    }
+
+    public void testDoNotPreserveSpace() {
+        final String cols = "column1,column2,column3\r\n value1  , value2,value3   ";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p1.setPreserveLeadingWhitespace(false);
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        assertEquals("do not preserve leading space value1...", "value1", ds.getRecord().getString("column1"));
+        assertEquals("do not preserve leading space value2...", "value2", ds.getRecord().getString("column2"));
+        assertEquals("do not preserve leading space value3...", "value3", ds.getRecord().getString("column3"));
+    }
+
+    public void testDoPreserveLeadingSpace() {
+        final String cols = "column1,column2,column3\r\n value1  , value2,value3   ";
+        final Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        final StreamingDataSet ds = p.parseAsStream();
+        ds.next();
+        assertEquals("value1...", " value1", ds.getRecord().getString("column1"));
+        assertEquals("value2...", " value2", ds.getRecord().getString("column2"));
+        assertEquals("value3...", "value3", ds.getRecord().getString("column3"));
+    }
+
+    public void testDoPreserveTrailingSpace() {
+        final String cols = "column1,column2,column3\r\n value1  , value2,value3   ";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p1.setPreserveLeadingWhitespace(false);
+        p1.setPreserveTrailingWhitespace(true);
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        assertEquals("do preserve trailing space value1...", "value1  ", ds.getRecord().getString("column1"));
+        assertEquals("do preserve trailing space value2...", "value2", ds.getRecord().getString("column2"));
+        assertEquals("do preserve trailing space value3...", "value3   ", ds.getRecord().getString("column3"));
+    }
+
+    public void testDoPreserveBothSpace() {
+        final String cols = "column1,column2,column3\r\n value1  , value2,value3   ";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p1.setPreserveLeadingWhitespace(true);
+        p1.setPreserveTrailingWhitespace(true);
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        assertEquals("do preserve both space value1...", " value1  ", ds.getRecord().getString("column1"));
+        assertEquals("do preserve both space value2...", " value2", ds.getRecord().getString("column2"));
+        assertEquals("do preserve both space value3...", "value3   ", ds.getRecord().getString("column3"));
     }
 
     public void testContainsWithStream() {

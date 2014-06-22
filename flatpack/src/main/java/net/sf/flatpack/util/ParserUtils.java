@@ -32,11 +32,9 @@
  */
 package net.sf.flatpack.util;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -96,9 +94,14 @@ public final class ParserUtils {
      *            qualifier which is surrounding the text
      * @param initialSize -
      *            intial capacity of the List size
+     * @param preserveLeadingWhitespace
+     *            Keep any leading spaces
+     * @param preserveTrailingWhitespace
+     *            Keep any trailing spaces
      * @return List
      */
-    public static List<String> splitLine(final String line, final char delimiter, final char qualifier, final int initialSize) {
+    public static List<String> splitLine(final String line, final char delimiter, final char qualifier, final int initialSize,
+            final boolean preserveLeadingWhitespace, final boolean preserveTrailingWhitespace) {
         final List<String> list = new ArrayList<String>(initialSize);
 
         if (delimiter == 0) {
@@ -114,7 +117,13 @@ public final class ParserUtils {
             // on empty records which contain just the delimiter
             trimmedLine = line;
         } else {
-            trimmedLine = line.trim();
+            trimmedLine = line;
+            if (!preserveLeadingWhitespace) {
+                trimmedLine = ParserUtils.lTrim(line);
+            }
+            if (!preserveTrailingWhitespace) {
+                trimmedLine = ParserUtils.rTrim(line);
+            }
         }
 
         final int size = trimmedLine.length();
@@ -145,7 +154,10 @@ public final class ParserUtils {
                 if (!insideQualifier) {
                     String trimmed = trimmedLine.substring(startBlock, endBlock > startBlock ? endBlock : startBlock + 1);
                     if (!blockWasInQualifier) {
-                        trimmed = trimmed.trim();
+                        if (!preserveLeadingWhitespace)
+                            trimmed = ParserUtils.lTrim(trimmed);
+                        if (!preserveTrailingWhitespace)
+                            trimmed = ParserUtils.rTrim(trimmed);
                     } else {
                         // need to run the qualifier replace when it was in qualifier
                         trimmed = trimmed.replaceAll(doubleQualifier, String.valueOf(qualifier));
@@ -215,7 +227,12 @@ public final class ParserUtils {
                     list.add(str);
                 }
             } else {
-                list.add(str.trim());
+                String s = str;
+                if (!preserveLeadingWhitespace)
+                    s = ParserUtils.lTrim(s);
+                if (!preserveTrailingWhitespace)
+                    s = ParserUtils.rTrim(s);
+                list.add(s);
             }
         } else if (trimmedLine.charAt(size - 1) == delimiter) {
             list.add("");
@@ -374,7 +391,8 @@ public final class ParserUtils {
         final List<ColumnMetaData> results = new ArrayList<ColumnMetaData>();
         final Set<String> dupCheck = new HashSet<String>();
 
-        final List<String> lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT);
+        final List<String> lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT, p.isPreserveLeadingWhitespace(),
+                p.isPreserveTrailingWhitespace());
         for (final String colName : lineData) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName(colName);
@@ -399,7 +417,6 @@ public final class ParserUtils {
      * @exception FileNotFoundException
      * @exception IOException
      * @return ArrayList - ColumnMetaData
-     */
     public static List<ColumnMetaData> getColumnMDFromFile(final File theFile, final String delimiter, final String qualifier) throws IOException {
         BufferedReader br = null;
         FileReader fr = null;
@@ -433,6 +450,7 @@ public final class ParserUtils {
         }
         return results;
     }
+     */
 
     /**
      * Determines if the given line is the first part of a multiline record.  It does this by verifying that the
@@ -876,7 +894,7 @@ public final class ParserUtils {
             final StringBuilder sqlSb = new StringBuilder();
 
             sqlSb.append("SELECT * FROM ").append(dfTbl).append(" INNER JOIN ").append(dsTbl).append(" ON ").append(dfTbl).append(".DATAFILE_NO = ")
-            .append(dsTbl).append(".DATAFILE_NO " + "WHERE DATAFILE_DESC = ? ORDER BY DATASTRUCTURE_COL_ORDER");
+                    .append(dsTbl).append(".DATAFILE_NO " + "WHERE DATAFILE_DESC = ? ORDER BY DATASTRUCTURE_COL_ORDER");
 
             stmt = con.prepareStatement(sqlSb.toString()); // always use PreparedStatement
             // as the DB can do clever things.

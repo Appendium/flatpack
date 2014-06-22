@@ -148,7 +148,8 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     continue;
                 }
                 // column values
-                List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT);
+                List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT,
+                        isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace());
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
                 final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 final int columnCount = cmds.size();

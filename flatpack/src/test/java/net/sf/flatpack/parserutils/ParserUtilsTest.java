@@ -59,7 +59,7 @@ public class ParserUtilsTest extends TestCase {
 
     public void testEmptyRow() {
         final String data = ",,,";
-        final List l = ParserUtils.splitLine(data, ',', FPConstants.NO_QUALIFIER, 4);
+        final List l = ParserUtils.splitLine(data, ',', FPConstants.NO_QUALIFIER, 4, false, false);
         assertEquals("list should be empty and is not...", ParserUtils.isListElementsEmpty(l), true);
     }
 

@@ -5,8 +5,6 @@ package net.sf.flatpack.examples;
 
 import java.lang.reflect.Method;
 
-import net.sf.flatpack.util.FPConstants;
-import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.examples.createsamplecsv.CSVTestFileCreator;
 import net.sf.flatpack.examples.csvheaderandtrailer.CSVHeaderAndTrailer;
 import net.sf.flatpack.examples.csvperformancetest.CSVPerformanceTest;
@@ -21,6 +19,8 @@ import net.sf.flatpack.examples.largedataset.largecsvperformancetest.CSVLarge;
 import net.sf.flatpack.examples.lowlevelparse.LowLevelParse;
 import net.sf.flatpack.examples.multilinedelimitedrecord.DelimitedMultiLine;
 import net.sf.flatpack.examples.numericsanddates.NumericsAndDates;
+import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.ParserUtils;
 
 /**
  * @author Benoit Xhenseval
@@ -38,6 +38,7 @@ public class Examples implements Repeater {
         examples.run();
     }
 
+    @Override
     public void repeat(final Method target) {
     }
 
@@ -270,7 +271,7 @@ public class Examples implements Repeater {
 
         final long start = System.currentTimeMillis();
         for (int i = 0; i < repeat; i++) {
-            ParserUtils.splitLine(line, ',', '\"', FPConstants.SPLITLINE_SIZE_INIT);
+            ParserUtils.splitLine(line, ',', '\"', FPConstants.SPLITLINE_SIZE_INIT, false, false);
         }
         final long stop = System.currentTimeMillis();
 

@@ -43,7 +43,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_NO_BREAKS, d, q);
 
-            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10);
+            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10, false, false);
 
             // check to make sure we have the same amount of elements which were
             // expected
@@ -70,7 +70,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_WITH_BREAKS, d, q);
 
-            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10);
+            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10, false, false);
 
             // check to make sure we have the same amount of elements which were
             // expected
@@ -85,7 +85,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
         }
 
         ParserUtils.splitLine("26,\"10726/1996\",551,\"Extra\",08/04/2005 00:00:00,0,0,,\"The unanimous judgement of the Team is that:\n" + "\n"
-                + "(i) The members have to pay the amount on time. \n" + "\n" + "(ii) There would be regular meeting biweekly. \"", ',', '"', 10);
+                + "(i) The members have to pay the amount on time. \n" + "\n" + "(ii) There would be regular meeting biweekly. \"", ',', '"', 10,
+                false, false);
     }
 
     /**
@@ -93,7 +94,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
      * data
      */
     public void testMalformedData() {
-        final List splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, ',', '\"', 10);
+        final List splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, ',', '\"', 10, false, false);
 
         assertEquals("Expecting 2 Data Elements From The Malformed Data", 2, splitLineResults.size());
     }
@@ -196,7 +197,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
     }
 
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
-        final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier, 10);
+        final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier, 10, false, false);
 
         assertEquals("Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]", expected.length,
                 splitLineResults.size());
