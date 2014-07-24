@@ -2,6 +2,7 @@ package net.sf.flatpack;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class StreamingRecord implements StreamingDataSet {
     private final DataSet dataSet;
@@ -12,7 +13,7 @@ public class StreamingRecord implements StreamingDataSet {
     }
 
     @Override
-    public Record getRecord() {
+    public Optional<Record> getRecord() {
         return dataSet.getRecord();
     }
 

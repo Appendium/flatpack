@@ -1,6 +1,7 @@
 package net.sf.flatpack;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Rather than treating a DataSet as a stateful class whereby we need to extract each column one by
@@ -15,7 +16,7 @@ public interface RecordDataSet {
      */
     boolean next();
 
-    Record getRecord();
+    Optional<Record> getRecord();
 
     /**
      * Returns A Collection Of DataErrors that happened during processing

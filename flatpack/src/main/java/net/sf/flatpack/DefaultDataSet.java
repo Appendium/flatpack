@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Supplier;
 
@@ -335,8 +336,8 @@ public class DefaultDataSet implements DataSet {
     }
 
     @Override
-    public Record getRecord() {
-        return currentRecord;
+    public Optional<Record> getRecord() {
+        return Optional.ofNullable(currentRecord);
     }
 
     /*

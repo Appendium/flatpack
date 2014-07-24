@@ -2,6 +2,7 @@ package net.sf.flatpack;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
@@ -35,27 +36,27 @@ public interface StreamingDataSet extends RecordDataSet {
 
     default Iterator<Record> spliterator() {
         return new Iterator<Record>() {
-            Record nextData = null;
+            Optional<Record> nextData = Optional.empty();
 
             @Override
             public boolean hasNext() {
-                if (nextData != null) {
+                if (nextData.isPresent()) {
                     return true;
                 } else {
                     if (StreamingDataSet.this.next()) {
                         nextData = getRecord();
                     } else {
-                        nextData = null;
+                        nextData = Optional.empty();
                     }
-                    return nextData != null;
+                    return nextData.isPresent();
                 }
             }
 
             @Override
             public Record next() {
-                if (nextData != null || hasNext()) {
-                    final Record line = nextData;
-                    nextData = null;
+                if (nextData.isPresent() || hasNext()) {
+                    final Record line = nextData.get();
+                    nextData = Optional.empty();
                     return line;
                 } else {
                     throw new NoSuchElementException();
