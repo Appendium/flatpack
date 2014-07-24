@@ -3,10 +3,14 @@ Build site:
 from the flatpack root dir:
 mvn clean install site site:stage
 
-
 HOW to release to OSS Sonatype REPO
 ===================================
 https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+
+Release a SNAPSHOT, simply do 
+mvn deploy
+If configured to point to OSS Repo, it will deploy a new snapshot.
+
 
 
 SIGN as part of release
