@@ -95,7 +95,7 @@ public abstract class AbstractParser implements Parser {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParser#isHandlingShortLines()
      */
     @Override
@@ -105,7 +105,7 @@ public abstract class AbstractParser implements Parser {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.sf.flatpack.PZParser#setHandlingShortLines(boolean)
      */
     @Override
@@ -125,20 +125,24 @@ public abstract class AbstractParser implements Parser {
         return this;
     }
 
+    @Override
     public boolean isPreserveLeadingWhitespace() {
         return preserveLeadingWhitespace;
     }
 
-    public Parser setPreserveLeadingWhitespace(boolean preserveLeadingWhitespace) {
+    @Override
+    public Parser setPreserveLeadingWhitespace(final boolean preserveLeadingWhitespace) {
         this.preserveLeadingWhitespace = preserveLeadingWhitespace;
         return this;
     }
 
+    @Override
     public boolean isPreserveTrailingWhitespace() {
         return preserveTrailingWhitespace;
     }
 
-    public Parser setPreserveTrailingWhitespace(boolean preserveTrailingWhitespace) {
+    @Override
+    public Parser setPreserveTrailingWhitespace(final boolean preserveTrailingWhitespace) {
         this.preserveTrailingWhitespace = preserveTrailingWhitespace;
         return this;
     }
@@ -210,7 +214,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Adds a new error to this DataSet. These can be collected, and retrieved
      * after processing
-     * 
+     *
      * @param ds
      *            the dataset
      * @param errorDesc
@@ -227,7 +231,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Adds a new error to this DataSet. These can be collected, and retrieved
      * after processing
-     * 
+     *
      * @param errorDesc
      *            String description of error
      * @param lineNo

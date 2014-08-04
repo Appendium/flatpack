@@ -18,7 +18,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
     private static final String[] DELIMITED_DATA_NO_BREAKS = { "Column 1", "Column 2", "Column 3", "Column 4", "Column 5" };
 
     private static final String[] DELIMITED_DATA_WITH_BREAKS = { "Column 1 \r\n\r\n Test After Break \r\n Another Break", "Column 2",
-            "Column 3 \r\n\r\n Test After Break", "Column 4", "Column 5 \r\n\r\n Test After Break\r\n Another Break" };
+        "Column 3 \r\n\r\n Test After Break", "Column 4", "Column 5 \r\n\r\n Test After Break\r\n Another Break" };
 
     // TODO think of a situation that actually breaks the parse. This still
     // works because of the way it is coded
@@ -29,11 +29,11 @@ public class ParserUtilsSplitLineTest extends TestCase {
     // 0 = delimiter
     // 1 = qualifier
     private static final char[][] DELIM_QUAL_PAIR = { { ',', '\"' }, { '\t', '\"' }, { '|', '\"' }, { '_', '\"' }, { ',', 0 }, { '|', 0 },
-            { '\t', 0 } };
+        { '\t', 0 } };
 
     /**
      * Test without any line breaks
-     * 
+     *
      */
     public void testNoLineBreaks() {
         // loop down all delimiter qualifier pairs to test
@@ -60,7 +60,7 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
     /**
      * Test with any line breaks
-     * 
+     *
      */
     public void testLineBreaks() {
         // loop down all delimiter qualifier pairs to test

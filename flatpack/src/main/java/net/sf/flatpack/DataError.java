@@ -109,7 +109,7 @@ public class DataError {
     public String toString() {
         final StringBuilder buf = new StringBuilder();
         buf.append("Line:").append(lineNo).append(" Level:").append(errorLevel).append(" Desc:").append(errorDesc)
-                .append(System.getProperty("line.separator"));
+        .append(System.getProperty("line.separator"));
         return buf.toString();
     }
 

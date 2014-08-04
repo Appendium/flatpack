@@ -67,15 +67,17 @@ public final class FixedWidthParserUtils {
             final boolean preserveLeadingWhitespace, final boolean preserveTrailingWhitespace) {
         final List<String> splitResult = new ArrayList<String>();
         int recPosition = 1;
-        for (ColumnMetaData colMetaDataObj : columnMetaData) {
+        for (final ColumnMetaData colMetaDataObj : columnMetaData) {
             String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);
             recPosition += colMetaDataObj.getColLength();
             // make sure that we preserve leading and trailing spaces as user has requested
             // This was previously issuing a trim()
-            if (!preserveLeadingWhitespace)
+            if (!preserveLeadingWhitespace) {
                 tempValue = ParserUtils.lTrim(tempValue);
-            if (!preserveTrailingWhitespace)
+            }
+            if (!preserveTrailingWhitespace) {
                 tempValue = ParserUtils.rTrim(tempValue);
+            }
 
             splitResult.add(tempValue);
         }
@@ -103,10 +105,6 @@ public final class FixedWidthParserUtils {
         // different MD object
         while (mapEntries.hasNext()) {
             final Entry<String, XMLRecordElement> entry = mapEntries.next();
-            // if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
-            // continue; // skip this key will be assumed if none of the
-            // others match
-            // }
             final XMLRecordElement recordXMLElement = entry.getValue();
 
             if (recordXMLElement.getEndPositition() > line.length()) {
@@ -126,6 +124,5 @@ public final class FixedWidthParserUtils {
 
         // must be a detail line
         return FPConstants.DETAIL_ID;
-
     }
 }

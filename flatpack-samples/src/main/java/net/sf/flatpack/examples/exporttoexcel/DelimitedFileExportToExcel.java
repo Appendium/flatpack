@@ -17,7 +17,7 @@ import net.sf.flatpack.util.ExcelTransformer;
 
 /**
  * @author zepernick
- * 
+ *
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
@@ -50,7 +50,7 @@ public class DelimitedFileExportToExcel {
         orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
         ds.orderRows(orderby);
 
-        if (ds.getErrors() != null && ds.getErrors().size() > 0) {
+        if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             for (int i = 0; i < ds.getErrors().size(); i++) {
                 final DataError de = (DataError) ds.getErrors().get(i);
                 System.out.println("Error Msg: " + de.getErrorDesc() + " Line: " + de.getLineNo());

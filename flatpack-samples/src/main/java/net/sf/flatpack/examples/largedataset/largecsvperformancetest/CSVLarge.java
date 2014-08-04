@@ -20,7 +20,7 @@ import net.sf.flatpack.brparse.BuffReaderParseFactory;
 
 /**
  * @author zepernick
- * 
+ *
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
@@ -67,15 +67,15 @@ public class CSVLarge {
             String timeMessage = "";
 
             if (timeFinished - timeStarted < 1000) {
-                timeMessage = (timeFinished - timeStarted) + " Milleseconds...";
+                timeMessage = timeFinished - timeStarted + " Milleseconds...";
             } else {
-                timeMessage = ((timeFinished - timeStarted) / 1000) + " Seconds...";
+                timeMessage = (timeFinished - timeStarted) / 1000 + " Seconds...";
             }
 
             System.out.println("");
             System.out.println("********FILE PARSED IN: " + timeMessage + " ******");
 
-            if (ds.getErrors() != null && ds.getErrors().size() > 0) {
+            if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
                 System.out.println("FOUND ERRORS IN FILE....");
                 for (int i = 0; i < ds.getErrors().size(); i++) {
                     final DataError de = (DataError) ds.getErrors().get(i);

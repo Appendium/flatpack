@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.sf.flatpack.examples;
 

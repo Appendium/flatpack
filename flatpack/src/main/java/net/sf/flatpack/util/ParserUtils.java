@@ -154,10 +154,12 @@ public final class ParserUtils {
                 if (!insideQualifier) {
                     String trimmed = trimmedLine.substring(startBlock, endBlock > startBlock ? endBlock : startBlock + 1);
                     if (!blockWasInQualifier) {
-                        if (!preserveLeadingWhitespace)
+                        if (!preserveLeadingWhitespace) {
                             trimmed = ParserUtils.lTrim(trimmed);
-                        if (!preserveTrailingWhitespace)
+                        }
+                        if (!preserveTrailingWhitespace) {
                             trimmed = ParserUtils.rTrim(trimmed);
+                        }
                     } else {
                         // need to run the qualifier replace when it was in qualifier
                         trimmed = trimmed.replaceAll(doubleQualifier, String.valueOf(qualifier));
@@ -228,10 +230,12 @@ public final class ParserUtils {
                 }
             } else {
                 String s = str;
-                if (!preserveLeadingWhitespace)
+                if (!preserveLeadingWhitespace) {
                     s = ParserUtils.lTrim(s);
-                if (!preserveTrailingWhitespace)
+                }
+                if (!preserveTrailingWhitespace) {
                     s = ParserUtils.rTrim(s);
+                }
                 list.add(s);
             }
         } else if (trimmedLine.charAt(size - 1) == delimiter) {
@@ -407,52 +411,6 @@ public final class ParserUtils {
     }
 
     /**
-     * Returns a list of ColumnMetaData objects. This is for use with delimited
-     * files. The first line of the file which contains data will be used as the
-     * column names
-     *
-     * @param theFile
-     * @param delimiter
-     * @param qualifier
-     * @exception FileNotFoundException
-     * @exception IOException
-     * @return ArrayList - ColumnMetaData
-    public static List<ColumnMetaData> getColumnMDFromFile(final File theFile, final String delimiter, final String qualifier) throws IOException {
-        BufferedReader br = null;
-        FileReader fr = null;
-        final List<ColumnMetaData> results = new ArrayList<ColumnMetaData>();
-
-        try {
-            fr = new FileReader(theFile);
-            br = new BufferedReader(fr);
-
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                if (line.trim().length() == 0) {
-                    continue;
-                }
-
-                final List<String> lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), FPConstants.SPLITLINE_SIZE_INIT);
-                for (final String colName : lineData) {
-                    final ColumnMetaData cmd = new ColumnMetaData();
-                    cmd.setColName(colName);
-                    results.add(cmd);
-                }
-                break;
-            }
-        } finally {
-            if (br != null) {
-                br.close();
-            }
-            if (fr != null) {
-                fr.close();
-            }
-        }
-        return results;
-    }
-     */
-
-    /**
      * Determines if the given line is the first part of a multiline record.  It does this by verifying that the
      * qualifer on the last element is not closed
      *
@@ -472,7 +430,6 @@ public final class ParserUtils {
             // could be a potential line break
             boolean qualiFound = false;
             for (int i = chrArry.length - 1; i >= 0; i--) {
-                // System.out.println(chrArry[i]);
                 if (chrArry[i] == ' ') {
                     continue;
                 }
@@ -567,10 +524,6 @@ public final class ParserUtils {
         // different MD object
         while (mapEntries.hasNext()) {
             final Entry<String, XMLRecordElement> entry = mapEntries.next();
-            // if (entry.getKey().equals(PZConstants.DETAIL_ID) || entry.getKey().equals(PZConstants.COL_IDX)) {
-            // continue; // skip this key will be assumed if none of the
-            // // others match
-            // }
             final XMLRecordElement recordXMLElement = entry.getValue();
 
             if (recordXMLElement.getElementCount() > 0 && recordXMLElement.getElementCount() == lineElements.size()) {

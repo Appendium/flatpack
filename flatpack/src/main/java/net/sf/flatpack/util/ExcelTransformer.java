@@ -189,7 +189,7 @@ public class ExcelTransformer {
 
     /**
      * Columns contained in this array will be writen as numerics to Excel instead of Text
-     * 
+     *
      * @param numericColumns the numericColumns to set
      */
     public void setNumericColumns(final String[] numericColumns) {

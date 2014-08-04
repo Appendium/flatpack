@@ -97,7 +97,7 @@ public interface Parser {
     Parser setIgnoreExtraColumns(boolean ignoreExtraColumns);
 
     /**
-    * Defaults to <code>true</code>.
+     * Defaults to <code>true</code>.
      * @return true, the parser will preserve leading whitespace in each column when splitting a line
      */
     boolean isPreserveLeadingWhitespace();

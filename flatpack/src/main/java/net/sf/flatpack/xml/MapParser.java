@@ -114,18 +114,6 @@ public final class MapParser {
      * @throws JDOMException
      */
     public static Map<String, Object> parse(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
-        // use for debug when JDOM complains about the xml
-        /* final BufferedReader br = new BufferedReader(xmlStreamReader);
-         final FileWriter fw = new FileWriter("c:/test.pz");
-         final PrintWriter out = new PrintWriter(fw);
-         String line = null;
-         while ((line = br.readLine()) != null) {
-         out.println(line);
-         }
-         out.flush();
-         fw.close();
-         br.close();*/
-
         if (xmlStreamReader == null) {
             throw new NullPointerException("XML Reader Is Not Allowed To Be Null...");
         }
@@ -305,7 +293,6 @@ public final class MapParser {
             }
         }
 
-        // System.out.println(map);
         return new MetaData(col, m, map);
     }
 }

@@ -20,23 +20,23 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         final StringWriter out = new StringWriter();
 
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"')//
-        .addColumnTitle("FIRSTNAME") // new fluent
-        .addColumnTitle("LASTNAME") //
-        .addColumnTitle("ADDRESS") //
-        .addColumnTitle("CITY") //
-        .addColumnTitle("STATE") //
-        .addColumnTitle("ZIP");
+                .addColumnTitle("FIRSTNAME") // new fluent
+                .addColumnTitle("LASTNAME") //
+                .addColumnTitle("ADDRESS") //
+                .addColumnTitle("CITY") //
+                .addColumnTitle("STATE") //
+                .addColumnTitle("ZIP");
 
         try (Writer writer = factory.createWriter(out)) {
             // write one line of data ... not in the correct order of fields
             writer.addRecordEntry("LASTNAME", "ANAME") //
-            .addRecordEntry("FIRSTNAME", "JOHN") //
-            .addRecordEntry("ZIP", "44035") //
-            .addRecordEntry("CITY", "ELYRIA") //
-            .addRecordEntry("STATE", "OH") //
-            .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
-            .nextRecord() //
-            .flush();
+                    .addRecordEntry("FIRSTNAME", "JOHN") //
+                    .addRecordEntry("ZIP", "44035") //
+                    .addRecordEntry("CITY", "ELYRIA") //
+                    .addRecordEntry("STATE", "OH") //
+                    .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
+                    .nextRecord() //
+                    .flush();
         }
 
     }
@@ -45,23 +45,23 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         final StringWriter out = new StringWriter();
 
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"')//
-        .addColumnTitle("FIRSTNAME") // new fluent
-        .addColumnTitle("LASTNAME") //
-        .addColumnTitle("ADDRESS") //
-        .addColumnTitle("CITY") //
-        .addColumnTitle("STATE") //
-        .addColumnTitle("ZIP");
+                .addColumnTitle("FIRSTNAME") // new fluent
+                .addColumnTitle("LASTNAME") //
+                .addColumnTitle("ADDRESS") //
+                .addColumnTitle("CITY") //
+                .addColumnTitle("STATE") //
+                .addColumnTitle("ZIP");
 
         final Writer writer = factory.createWriter(out);
         // write one line of data ... not in the correct order of fields
         writer.addRecordEntry("LASTNAME", "ANAME") //
-        .addRecordEntry("FIRSTNAME", "JOHN") //
-        .addRecordEntry("ZIP", "44035") //
-        .addRecordEntry("CITY", "ELYRIA") //
-        .addRecordEntry("STATE", "OH") //
-        .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
-        .nextRecord() //
-        .flush();
+                .addRecordEntry("FIRSTNAME", "JOHN") //
+                .addRecordEntry("ZIP", "44035") //
+                .addRecordEntry("CITY", "ELYRIA") //
+                .addRecordEntry("STATE", "OH") //
+                .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
+                .nextRecord() //
+                .flush();
 
         // make sure the tests work on Windows and on Linux
         final String expected = this.joinLines("FIRSTNAME;LASTNAME;ADDRESS;CITY;STATE;ZIP", "JOHN;ANAME;1234 CIRCLE CT;ELYRIA;OH;44035");

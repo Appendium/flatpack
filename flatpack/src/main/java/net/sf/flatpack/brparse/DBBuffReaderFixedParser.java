@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import net.sf.flatpack.InitialisationException;
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.ParserUtils;
 
 public class DBBuffReaderFixedParser extends BuffReaderFixedParser implements InterfaceBuffReaderParse {
@@ -21,10 +22,8 @@ public class DBBuffReaderFixedParser extends BuffReaderFixedParser implements In
     protected void init() {
         try {
 
-            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
+            final List<ColumnMetaData> cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
-            // addToColumnMD(PZConstants.DETAIL_ID, cmds);
-            // addToColumnMD(PZConstants.COL_IDX, ParserUtils.buidColumnIndexMap(cmds, this));
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());

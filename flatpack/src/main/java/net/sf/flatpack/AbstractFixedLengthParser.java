@@ -88,7 +88,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
             // gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
 
-            final Map recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
+            final Map<String, Integer> recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
 
             // Read in the flat file
             br = new BufferedReader(dataSource);
@@ -104,7 +104,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 }
 
                 final String mdkey = FixedWidthParserUtils.getCMDKey(getPzMetaData(), line);
-                final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
+                final int recordLength = recordLengths.get(mdkey).intValue();
 
                 if (line.length() > recordLength) {
                     // Incorrect record length on line log the error. Line will not
@@ -135,7 +135,6 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                     }
                 }
 
-                // int recPosition = 1;
                 final Row row = new Row();
                 row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
 

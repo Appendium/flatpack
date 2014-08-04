@@ -10,8 +10,8 @@ import net.sf.flatpack.util.ParserUtils;
 
 /**
  * Test the functionality of a fixed width parse
- * 
- * @author Paul Zepernick 
+ *
+ * @author Paul Zepernick
  */
 public class FixedWidthParserUtilsTest extends TestCase {
 
@@ -23,9 +23,9 @@ public class FixedWidthParserUtilsTest extends TestCase {
         check(new String[] { "test", "test", "test" }, new int[] { 5, 10, 20 }, new String[] { "test", "test", "test" }, true, false);
 
         check(new String[] { "test with some space", "test", "test" }, new int[] { 300, 10, 20 }, new String[] { "test with some space", "test",
-                "test" }, true, false);
+        "test" }, true, false);
 
-        String[] textWithLeadingAndTrailing = { "  test with leading and trailing    ", "  test ", "test" };
+        final String[] textWithLeadingAndTrailing = { "  test with leading and trailing    ", "  test ", "test" };
         check(textWithLeadingAndTrailing, new int[] { 36, 7, 4 }, textWithLeadingAndTrailing, true, true);
         check(textWithLeadingAndTrailing, new int[] { 36, 7, 4 }, new String[] { "  test with leading and trailing", "  test", "test" }, true, false);
         check(textWithLeadingAndTrailing, new int[] { 36, 7, 4 }, new String[] { "test with leading and trailing    ", "test ", "test" }, false, true);
@@ -37,9 +37,9 @@ public class FixedWidthParserUtilsTest extends TestCase {
 
         assertEquals("data and col lengths different size...", columnData.length, lengths.length);
 
-        for (int i = 0; i < lengths.length; i++) {
+        for (final int length : lengths) {
             final ColumnMetaData cmd = new ColumnMetaData();
-            cmd.setColLength(lengths[i]);
+            cmd.setColLength(length);
             columnMetaData.add(cmd);
         }
 

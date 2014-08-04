@@ -19,13 +19,13 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
         final Writer writer = new FixedWriterFactory(this.getMapping()).createWriter(out);
 
         writer.addRecordEntry("LASTNAME", "DOE") // New fluent
-                .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
-                .addRecordEntry("STATE", "OH") //
-                .addRecordEntry("ZIP", "44035") //
-                .addRecordEntry("FIRSTNAME", "JOHN") //
-                .addRecordEntry("CITY", "ELYRIA") //
-                .nextRecord() //
-                .flush();
+        .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
+        .addRecordEntry("STATE", "OH") //
+        .addRecordEntry("ZIP", "44035") //
+        .addRecordEntry("FIRSTNAME", "JOHN") //
+        .addRecordEntry("CITY", "ELYRIA") //
+        .nextRecord() //
+        .flush();
 
         final String expected = this
                 .normalizeLineEnding("JOHN                               DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH44035");

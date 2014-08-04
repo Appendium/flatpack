@@ -1,12 +1,12 @@
 /**
- * 
+ *
  */
 package net.sf.flatpack.examples;
 
 import java.lang.reflect.Method;
 
 /**
- * 
+ *
  * @author Benoit Xhenseval
  *
  */

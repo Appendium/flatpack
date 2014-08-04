@@ -20,7 +20,7 @@ import net.sf.flatpack.Parser;
 
 /**
  * @author zepernick
- * 
+ *
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
@@ -57,9 +57,9 @@ public class CSVPerformanceTest {
         String timeMessage = "";
 
         if (timeFinished - timeStarted < 1000) {
-            timeMessage = (timeFinished - timeStarted) + " Milleseconds...";
+            timeMessage = timeFinished - timeStarted + " Milleseconds...";
         } else {
-            timeMessage = ((float) ((timeFinished - timeStarted) / 1000.0)) + " Seconds...";
+            timeMessage = (float) ((timeFinished - timeStarted) / 1000.0) + " Seconds...";
         }
 
         System.out.println("");
@@ -76,11 +76,11 @@ public class CSVPerformanceTest {
             final int colCount = colNames.length;
             while (ds.next()) {
                 rowCount++;
-                for (int i = 0; i < colNames.length; i++) {
-                    final String string = ds.getString(colNames[i]);
+                for (final String colName : colNames) {
+                    final String string = ds.getString(colName);
 
                     if (verbose) {
-                        System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + string);
+                        System.out.println("COLUMN NAME: " + colName + " VALUE: " + string);
                     }
                 }
 
@@ -91,9 +91,9 @@ public class CSVPerformanceTest {
             timeFinished = System.currentTimeMillis();
 
             if (timeFinished - timeStarted < 1000) {
-                timeMessage = (timeFinished - timeStarted) + " Milleseconds...";
+                timeMessage = timeFinished - timeStarted + " Milleseconds...";
             } else {
-                timeMessage = ((float) ((timeFinished - timeStarted) / 1000.0)) + " Seconds...";
+                timeMessage = (float) ((timeFinished - timeStarted) / 1000.0) + " Seconds...";
             }
 
             System.out.println("");
@@ -101,7 +101,7 @@ public class CSVPerformanceTest {
 
         }
 
-        if (ds.getErrors() != null && ds.getErrors().size() > 0) {
+        if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             System.out.println("FOUND ERRORS IN FILE....");
             for (int i = 0; i < ds.getErrors().size(); i++) {
                 final DataError de = (DataError) ds.getErrors().get(i);

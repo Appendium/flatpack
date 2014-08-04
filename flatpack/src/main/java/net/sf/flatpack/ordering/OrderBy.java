@@ -112,10 +112,10 @@ public class OrderBy implements Comparator, Serializable {
             Comparable comp1 = null;
             final String str0 = row0.getValue(
                     ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(
-                    Locale.getDefault());
+                            Locale.getDefault());
             final String str1 = row1.getValue(
                     ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(
-                    Locale.getDefault());
+                            Locale.getDefault());
             switch (oc.getSelectedColType()) {
             case OrderColumn.COLTYPE_STRING:
             default:

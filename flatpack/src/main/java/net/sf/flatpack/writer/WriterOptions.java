@@ -11,7 +11,7 @@ public class WriterOptions {
 
     /**
      * Returns a DelimiterWriterOptions instance
-     * 
+     *
      * @return DelimiterWriterOptions
      */
     public static WriterOptions getInstance() {
@@ -28,7 +28,7 @@ public class WriterOptions {
     /**
      * When this is set to true, the addRecordEntry(column, value) will throw an exception.  You
      * must use addRecordEntry(value).
-     * 
+     *
      * @param autoPrintHeader the autoPrintHeader to set
      */
     public WriterOptions autoPrintHeader(final boolean autoPrintHeader) {

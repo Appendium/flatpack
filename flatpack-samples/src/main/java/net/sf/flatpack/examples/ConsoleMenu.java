@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.sf.flatpack.examples;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @author Benoit Xhenseval
- * 
+ *
  */
 public class ConsoleMenu {
     private static final int EXIT_CODE = 0;
@@ -52,7 +52,7 @@ public class ConsoleMenu {
 
     /**
      * add an entry in the menu, sequentially
-     * 
+     *
      * @param menuDisplay
      *            how the entry will be displayed in the menu
      * @param methodName
@@ -87,7 +87,7 @@ public class ConsoleMenu {
 
             do {
                 opt = ConsoleMenu.getInt("Enter your choice:", -1);
-            } while (((opt <= 0) || (opt > methods.size())) && (opt != EXIT_CODE));
+            } while ((opt <= 0 || opt > methods.size()) && opt != EXIT_CODE);
 
             if (opt == EXIT_CODE) {
                 ConsoleMenu.println("Exiting menu");
@@ -121,24 +121,24 @@ public class ConsoleMenu {
     }
 
     private void displayMenu(final int size) {
-        for (int i = 0; i < (size / 2); i++) {
+        for (int i = 0; i < size / 2; i++) {
             final StringBuffer line = new StringBuffer();
             final String col1 = (String) menu.get(i);
 
-            if ((i + 1) < COL) {
+            if (i + 1 < COL) {
                 line.append(" ");
             }
 
             final int pos = i + 1;
             line.append("   ").append(pos).append(") ").append(col1);
 
-            while (line.length() < (screenColumns / 2)) {
+            while (line.length() < screenColumns / 2) {
                 line.append(" ");
             }
 
-            if ((i + (size / 2)) < size) {
-                final String col2 = (String) menu.get(i + (size / 2));
-                final int position = i + 1 + (size / 2);
+            if (i + size / 2 < size) {
+                final String col2 = (String) menu.get(i + size / 2);
+                final int position = i + 1 + size / 2;
                 line.append("   ").append(position).append(") ").append(col2);
             }
 
@@ -155,7 +155,7 @@ public class ConsoleMenu {
 
             line.append("   ").append(size).append(") ").append(col1);
 
-            while (line.length() < (screenColumns / 2)) {
+            while (line.length() < screenColumns / 2) {
                 line.append(" ");
             }
 
@@ -168,7 +168,7 @@ public class ConsoleMenu {
 
     /**
      * Gets an int from the System.in
-     * 
+     *
      * @param title
      *            for the command line
      * @return int as entered by the user of the console app
@@ -194,22 +194,21 @@ public class ConsoleMenu {
 
     /**
      * Gets a boolean from the System.in
-     * 
+     *
      * @param title
      *            for the command line
      * @return boolean as selected by the user of the console app
      */
     public static boolean getBoolean(final String title, final boolean defaultValue) {
-        final String val =
-                ConsoleMenu.selectOne(title, new String[] { "Yes", "No" }, new String[] { Boolean.TRUE.toString(), Boolean.FALSE.toString() },
-                        defaultValue ? 1 : 2);
+        final String val = ConsoleMenu.selectOne(title, new String[] { "Yes", "No" },
+                new String[] { Boolean.TRUE.toString(), Boolean.FALSE.toString() }, defaultValue ? 1 : 2);
 
         return Boolean.valueOf(val).booleanValue();
     }
 
     /**
      * Gets an BigDecimal from the System.in
-     * 
+     *
      * @param title
      *            for the command line
      * @return int as entered by the user of the console app
@@ -235,8 +234,8 @@ public class ConsoleMenu {
 
     public static Date getDate(final String title, final Date defaultValue) {
         final SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yy");
-        final String date =
-                ConsoleMenu.getString(title + "(dd-MM-yy" + (defaultValue != null ? ", default:" + fmt.format(defaultValue) : "") + ")", null);
+        final String date = ConsoleMenu.getString(title + "(dd-MM-yy" + (defaultValue != null ? ", default:" + fmt.format(defaultValue) : "") + ")",
+                null);
         try {
             if (date == null || date.length() == 0) {
                 return defaultValue;
@@ -251,7 +250,7 @@ public class ConsoleMenu {
 
     /**
      * Gets a String from the System.in
-     * 
+     *
      * @param msg
      *            for the command line
      * @return String as entered by the user of the console app
@@ -279,7 +278,7 @@ public class ConsoleMenu {
 
     /**
      * Generates a menu with a list of options and return the value selected.
-     * 
+     *
      * @param title
      *            for the command line
      * @param optionNames
@@ -303,7 +302,7 @@ public class ConsoleMenu {
 
         do {
             choice = ConsoleMenu.getInt("Your Choice 1-" + optionNames.length + ": ", defaultOption);
-        } while ((choice <= 0) || (choice > optionNames.length));
+        } while (choice <= 0 || choice > optionNames.length);
 
         return optionValues[choice - 1];
     }
@@ -374,6 +373,7 @@ public class ConsoleMenu {
         /**
          * Begin masking until asked to stop.
          */
+        @Override
         public void run() {
             while (!stop) {
                 try {

@@ -13,7 +13,7 @@ public interface InterfaceBuffReaderParse {
 
     /**
      * Builds a row into the DataSet using the current record from the File
-     * 
+     *
      * @param ds
      * @return Row object
      */

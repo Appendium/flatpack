@@ -13,7 +13,7 @@ import net.sf.flatpack.Parser;
 
 /**
  * @author zepernick
- * 
+ *
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
@@ -35,7 +35,7 @@ public class CSVHeaderAndTrailer {
         final File dataFile = new File(data);
         // delimited by a comma
         // text qualified by double quotes
-        // ignore first record 
+        // ignore first record
         final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(mapFile, dataFile, ',', '\"', true);
         final DataSet ds = pzparser.parse();
         while (ds.next()) {
@@ -65,7 +65,7 @@ public class CSVHeaderAndTrailer {
             System.out.println("===========================================================================");
         }
 
-        if (ds.getErrors() != null && ds.getErrors().size() > 0) {
+        if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             System.out.println("FOUND ERRORS IN FILE");
         }
     }

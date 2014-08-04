@@ -86,7 +86,6 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
 
     @Override
     protected DataSet doParse() {
-        // final DataSet ds = new BuffReaderPZDataSet(getColumnMD(), this);
         final DataSet ds = new BuffReaderDataSet(getPzMetaData(), this);
         try {
             // gather the conversion properties
@@ -131,7 +130,6 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             } else if (!processedFirst && shouldCreateMDFromFile()) {
                 processedFirst = true;
                 setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, getDelimiter(), getQualifier(), this));
-                // setColumnMD(ParserUtils.getColumnMDFromFile(line, getDelimiter(), getQualifier(), this));
                 continue;
             }
 
@@ -139,13 +137,9 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             // seems like we may want to try doing something like this. I have my reservations because
             // it is possible that we don't get a "detail" id and this might generate NPE
             // is it going to create too much overhead to do a null check here as well???
-            // final int intialSize = ParserUtils.getColumnMetaData(PZConstants.DETAIL_ID, getColumnMD()).size();
-            // column values
             List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT,
                     isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace());
-            // final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getColumnMD(), columns);
             final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
-            // final List cmds = ParserUtils.getColumnMetaData(mdkey, getColumnMD());
             final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
             final int columnCount = cmds.size();
             // DEBUG

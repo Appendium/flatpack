@@ -13,7 +13,7 @@ import net.sf.flatpack.brparse.BuffReaderParseFactory;
 
 /**
  * @author zepernick
- * 
+ *
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
@@ -42,8 +42,8 @@ public class LargeFixedLengthWithPZMap {
             colNames = ds.getColumns();
 
             while (ds.next()) {
-                for (int i = 0; i < colNames.length; i++) {
-                    System.out.println("COLUMN NAME: " + colNames[i] + " VALUE: " + ds.getString(colNames[i]));
+                for (final String colName : colNames) {
+                    System.out.println("COLUMN NAME: " + colName + " VALUE: " + ds.getString(colName));
                 }
 
                 System.out.println("===========================================================================");

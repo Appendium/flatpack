@@ -15,7 +15,7 @@ import net.sf.flatpack.Parser;
 
 /**
  * @author zepernick
- * 
+ *
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
@@ -69,7 +69,7 @@ public class FixedLengthHeaderAndTrailer {
 
         }
 
-        if (ds.getErrors() != null && ds.getErrors().size() > 0) {
+        if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             errors = ds.getErrors().iterator();
 
             while (errors.hasNext()) {

@@ -47,7 +47,7 @@ public class TabDelimited {
             System.out.println("===========================================================================");
         }
 
-        if (ds.getErrors() != null && ds.getErrors().size() > 0) {
+        if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             System.out.println("FOUND ERRORS IN FILE....");
             for (int i = 0; i < ds.getErrors().size(); i++) {
                 final DataError de = (DataError) ds.getErrors().get(i);

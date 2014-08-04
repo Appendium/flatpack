@@ -166,7 +166,6 @@ public class BuffReaderParseFactory implements ParserFactory {
     @Override
     public Parser newDelimitedParser(final Connection con, final Reader dataSource, final String dataDefinition, final char delimiter,
             final char qualifier, final boolean ignoreFirstRecord) {
-        // throw new UnsupportedOperationException("Not supported...");
         return new DBBuffReaderDelimParser(con, dataSource, dataDefinition, delimiter, qualifier, ignoreFirstRecord);
     }
 

@@ -14,7 +14,7 @@ import net.sf.flatpack.util.ParserUtils;
 
 /**
  * @author zepernick
- * 
+ *
  */
 public class LowLevelParse {
 
