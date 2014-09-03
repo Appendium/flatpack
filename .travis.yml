@@ -12,4 +12,4 @@ notifications:
     on_success: always
     on_failure: always   
 after_success:
-  - "[[ $TRAVIS_BRANCH == \"master\" ]] && { python travis/addServer.py; mvn clean deploy --settings ~/.m2/mySettings.xml; };"
+  - "{ python travis/addServer.py; mvn clean deploy --settings ~/.m2/mySettings.xml; };"
