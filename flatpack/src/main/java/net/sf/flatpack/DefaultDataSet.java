@@ -410,11 +410,13 @@ public class DefaultDataSet implements DataSet {
      */
     @Override
     public void absolute(final int localPointer) {
-        if (localPointer < 0 || localPointer > rows.size() - 1) {
+        if (localPointer < 0 || localPointer >= rows.size()) {
             throw new IndexOutOfBoundsException("INVALID POINTER LOCATION: " + localPointer);
         }
 
         pointer = localPointer;
+        currentRecord = new RowRecord(rows.get(pointer), metaData, parser.isColumnNamesCaseSensitive(), pzConvertProps, strictNumericParse,
+                upperCase, lowerCase, parser.isNullEmptyStrings());
     }
 
     /**
