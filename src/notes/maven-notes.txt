@@ -46,4 +46,4 @@ DOING the RELEASE
 	</servers>
 
 2)
-mvn release:prepare release:perform -DrepositoryId=sonatype-nexus-staging -Darguments="-Dgpg.passphrase=0bjectlabKit -Dgpg.keyname=8F656881" -DconnectionUrl=scm:git:git@github.com:appendium/flatpack.git
+mvn release:prepare release:perform -DrepositoryId=sonatype-nexus-staging -Darguments="-Dgpg.passphrase=0bjectlabKit -Dgpg.keyname=8F656881" -DconnectionUrl=scm:git:git@github.com:appendium/flatpack.git -Psonatype-nexus-staging -Dgoals=deploy
