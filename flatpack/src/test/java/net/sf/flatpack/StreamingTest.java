@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import junit.framework.TestCase;
 
 /**
- * JDK  Streaming test.
+ * JDK 8 Streaming test.
  * @author Benoit Xhenseval
  */
 public class StreamingTest extends TestCase {
@@ -38,7 +38,7 @@ public class StreamingTest extends TestCase {
         final String cols = "item,price,purchaseDate\r\n"//
                 + "MacBook,1890.20,20140523\r\n"//
                 + "Surface3,850.00,20140524\r\n"//
-        ;
+                ;
         final Parser p = DefaultParserFactory.newCsvParser(new StringReader(cols));
         final List<Test> ds = p.stream() //
                 .map(t -> {
@@ -47,12 +47,13 @@ public class StreamingTest extends TestCase {
                     r.setPrice(t.getBigDecimal("price"));
                     return r;
                 })// Mapping from Record to Test
-                .filter(t -> "Surface3".equals(t.getItemName())) // only keep greetings hello2
+                .filter(t -> "Surface3".equals(t.getItemName())) // only keep the Surface3 (why???)
                 .collect(Collectors.toList());
 
         // test record 1 with Data in file!
         assertEquals("Size", 1, ds.size());
-        assertEquals("Item", "Surface3", ds.get(0).getItemName());
-        assertTrue("Price", new BigDecimal("850").compareTo(ds.get(0).getPrice()) == 0);
+        final Test test = ds.get(0);
+        assertEquals("Item", "Surface3", test.getItemName());
+        assertTrue("Price", new BigDecimal("850").compareTo(test.getPrice()) == 0);
     }
 }
