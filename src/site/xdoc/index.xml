@@ -25,8 +25,9 @@
 
 	<p>Reminder: we have moved to <a href="http://www.github.com/appendium/flatpack">GitHub</a>.</p>
 
-    <p>May 23, 2014: FlatPack 3.4.0 is released, it is mainly a bug-fix release with some fluent changes, see the <a href="changes-report.html">change log</a> Note that this is the
-    <b>LAST RELEASE to support JDK1.5</b>, next one... Java8!</p>
+	<p><strong>We have two branches: 3_4_branch which remains JDK 1.5 and master/4_x which is JDK8.</strong> New development will be limited to master.</p>
+
+    <p>September 04, 2014: FlatPack 3.4.2 is released, it is mainly a bug-fix release with some fluent changes, see the <a href="changes-report.html">change log</a></p>
     </section>
 
 
