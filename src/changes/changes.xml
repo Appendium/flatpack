@@ -6,7 +6,7 @@
 		<title>Changes</title>
 	</properties>
 	<body>
-		<release version="4.0.0" date="in Git" description="Move to JDK8">
+		<release version="4.0.0" date="2014-10-01" description="Move to JDK8">
 			<action dev="benoitx" type="add" issue="8">dataSet.getRecord should never return null, use java.util.Optional.</action>
 			<action dev="benoitx" type="add" issue="4">Writer interface is now more 'fluent'.</action>
 			<action dev="benoitx" type="add" issue="1">Writer is now Autocloseable.</action>

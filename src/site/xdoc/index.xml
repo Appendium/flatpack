@@ -27,7 +27,7 @@
 
 	<p><strong>We have two branches: 3_4_branch which remains JDK 1.5 and master/4_x which is JDK8.</strong> New development will be limited to master.</p>
 
-    <p>September 04, 2014: FlatPack 3.4.2 is released, it is mainly a bug-fix release with some fluent changes, see the <a href="changes-report.html">change log</a></p>
+    <p>September 04, 2014: FlatPack 4.0.0 is released, JDK8 Release! with some fluent changes, see the <a href="changes-report.html">change log</a></p>
     </section>
 
 
