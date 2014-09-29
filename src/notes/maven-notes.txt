@@ -32,8 +32,11 @@ ssb   2048R/B9A710D1 2014-01-01
 sec   2048R/8F656881 2014-05-22
 uid                  Benoit Xhenseval (For Open Source Projects) <kit@objectlab.co.uk>
 
-DOING the RELEASE See http://j.mp/TC8Fdy
-========================================
+========================================================================
+=
+DOING the RELEASE See http://central.sonatype.org/pages/ossrh-guide.html
+=
+========================================================================
 
 1) replace ~/.m2/settings.xml with only 
 
