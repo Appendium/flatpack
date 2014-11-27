@@ -11,7 +11,6 @@ import net.sf.flatpack.InitialisationException;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.xml.MapParser;
 
-import org.jdom.JDOMException;
 
 /**
  *
@@ -38,7 +37,7 @@ public abstract class AbstractWriterFactory implements WriterFactory {
 
         try {
             mapping = MapParser.parse(mappingSrc, null);
-        } catch (final JDOMException jde) {
+        } catch (final Exception jde) {
             throw new InitialisationException(jde);
         }
     }

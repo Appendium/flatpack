@@ -9,7 +9,6 @@ import java.util.Map;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
 
-import org.jdom.JDOMException;
 
 /**
  *
@@ -28,11 +27,11 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
         this.qualifier = qualifier;
     }
 
-    public DelimiterWriterFactory(final Reader mappingSrc) throws IOException, JDOMException {
+    public DelimiterWriterFactory(final Reader mappingSrc) throws IOException {
         this(mappingSrc, DEFAULT_DELIMITER);
     }
 
-    public DelimiterWriterFactory(final Reader mappingSrc, final char delimiter) throws IOException, JDOMException {
+    public DelimiterWriterFactory(final Reader mappingSrc, final char delimiter) throws IOException {
         this(mappingSrc, delimiter, DEFAULT_QUALIFIER);
     }
 

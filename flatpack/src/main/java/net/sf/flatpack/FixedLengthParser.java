@@ -41,7 +41,6 @@ import java.io.Reader;
 
 import net.sf.flatpack.xml.MapParser;
 
-import org.jdom.JDOMException;
 
 /**
  * @author xhensevb
@@ -116,9 +115,9 @@ public class FixedLengthParser extends AbstractFixedLengthParser {
                     this.pzmapReader.close();
                 }
             }
-        } catch (final JDOMException e) {
-            throw new InitialisationException(e);
         } catch (final IOException e) {
+            throw new InitialisationException(e);
+        } catch (final Exception e) {
             throw new InitialisationException(e);
         }
     }

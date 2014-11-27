@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
 
-import org.jdom.JDOMException;
-
 /**
  *
  * @author Dirk Holmes and Holger Holger Hoffstatte
@@ -20,7 +18,7 @@ public class FixedWriterFactory extends AbstractWriterFactory {
         this.pad = DEFAULT_PADDING_CHARACTER;
     }
 
-    public FixedWriterFactory(final Reader mappingSrc) throws IOException, JDOMException {
+    public FixedWriterFactory(final Reader mappingSrc) throws IOException {
         this(mappingSrc, DEFAULT_PADDING_CHARACTER);
     }
 
