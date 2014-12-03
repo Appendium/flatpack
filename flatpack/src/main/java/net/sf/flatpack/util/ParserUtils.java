@@ -395,8 +395,7 @@ public final class ParserUtils {
         final List<ColumnMetaData> results = new ArrayList<ColumnMetaData>();
         final Set<String> dupCheck = new HashSet<String>();
 
-        final List<String> lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT, p.isPreserveLeadingWhitespace(),
-                p.isPreserveTrailingWhitespace());
+        final List<String> lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT, false, false);
         for (final String colName : lineData) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName(colName);
@@ -847,7 +846,7 @@ public final class ParserUtils {
             final StringBuilder sqlSb = new StringBuilder();
 
             sqlSb.append("SELECT * FROM ").append(dfTbl).append(" INNER JOIN ").append(dsTbl).append(" ON ").append(dfTbl).append(".DATAFILE_NO = ")
-                    .append(dsTbl).append(".DATAFILE_NO " + "WHERE DATAFILE_DESC = ? ORDER BY DATASTRUCTURE_COL_ORDER");
+            .append(dsTbl).append(".DATAFILE_NO " + "WHERE DATAFILE_DESC = ? ORDER BY DATASTRUCTURE_COL_ORDER");
 
             stmt = con.prepareStatement(sqlSb.toString()); // always use PreparedStatement
             // as the DB can do clever things.

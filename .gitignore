@@ -4,6 +4,7 @@
 test-output/
 logs
 .springBeans
+bin/
 
 # Compiled source #
 ###################
