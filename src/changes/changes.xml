@@ -6,6 +6,9 @@
 		<title>Changes</title>
 	</properties>
 	<body>
+		<release version="4.0.1" date="2014-12-10" description="Maintenance">
+			<action dev="ks-appendium" type="fix" issue="10">When parsing a header column, trim the leading and trailing spaces.</action>
+		</release>
 		<release version="4.0.0" date="2014-10-01" description="Move to JDK8">
 			<action dev="benoitx" type="add" issue="8">dataSet.getRecord should never return null, use java.util.Optional.</action>
 			<action dev="benoitx" type="add" issue="4">Writer interface is now more 'fluent'.</action>
