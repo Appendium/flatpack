@@ -160,9 +160,6 @@ public final class ParserUtils {
                         if (!preserveTrailingWhitespace) {
                             trimmed = ParserUtils.rTrim(trimmed);
                         }
-                    } else {
-                        // need to run the qualifier replace when it was in qualifier
-                        trimmed = trimmed.replaceAll(doubleQualifier, String.valueOf(qualifier));
                     }
 
                     if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
