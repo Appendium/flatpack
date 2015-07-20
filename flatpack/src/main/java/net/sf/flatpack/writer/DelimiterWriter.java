@@ -11,12 +11,12 @@ import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
 
 /**
- * 
+ *
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
 public class DelimiterWriter extends AbstractWriter {
-    private char delimiter;
-    private char qualifier;
+    private final char delimiter;
+    private final char qualifier;
     private List<String> columnTitles = null;
     private boolean columnTitlesWritten = false;
 
@@ -28,7 +28,7 @@ public class DelimiterWriter extends AbstractWriter {
 
         columnTitles = new ArrayList<String>();
         final List<ColumnMetaData> columns = (List<ColumnMetaData>) columnMapping.get(FPConstants.DETAIL_ID);
-        for (ColumnMetaData cmd : columns) {
+        for (final ColumnMetaData cmd : columns) {
             columnTitles.add(cmd.getColName());
         }
         // write the column headers
@@ -42,6 +42,7 @@ public class DelimiterWriter extends AbstractWriter {
         this.write(delimiter);
     }
 
+    @Override
     protected void write(final Object value) throws IOException {
         String stringValue = "";
 
@@ -56,7 +57,8 @@ public class DelimiterWriter extends AbstractWriter {
         }
 
         final boolean needsQuoting = stringValue.indexOf(delimiter) != -1
-                || (qualifier != FPConstants.NO_QUALIFIER && stringValue.indexOf(qualifier) != -1);
+                || qualifier != FPConstants.NO_QUALIFIER && stringValue.indexOf(qualifier) != -1
+                || stringValue.split("\r\n|\r|\n").length > 1;
 
         if (needsQuoting) {
             super.write(qualifier);
@@ -103,6 +105,7 @@ public class DelimiterWriter extends AbstractWriter {
         }
     }
 
+    @Override
     public final void nextRecord() throws IOException {
         // if (!columnTitlesWritten) {
         // this.writeColumnTitles();
@@ -126,6 +129,7 @@ public class DelimiterWriter extends AbstractWriter {
         }
     }
 
+    @Override
     protected boolean validateColumnTitle(final String columnTitle) {
         return columnTitles.contains(columnTitle);
     }
