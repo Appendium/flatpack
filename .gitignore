@@ -54,3 +54,5 @@ Thumbs.db
 flatpack/.project
 
 release.properties
+
+bin/

@@ -146,9 +146,6 @@ public final class ParserUtils {
                     String trimmed = trimmedLine.substring(startBlock, endBlock > startBlock ? endBlock : startBlock + 1);
                     if (!blockWasInQualifier) {
                         trimmed = trimmed.trim();
-                    } else {
-                        // need to run the qualifier replace when it was in qualifier
-                        trimmed = trimmed.replaceAll(doubleQualifier, String.valueOf(qualifier));
                     }
 
                     if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
@@ -375,7 +372,7 @@ public final class ParserUtils {
         final Set<String> dupCheck = new HashSet<String>();
 
         final List<String> lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT);
-        for (String colName : lineData) {
+        for (final String colName : lineData) {
             final ColumnMetaData cmd = new ColumnMetaData();
             cmd.setColName(colName);
             if (dupCheck.contains(cmd.getColName())) {
@@ -415,8 +412,8 @@ public final class ParserUtils {
                     continue;
                 }
 
-                List<String> lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), FPConstants.SPLITLINE_SIZE_INIT);
-                for (String colName : lineData) {
+                final List<String> lineData = splitLine(line, delimiter.charAt(0), qualifier.charAt(0), FPConstants.SPLITLINE_SIZE_INIT);
+                for (final String colName : lineData) {
                     final ColumnMetaData cmd = new ColumnMetaData();
                     cmd.setColName(colName);
                     results.add(cmd);
@@ -521,13 +518,13 @@ public final class ParserUtils {
 
         recordLengths.put(FPConstants.DETAIL_ID, recordLength);
 
-        Iterator<Entry<String, XMLRecordElement>> columnMDIt = columnMD.xmlRecordIterator();
+        final Iterator<Entry<String, XMLRecordElement>> columnMDIt = columnMD.xmlRecordIterator();
         while (columnMDIt.hasNext()) {
-            Entry<String, XMLRecordElement> entry = columnMDIt.next();
-            List<ColumnMetaData> cmds = entry.getValue().getColumns();
+            final Entry<String, XMLRecordElement> entry = columnMDIt.next();
+            final List<ColumnMetaData> cmds = entry.getValue().getColumns();
 
             recordLength = 0;
-            for (ColumnMetaData cmd : cmds) {
+            for (final ColumnMetaData cmd : cmds) {
                 recordLength += cmd.getColLength();
             }
 
@@ -660,7 +657,7 @@ public final class ParserUtils {
      * Note: this method doesn't not support padding with <a
      * href="http://www.unicode.org/glossary/#supplementary_character">Unicode
      * Supplementary Characters</a> as they require a pair of <code>char</code>s
-     * to be represented. 
+     * to be represented.
      * </p>
      *
      * @param repeat
@@ -697,7 +694,7 @@ public final class ParserUtils {
         if (columns != null && !columns.isEmpty()) {
             map = new HashMap<String, Integer>();
             int idx = 0;
-            for (ColumnMetaData meta : columns) {
+            for (final ColumnMetaData meta : columns) {
                 String colName = meta.getColName();
                 if (p != null && !p.isColumnNamesCaseSensitive()) {
                     // user has selected to make column names case sensitive
@@ -738,7 +735,7 @@ public final class ParserUtils {
         // just a minus sign
         final int sLen = newString.length();
         final String s = newString.toString();
-        if (sLen == 0 || (sLen == 1 && "-".equals(s))) {
+        if (sLen == 0 || sLen == 1 && "-".equals(s)) {
             return "0";
         }
 
@@ -763,7 +760,7 @@ public final class ParserUtils {
         }
         final int sLen = newString.length();
         final String s = newString.toString();
-        if (sLen == 0 || (sLen == 1 && (".".equals(s) || "-".equals(s)))) {
+        if (sLen == 0 || sLen == 1 && (".".equals(s) || "-".equals(s))) {
             return "0";
         }
 
@@ -789,14 +786,14 @@ public final class ParserUtils {
     /**
      * Checks a list of &lt;String&gt; elements to see if every element
      * in the list is empty.
-     * 
+     *
      * @param l
      *          List of &lt;String&gt;
      * @return boolean
      *              true when all elements are empty
      */
     public static boolean isListElementsEmpty(final List<String> l) {
-        for(String s : l) {
+        for(final String s : l) {
             if (s != null && s.trim().length() > 0) {
                 return false;
             }
@@ -860,7 +857,7 @@ public final class ParserUtils {
      * @param dataDefinition
      *          Name of the data definition stored in the Datafile table
      * @param parser
-     * 			Instance of the parser being used for the file.  It will be checked to get the table names 
+     * 			Instance of the parser being used for the file.  It will be checked to get the table names
      * 			for the DATASTRUCTURE table and DATAFILE table.
      * @throws SQLException
      * @return List
@@ -870,8 +867,8 @@ public final class ParserUtils {
         ResultSet rs = null;
         final List<ColumnMetaData> cmds = new ArrayList<ColumnMetaData>();
         try {
-            String dfTbl = parser != null ? parser.getDataFileTable() : "DATAFILE";
-            String dsTbl = parser != null ? parser.getDataStructureTable() : "DATASTRUCTURE";
+            final String dfTbl = parser != null ? parser.getDataFileTable() : "DATAFILE";
+            final String dsTbl = parser != null ? parser.getDataStructureTable() : "DATASTRUCTURE";
             final StringBuilder sqlSb = new StringBuilder();
 
             sqlSb.append("SELECT * FROM ").append(dfTbl).append(" INNER JOIN ").append(dsTbl).append(" ON ").append(dfTbl).append(".DATAFILE_NO = ")
@@ -891,7 +888,7 @@ public final class ParserUtils {
                 column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
                 column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
                 column.setStartPosition(recPosition);
-                column.setEndPosition(recPosition + (rs.getInt("DATASTRUCTURE_LENGTH") - 1));
+                column.setEndPosition(recPosition + rs.getInt("DATASTRUCTURE_LENGTH") - 1);
                 recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
 
                 cmds.add(column);
