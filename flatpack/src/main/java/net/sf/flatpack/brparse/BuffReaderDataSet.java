@@ -62,11 +62,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
     @Override
     public boolean next() {
 
-        Row r = null;
-
-        if (brParser != null) {
-            r = brParser.buildRow(this);
-        } else {
+        if (brParser == null) {
             // this should not happen, throw exception
             throw new RuntimeException("No parser available to fetch row");
         }
@@ -75,18 +71,13 @@ public class BuffReaderDataSet extends DefaultDataSet {
             setMetaData(((AbstractParser) brParser).getPzMetaData());
         }
 
-        if (r == null) {
-            setPointer(-1);
-            return false;
+        clearRows();
+        final Row r = brParser.buildRow(this);
+        if (r != null) {
+            addRow(r);
         }
 
-        clearRows();
-        addRow(r);
-
-        setPointer(0);
-
-        return true;
-
+        return super.next();
     }
 
     /**

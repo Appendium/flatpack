@@ -8,6 +8,11 @@
 	<body>
 		<release version="4.0.1" date="2014-12-10" description="Maintenance">
 			<action dev="ks-appendium" type="fix" issue="10">When parsing a header column, trim the leading and trailing spaces.</action>
+            <action dev="benoitx" type="fix" issue="16" due-to="dkulp">Mark jxl imports optional in OSGi.</action>
+            <action dev="ks-appendium" type="fix" issue="15" due-to="ks-appendium">Need to handle multi-line.</action>
+            <action dev="benoitx" type="fix" issue="14" due-to="moffatn">Fix for java.lang.NullPointerException
+                at net.sf.flatpack.DefaultDataSet.getString.</action>
+            <action dev="ks-appendium" type="fix" issue="13" due-to="antubis23">Fix DelimiterWriter not consistent with ParserUtils</action>
 		</release>
 		<release version="4.0.0" date="2014-10-01" description="Move to JDK8">
 			<action dev="benoitx" type="add" issue="8">dataSet.getRecord should never return null, use java.util.Optional.</action>
