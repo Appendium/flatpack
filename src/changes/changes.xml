@@ -12,6 +12,7 @@
             <action dev="ks-appendium" type="fix" issue="15" due-to="ks-appendium">Need to handle multi-line.</action>
             <action dev="benoitx" type="fix" issue="14" due-to="moffatn">Fix for java.lang.NullPointerException
                 at net.sf.flatpack.DefaultDataSet.getString.</action>
+            <action dev="ks-appendium" type="fix" issue="13" due-to="antubis23">Fix DelimiterWriter not consistent with ParserUtils</action>
         </release>
         <release version="3.4.2" date="2014-09-02" description="Maintenance">
             <action dev="benoitx" type="fix" issue="9" due-to="SvenNold">Fix for NPE in isRecordID if using absolute.</action>
