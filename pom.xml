@@ -10,7 +10,7 @@
 	<groupId>net.sf.flatpack</groupId>
 	<artifactId>flatpack-parent</artifactId>
 	<name>FlatPack</name>
-	<version>4.0.1</version>
+	<version>4.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters. 
@@ -225,7 +225,7 @@
 		<connection>scm:git:git@github.com:appendium/flatpack.git</connection>
 		<url>git://github.com:appendium/flatpack.git</url>
 		<developerConnection>scm:git:git@github.com:appendium/flatpack.git</developerConnection>
-	  <tag>flatpack-parent-4.0.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<issueManagement>
