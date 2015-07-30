@@ -7,9 +7,15 @@
 		<title>Changes</title>
 	</properties>
 	<body>
-		<release version="3.4.2" date="2014-09-02" description="Maintenance">
-     		 <action dev="benoitx" type="fix" issue="9" due-to="SvenNold">Fix for NPE in isRecordID if using absolute.</action>
-		</release>
+        <release version="3.4.3" date="2015-07-31" description="Maintenance">
+            <action dev="benoitx" type="fix" issue="16" due-to="dkulp">Mark jxl imports optional in OSGi.</action>
+            <action dev="ks-appendium" type="fix" issue="15" due-to="ks-appendium">Need to handle multi-line.</action>
+            <action dev="benoitx" type="fix" issue="14" due-to="moffatn">Fix for java.lang.NullPointerException
+                at net.sf.flatpack.DefaultDataSet.getString.</action>
+        </release>
+        <release version="3.4.2" date="2014-09-02" description="Maintenance">
+            <action dev="benoitx" type="fix" issue="9" due-to="SvenNold">Fix for NPE in isRecordID if using absolute.</action>
+        </release>
 		<release version="3.4.0" date="2014-05-23" description="Maintenance, JDK1.5 and fluent">
 			<action dev="benoitx" type="add">Add convenience method DefaultParserFactory.newCsvParser.</action>
 			<action dev="benoitx" type="add">Make interface more 'fluent'.</action>
