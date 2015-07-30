@@ -39,9 +39,6 @@ import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.xml.MetaData;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * 
  *
@@ -56,45 +53,37 @@ public class BuffReaderDataSet extends DefaultDataSet {
      * @param brParser
      */
     public BuffReaderDataSet(final MetaData columnMD2, final InterfaceBuffReaderParse brParser) {
-        super(columnMD2, (Parser)brParser);
-        //register the parser with the dataset so we can fetch rows from 
-        //the bufferedreader as needed
+        super(columnMD2, (Parser) brParser);
+        // register the parser with the dataset so we can fetch rows from
+        // the bufferedreader as needed
         this.brParser = brParser;
     }
 
+    @Override
     public boolean next() {
-  
-            Row r = null;
-            
-            if (brParser != null) {
-                r = brParser.buildRow(this);
-            } else {
-                //this should not happen, throw exception
-                throw new RuntimeException("No parser available to fetch row");
-            }
+        if (brParser == null) {
+            // this should not happen, throw exception
+            throw new RuntimeException("No parser available to fetch row");
+        }
 
-            if (getMetaData() == null) {
-                setMetaData(((AbstractParser)brParser).getPzMetaData());
-            }            
-            
-            if (r == null) {
-                setPointer(-1);
-                return false;
-            }
-            
-            clearRows();
+        if (getMetaData() == null) {
+            setMetaData(((AbstractParser) brParser).getPzMetaData());
+        }
+
+        clearRows();
+        final Row r = brParser.buildRow(this);
+        if (r != null) {
             addRow(r);
+        }
 
-            setPointer(0);
-
-            return true;
-
+        return super.next();
     }
 
     /**
      * Not Supported!
      * @return boolean
      */
+    @Override
     public boolean previous() {
         throw new UnsupportedOperationException("previous() is Not Implemented");
     }
@@ -105,6 +94,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
      * @see net.sf.flatpack.ordering.OrderBy
      * @see net.sf.flatpack.ordering.OrderColumn
      */
+    @Override
     public void orderRows(final OrderBy ob) {
         throw new UnsupportedOperationException("orderRows() is Not Implemented");
     }
@@ -114,6 +104,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
      * @param localPointer - int
      * @exception IndexOutOfBoundsException
      */
+    @Override
     public void absolute(final int localPointer) {
         throw new UnsupportedOperationException("absolute() is Not Implemented");
     }
@@ -121,6 +112,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
     /**
      *Not Supported!
      */
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is Not Implemented");
     }
@@ -129,6 +121,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
      * Not Supported!
      * @return int
      */
+    @Override
     public int getIndex() {
         throw new UnsupportedOperationException("getIndex() is Not Implemented");
     }
@@ -136,6 +129,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
     /**
      * Not Supported!
      */
+    @Override
     public void goBottom() {
         throw new UnsupportedOperationException("goBottom() is Not Implemented");
     }
@@ -143,6 +137,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
     /**
      * Not Supported!
      */
+    @Override
     public void goTop() {
         throw new UnsupportedOperationException("goTop() is Not Implemented");
     }
@@ -150,15 +145,17 @@ public class BuffReaderDataSet extends DefaultDataSet {
     /**
      * Not Supported!
      */
+    @Override
     public void setValue(final String column, final String value) {
         throw new UnsupportedOperationException("setValue() is Not Implemented");
     }
-    
+
     /**
      * Not Supported!
      */
+    @Override
     public int getRowCount() {
-    	throw new UnsupportedOperationException("getRowCount() is Not Implemented");
+        throw new UnsupportedOperationException("getRowCount() is Not Implemented");
     }
 
 }
