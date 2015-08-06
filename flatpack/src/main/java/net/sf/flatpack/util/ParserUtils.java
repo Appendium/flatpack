@@ -435,7 +435,24 @@ public final class ParserUtils {
                 // remember we are working are way backwards on the line
                 if (qualiFound) {
                     if (chrArry[i] == delimiter) {
-                        return true;
+                        // before deciding if this is the begining of a qualified new line
+                        // I think we have to go back to the beginning of the line and see if we are inside a qualified
+                        // field or not?
+                        //return true;
+                        boolean qualifiedContent = chrArry[0] == qualifier;
+                        for(int index = 0; index < chrArry.length; index++) {
+                            char currentChar = chrArry[index];
+                            qualifiedContent = currentChar == qualifier;
+                            if(qualifiedContent) {
+                                // go until first occurence of closing qualifierdelimiter combination
+                                for(; index < chrArry.length; index++) {
+                                    if(chrArry[index] == delimiter && chrArry[++index] == qualifier) {
+                                        qualifiedContent = false;
+                                    }
+                                }
+                            }
+                        }
+                        return qualifiedContent;
                     }
                     // guard against multiple qualifiers in the sequence [ ,""We ]
                     qualiFound = chrArry[i] == qualifier;
@@ -472,7 +489,24 @@ public final class ParserUtils {
                     continue;
                 }
                 if (chrArry[i] == delimiter) {
-                    return true;
+                        // before deciding if this is the begining of a qualified new line
+                        // I think we have to go back to the beginning of the line and see if we are inside a qualified
+                        // field or not?
+                        //return true;
+                        boolean qualifiedContent = chrArry[0] == qualifier;
+                        for(int index = 0; index < chrArry.length; index++) {
+                            char currentChar = chrArry[index];
+                            qualifiedContent = currentChar == qualifier;
+                            if(qualifiedContent) {
+                                // go until first occurence of closing qualifierdelimiter combination
+                                for(; index < chrArry.length; index++) {
+                                    if(chrArry[index] == delimiter && chrArry[++index] == qualifier) {
+                                        qualifiedContent = false;
+                                    }
+                                }
+                            }
+                        }
+                        return qualifiedContent;
                 }
                 break;
             }
