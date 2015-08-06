@@ -136,6 +136,13 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                 }
 
                 final String mdkey = FixedWidthParserUtils.getCMDKey(getPzMetaData(), line);
+
+                final Row row = new Row();
+                row.setRowNumber(lineCount);
+                row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey);
+
+                final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
+
                 final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
 
                 if (line.length() > recordLength) {
@@ -143,10 +150,10 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                     // be included in the
                     // dataset
                     if (isIgnoreExtraColumns()) {
+                        addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
                         // user has chosen to ignore the fact that we have too many bytes in the fixed
                         // width file. Truncate the line to the correct length
-                        line = line.substring(0, recordLength);
-                        addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
+                        row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line.substring(0, recordLength), isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
                     } else {
                         addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
@@ -154,11 +161,10 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                     }
                 } else if (line.length() < recordLength) {
                     if (isHandlingShortLines()) {
-                        // We can pad this line out
-                        line += ParserUtils.padding(recordLength - line.length(), ' ');
-
                         // log a warning
                         addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
+                        // We can pad this line out
+                        row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line + ParserUtils.padding(recordLength - line.length(), ' '), isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
 
                     } else {
                         addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
@@ -166,14 +172,6 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                         continue;
                     }
                 }
-
-                final Row row = new Row();
-                row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey);
-
-                final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
-                row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line, isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
-
-                row.setRowNumber(lineCount);
 
                 if (isFlagEmptyRows()) {
                     // user has elected to have the parser flag rows that are empty
