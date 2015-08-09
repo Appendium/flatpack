@@ -56,11 +56,32 @@ public class ParserUtilsTest extends TestCase {
         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Integer.class), new Integer("5"));
         assertEquals(ParserUtils.runPzConverter(convertProps, "$5.3556", BigDecimal.class), new BigDecimal("5.3556"));
     }
-    
+
     public void testEmptyRow() {
         final String data = ",,,";
-        final List l = ParserUtils.splitLine(data, ',', FPConstants.NO_QUALIFIER, 4);        
+        final List l = ParserUtils.splitLine(data, ',', FPConstants.NO_QUALIFIER, 4);
         assertEquals("list should be empty and is not...", ParserUtils.isListElementsEmpty(l), true);
+    }
+
+    public void testQualifiedNonMultiLine() {
+        final String data = "data 1-1,data 1-2,\"qualified,data 1-3,\"\n";
+        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), false);
+    }
+
+    public void testQualifiedMultiLine() {
+        final String data = "data 1-1,data 1-2,\"qualified,data 1-3,\n" + "qualified data 1-3 continued from previous line\"\n";
+        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), true);
+    }
+
+    public void testNonQualifiedNonMultiLine() {
+        final String data = "data 1-1,data 1-2,qualified,data 1-3\n";
+        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), false);
+    }
+
+    public void testNonQualifiedMultiLine() {
+        // can't really have multiline without qualifier
+        final String data = "data 1-1,data 1-2,qualified,data 1-3\n" + "qualified data 1-3 continued from previous line\n";
+        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), false);
     }
 
     public static void main(final String[] args) {

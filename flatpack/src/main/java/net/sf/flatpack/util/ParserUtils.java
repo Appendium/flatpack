@@ -52,10 +52,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import net.sf.flatpack.Parser;
 import net.sf.flatpack.converter.Converter;
@@ -451,7 +451,6 @@ public final class ParserUtils {
             // could be a potential line break
             boolean qualiFound = false;
             for (int i = chrArry.length - 1; i >= 0; i--) {
-                // System.out.println(chrArry[i]);
                 if (chrArry[i] == ' ') {
                     continue;
                 }
@@ -461,7 +460,24 @@ public final class ParserUtils {
                 // remember we are working are way backwards on the line
                 if (qualiFound) {
                     if (chrArry[i] == delimiter) {
-                        return true;
+                        // before deciding if this is the begining of a qualified new line
+                        // I think we have to go back to the beginning of the line and see if we are inside a qualified
+                        // field or not?
+                        // return true;
+                        boolean qualifiedContent = chrArry[0] == qualifier;
+                        for (int index = 0; index < chrArry.length; index++) {
+                            char currentChar = chrArry[index];
+                            qualifiedContent = currentChar == qualifier;
+                            if (qualifiedContent) {
+                                // go until first occurence of closing qualifierdelimiter combination
+                                for (; index < chrArry.length; index++) {
+                                    if (chrArry[index] == delimiter && chrArry[++index] == qualifier) {
+                                        qualifiedContent = false;
+                                    }
+                                }
+                            }
+                        }
+                        return qualifiedContent;
                     }
                     // guard against multiple qualifiers in the sequence [ ,""We ]
                     qualiFound = chrArry[i] == qualifier;
@@ -498,7 +514,24 @@ public final class ParserUtils {
                     continue;
                 }
                 if (chrArry[i] == delimiter) {
-                    return true;
+                    // before deciding if this is the begining of a qualified new line
+                    // I think we have to go back to the beginning of the line and see if we are inside a qualified
+                    // field or not?
+                    // return true;
+                    boolean qualifiedContent = chrArry[0] == qualifier;
+                    for (int index = 0; index < chrArry.length; index++) {
+                        char currentChar = chrArry[index];
+                        qualifiedContent = currentChar == qualifier;
+                        if (qualifiedContent) {
+                            // go until first occurence of closing qualifierdelimiter combination
+                            for (; index < chrArry.length; index++) {
+                                if (chrArry[index] == delimiter && chrArry[++index] == qualifier) {
+                                    qualifiedContent = false;
+                                }
+                            }
+                        }
+                    }
+                    return qualifiedContent;
                 }
                 break;
             }
@@ -793,7 +826,7 @@ public final class ParserUtils {
      *              true when all elements are empty
      */
     public static boolean isListElementsEmpty(final List<String> l) {
-        for(final String s : l) {
+        for (final String s : l) {
             if (s != null && s.trim().length() > 0) {
                 return false;
             }
@@ -862,7 +895,8 @@ public final class ParserUtils {
      * @throws SQLException
      * @return List
      */
-    public static List<ColumnMetaData> buildMDFromSQLTable(final Connection con, final String dataDefinition, final Parser parser) throws SQLException {
+    public static List<ColumnMetaData> buildMDFromSQLTable(final Connection con, final String dataDefinition, final Parser parser)
+            throws SQLException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         final List<ColumnMetaData> cmds = new ArrayList<ColumnMetaData>();
