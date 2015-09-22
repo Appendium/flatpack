@@ -171,6 +171,8 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                                 isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
+                } else {
+                    row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line, isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
                 }
 
                 if (isFlagEmptyRows()) {
