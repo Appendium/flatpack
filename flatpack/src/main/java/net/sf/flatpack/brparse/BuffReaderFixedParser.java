@@ -145,6 +145,8 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
 
                 final int recordLength = ((Integer) recordLengths.get(mdkey)).intValue();
 
+                // invoking row.addColumn() in each case to avoid having to copy the row data
+
                 if (line.length() > recordLength) {
                     // Incorrect record length on line log the error. Line will not
                     // be included in the
