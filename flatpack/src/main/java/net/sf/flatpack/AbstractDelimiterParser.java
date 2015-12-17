@@ -51,12 +51,12 @@ import org.slf4j.LoggerFactory;
  *
  */
 public abstract class AbstractDelimiterParser extends AbstractParser {
+    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractDelimiterParser.class);
     private char delimiter = 0;
     private char qualifier = 0;
     private boolean ignoreFirstRecord = false;
-    private int lineCount = 0;
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractDelimiterParser.class);
+    private int lineCount = 0;
 
     public AbstractDelimiterParser(final Reader dataSourceReader, final String dataDefinition, final char delimiter, final char qualifier,
             final boolean ignoreFirstRecord) {
@@ -143,7 +143,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     continue;
                 } else if (!processedFirst && createMDFromFile) {
                     processedFirst = true;
-                    setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, delimiter, qualifier, this));
+                    setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, delimiter, qualifier, this, addSuffixToDuplicateColumnNames));
                     ds.setMetaData(getPzMetaData());
                     continue;
                 }
@@ -313,5 +313,6 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         }
 
         return lineData.toString();
+
     }
 }

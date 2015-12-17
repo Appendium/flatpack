@@ -386,19 +386,30 @@ public final class ParserUtils {
      * @param qualifier
      * @param p
      *          PZParser used to specify additional option when working with the ColumnMetaData. Can be null
+     * @param addSuffixToDuplicateColumnNames 
      * @return PZMetaData
      */
-    public static MetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final Parser p) {
+    public static MetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final Parser p,
+            boolean addSuffixToDuplicateColumnNames) {
         final List<ColumnMetaData> results = new ArrayList<ColumnMetaData>();
         final Set<String> dupCheck = new HashSet<String>();
 
         final List<String> lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT, false, false);
         for (final String colName : lineData) {
             final ColumnMetaData cmd = new ColumnMetaData();
-            cmd.setColName(colName);
-            if (dupCheck.contains(cmd.getColName())) {
-                throw new FPException("Duplicate Column Name In File: " + cmd.getColName());
+            String colNameToUse = colName;
+            if (dupCheck.contains(colNameToUse)) {
+                if (!addSuffixToDuplicateColumnNames) {
+                    throw new FPException("Duplicate Column Name In File: " + cmd.getColName());
+                } else {
+                    int count = 2;
+                    while (dupCheck.contains(colNameToUse + count)) {
+                        count++;
+                    }
+                    colNameToUse = colName + count;
+                }
             }
+            cmd.setColName(colNameToUse);
             results.add(cmd);
             dupCheck.add(cmd.getColName());
         }
@@ -438,15 +449,15 @@ public final class ParserUtils {
                         // before deciding if this is the begining of a qualified new line
                         // I think we have to go back to the beginning of the line and see if we are inside a qualified
                         // field or not?
-                        //return true;
+                        // return true;
                         boolean qualifiedContent = chrArry[0] == qualifier;
-                        for(int index = 0; index < chrArry.length; index++) {
+                        for (int index = 0; index < chrArry.length; index++) {
                             char currentChar = chrArry[index];
                             qualifiedContent = currentChar == qualifier;
-                            if(qualifiedContent) {
+                            if (qualifiedContent) {
                                 // go until first occurence of closing qualifierdelimiter combination
-                                for(; index < chrArry.length; index++) {
-                                    if(chrArry[index] == delimiter && chrArry[++index] == qualifier) {
+                                for (; index < chrArry.length; index++) {
+                                    if (chrArry[index] == delimiter && chrArry[++index] == qualifier) {
                                         qualifiedContent = false;
                                     }
                                 }
@@ -489,24 +500,24 @@ public final class ParserUtils {
                     continue;
                 }
                 if (chrArry[i] == delimiter) {
-                        // before deciding if this is the begining of a qualified new line
-                        // I think we have to go back to the beginning of the line and see if we are inside a qualified
-                        // field or not?
-                        //return true;
-                        boolean qualifiedContent = chrArry[0] == qualifier;
-                        for(int index = 0; index < chrArry.length; index++) {
-                            char currentChar = chrArry[index];
-                            qualifiedContent = currentChar == qualifier;
-                            if(qualifiedContent) {
-                                // go until first occurence of closing qualifierdelimiter combination
-                                for(; index < chrArry.length; index++) {
-                                    if(chrArry[index] == delimiter && chrArry[++index] == qualifier) {
-                                        qualifiedContent = false;
-                                    }
+                    // before deciding if this is the begining of a qualified new line
+                    // I think we have to go back to the beginning of the line and see if we are inside a qualified
+                    // field or not?
+                    // return true;
+                    boolean qualifiedContent = chrArry[0] == qualifier;
+                    for (int index = 0; index < chrArry.length; index++) {
+                        char currentChar = chrArry[index];
+                        qualifiedContent = currentChar == qualifier;
+                        if (qualifiedContent) {
+                            // go until first occurence of closing qualifierdelimiter combination
+                            for (; index < chrArry.length; index++) {
+                                if (chrArry[index] == delimiter && chrArry[++index] == qualifier) {
+                                    qualifiedContent = false;
                                 }
                             }
                         }
-                        return qualifiedContent;
+                    }
+                    return qualifiedContent;
                 }
                 break;
             }
@@ -877,7 +888,7 @@ public final class ParserUtils {
             final StringBuilder sqlSb = new StringBuilder();
 
             sqlSb.append("SELECT * FROM ").append(dfTbl).append(" INNER JOIN ").append(dsTbl).append(" ON ").append(dfTbl).append(".DATAFILE_NO = ")
-            .append(dsTbl).append(".DATAFILE_NO " + "WHERE DATAFILE_DESC = ? ORDER BY DATASTRUCTURE_COL_ORDER");
+                    .append(dsTbl).append(".DATAFILE_NO " + "WHERE DATAFILE_DESC = ? ORDER BY DATASTRUCTURE_COL_ORDER");
 
             stmt = con.prepareStatement(sqlSb.toString()); // always use PreparedStatement
             // as the DB can do clever things.

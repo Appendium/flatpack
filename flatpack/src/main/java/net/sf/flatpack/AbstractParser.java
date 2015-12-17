@@ -84,6 +84,18 @@ public abstract class AbstractParser implements Parser {
 
     private String dataStructureTable = "DATASTRUCTURE";
 
+    private boolean addSuffixToDuplicateColumnNames = false;
+
+    public boolean isAddSuffixToDuplicateColumnNames() {
+        return addSuffixToDuplicateColumnNames;
+    }
+
+    @Override
+    public Parser setAddSuffixToDuplicateColumnNames(boolean addSuffixToDuplicateColumnNames) {
+        this.addSuffixToDuplicateColumnNames = addSuffixToDuplicateColumnNames;
+        return this;
+    }
+
     protected AbstractParser(final Reader dataSourceReader) {
         this.dataSourceReader = dataSourceReader;
     }

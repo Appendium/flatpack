@@ -80,6 +80,12 @@ public interface Parser {
     Parser setHandlingShortLines(boolean handleShortLines);
 
     /**
+     * @param addSuffixToDuplicateColumnNames
+     *          when true, add a count to duplicate colum names
+     */
+    Parser setAddSuffixToDuplicateColumnNames(boolean addSuffixToDuplicateColumnNames);
+
+    /**
      *
      * @return true, detail lines with a length or column count &gt; the mapping
      *         definition will be truncated and the reader will NOT register
