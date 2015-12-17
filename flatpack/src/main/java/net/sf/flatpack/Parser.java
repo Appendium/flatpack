@@ -81,7 +81,7 @@ public interface Parser {
 
     /**
      * @param addSuffixToDuplicateColumnNames
-     *          when true, add a count to duplicate colum names
+     *          when true, add a count to duplicate colum names. eg the second column called "Asset" will become "Asset2".
      */
     Parser setAddSuffixToDuplicateColumnNames(boolean addSuffixToDuplicateColumnNames);
 

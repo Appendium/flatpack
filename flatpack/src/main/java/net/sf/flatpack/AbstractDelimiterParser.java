@@ -143,7 +143,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     continue;
                 } else if (!processedFirst && createMDFromFile) {
                     processedFirst = true;
-                    setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, delimiter, qualifier, this, addSuffixToDuplicateColumnNames));
+                    setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, delimiter, qualifier, this, isAddSuffixToDuplicateColumnNames()));
                     ds.setMetaData(getPzMetaData());
                     continue;
                 }
