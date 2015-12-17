@@ -3,6 +3,8 @@ package net.sf.flatpack;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -152,6 +154,39 @@ public class RowRecord implements Record {
     }
 
     @Override
+    public LocalDate getLocalDate(final String column, final String dateFormat, final Supplier<LocalDate> defaultSupplier) throws ParseException {
+        final LocalDate d = getLocalDate(column, dateFormat);
+        if (d == null) {
+            return defaultSupplier.get();
+        }
+        return d;
+    }
+
+    @Override
+    public LocalDate getLocalDate(final String column, final Supplier<LocalDate> defaultSupplier) throws ParseException {
+        final LocalDate d = getLocalDate(column);
+        if (d == null) {
+            return defaultSupplier.get();
+        }
+        return d;
+    }
+
+    @Override
+    public LocalDate getLocalDate(final String column) throws ParseException {
+        return getLocalDate(column, "yyyy-mm-dd");
+    }
+
+    @Override
+    public LocalDate getLocalDate(final String column, final String dateFormat) throws ParseException {
+        final String s = getStringValue(column);
+        if (FPStringUtils.isBlank(s)) {
+            // don't do the parse on empties
+            return null;
+        }
+        return LocalDate.parse(s, DateTimeFormatter.ofPattern(dateFormat));
+    }
+
+    @Override
     public double getDouble(final String column, final Supplier<Double> defaultSupplier) {
         final String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
@@ -241,7 +276,7 @@ public class RowRecord implements Record {
             return null;
         }
 
-        return new BigDecimal(s);
+        return new BigDecimal(s.replace(",", ""));
     }
 
     @Override

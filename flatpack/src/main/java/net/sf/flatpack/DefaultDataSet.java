@@ -35,6 +35,7 @@ package net.sf.flatpack;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -543,5 +544,25 @@ public class DefaultDataSet implements DataSet {
         }
 
         return rows.get(pointer).getRawData();
+    }
+
+    @Override
+    public LocalDate getLocalDate(String column, Supplier<LocalDate> defaultSupplier) throws ParseException {
+        return currentRecord.getLocalDate(column, defaultSupplier);
+    }
+
+    @Override
+    public LocalDate getLocalDate(String column) throws ParseException {
+        return currentRecord.getLocalDate(column);
+    }
+
+    @Override
+    public LocalDate getLocalDate(String column, String dateFormat, Supplier<LocalDate> defaultSupplier) throws ParseException {
+        return currentRecord.getLocalDate(column, dateFormat, defaultSupplier);
+    }
+
+    @Override
+    public LocalDate getLocalDate(String column, String dateFormat) throws ParseException {
+        return currentRecord.getLocalDate(column, dateFormat);
     }
 }

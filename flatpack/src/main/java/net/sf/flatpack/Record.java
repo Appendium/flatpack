@@ -3,6 +3,7 @@ package net.sf.flatpack;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
@@ -194,6 +195,72 @@ public interface Record {
      * @return Date
      */
     Date getDate(String column, SimpleDateFormat sdf) throws ParseException;
+
+    /**
+     * Returns the date value of a specified column. This assumes the date is in
+     * yyy-mm-dd. If your date is not in this format, see
+     * getDate(String,SimpleDateFormat)
+     *
+     * Will return "null" on empty Strings
+     *
+     * @param column
+     *            - Name of the column
+     * @param defaultSupplier for default value if result in column is null/empty
+     * @exception ParseException
+     * @return Date
+     * @since 4.0
+     */
+    LocalDate getLocalDate(String column, Supplier<LocalDate> defaultSupplier) throws ParseException;
+
+    /**
+     * Returns the local date value of a specified column. This assumes the date is in
+     * yyyy-MM-dd. If your date is not in this format, see
+     * getLocalDate(String,SimpleDateFormat)
+     *
+     * Will return "null" on empty Strings
+     *
+     * @param column
+     *            - Name of the column
+     * @exception ParseException
+     * @return Date
+     */
+    LocalDate getLocalDate(String column) throws ParseException;
+
+    /**
+     * Returns the lcoal date value of a specified column. This should be used if the
+     * date is NOT in yyyyMMdd format. The SimpleDateFormat object will specify
+     * what kind of format the date is in.
+     *
+     * Will return "null" on empty Strings
+     *
+     * @param column
+     *            - Name of the column
+     * @param sdf
+     *            - SimpleDateFormat of the date
+     * @param defaultSupplier for default value if result in column is null/empty
+     * @exception ParseException
+     * @see java.text.SimpleDateFormat
+     * @return Date
+     * @since 4.0
+     */
+    LocalDate getLocalDate(String column, String dateFormat, Supplier<LocalDate> defaultSupplier) throws ParseException;
+
+    /**
+     * Returns the lcoal date value of a specified column. This should be used if the
+     * date is NOT in yyy-mm-dd format. The SimpleDateFormat object will specify
+     * what kind of format the date is in.
+     *
+     * Will return "null" on empty Strings
+     *
+     * @param column
+     *            - Name of the column
+     * @param sdf
+     *            - SimpleDateFormat of the date
+     * @exception ParseException
+     * @see java.text.SimpleDateFormat
+     * @return Date
+     */
+    LocalDate getLocalDate(String column, String dateFormat) throws ParseException;
 
     /**
      * Returns the value of the column with the type of object specified
