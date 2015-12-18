@@ -235,8 +235,8 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @param sdf
-     *            - SimpleDateFormat of the date
+     * @param dateFormat
+     *            - dateFormat of the date
      * @param defaultSupplier for default value if result in column is null/empty
      * @exception ParseException
      * @see java.text.SimpleDateFormat
@@ -254,8 +254,8 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @param sdf
-     *            - SimpleDateFormat of the date
+     * @param dateFormat
+     *            - dateFormat of the date
      * @exception ParseException
      * @see java.text.SimpleDateFormat
      * @return Date
