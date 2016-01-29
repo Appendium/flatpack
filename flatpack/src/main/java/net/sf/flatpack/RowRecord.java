@@ -270,13 +270,19 @@ public class RowRecord implements Record {
 
     @Override
     public BigDecimal getBigDecimal(final String column) {
-        final String s = getStringValue(column);
+        String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
             // don't do the parse on empties
             return null;
         }
 
-        return new BigDecimal(s.replace(",", ""));
+        s = s.replace(",", "").trim();
+
+        if (FPStringUtils.isBlank(s)) {
+            // don't do the parse on empties
+            return null;
+        }
+        return new BigDecimal(s);
     }
 
     @Override
