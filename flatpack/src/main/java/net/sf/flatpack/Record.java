@@ -309,6 +309,12 @@ public interface Record {
     boolean isRecordID(String recordID);
 
     /**
+     * Show the record ID (default is 'detail')
+     * @return the record ID (default is 'detail')
+     */
+    String getRecordID();
+
+    /**
      * Does this DataSet contain a column with the given name?
      *
      * @param column

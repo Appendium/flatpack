@@ -402,6 +402,11 @@ public class DefaultDataSet implements DataSet {
         return currentRecord.isRecordID(recordID);
     }
 
+    @Override
+    public String getRecordID() {
+        return currentRecord.getRecordID();
+    }
+
     /**
      * Sets the absolute position of the record pointer
      *

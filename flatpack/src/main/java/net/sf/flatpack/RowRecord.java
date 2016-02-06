@@ -43,11 +43,17 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public boolean isRecordID(final String recordID) {
+    public String getRecordID() {
         String rowID = row.getMdkey();
         if (rowID == null) {
             rowID = FPConstants.DETAIL_ID;
         }
+        return rowID;
+    }
+
+    @Override
+    public boolean isRecordID(final String recordID) {
+        String rowID = getRecordID();
 
         return rowID.equals(recordID);
     }
