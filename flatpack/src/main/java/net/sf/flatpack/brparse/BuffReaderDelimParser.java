@@ -130,6 +130,7 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             } else if (!processedFirst && shouldCreateMDFromFile()) {
                 processedFirst = true;
                 setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, getDelimiter(), getQualifier(), this, isAddSuffixToDuplicateColumnNames()));
+                ds.setMetaData(getPzMetaData());
                 continue;
             }
 
