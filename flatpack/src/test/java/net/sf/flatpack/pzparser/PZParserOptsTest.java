@@ -120,6 +120,31 @@ public class PZParserOptsTest extends TestCase {
         } catch (final NoSuchElementException e) {
             fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should NOT fail with case sensitivity turned OFF");
         }
+
+        // re-test the buffered reader
+        p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+
+        // check that column names are case sensitive
+        p.setColumnNamesCaseSensitive(true);
+        ds = p.parse();
+        ds.next();
+        try {
+            ds.getString("COLUMN2");
+            fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
+        } catch (final NoSuchElementException e) {
+            // this should happen since we are matching case
+        }
+
+        // check that column names are NOT case sensitive
+        p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
+        p.setColumnNamesCaseSensitive(false);
+        ds = p.parse();
+        ds.next();
+        try {
+            ds.getString("COLUMN2");
+        } catch (final NoSuchElementException e) {
+            fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should NOT fail with case sensitivity turned OFF");
+        }
     }
 
     public void testEmptyRowCheck() {
