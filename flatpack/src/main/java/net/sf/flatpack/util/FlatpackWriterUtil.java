@@ -4,6 +4,7 @@
 package net.sf.flatpack.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,12 @@ public final class FlatpackWriterUtil {
         return listCol;
     }
 
+    public static void buildColumns(final List<ColumnMetaData> listCol, final Collection<String> cols) {
+        if (cols != null) {
+            cols.forEach(s -> listCol.add(new ColumnMetaData(s)));
+        }
+    }
+
     public static void buildColumns(final List<ColumnMetaData> listCol, final String cols) {
         if (cols != null) {
             for (final String s : cols.split(",")) {
@@ -55,5 +62,4 @@ public final class FlatpackWriterUtil {
             }
         }
     }
-
 }
