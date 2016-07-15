@@ -43,9 +43,7 @@ public final class FlatpackWriterUtil {
     public static void buildColumns(final List<ColumnMetaData> listCol, final String cols) {
         if (cols != null) {
             for (final String s : cols.split(",")) {
-                final ColumnMetaData cmd = new ColumnMetaData();
-                cmd.setColName(s);
-                listCol.add(cmd);
+                listCol.add(new ColumnMetaData(s));
             }
         }
     }
@@ -53,9 +51,7 @@ public final class FlatpackWriterUtil {
     public static void buildColumns(final List<ColumnMetaData> listCol, final String... cols) {
         if (cols != null) {
             for (final String s : cols) {
-                final ColumnMetaData cmd = new ColumnMetaData();
-                cmd.setColName(s);
-                listCol.add(cmd);
+                listCol.add(new ColumnMetaData(s));
             }
         }
     }

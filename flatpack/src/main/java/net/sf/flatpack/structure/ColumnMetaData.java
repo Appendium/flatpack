@@ -37,12 +37,13 @@ public class ColumnMetaData {
     /** ending position */
     private int endPosition = 0;
 
-    /**
-     * constructor
-     *
-     */
     public ColumnMetaData() {
         super();
+    }
+
+    public ColumnMetaData(final String colName) {
+        super();
+        this.colName = colName;
     }
 
     /**
