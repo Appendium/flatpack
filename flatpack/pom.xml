@@ -43,10 +43,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Export-Package>net.sf.flatpack.*;version="${pom.version}"</Export-Package>
+                        <Export-Package>net.sf.flatpack.*;version="${project.version}"</Export-Package>
                         <Private-Package />
-                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Version>${pom.version}</Bundle-Version>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
                         <Bundle-RequiredExecutionEnvironment>J2SE-1.4</Bundle-RequiredExecutionEnvironment>
                     </instructions>
                 </configuration>
