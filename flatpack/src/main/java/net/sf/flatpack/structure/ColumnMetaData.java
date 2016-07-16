@@ -41,6 +41,9 @@ public class ColumnMetaData {
         super();
     }
 
+    /**
+     * @param colName column name
+     */
     public ColumnMetaData(final String colName) {
         super();
         this.colName = colName;
