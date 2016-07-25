@@ -605,7 +605,8 @@ public final class ParserUtils {
         idx = columnMD.getColumnIndex(key, column);
 
         if (idx < 0) {
-            throw new NoSuchElementException("Column [" + column + "] does not exist, check case/spelling. key:" + key);
+            throw new NoSuchElementException(
+                    "Column [" + column + "] does not exist, check case/spelling." + (key != null ? " key:[" + key + "]" : ""));
         }
         return idx;
     }
@@ -928,27 +929,27 @@ public final class ParserUtils {
     // LEAVE AS A REFERENCE FOR POSSIBLE LATER USE
     /* public static List splitLineWithBuf(String line, final char delimiter, char qualifier, int initialSize) {
      List list = new ArrayList(initialSize);
-
+    
      if (delimiter == 0) {
      list.add(line);
      return list;
      } else if (line == null) {
      return list;
      }
-
+    
      final String trimmedLine = line.trim();
      int size = trimmedLine.length();
-
+    
      if (size == 0) {
      list.add("");
      return list;
      }
-
+    
      boolean insideQualifier = false;
      char previousChar = 0;
      boolean blockWasInQualifier = false;
      StringBuilder buf = new StringBuilder(32);
-
+    
      // final String doubleQualifier = String.valueOf(qualifier) +
      // String.valueOf(qualifier);
      for (int i = 0; i < size; i++) {
@@ -960,7 +961,7 @@ public final class ParserUtils {
      }
      continue;
      }
-
+    
      if (currentChar == delimiter) {
      // we've found the delimiter (eg ,)
      if (!insideQualifier) {
@@ -972,7 +973,7 @@ public final class ParserUtils {
      // trimmed = trimmed.replaceAll(doubleQualifier,
      // String.valueOf(qualifier));
      }
-
+    
      if (trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
      list.add("");
      } else {
@@ -1020,13 +1021,13 @@ public final class ParserUtils {
      }
      previousChar = currentChar;
      }
-
+    
      if (buf.length() > 0) {
      list.add(buf.toString().trim());
      } else if (trimmedLine.charAt(size - 1) == delimiter) {
      list.add("");
      }
-
+    
      return list;
      }*/
 }
