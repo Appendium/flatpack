@@ -37,13 +37,13 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Benoit Xhenseval
@@ -151,8 +151,8 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT,
                         isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace());
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
-                final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
-                final int columnCount = cmds.size();
+                final List<ColumnMetaData> metaData = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
+                final int columnCount = metaData.size();
 
                 if (columns.size() > columnCount) {
                     // Incorrect record length on line log the error. Line
@@ -161,9 +161,9 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                         // user has chosen to ignore the fact that we have too many columns in the data from
                         // what the mapping has described. sublist the array to remove un-needed columns
                         columns = columns.subList(0, columnCount);
-                        addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", lineCount, 1);
+                        addError(ds, "Flatpack truncated line to correct number of columns", lineCount, 1, isStoreRawDataToDataError() ? line : null);
                     } else {
-                        addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2,
+                        addError(ds, "Too many columns expected: " + columnCount + " Flatpack got: " + columns.size(), lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
@@ -175,10 +175,10 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                         }
 
                         // log a warning
-                        addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", lineCount, 1);
+                        addError(ds, "Flatpack padded line to correct number of columns", lineCount, 1, isStoreRawDataToDataError() ? line : null);
 
                     } else {
-                        addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), lineCount, 2,
+                        addError(ds, "Too few columns expected: " + columnCount + " only got: " + columns.size(), lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
                         continue;
                     }
