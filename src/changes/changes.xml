@@ -6,7 +6,7 @@
 		<title>Changes</title>
 	</properties>
 	<body>
-		<release version="1.4.2" date="TBD" description="Maintenance">
+		<release version="4.0.2" date="TBD" description="Maintenance">
 			<action dev="benoitx" type="add">
 				new option to automatically "de-duplicate" column names by appending a number at the end of it if it already exist. This is off by default but can be set
 				via call to parser.setAddSuffixToDuplicateColumnNames(true).
@@ -14,6 +14,7 @@
 			<action dev="benoitx" type="fix">
 				RowRecord.getBigDecimal should trim the string to avoid potential parsing issues.
 			</action>
+            <action dev="benoitx" type="fix" issue="27" due-to="benoitx">Delimiter Writer does not handle field ending with new line.</action>
 		</release>
 		<release version="4.0.1" date="2014-12-10" description="Maintenance">
 			<action dev="ks-appendium" type="fix" issue="10">When parsing a header column, trim the leading and trailing spaces.</action>
