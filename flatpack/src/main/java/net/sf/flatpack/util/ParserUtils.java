@@ -400,7 +400,7 @@ public final class ParserUtils {
             String colNameToUse = colName;
             if (dupCheck.contains(colNameToUse)) {
                 if (!addSuffixToDuplicateColumnNames) {
-                    throw new FPException("Duplicate Column Name In File: " + cmd.getColName());
+                    throw new FPException("Duplicate Column Name In File: " + colNameToUse);
                 } else {
                     int count = 2;
                     while (dupCheck.contains(colNameToUse + count)) {
