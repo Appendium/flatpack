@@ -348,7 +348,7 @@ public class DefaultDataSet implements DataSet {
      */
     @Override
     public void orderRows(final OrderBy ob) {
-        if (ob != null && rows != null) {
+        if (ob != null) {
             ob.setMetaData(getMetaData());
             ob.setParser(parser);
             Collections.sort(rows, ob);
@@ -368,8 +368,8 @@ public class DefaultDataSet implements DataSet {
             return false;
         }
         pointer--;
-        currentRecord = new RowRecord(rows.get(pointer), metaData, parser.isColumnNamesCaseSensitive(), pzConvertProps, strictNumericParse,
-                upperCase, lowerCase, parser.isNullEmptyStrings());
+        currentRecord = new RowRecord(rows.get(pointer), metaData, parser.isColumnNamesCaseSensitive(), pzConvertProps, strictNumericParse, upperCase,
+                lowerCase, parser.isNullEmptyStrings());
         return true;
     }
 
@@ -421,8 +421,8 @@ public class DefaultDataSet implements DataSet {
         }
 
         pointer = localPointer;
-        currentRecord = new RowRecord(rows.get(pointer), metaData, parser.isColumnNamesCaseSensitive(), pzConvertProps, strictNumericParse,
-                upperCase, lowerCase, parser.isNullEmptyStrings());
+        currentRecord = new RowRecord(rows.get(pointer), metaData, parser.isColumnNamesCaseSensitive(), pzConvertProps, strictNumericParse, upperCase,
+                lowerCase, parser.isNullEmptyStrings());
     }
 
     /**

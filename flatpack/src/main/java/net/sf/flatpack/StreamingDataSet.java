@@ -21,8 +21,8 @@ public interface StreamingDataSet extends RecordDataSet {
      * @return a stream of Records
      */
     default Stream<Record> stream() {
-        return StreamSupport.stream(
-                Spliterators.spliteratorUnknownSize(spliterator(), Spliterator.ORDERED | Spliterator.NONNULL | Spliterator.IMMUTABLE), false);
+        return StreamSupport
+                .stream(Spliterators.spliteratorUnknownSize(spliterator(), Spliterator.ORDERED | Spliterator.NONNULL | Spliterator.IMMUTABLE), false);
     }
 
     /**
@@ -30,8 +30,8 @@ public interface StreamingDataSet extends RecordDataSet {
      * @return a stream of Records
      */
     default Stream<Record> parallelStream() {
-        return StreamSupport.stream(
-                Spliterators.spliteratorUnknownSize(spliterator(), Spliterator.ORDERED | Spliterator.NONNULL | Spliterator.IMMUTABLE), true);
+        return StreamSupport
+                .stream(Spliterators.spliteratorUnknownSize(spliterator(), Spliterator.ORDERED | Spliterator.NONNULL | Spliterator.IMMUTABLE), true);
     }
 
     default Iterator<Record> spliterator() {
@@ -54,7 +54,7 @@ public interface StreamingDataSet extends RecordDataSet {
 
             @Override
             public Record next() {
-                if (nextData.isPresent() || hasNext()) {
+                if (nextData.isPresent() && hasNext()) {
                     final Record line = nextData.get();
                     nextData = Optional.empty();
                     return line;
