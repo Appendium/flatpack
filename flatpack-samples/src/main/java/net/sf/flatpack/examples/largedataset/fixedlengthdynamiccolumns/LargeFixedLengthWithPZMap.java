@@ -34,9 +34,8 @@ public class LargeFixedLengthWithPZMap {
 
     public static void call(final String mapping, final String data) throws Exception {
         String[] colNames = null;
-        BuffReaderFixedParser pzparse = null;
-        try {
-            pzparse = (BuffReaderFixedParser) BuffReaderParseFactory.getInstance().newFixedLengthParser(new File(mapping), new File(data));
+        try (BuffReaderFixedParser pzparse = (BuffReaderFixedParser) BuffReaderParseFactory.getInstance().newFixedLengthParser(new File(mapping),
+                new File(data))) {
 
             final DataSet ds = pzparse.parse();
             colNames = ds.getColumns();
@@ -48,10 +47,6 @@ public class LargeFixedLengthWithPZMap {
 
                 System.out.println("===========================================================================");
             }
-
-        } finally {
-            pzparse.close();
         }
-
     }
 }

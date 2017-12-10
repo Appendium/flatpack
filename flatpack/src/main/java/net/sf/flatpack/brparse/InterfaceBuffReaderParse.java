@@ -9,7 +9,7 @@ import net.sf.flatpack.structure.Row;
  *
  * @author Paul Zepernick
  */
-public interface InterfaceBuffReaderParse {
+public interface InterfaceBuffReaderParse extends AutoCloseable {
 
     /**
      * Builds a row into the DataSet using the current record from the File

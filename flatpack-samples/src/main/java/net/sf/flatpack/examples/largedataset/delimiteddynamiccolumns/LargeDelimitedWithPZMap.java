@@ -36,17 +36,13 @@ public class LargeDelimitedWithPZMap {
 
     public static void call(final String mapping, final String data) throws Exception {
         String[] colNames = null;
-        FileInputStream pzmap = null;
-        FileInputStream fileToParse = null;
-        BuffReaderDelimParser pzparse = null;
-        try {
-            pzmap = new FileInputStream(new File(mapping));
-            fileToParse = new FileInputStream(new File(data));
+        try (FileInputStream pzmap = new FileInputStream(new File(mapping));
+                FileInputStream fileToParse = new FileInputStream(new File(data));
+                BuffReaderDelimParser pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(pzmap, fileToParse,
+                        ',', '"', true)) {
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-
-            pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(pzmap, fileToParse, ',', '"', true);
 
             final DataSet ds = pzparse.parse();
 
@@ -63,13 +59,6 @@ public class LargeDelimitedWithPZMap {
             if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
                 System.out.println("FOUND ERRORS IN FILE");
             }
-
-        } finally {
-            // free up the file readers
-            if (pzparse != null) {
-                pzparse.close();
-            }
         }
-
     }
 }
