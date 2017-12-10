@@ -55,7 +55,7 @@ public interface StreamingDataSet extends RecordDataSet {
             @Override
             public Record next() {
                 if (nextData.isPresent() || hasNext()) {
-                    final Record line = nextData.get();
+                    final Record line = nextData.isPresent() ? nextData.get() : null;
                     nextData = Optional.empty();
                     return line;
                 } else {
