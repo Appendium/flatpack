@@ -5,6 +5,8 @@ package net.sf.flatpack.examples;
 
 import java.lang.reflect.Method;
 
+import net.objectlab.kit.console.ConsoleMenu;
+import net.objectlab.kit.console.Repeater;
 import net.sf.flatpack.examples.createsamplecsv.CSVTestFileCreator;
 import net.sf.flatpack.examples.csvheaderandtrailer.CSVHeaderAndTrailer;
 import net.sf.flatpack.examples.csvperformancetest.CSVPerformanceTest;
