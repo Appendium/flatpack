@@ -13,7 +13,7 @@ env:
 jdk:
   - oraclejdk8
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=benoitx-github -Dsonar.login=13b70009cbae7646c3458517212a3ba73faff609
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar 
 cache:
   directories:
     - '$HOME/.m2/repository'
