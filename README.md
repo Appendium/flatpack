@@ -1,4 +1,5 @@
-[![Build Status](https://secure.travis-ci.org/Appendium/flatpack.png?branch=master)](http://travis-ci.org/Appendium/flatpack) [![Stories in Ready](https://badge.waffle.io/Appendium/flatpack.png?label=ready)](https://waffle.io/Appendium/flatpack) 
+[![Build Status](https://secure.travis-ci.org/Appendium/flatpack.png?branch=master)](http://travis-ci.org/Appendium/flatpack) [![Stories in Ready](https://badge.waffle.io/Appendium/flatpack.png?label=ready)](https://waffle.io/Appendium/flatpack) [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=net.sf.flatpack:flatpack-parent)](https://sonarcloud.io/dashboard/index/net.sf.flatpack:flatpack-parent)    
+
 
 flatpack
 ========
