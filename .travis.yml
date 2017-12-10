@@ -1,10 +1,23 @@
 language: java
+sudo: false
+install: true
+addons:
+  sonarcloud:
+    organization: "benoitx-github"
+    token:
+      secure: "13b70009cbae7646c3458517212a3ba73faff609"
 env:
   global:
     - SONATYPE_USERNAME=benoitx
     - secure: "MtZwtUKZtF83MDYsKbZeyJn0R9xvSFBA9jJpk1wQXJ/zZCQsNbBJGm8ez8l5x++tGwX5BvbEeH3rqWrul9gNLcNG5PXUnar5rAHUFAHnEr3OuPfKogkOGMXxK0xXWzeKIJx5nDAAPvqlMe7lGOogA60ZFfQM3CdHwbWlNo/xVVI="
 jdk:
   - oraclejdk8
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=benoitx-github -Dsonar.login=13b70009cbae7646c3458517212a3ba73faff609
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
 notifications:
   email:
     recipients:
