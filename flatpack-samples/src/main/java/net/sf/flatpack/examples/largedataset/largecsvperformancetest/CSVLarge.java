@@ -85,21 +85,18 @@ public class CSVLarge {
         } catch (final Exception ex) {
             ex.printStackTrace();
         } finally {
-            pzparse.close();
+            if (pzparse != null) {
+                pzparse.close();
+            }
         }
-
     }
 
     private static Map readSettings() throws Exception {
         final Map result = new HashMap();
-        FileReader fr = null;
-        BufferedReader br = null;
-        String line = null;
 
-        try {
-            fr = new FileReader("settings.properties");
-            br = new BufferedReader(fr);
+        try (FileReader fr = new FileReader("settings.properties"); BufferedReader br = new BufferedReader(fr)) {
 
+            String line = null;
             while ((line = br.readLine()) != null) {
                 if (line.trim().length() == 0 || line.startsWith("#") || line.indexOf("=") == -1) {
                     continue;
@@ -107,17 +104,8 @@ public class CSVLarge {
 
                 result.put(line.substring(0, line.indexOf("=")), line.substring(line.indexOf("=") + 1));
             }
-        } finally {
-            if (fr != null) {
-                fr.close();
-            }
-            if (br != null) {
-                br.close();
-            }
         }
 
         return result;
-
     }
-
 }

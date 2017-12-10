@@ -94,10 +94,8 @@ public class ExcelTransformer {
             WritableCellFormat cellFormat = new WritableCellFormat(times10ptBold);
             int colOffset = 0;
             for (int i = 0; i < columnNames.length; i++) {
-                if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])) {
-                    colOffset++;
-                    continue;
-                } else if (excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
+                if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])
+                        || excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
                     colOffset++;
                     continue;
                 }
@@ -115,10 +113,8 @@ public class ExcelTransformer {
 
                 colOffset = 0;
                 for (int i = 0; i < columnNames.length; i++) {
-                    if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])) {
-                        colOffset++;
-                        continue;
-                    } else if (excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
+                    if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])
+                            || excludeFromExportColumnsList != null && excludeFromExportColumnsList.contains(columnNames[i])) {
                         colOffset++;
                         continue;
                     }

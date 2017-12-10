@@ -66,8 +66,9 @@ public class LargeDelimitedWithPZMap {
 
         } finally {
             // free up the file readers
-            pzparse.close();
-
+            if (pzparse != null) {
+                pzparse.close();
+            }
         }
 
     }
