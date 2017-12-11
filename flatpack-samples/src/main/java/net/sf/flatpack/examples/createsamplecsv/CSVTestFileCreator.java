@@ -3,6 +3,9 @@ package net.sf.flatpack.examples.createsamplecsv;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * Created on Nov 30, 2005
  *
@@ -14,6 +17,7 @@ import java.io.PrintWriter;
  * Creates a sample csv file with the specified number of columns and rows
  */
 public class CSVTestFileCreator {
+    private static final Logger LOG = LoggerFactory.getLogger(CSVTestFileCreator.class);
 
     public static void main(final String[] args) {
         int cols = 0;
@@ -74,7 +78,7 @@ public class CSVTestFileCreator {
             }
 
         } catch (final Exception ex) {
-            ex.printStackTrace();
+            LOG.error("Issue", ex);
         } finally {
             try {
                 if (out != null) {

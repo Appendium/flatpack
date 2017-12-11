@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.util.ParserUtils;
 
 /*
@@ -17,14 +20,14 @@ import net.sf.flatpack.util.ParserUtils;
  *
  */
 public class LowLevelParse {
+    private static final Logger LOG = LoggerFactory.getLogger(LowLevelParse.class);
 
     public static void main(final String[] args) {
         final String data = getDefaultDataFile();
         try {
             call(data);
         } catch (final Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.error("issue", e);
         }
     }
 
@@ -33,15 +36,11 @@ public class LowLevelParse {
     }
 
     public static void call(final String data) throws Exception {
-        BufferedReader br = null;
-        FileReader fr = null;
         final File textFile = new File(data);
         String line = null;
         List elements = null;
 
-        try {
-            fr = new FileReader(textFile);
-            br = new BufferedReader(fr);
+        try (FileReader fr = new FileReader(textFile); BufferedReader br = new BufferedReader(fr)) {
 
             while ((line = br.readLine()) != null) {
                 if (line.trim().length() == 0) {
@@ -59,21 +58,9 @@ public class LowLevelParse {
                 }
 
                 System.out.println("===========================================================================");
-
             }
-
         } catch (final Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                if (br != null) {
-                    br.close();
-                }
-                if (fr != null) {
-                    fr.close();
-                }
-            } catch (final Exception ignore) {
-            }
+            LOG.error("issue", ex);
         }
 
     }

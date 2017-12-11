@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.brparse.BuffReaderDelimParser;
@@ -25,6 +28,7 @@ import net.sf.flatpack.brparse.BuffReaderParseFactory;
  * Preferences - Java - Code Style - Code Templates
  */
 public class CSVLarge {
+    private static final Logger LOG = LoggerFactory.getLogger(CSVLarge.class);
 
     public static void main(final String[] args) {
         try {
@@ -42,13 +46,12 @@ public class CSVLarge {
     }
 
     public static void call(final String data) throws Exception {
-        BuffReaderDelimParser pzparse = null;
-        try {
+        try (BuffReaderDelimParser pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(new File(data), ',',
+                '"')) {
 
             // delimited by a comma
             // text qualified by double quotes
             // ignore first record
-            pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(new File(data), ',', '"');
 
             final DataSet ds = pzparse.parse();
             final long timeStarted = System.currentTimeMillis();
@@ -83,11 +86,7 @@ public class CSVLarge {
                 }
             }
         } catch (final Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            if (pzparse != null) {
-                pzparse.close();
-            }
+            LOG.error("Issue", ex);
         }
     }
 

@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
@@ -25,6 +28,7 @@ import net.sf.flatpack.Parser;
  * Preferences - Java - Code Style - Code Templates
  */
 public class CSVPerformanceTest {
+    private static final Logger LOG = LoggerFactory.getLogger(CSVPerformanceTest.class);
 
     public static void main(final String[] args) {
 
@@ -38,7 +42,7 @@ public class CSVPerformanceTest {
 
             call(filename, Boolean.valueOf(verbose).booleanValue(), true);
         } catch (final Exception ex) {
-            ex.printStackTrace();
+            LOG.error("Issue", ex);
         }
 
     }
@@ -113,26 +117,15 @@ public class CSVPerformanceTest {
 
     private static Map<String, String> readSettings() throws Exception {
         final Map<String, String> result = new HashMap<>();
-        // FileReader fr = null;
-        // BufferedReader br = null;
 
         try (FileReader fr = new FileReader("settings.properties"); BufferedReader br = new BufferedReader(fr)) {
-
             String line = null;
             while ((line = br.readLine()) != null) {
                 if (line.trim().length() == 0 || line.startsWith("#") || line.indexOf("=") == -1) {
                     continue;
                 }
-
                 result.put(line.substring(0, line.indexOf("=")), line.substring(line.indexOf("=") + 1));
             }
-            // } finally {
-            // if (fr != null) {
-            // fr.close();
-            // }
-            // if (br != null) {
-            // br.close();
-            // }
         }
 
         return result;

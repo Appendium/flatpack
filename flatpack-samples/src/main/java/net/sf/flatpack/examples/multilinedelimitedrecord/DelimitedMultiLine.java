@@ -7,6 +7,9 @@ package net.sf.flatpack.examples.multilinedelimitedrecord;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
 import net.sf.flatpack.Parser;
@@ -18,14 +21,14 @@ import net.sf.flatpack.Parser;
  * Preferences - Java - Code Style - Code Templates
  */
 public class DelimitedMultiLine {
+    private static final Logger LOG = LoggerFactory.getLogger(DelimitedMultiLine.class);
 
     public static void main(final String[] args) throws Exception {
         final String data = getDefaultDataFile();
         try {
             call(data);
         } catch (final Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
