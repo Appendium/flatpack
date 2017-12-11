@@ -5,6 +5,9 @@ package net.sf.flatpack.examples;
 
 import java.lang.reflect.Method;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.objectlab.kit.console.ConsoleMenu;
 import net.objectlab.kit.console.Repeater;
 import net.sf.flatpack.examples.createsamplecsv.CSVTestFileCreator;
@@ -28,6 +31,7 @@ import net.sf.flatpack.util.ParserUtils;
  * @author Benoit Xhenseval
  */
 public class Examples implements Repeater {
+    private static final Logger LOG = LoggerFactory.getLogger(Examples.class);
 
     public void tearDown() {
     }
@@ -92,7 +96,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", CSVHeaderAndTrailer.getDefaultDataFile());
             CSVHeaderAndTrailer.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -103,7 +107,7 @@ public class Examples implements Repeater {
             final boolean verbose = ConsoleMenu.getBoolean("Verbose", false);
             CSVPerformanceTest.call(mapping, verbose, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -113,7 +117,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMap.getDefaultDataFile());
             DelimitedWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -123,7 +127,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMapErrors.getDefaultDataFile());
             DelimitedWithPZMapErrors.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -133,7 +137,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", DelimitedFileExportToExcel.getDefaultDataFile());
             DelimitedFileExportToExcel.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -143,7 +147,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", FixedLengthWithPZMap.getDefaultDataFile());
             FixedLengthWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -153,7 +157,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", FixedLengthHeaderAndTrailer.getDefaultDataFile());
             FixedLengthHeaderAndTrailer.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -163,7 +167,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", LargeDelimitedWithPZMap.getDefaultDataFile());
             LargeDelimitedWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -173,7 +177,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", LargeFixedLengthWithPZMap.getDefaultDataFile());
             LargeFixedLengthWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -188,7 +192,7 @@ public class Examples implements Repeater {
 
             CSVLarge.call(filename);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -197,7 +201,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", LowLevelParse.getDefaultDataFile());
             LowLevelParse.call(data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -206,7 +210,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", DelimitedMultiLine.getDefaultDataFile());
             DelimitedMultiLine.call(data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
@@ -216,7 +220,7 @@ public class Examples implements Repeater {
             final String data = ConsoleMenu.getString("Data   ", NumericsAndDates.getDefaultDataFile());
             NumericsAndDates.call(mapping, data);
         } catch (final Exception e) {
-            e.printStackTrace();
+            LOG.error("Issue", e);
         }
     }
 
