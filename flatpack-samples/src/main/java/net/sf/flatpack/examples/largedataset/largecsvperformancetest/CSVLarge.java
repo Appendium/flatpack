@@ -36,8 +36,7 @@ public class CSVLarge {
             final String data = (String) settings.get("csvFile");
             call(data);
         } catch (final Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.error("issue", e);
         }
     }
 
