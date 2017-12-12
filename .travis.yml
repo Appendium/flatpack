@@ -3,26 +3,28 @@ sudo: false
 install: true
 addons:
   sonarcloud:
-    organization: "benoitx-github"
+    organization: benoitx-github
     token:
-      secure: "13b70009cbae7646c3458517212a3ba73faff609"
+      secure: 13b70009cbae7646c3458517212a3ba73faff609
 env:
   global:
-    - SONATYPE_USERNAME=benoitx
-    - secure: "MtZwtUKZtF83MDYsKbZeyJn0R9xvSFBA9jJpk1wQXJ/zZCQsNbBJGm8ez8l5x++tGwX5BvbEeH3rqWrul9gNLcNG5PXUnar5rAHUFAHnEr3OuPfKogkOGMXxK0xXWzeKIJx5nDAAPvqlMe7lGOogA60ZFfQM3CdHwbWlNo/xVVI="
+  - SONATYPE_USERNAME=benoitx
+  - secure: MtZwtUKZtF83MDYsKbZeyJn0R9xvSFBA9jJpk1wQXJ/zZCQsNbBJGm8ez8l5x++tGwX5BvbEeH3rqWrul9gNLcNG5PXUnar5rAHUFAHnEr3OuPfKogkOGMXxK0xXWzeKIJx5nDAAPvqlMe7lGOogA60ZFfQM3CdHwbWlNo/xVVI=
+  - secure: DSPCcO+Ny49IioFE8AHUyAEIVCP+j+5xJSyj3z9TvFfSgvLVrVPbhb62dkvheA0j2gaIOWVqivmqp3ZLzCDavyUZFzKtpp1Jo1SwcrG0kKG2dR/abQ8Vf2ct1n+5l0ebOQlAxVZnJpbAoKNYl3aT7wrOkrVtEAB4dUNaKUDJ7aU=
 jdk:
-  - oraclejdk8
+- oraclejdk8
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar 
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
 notifications:
   email:
     recipients:
-      - opensource@appendium.com
+    - opensource@appendium.com
     on_success: always
-    on_failure: always   
+    on_failure: always
 after_success:
-  - "[[ $TRAVIS_BRANCH == \"master\" ]] && { python travis/addServer.py; mvn clean deploy --settings ~/.m2/mySettings.xml; };"
+- '[[ $TRAVIS_BRANCH == "master" ]] && { python travis/addServer.py; mvn clean deploy site
+  --settings ~/.m2/mySettings.xml; };'
