@@ -301,7 +301,7 @@
                                 <aggregate>true</aggregate>
                             </configuration>
                         </plugin>
-                        <plugin>
+                        <!-- <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>cobertura-maven-plugin</artifactId>
                             <version>2.6</version>
@@ -318,7 +318,7 @@
                                     </excludes>
                                 </instrumentation>
                             </configuration>
-                        </plugin>
+                        </plugin>-->
                         <plugin>
                             <groupId>org.owasp</groupId>
                             <artifactId>dependency-check-maven</artifactId>
