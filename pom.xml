@@ -334,6 +334,7 @@
                                 </reportSet>
                             </reportSets>
                         </plugin>
+                        <!-- 
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-pmd-plugin</artifactId>
@@ -355,6 +356,7 @@
                                 <argLine>-XX:MaxPermSize=256m</argLine>
                             </configuration>
                         </plugin>
+                         -->
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>taglist-maven-plugin</artifactId>
@@ -448,9 +450,6 @@
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/appendium/flatpack/issues/</url>
-        <!--
-            <url>https://sourceforge.net/tracker/?group_id=175139</url>
-        -->
     </issueManagement>
 
     <reporting>
