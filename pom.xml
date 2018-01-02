@@ -174,7 +174,6 @@
                     </execution>
                 </executions>
             </plugin>
-          -->
                <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -191,6 +190,7 @@
                     </execution>
                 </executions>
             </plugin>
+          -->
             <!--
                 <plugin>
                 <groupId>com.github.github</groupId>
@@ -318,7 +318,7 @@
                                     </excludes>
                                 </instrumentation>
                             </configuration>
-                        </plugin>-->
+                        </plugin>
                         <plugin>
                             <groupId>org.owasp</groupId>
                             <artifactId>dependency-check-maven</artifactId>
@@ -334,7 +334,6 @@
                                 </reportSet>
                             </reportSets>
                         </plugin>
-                        <!-- 
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-pmd-plugin</artifactId>
