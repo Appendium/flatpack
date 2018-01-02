@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package net.sf.flatpack.brparse;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import java.io.StringReader;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import junit.framework.TestCase;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import net.sf.flatpack.DataSet;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import net.sf.flatpack.DefaultDataSet;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import net.sf.flatpack.DefaultParserFactory;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import net.sf.flatpack.Parser;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import net.sf.flatpack.structure.Row;<a name="line.9"></a>
+<span class="sourceLineNo">010</span><a name="line.10"></a>
+<span class="sourceLineNo">011</span>/**<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Test misc methods in the BuffReaderFixedParser class<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * @author Tim Zimmerman<a name="line.14"></a>
+<span class="sourceLineNo">015</span> */<a name="line.15"></a>
+<span class="sourceLineNo">016</span>public class BuffReaderDelimParserTest extends TestCase {<a name="line.16"></a>
+<span class="sourceLineNo">017</span><a name="line.17"></a>
+<span class="sourceLineNo">018</span>    private static final char DELIMTER = ',';<a name="line.18"></a>
+<span class="sourceLineNo">019</span>    private static final char QUALIFIER = '\"';<a name="line.19"></a>
+<span class="sourceLineNo">020</span>    private static final String PZ_MAP_XML_STRING<a name="line.20"></a>
+<span class="sourceLineNo">021</span>            = "&lt;?xml version=\"1.0\"?&gt;\n"<a name="line.21"></a>
+<span class="sourceLineNo">022</span>            + "&lt;!DOCTYPE PZMAP SYSTEM   \"flatpack.dtd\" &gt;\n"<a name="line.22"></a>
+<span class="sourceLineNo">023</span>            + "&lt;PZMAP&gt;\n"<a name="line.23"></a>
+<span class="sourceLineNo">024</span>            + " &lt;COLUMN name=\"FIELD_ONE\"/&gt;\n"<a name="line.24"></a>
+<span class="sourceLineNo">025</span>            + " &lt;COLUMN name=\"FIELD_TWO\"/&gt;\n"<a name="line.25"></a>
+<span class="sourceLineNo">026</span>            + " &lt;COLUMN name=\"FIELD_THREE\"/&gt;\n"<a name="line.26"></a>
+<span class="sourceLineNo">027</span>            + " &lt;COLUMN name=\"FIELD_FOUR\"/&gt;\n"<a name="line.27"></a>
+<span class="sourceLineNo">028</span>            + "&lt;/PZMAP&gt; ";<a name="line.28"></a>
+<span class="sourceLineNo">029</span>    private static final String EXACT_LINE_STRING = "exactly,four,values,here";<a name="line.29"></a>
+<span class="sourceLineNo">030</span>    private static final String SHORT_LINE_STRING = "shorter,than,four";<a name="line.30"></a>
+<span class="sourceLineNo">031</span>    private static final String LONG_LINE_STRING = "longer,than,four,fields,fifth";<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>    public String parseRawData(String pzMapXML, String dataString) {<a name="line.34"></a>
+<span class="sourceLineNo">035</span>        String rawData = null;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>        StringReader pzReader = new StringReader(pzMapXML);<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        StringReader lineReader = new StringReader(dataString);<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        try {<a name="line.38"></a>
+<span class="sourceLineNo">039</span>            Parser parser = BuffReaderParseFactory.getInstance().newDelimitedParser(pzReader, lineReader, DELIMTER, QUALIFIER, false);<a name="line.39"></a>
+<span class="sourceLineNo">040</span>            assertTrue("Parser is not an instance of " + BuffReaderDelimParser.class, parser instanceof BuffReaderDelimParser);<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>            BuffReaderDelimParser delimParser = (BuffReaderDelimParser) parser;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>            delimParser.setIgnoreExtraColumns(true);<a name="line.43"></a>
+<span class="sourceLineNo">044</span>            delimParser.setHandlingShortLines(true);<a name="line.44"></a>
+<span class="sourceLineNo">045</span>            delimParser.setStoreRawDataToDataSet(true);<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>            DefaultDataSet dataset = (DefaultDataSet) delimParser.parse();<a name="line.47"></a>
+<span class="sourceLineNo">048</span>            Row parsedRow = delimParser.buildRow(dataset);<a name="line.48"></a>
+<span class="sourceLineNo">049</span>            rawData = parsedRow.getRawData();<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        } finally {<a name="line.50"></a>
+<span class="sourceLineNo">051</span>            pzReader.close();<a name="line.51"></a>
+<span class="sourceLineNo">052</span>            lineReader.close();<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        }<a name="line.53"></a>
+<span class="sourceLineNo">054</span>        return rawData;<a name="line.54"></a>
+<span class="sourceLineNo">055</span>    }<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>    public void testBuildExactRow() {<a name="line.57"></a>
+<span class="sourceLineNo">058</span>            String rawData = this.parseRawData(PZ_MAP_XML_STRING, EXACT_LINE_STRING);<a name="line.58"></a>
+<span class="sourceLineNo">059</span>            assertTrue("The raw data does not match the orginal line", rawData.equals(EXACT_LINE_STRING));<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    }<a name="line.60"></a>
+<span class="sourceLineNo">061</span><a name="line.61"></a>
+<span class="sourceLineNo">062</span>    public void testBuildShortRow() {<a name="line.62"></a>
+<span class="sourceLineNo">063</span>            String rawData = this.parseRawData(PZ_MAP_XML_STRING, SHORT_LINE_STRING);<a name="line.63"></a>
+<span class="sourceLineNo">064</span>            assertTrue("The raw data does not match the orginal line", rawData.equals(SHORT_LINE_STRING));<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    }<a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>    public void testBuildLongRow() {<a name="line.67"></a>
+<span class="sourceLineNo">068</span>            String rawData = this.parseRawData(PZ_MAP_XML_STRING, LONG_LINE_STRING);<a name="line.68"></a>
+<span class="sourceLineNo">069</span>            assertTrue("The raw data does not match the orginal line", rawData.equals(LONG_LINE_STRING));<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    }<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>    public static void main(final String[] args) {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        junit.textui.TestRunner.run(BuffReaderDelimParserTest.class);<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    }<a name="line.74"></a>
+<span class="sourceLineNo">075</span>}<a name="line.75"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

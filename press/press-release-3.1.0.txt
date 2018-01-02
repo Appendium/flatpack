@@ -1,0 +1,70 @@
+Paul Zepernick and ObjectLab are pleased to announce release 3.1.0 of
+FlatPack for Java 1.4+.
+
+FlatPack is the new name for PZFileReader as the project has outgrown
+the initial scope of reading files...
+
+Open Source flat file parser (CSV, Fixed Length, Custom) using XML 
+to configure formats.
+
+http://flatpack.sourceforge.net
+
+This is an important release with a new name and package structure.
+Users of previous version should find it easy to migrate as most classes
+have kept their original name.
+
+A major development is the experimental release of writers for exporting
+DataSets. We would like to thank Dirk and Holger from the Mule Project
+for their kind contribution to FlatPack. We're looking forward to the
+result of using FlatPack in Mule, a great Open Source ESB.
+
+This release also adds a few convenience methods on a DataSet and the 
+Parser classes, fixes a couple of bugs.
+More on changes at: http://flatpack.sf.net/changes-report.html
+
+
+FlatPack is released under the business friendly Apache License v2.0.
+
+The library is small, lightweight and does not force you to adopt a
+framework.
+
+The implementation is useful to any business that deal with flat files.
+Not only it can parse very quickly some CSV or any-user defined delimiter,
+this library can parse FIXED LENGTH files.
+
+The library allow you to define an XML mapping (or in a database) of
+the format of your file. Once this is done, the parsed data can be accessed
+via a simple name lookup mechanism.
+
+It is our aim to publish at some point some well know file formats for
+your immediate use. Please contribute if you have some standard files...
+
+It is available for download via SourceForge or the Maven Central
+Repository (both Maven 1 and Maven 2). The homepage has some very 
+quick examples.
+
+Maven Repositories:
+M1: http://objectlabkit.sf.net/m1-repo
+M2: http://objectlabkit.sf.net/m2-repo
+
+ObjectLab is not new to the open-source community having used numerous OS 
+projects, It has recently launched the ObjectLab Kit family, including:
+- QALab (http://qalab.sourceforge.net), a tool that keeps track over-time
+  of the static analysis results from FindBugs, Checkstyle, PMD, Cobertura etc.
+- DateCalculators (http://objectlabkit.sourceforge.net), a set of generic
+  lightweight and thread-safe Date calculators for Business and Finance.
+- JTreeMap, (http://jtreemap.sourceforge.net), probably the only Java Open 
+  Source implementation of treemap/heatmaps, available as a Swing or SWT
+  component.
+- StatSVN, (http://www.statsvn.org), statistics for your Subversion repo.
+
+We would like to thanks our friends and colleagues for their help, 
+reviews and suggestions.
+
+Sorry for the long email... 
+
+Feel free to pass on to people who may be interested.
+
+Enjoy!!
+
+Paul Zepernick and Benoit Xhenseval

@@ -1,0 +1,42 @@
+-breakiterator
+-classpath
+'/home/travis/build/Appendium/flatpack/target/classes:/home/travis/build/Appendium/flatpack/target/test-classes:/home/travis/build/Appendium/flatpack/flatpack/target/classes:/home/travis/build/Appendium/flatpack/flatpack/target/test-classes:/home/travis/build/Appendium/flatpack/flatpack-samples/target/classes:/home/travis/build/Appendium/flatpack/flatpack-samples/target/test-classes:/home/travis/.m2/repository/joda-time/joda-time/2.9.6/joda-time-2.9.6.jar:/home/travis/.m2/repository/org/jdom/jdom/1.1/jdom-1.1.jar:/home/travis/.m2/repository/net/sourceforge/jexcelapi/jxl/2.6/jxl-2.6.jar:/home/travis/.m2/repository/net/objectlab/kit/objectlab-utils/1.4.1-SNAPSHOT/objectlab-utils-1.4.1-SNAPSHOT.jar:/home/travis/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar:/home/travis/.m2/repository/junit/junit/3.8.2/junit-3.8.2.jar:/home/travis/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar:/home/travis/build/Appendium/flatpack/flatpack/target/classes:/home/travis/.m2/repository/org/slf4j/slf4j-simple/1.7.21/slf4j-simple-1.7.21.jar'
+-encoding
+'UTF-8'
+-private
+-sourcepath
+'/home/travis/build/Appendium/flatpack/flatpack/src/test/java'
+-author
+-bottom
+'Copyright &#169; 2006&#x2013;2018 <a href="http://www.appendium.com/">Appendium - Portfolio Financing Platform</a>. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/travis/build/Appendium/flatpack/target/site/testapidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'FlatPack 4.0.2-SNAPSHOT Test API'
+-link
+'http://download.oracle.com/javase/7/docs/api'
+-link
+'http://download.oracle.com/javaee/7/api'
+-link
+'http://docs.spring.io/spring/docs/current/javadoc-api'
+-link
+'http://docs.spring.io/spring-data/data-jpa/docs/current/api'
+-link
+'http://slf4j.org/api'
+-link
+'http://jakarta.apache.org/commons/logging/apidocs'
+-link
+'http://junit.sourceforge.net/javadoc'
+-link
+'../apidocs'
+-linkoffline
+'http://docs.oracle.com/javase/7/docs/api' '/home/travis/build/Appendium/flatpack/target/javadoc-bundle-options'
+-linksource
+-use
+-version
+-windowtitle
+'FlatPack 4.0.2-SNAPSHOT Test API'
