@@ -45,11 +45,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sf.flatpack.Parser;
-import net.sf.flatpack.structure.ColumnMetaData;
-import net.sf.flatpack.util.FPConstants;
-import net.sf.flatpack.util.ParserUtils;
-
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -57,6 +52,11 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.flatpack.Parser;
+import net.sf.flatpack.structure.ColumnMetaData;
+import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.ParserUtils;
 
 /**
  * @author zepernick
@@ -70,9 +70,6 @@ public final class MapParser {
 
     /**
      * Constructor
-     *
-     * @param XMLDocument -
-     *            xml file to be parsed
      */
     private MapParser() {
     }
@@ -216,8 +213,8 @@ public final class MapParser {
                 try {
                     cmd.setColLength(Integer.parseInt(xmlColumn.getAttributeValue("length")));
                 } catch (final Exception ex) {
-                    throw new IllegalArgumentException("LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: "
-                            + xmlColumn.getAttributeValue("length"), ex);
+                    throw new IllegalArgumentException(
+                            "LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: " + xmlColumn.getAttributeValue("length"), ex);
                 }
             }
             columnResults.add(cmd);
