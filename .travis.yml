@@ -28,3 +28,4 @@ notifications:
 after_success:
 - '[[ $TRAVIS_BRANCH == "master" ]] && { python travis/addServer.py; mvn clean deploy 
   --settings ~/.m2/mySettings.xml; };'
+- mvn clean site -X
