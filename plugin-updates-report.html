@@ -15,10 +15,10 @@
   <body class="composite">
     <div id="banner">
                   <a href="http://www.appendium.com" id="bannerLeft">
-                                                <img src="../images/appendium_logo.jpg" alt="" />
+                                                <img src="images/appendium_logo.jpg" alt="" />
                 </a>
                         <a href="http://www.objectlab.co.uk/" id="bannerRight">
-                                                <img src="../images/objectlab_logo.jpg" alt="" />
+                                                <img src="images/objectlab_logo.jpg" alt="" />
                 </a>
             <div class="clear">
         <hr/>
@@ -30,11 +30,11 @@
         Last Published: 2018-01-02
                   &nbsp;| Version: 4.0.2-SNAPSHOT
                       </div>
-            <div class="xright">            <a href="../index.html">Main</a>
+            <div class="xright">            <a href="index.html">Main</a>
             |
-                <a href="../flatpack/index.html">FlatPack Lib</a>
+                <a href="flatpack/index.html">FlatPack Lib</a>
             |
-                <a href="../../../flatpack/flatpack/">GitHub</a>
+                <a href="../../flatpack/flatpack/">GitHub</a>
             |
                 <a href="https://sourceforge.net/projects/flatpack/" class="externalLink">sf.net/projects/flatpack</a>
               
@@ -49,14 +49,76 @@
                                                 <h5>FlatPack</h5>
                   <ul>
                   <li class="none">
-                  <a href="../index.html">Main Page</a>
+                  <a href="flatpack/index.html">Main library</a>
             </li>
                   <li class="none">
-                  <a href="../flatpack/index.html">Main Library</a>
+                  <a href="documentation/index.html">Documentation</a>
             </li>
                   <li class="none">
-                  <a href="../documentation/index.html">Documentation</a>
+                  <a href="parsing.html">Examples</a>
             </li>
+                  <li class="none">
+                  <a href="history.html">History</a>
+            </li>
+                  <li class="none">
+                  <a href="features.html">Features</a>
+            </li>
+                  <li class="none">
+                  <a href="flatpack-examples/index.html">Examples</a>
+            </li>
+                  <li class="none">
+                  <a href="apidocs/index.html">JavaDoc</a>
+            </li>
+                  <li class="none">
+                  <a href="press/index.html">In the press</a>
+            </li>
+                  <li class="none">
+                  <a href="code-metrics.html">Code Metrics</a>
+            </li>
+          </ul>
+                       <h5>Modules</h5>
+                  <ul>
+                  <li class="none">
+                  <a href="flatpack/index.html">FlatPack</a>
+            </li>
+                  <li class="none">
+                  <a href="flatpack-examples/index.html">FlatPack Examples</a>
+            </li>
+          </ul>
+                       <h5>Project Documentation</h5>
+                  <ul>
+                                                                                                                                                                                                                                                                                                                                                  <li class="collapsed">
+                  <a href="project-info.html">Project Information</a>
+                  </li>
+                                                                                                                                                                                                            <li class="expanded">
+                  <a href="project-reports.html">Project Reports</a>
+                    <ul>
+                      <li class="none">
+                  <a href="surefire-report.html">Surefire Report</a>
+            </li>
+                      <li class="none">
+                  <a href="property-updates-report.html">Property Updates Report</a>
+            </li>
+                      <li class="none">
+            <strong>Plugin Updates Report</strong>
+          </li>
+                      <li class="none">
+                  <a href="dependency-updates-report.html">Dependency Updates Report</a>
+            </li>
+                      <li class="none">
+                  <a href="apidocs/index.html">JavaDocs</a>
+            </li>
+                      <li class="none">
+                  <a href="testapidocs/index.html">Test JavaDocs</a>
+            </li>
+                      <li class="none">
+                  <a href="xref/index.html">Source Xref</a>
+            </li>
+                      <li class="none">
+                  <a href="xref-test/index.html">Test Source Xref</a>
+            </li>
+              </ul>
+        </li>
           </ul>
                        <h5>Links</h5>
                   <ul>
@@ -67,7 +129,16 @@
                   <a href="http://objectlabkit.sourceforge.net/" class="externalLink">ObjectLab Kit</a>
             </li>
                   <li class="none">
+                  <a href="http://jtreemap.sourceforge.net/" class="externalLink">JTreeMap</a>
+            </li>
+                  <li class="none">
+                  <a href="http://www.statsvn.org/" class="externalLink">StatSVN</a>
+            </li>
+                  <li class="none">
                   <a href="http://www.objectlab.co.uk" class="externalLink">ObjectLab</a>
+            </li>
+                  <li class="none">
+                  <a href="http://www.appendium.com" class="externalLink">Appendium</a>
             </li>
           </ul>
                                                                                                                    <a href="http://sourceforge.net" title="Hosted on SourceForge.net" class="poweredBy">
@@ -88,7 +159,7 @@
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td># of plugins using the latest version available</td>
-<td>5</td></tr>
+<td>1</td></tr>
 <tr class="b">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td># of plugins where the next version available is smaller than an incremental version update</td>
@@ -96,7 +167,7 @@
 <tr class="a">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td># of plugins where the next version available is an incremental version update</td>
-<td>3</td></tr>
+<td>2</td></tr>
 <tr class="b">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td># of plugins where the next version available is a minor version update</td>
@@ -197,16 +268,6 @@
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
 <tr class="a">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td>org.apache.felix</td>
-<td>maven-bundle-plugin</td>
-<td>3.2.0</td>
-<td></td>
-<td></td>
-<td><b>3.3.0</b></td>
-<td></td>
-<td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="b">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td>org.apache.maven.plugins</td>
 <td>maven-clean-plugin</td>
 <td>2.5</td>
@@ -215,7 +276,7 @@
 <td><b>2.6</b></td>
 <td><b>3.0.0</b></td>
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="a">
+<tr class="b">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td>org.apache.maven.plugins</td>
 <td>maven-compiler-plugin</td>
@@ -225,17 +286,17 @@
 <td><b>3.6.0</b></td>
 <td></td>
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<tr class="a">
+<td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td>org.apache.maven.plugins</td>
 <td>maven-deploy-plugin</td>
-<td><b>2.8.2</b></td>
+<td>2.7</td>
 <td></td>
 <td></td>
-<td></td>
+<td><b>2.8</b></td>
 <td></td>
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="a">
+<tr class="b">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td>org.apache.maven.plugins</td>
 <td>maven-enforcer-plugin</td>
@@ -245,37 +306,17 @@
 <td><b>1.1</b></td>
 <td><b>3.0.0-M1</b></td>
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<tr class="a">
+<td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td>org.apache.maven.plugins</td>
 <td>maven-install-plugin</td>
-<td><b>2.5.2</b></td>
+<td>2.4</td>
 <td></td>
 <td></td>
-<td></td>
-<td></td>
-<td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.apache.maven.plugins</td>
-<td>maven-javadoc-plugin</td>
-<td><b>3.0.0</b></td>
-<td></td>
-<td></td>
-<td></td>
+<td><b>2.5</b></td>
 <td></td>
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
 <tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>org.apache.maven.plugins</td>
-<td>maven-resources-plugin</td>
-<td><b>3.0.2</b></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="a">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td>org.apache.maven.plugins</td>
 <td>maven-site-plugin</td>
@@ -285,7 +326,7 @@
 <td><b>3.5</b></td>
 <td></td>
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="b">
+<tr class="a">
 <td><img src="images/icon_warning_sml.gif" alt="" /></td>
 <td>org.apache.maven.plugins</td>
 <td>maven-source-plugin</td>
@@ -295,27 +336,7 @@
 <td><b>2.4</b></td>
 <td><b>3.0.0</b></td>
 <td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="a">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td>org.apache.maven.plugins</td>
-<td>maven-surefire-plugin</td>
-<td>2.19.1</td>
-<td></td>
-<td></td>
-<td><b>2.20</b></td>
-<td></td>
-<td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
 <tr class="b">
-<td><img src="images/icon_warning_sml.gif" alt="" /></td>
-<td>org.owasp</td>
-<td>dependency-check-maven</td>
-<td>1.3.3</td>
-<td></td>
-<td><b>1.3.4</b></td>
-<td><b>1.4.0</b></td>
-<td><b>2.0.0</b></td>
-<td><img src="images/icon_success_sml.gif" alt="" /></td></tr>
-<tr class="a">
 <th>Status</th>
 <th>Group Id</th>
 <th>Artifact Id</th>
@@ -331,36 +352,18 @@
 <div class="section">
 <h3><a name="Plugin_com.github.github:site-maven-plugin"></a>Plugin com.github.github:site-maven-plugin</h3>
 <table border="0" class="bodyTable">
-<tr class="b">
+<tr class="a">
 <th width="80%">Status</th>
 <td><img src="images/icon_success_sml.gif" alt="" />&#160;No newer versions available.</td></tr>
-<tr class="a">
+<tr class="b">
 <th width="80%">Group Id</th>
 <td>com.github.github</td></tr>
-<tr class="b">
+<tr class="a">
 <th width="80%">Artifact Id</th>
 <td>site-maven-plugin</td></tr>
-<tr class="a">
+<tr class="b">
 <th width="80%">Current Version</th>
 <td>0.12</td></tr></table></div>
-<div class="section">
-<h3><a name="Plugin_org.apache.felix:maven-bundle-plugin"></a>Plugin org.apache.felix:maven-bundle-plugin</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th width="80%">Status</th>
-<td><img src="images/icon_warning_sml.gif" alt="" />&#160;There is at least one newer minor version available. Minor updates are sometimes passive.</td></tr>
-<tr class="b">
-<th width="80%">Group Id</th>
-<td>org.apache.felix</td></tr>
-<tr class="a">
-<th width="80%">Artifact Id</th>
-<td>maven-bundle-plugin</td></tr>
-<tr class="b">
-<th width="80%">Current Version</th>
-<td>3.2.0</td></tr>
-<tr class="a">
-<th width="80%">Newer versions</th>
-<td><b>3.3.0</b>&#160;<i>Next Minor</i><br /><b>3.4.0</b>&#160;<i>Latest Minor</i></td></tr></table></div>
 <div class="section">
 <h3><a name="Plugin_org.apache.maven.plugins:maven-antrun-plugin"></a>Plugin org.apache.maven.plugins:maven-antrun-plugin</h3>
 <table border="0" class="bodyTable">
@@ -456,7 +459,7 @@
 <table border="0" class="bodyTable">
 <tr class="a">
 <th width="80%">Status</th>
-<td><img src="images/icon_success_sml.gif" alt="" />&#160;No newer versions available.</td></tr>
+<td><img src="images/icon_warning_sml.gif" alt="" />&#160;There is at least one newer minor version available. Minor updates are sometimes passive.</td></tr>
 <tr class="b">
 <th width="80%">Group Id</th>
 <td>org.apache.maven.plugins</td></tr>
@@ -465,7 +468,10 @@
 <td>maven-deploy-plugin</td></tr>
 <tr class="b">
 <th width="80%">Current Version</th>
-<td>2.8.2</td></tr></table></div>
+<td>2.7</td></tr>
+<tr class="a">
+<th width="80%">Newer versions</th>
+<td><b>2.8</b>&#160;<i>Next Minor</i><br />2.8.1<br /><b>2.8.2</b>&#160;<i>Latest Minor</i></td></tr></table></div>
 <div class="section">
 <h3><a name="Plugin_org.apache.maven.plugins:maven-enforcer-plugin"></a>Plugin org.apache.maven.plugins:maven-enforcer-plugin</h3>
 <table border="0" class="bodyTable">
@@ -489,7 +495,7 @@
 <table border="0" class="bodyTable">
 <tr class="a">
 <th width="80%">Status</th>
-<td><img src="images/icon_success_sml.gif" alt="" />&#160;No newer versions available.</td></tr>
+<td><img src="images/icon_warning_sml.gif" alt="" />&#160;There is at least one newer minor version available. Minor updates are sometimes passive.</td></tr>
 <tr class="b">
 <th width="80%">Group Id</th>
 <td>org.apache.maven.plugins</td></tr>
@@ -498,22 +504,10 @@
 <td>maven-install-plugin</td></tr>
 <tr class="b">
 <th width="80%">Current Version</th>
-<td>2.5.2</td></tr></table></div>
-<div class="section">
-<h3><a name="Plugin_org.apache.maven.plugins:maven-javadoc-plugin"></a>Plugin org.apache.maven.plugins:maven-javadoc-plugin</h3>
-<table border="0" class="bodyTable">
+<td>2.4</td></tr>
 <tr class="a">
-<th width="80%">Status</th>
-<td><img src="images/icon_success_sml.gif" alt="" />&#160;No newer versions available.</td></tr>
-<tr class="b">
-<th width="80%">Group Id</th>
-<td>org.apache.maven.plugins</td></tr>
-<tr class="a">
-<th width="80%">Artifact Id</th>
-<td>maven-javadoc-plugin</td></tr>
-<tr class="b">
-<th width="80%">Current Version</th>
-<td>3.0.0</td></tr></table></div>
+<th width="80%">Newer versions</th>
+<td><b>2.5</b>&#160;<i>Next Minor</i><br />2.5.1<br /><b>2.5.2</b>&#160;<i>Latest Minor</i></td></tr></table></div>
 <div class="section">
 <h3><a name="Plugin_org.apache.maven.plugins:maven-release-plugin"></a>Plugin org.apache.maven.plugins:maven-release-plugin</h3>
 <table border="0" class="bodyTable">
@@ -532,21 +526,6 @@
 <tr class="a">
 <th width="80%">Newer versions</th>
 <td><b>2.5.1</b>&#160;<i>Next Incremental</i><br />2.5.2<br /><b>2.5.3</b>&#160;<i>Latest Incremental</i></td></tr></table></div>
-<div class="section">
-<h3><a name="Plugin_org.apache.maven.plugins:maven-resources-plugin"></a>Plugin org.apache.maven.plugins:maven-resources-plugin</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th width="80%">Status</th>
-<td><img src="images/icon_success_sml.gif" alt="" />&#160;No newer versions available.</td></tr>
-<tr class="b">
-<th width="80%">Group Id</th>
-<td>org.apache.maven.plugins</td></tr>
-<tr class="a">
-<th width="80%">Artifact Id</th>
-<td>maven-resources-plugin</td></tr>
-<tr class="b">
-<th width="80%">Current Version</th>
-<td>3.0.2</td></tr></table></div>
 <div class="section">
 <h3><a name="Plugin_org.apache.maven.plugins:maven-site-plugin"></a>Plugin org.apache.maven.plugins:maven-site-plugin</h3>
 <table border="0" class="bodyTable">
@@ -582,43 +561,7 @@
 <td>2.3</td></tr>
 <tr class="a">
 <th width="80%">Newer versions</th>
-<td><b>2.4</b>&#160;<i>Next Minor</i><br /><b>3.0.0</b>&#160;<i>Next Major</i><br /><b>3.0.1</b>&#160;<i>Latest Major</i></td></tr></table></div>
-<div class="section">
-<h3><a name="Plugin_org.apache.maven.plugins:maven-surefire-plugin"></a>Plugin org.apache.maven.plugins:maven-surefire-plugin</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th width="80%">Status</th>
-<td><img src="images/icon_warning_sml.gif" alt="" />&#160;There is at least one newer minor version available. Minor updates are sometimes passive.</td></tr>
-<tr class="b">
-<th width="80%">Group Id</th>
-<td>org.apache.maven.plugins</td></tr>
-<tr class="a">
-<th width="80%">Artifact Id</th>
-<td>maven-surefire-plugin</td></tr>
-<tr class="b">
-<th width="80%">Current Version</th>
-<td>2.19.1</td></tr>
-<tr class="a">
-<th width="80%">Newer versions</th>
-<td><b>2.20</b>&#160;<i>Next Minor</i><br /><b>2.20.1</b>&#160;<i>Latest Minor</i></td></tr></table></div>
-<div class="section">
-<h3><a name="Plugin_org.owasp:dependency-check-maven"></a>Plugin org.owasp:dependency-check-maven</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th width="80%">Status</th>
-<td><img src="images/icon_warning_sml.gif" alt="" />&#160;There is at least one newer incremental version available. Incremental updates are typically passive.</td></tr>
-<tr class="b">
-<th width="80%">Group Id</th>
-<td>org.owasp</td></tr>
-<tr class="a">
-<th width="80%">Artifact Id</th>
-<td>dependency-check-maven</td></tr>
-<tr class="b">
-<th width="80%">Current Version</th>
-<td>1.3.3</td></tr>
-<tr class="a">
-<th width="80%">Newer versions</th>
-<td><b>1.3.4</b>&#160;<i>Next Incremental</i><br />1.3.5<br />1.3.5.1<br /><b>1.3.6</b>&#160;<i>Latest Incremental</i><br /><b>1.4.0</b>&#160;<i>Next Minor</i><br />1.4.1<br />1.4.2<br />1.4.3<br />1.4.4<br />1.4.4.1<br /><b>1.4.5</b>&#160;<i>Latest Minor</i><br /><b>2.0.0</b>&#160;<i>Next Major</i><br />2.0.1<br />2.1.0<br />2.1.1<br />3.0.0<br />3.0.1<br /><b>3.0.2</b>&#160;<i>Latest Major</i></td></tr></table></div></div>
+<td><b>2.4</b>&#160;<i>Next Minor</i><br /><b>3.0.0</b>&#160;<i>Next Major</i><br /><b>3.0.1</b>&#160;<i>Latest Major</i></td></tr></table></div></div>
       </div>
     </div>
     <div class="clear">
