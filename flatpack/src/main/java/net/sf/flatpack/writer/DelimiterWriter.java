@@ -57,8 +57,9 @@ public class DelimiterWriter extends AbstractWriter {
             }
         }
 
+        final boolean foundQualifier = qualifier != FPConstants.NO_QUALIFIER && stringValue.indexOf(qualifier) != -1;
         final boolean needsQuoting = stringValue.indexOf(delimiter) != -1 //
-                || qualifier != FPConstants.NO_QUALIFIER && stringValue.indexOf(qualifier) != -1 //
+                || foundQualifier //
                 || stringValue.indexOf('\n') != -1;
         // || stringValue.split("\r\n|\r|\n").length > 1;
 
@@ -66,7 +67,17 @@ public class DelimiterWriter extends AbstractWriter {
             super.write(qualifier);
         }
 
-        super.write(stringValue);
+        if (foundQualifier) {
+            final char[] chars = stringValue.toCharArray();
+            for (final char character : chars) {
+                if (character == qualifier) {
+                    super.write(qualifier);
+                }
+                super.write(character);
+            }
+        } else {
+            super.write(stringValue);
+        }
 
         if (needsQuoting) {
             super.write(qualifier);

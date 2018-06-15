@@ -167,7 +167,8 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         writer.flush();
 
         final String expected = this.joinLines("col1;col2;col3;col4",
-                "\"value;with;delimiter\";normal value;\"value \"with qualifier\"\";\"value \"with qualifier\" and ;delimiter;\"");
+                "\"value;with;delimiter\";normal value;\"value \"\"with qualifier\"\"\";\"value \"\"with qualifier\"\" and ;delimiter;\"");
+
         Assert.assertEquals(expected, out.toString());
     }
 
