@@ -15,6 +15,8 @@
 				RowRecord.getBigDecimal should trim the string to avoid potential parsing issues.
 			</action>
             <action dev="benoitx" type="fix" issue="27" due-to="benoitx">Delimiter Writer does not handle field ending with new line.</action>
+            <action dev="benoitx" type="fix" issue="33" due-to="benoitx">CSV Writer not compliant with RFC4180, Thanks to Martin Diphoorn for the patch. Also fixed some
+            reader issues for double qualifiers.</action>
 		</release>
 		<release version="4.0.1" date="2014-12-10" description="Maintenance">
 			<action dev="ks-appendium" type="fix" issue="10">When parsing a header column, trim the leading and trailing spaces.</action>

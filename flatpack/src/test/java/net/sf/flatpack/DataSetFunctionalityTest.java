@@ -4,6 +4,8 @@ import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.assertj.core.util.Arrays;
+
 import junit.framework.TestCase;
 import net.sf.flatpack.util.FPConstants;
 
@@ -78,6 +80,80 @@ public class DataSetFunctionalityTest extends TestCase {
         assertEquals("do preserve both space value1...", " value1  ", ds.getRecord().get().getString("column1"));
         assertEquals("do preserve both space value2...", " value2", ds.getRecord().get().getString("column2"));
         assertEquals("do preserve both space value3...", "value3   ", ds.getRecord().get().getString("column3"));
+    }
+
+    public void testDoubleQuote() {
+        final String cols = "column1,column2,column3\r\n\"val1\",\"val2\",\"val3\"";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '\"');
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        assertEquals("double Quoted val1...", "val1", ds.getRecord().get().getString("column1"));
+        assertEquals("double Quoted val2...", "val2", ds.getRecord().get().getString("column2"));
+        assertEquals("double Quoted val3...", "val3", ds.getRecord().get().getString("column3"));
+    }
+
+    public void testMixedDoubleQuote() {
+        final String cols = "column1,column2,column3\r\nval1,\"val2\",\"val3\"";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '\"');
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        assertEquals("double Quoted val1...", "val1", ds.getRecord().get().getString("column1"));
+        assertEquals("double Quoted val2...", "val2", ds.getRecord().get().getString("column2"));
+        assertEquals("double Quoted val3...", "val3", ds.getRecord().get().getString("column3"));
+    }
+
+    public void testDoubleQuoteWithComma() {
+        final String cols = "column1,column2,column3\r\n\"val1,\",\"val,2\",\"va,,l3\"";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '\"');
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        assertEquals("double Quoted val1...", "val1,", ds.getRecord().get().getString("column1"));
+        assertEquals("double Quoted val2...", "val,2", ds.getRecord().get().getString("column2"));
+        assertEquals("double Quoted val3...", "va,,l3", ds.getRecord().get().getString("column3"));
+    }
+
+    public void testDoubleQuoteWithDoubleQuoteInsideWithStream() {
+        final String cols = "column1\r\n\"val\"\"1\"";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '\"');
+
+        p1.setStoreRawDataToDataSet(true);
+
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        System.out.println("1/" + ds.getRecord().get().getRawData());
+        System.out.println("2/" + Arrays.asList(ds.getRecord().get().getColumns()));
+        System.out.println("3/" + ds.getRecord().get().getString("column1"));
+        assertEquals("Special | Quoted val\"1...", "val\"1", ds.getRecord().get().getString("column1"));
+
+        // assertTrue("Contains val\"1", p1.stream().allMatch(t -> t.getString("column1").equalsIgnoreCase("val\"1")));
+    }
+
+    public void testDoubleQuoteWithDoubleQuoteInsideWithStream2() {
+        final String cols = "column1,column2\r\n\"val\"\"1\",val2";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '\"');
+        p1.setStoreRawDataToDataSet(true);
+
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        System.out.println("4/" + ds.getRecord().get().getRawData());
+        System.out.println("5/" + Arrays.asList(ds.getRecord().get().getColumns()));
+        System.out.println("6/" + ds.getRecord().get().getString("column1"));
+        assertEquals("Special | Quoted val\"1...", "val\"1", ds.getRecord().get().getString("column1"));
+
+        // assertTrue("Contains val\"1", p1.stream().allMatch(t -> t.getString("column1").equalsIgnoreCase("val\"1")));
+    }
+
+    public void testSpecialQualifier() {
+        final String cols = "column1,column2\r\n|val1|,val2";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '|');
+        p1.setStoreRawDataToDataSet(true);
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        System.out.println(ds.getRecord().get().getRawData());
+        System.out.println(Arrays.asList(ds.getRecord().get().getColumns()));
+
+        assertEquals("Special | Quoted val1...", "val1", ds.getRecord().get().getString("column1"));
+        assertEquals("Special | Quoted val2...", "val2", ds.getRecord().get().getString("column2"));
     }
 
     public void testContainsWithStream() {

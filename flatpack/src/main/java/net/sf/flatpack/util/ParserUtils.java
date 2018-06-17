@@ -89,11 +89,11 @@ public final class ParserUtils {
      * @param line -
      *            String of data to be parsed
      * @param delimiter -
-     *            Delimiter seperating each element
+     *            Delimiter separating each element
      * @param qualifier -
      *            qualifier which is surrounding the text
      * @param initialSize -
-     *            intial capacity of the List size
+     *            initial capacity of the List size
      * @param preserveLeadingWhitespace
      *            Keep any leading spaces
      * @param preserveTrailingWhitespace
@@ -165,6 +165,7 @@ public final class ParserUtils {
                     if (trimmed == null || trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
                         list.add("");
                     } else {
+                        trimmed = trimmed.replace(doubleQualifier, String.valueOf(qualifier));
                         list.add(trimmed);
                     }
                     blockWasInQualifier = false;
@@ -207,7 +208,7 @@ public final class ParserUtils {
                     // last column (e.g. finishes with ")
                     if (i == size - 1) {
                         String str = trimmedLine.substring(startBlock, size - 1);
-                        str = str.replaceAll(doubleQualifier, String.valueOf(qualifier));
+                        str = str.replace(doubleQualifier, String.valueOf(qualifier));
                         list.add(str);
                         startBlock = i + 1;
                     }
@@ -218,7 +219,7 @@ public final class ParserUtils {
 
         if (startBlock < size) {
             String str = trimmedLine.substring(startBlock, size);
-            str = str.replaceAll(doubleQualifier, String.valueOf(qualifier));
+            str = str.replace(doubleQualifier, String.valueOf(qualifier));
             if (blockWasInQualifier) {
                 if (str.charAt(str.length() - 1) == qualifier) {
                     list.add(str.substring(0, str.length() - 1));
@@ -913,5 +914,9 @@ public final class ParserUtils {
             }
         }
         return cmds;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("AA\"\"CC".replace("\"\"", "\""));
     }
 }
