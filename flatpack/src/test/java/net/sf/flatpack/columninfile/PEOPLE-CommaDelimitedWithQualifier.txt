@@ -4,4 +4,4 @@
 "JANE","ANAME","111 MILKY WY","AVON","OH","44001"
 "FRED","ZNAME","123 ROCKY WY","ELYRIA","OH","12345"
 "FRED","ZNAME","123 ROCKY WY","ELYRIA","OH","12345"
-"FRED","ZNAME","Text Qualifier " and seperator, in string","ELYRIA","OH",""
+"FRED","ZNAME","Text Qualifier "" and separator, in string","ELYRIA","OH",""
