@@ -222,7 +222,7 @@ public class DefaultDataSet implements DataSet {
      * @see net.sf.flatpack.DataSet#getErrors()
      */
     @Override
-    public List getErrors() {
+    public List<DataError> getErrors() {
         return errors;
     }
 

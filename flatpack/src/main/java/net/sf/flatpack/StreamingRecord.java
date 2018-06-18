@@ -28,7 +28,7 @@ public class StreamingRecord implements StreamingDataSet {
     }
 
     @Override
-    public List getErrors() {
+    public List<DataError> getErrors() {
         return dataSet != null ? dataSet.getErrors() : Collections.emptyList();
     }
 }

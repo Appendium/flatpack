@@ -23,7 +23,7 @@ public interface RecordDataSet {
      *
      * @return Vector
      */
-    List getErrors();
+    List<DataError> getErrors();
 
     /**
      * Returns total number of records which contained a parse error in the

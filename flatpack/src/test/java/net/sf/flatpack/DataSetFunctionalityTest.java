@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.assertj.core.util.Arrays;
 
@@ -162,7 +163,17 @@ public class DataSetFunctionalityTest extends TestCase {
         p1.setStoreRawDataToDataSet(true);
         final StreamingDataSet ds = p1.parseAsStream();
         ds.next();
+        assertThat(ds.getRecord()).isEmpty();
         assertThat(ds.getErrorCount()).isEqualTo(1);
+        assertThat(ds.getErrors()).extracting("errorDesc").containsExactly("Odd number of Qualifier characters");
+    }
+
+    public void testInvalidLineAsStreamOfRecord() {
+        final String cols = "column1,column2\r\n|val1,val2";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '|');
+        p1.setStoreRawDataToDataSet(true);
+        final Stream<Record> ds = p1.stream();
+        assertThat(ds.count()).isZero();
     }
 
     public void testContainsWithStream() {

@@ -10,7 +10,7 @@ import java.util.stream.StreamSupport;
 
 /**
  * New with jdk8, define stream() methods. You should
- * start using this.
+ * start using this BUT note that it will only return VALID Records, any invalid row will be skipped.
  *
  * @author Benoit Xhenseval
  * @since 3.4
