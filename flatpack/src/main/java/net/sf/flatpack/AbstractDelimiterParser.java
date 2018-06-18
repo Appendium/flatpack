@@ -136,6 +136,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
             boolean processedFirst = false;
             /** loop through each line in the file */
             String line = null;
+            int estimatedColCount = FPConstants.SPLITLINE_SIZE_INIT;
             while ((line = fetchNextRecord(br, getQualifier(), getDelimiter())) != null) {
                 // check to see if the user has elected to skip the first record
                 if (!processedFirst && isIgnoreFirstRecord()) {
@@ -148,11 +149,19 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     continue;
                 }
                 // column values
-                List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), FPConstants.SPLITLINE_SIZE_INIT,
-                        isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace());
+
+                // check number of Qualifier, if ODD number --> Incorrect!!!
+                if (oddNumberOfQualifier(line, getQualifier())) {
+                    addError(ds, "Odd number of Qualifier characters", lineCount, 1, isStoreRawDataToDataError() ? line : null);
+                    continue;
+                }
+
+                List<String> columns = ParserUtils.splitLine(line, getDelimiter(), getQualifier(), estimatedColCount, isPreserveLeadingWhitespace(),
+                        isPreserveTrailingWhitespace());
                 final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
                 final List<ColumnMetaData> metaData = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
                 final int columnCount = metaData.size();
+                estimatedColCount = columnCount;
 
                 if (columns.size() > columnCount) {
                     // Incorrect record length on line log the error. Line
@@ -210,6 +219,20 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
             closeReaders();
         }
         return ds;
+    }
+
+    private boolean oddNumberOfQualifier(String line, char q) {
+        if (line == null || line.isEmpty()) {
+            return false;
+        }
+        int count = 0;
+        int idx = 0;
+        while ((idx = line.indexOf(q, idx)) != -1) {
+            count++;
+            idx++;
+        }
+
+        return count % 2 != 0;
     }
 
     /**

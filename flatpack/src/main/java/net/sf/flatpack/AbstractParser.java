@@ -258,8 +258,7 @@ public abstract class AbstractParser implements Parser {
             // user has selected to not log warnings in the parser
             return;
         }
-        final DataError de = new DataError(errorDesc, lineNo, errorLevel, lineData);
-        ds.addError(de);
+        ds.addError(new DataError(errorDesc, lineNo, errorLevel, lineData));
     }
 
     /**

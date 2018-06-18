@@ -1,5 +1,7 @@
 package net.sf.flatpack;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -139,8 +141,6 @@ public class DataSetFunctionalityTest extends TestCase {
         System.out.println("5/" + Arrays.asList(ds.getRecord().get().getColumns()));
         System.out.println("6/" + ds.getRecord().get().getString("column1"));
         assertEquals("Special | Quoted val\"1...", "val\"1", ds.getRecord().get().getString("column1"));
-
-        // assertTrue("Contains val\"1", p1.stream().allMatch(t -> t.getString("column1").equalsIgnoreCase("val\"1")));
     }
 
     public void testSpecialQualifier() {
@@ -154,6 +154,15 @@ public class DataSetFunctionalityTest extends TestCase {
 
         assertEquals("Special | Quoted val1...", "val1", ds.getRecord().get().getString("column1"));
         assertEquals("Special | Quoted val2...", "val2", ds.getRecord().get().getString("column2"));
+    }
+
+    public void testInvalidLine() {
+        final String cols = "column1,column2\r\n|val1,val2";
+        final Parser p1 = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '|');
+        p1.setStoreRawDataToDataSet(true);
+        final StreamingDataSet ds = p1.parseAsStream();
+        ds.next();
+        assertThat(ds.getErrorCount()).isEqualTo(1);
     }
 
     public void testContainsWithStream() {
