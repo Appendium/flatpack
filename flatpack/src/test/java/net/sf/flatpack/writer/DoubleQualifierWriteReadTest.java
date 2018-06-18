@@ -59,7 +59,7 @@ public class DoubleQualifierWriteReadTest extends TestCase {
         final DataSet parse = parser.parse();
         parse.next();
         final Optional<Record> record = parse.getRecord();
-        assertEquals("Header2_Data \"\"\"\" 0 \"\"", record.get().getString("Header2"));
+        assertEquals("Header2_Data \"\" 0 \"", record.get().getString("Header2"));
         LOG.info("Header2 \n{}", record.get().getString("Header2"));
     }
 
