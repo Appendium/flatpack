@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package net.sf.flatpack.examples.delimitedcolumnnamesinfile;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>/*<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * Created on Nov 27, 2005<a name="line.4"></a>
+<span class="sourceLineNo">005</span> *<a name="line.5"></a>
+<span class="sourceLineNo">006</span> */<a name="line.6"></a>
+<span class="sourceLineNo">007</span><a name="line.7"></a>
+<span class="sourceLineNo">008</span>import java.io.File;<a name="line.8"></a>
+<span class="sourceLineNo">009</span><a name="line.9"></a>
+<span class="sourceLineNo">010</span>import net.sf.flatpack.DataError;<a name="line.10"></a>
+<span class="sourceLineNo">011</span>import net.sf.flatpack.DataSet;<a name="line.11"></a>
+<span class="sourceLineNo">012</span>import net.sf.flatpack.DefaultParserFactory;<a name="line.12"></a>
+<span class="sourceLineNo">013</span>import net.sf.flatpack.Parser;<a name="line.13"></a>
+<span class="sourceLineNo">014</span>import net.sf.flatpack.ordering.OrderBy;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import net.sf.flatpack.ordering.OrderColumn;<a name="line.15"></a>
+<span class="sourceLineNo">016</span><a name="line.16"></a>
+<span class="sourceLineNo">017</span>/**<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * @author zepernick<a name="line.18"></a>
+<span class="sourceLineNo">019</span> *<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * TODO To change the template for this generated type comment go to Window -<a name="line.20"></a>
+<span class="sourceLineNo">021</span> * Preferences - Java - Code Style - Code Templates<a name="line.21"></a>
+<span class="sourceLineNo">022</span> */<a name="line.22"></a>
+<span class="sourceLineNo">023</span>public class DelimitedColumnNamesInFile {<a name="line.23"></a>
+<span class="sourceLineNo">024</span>    public static void main(final String[] args) throws Exception {<a name="line.24"></a>
+<span class="sourceLineNo">025</span>        String[] colNames = null;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>        OrderBy orderby = null;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>        // delimited by a comma<a name="line.28"></a>
+<span class="sourceLineNo">029</span>        // text qualified by double quotes<a name="line.29"></a>
+<span class="sourceLineNo">030</span>        // ignore first record<a name="line.30"></a>
+<span class="sourceLineNo">031</span>        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File("PEOPLE-CommaDelimitedWithQualifier.txt"), ',', '"');<a name="line.31"></a>
+<span class="sourceLineNo">032</span>        final DataSet ds = pzparser.parse();<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>        // re order the data set by last name<a name="line.34"></a>
+<span class="sourceLineNo">035</span>        orderby = new OrderBy();<a name="line.35"></a>
+<span class="sourceLineNo">036</span>        orderby.addOrderColumn(new OrderColumn("CITY", false));<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        orderby.addOrderColumn(new OrderColumn("LASTNAME", true));<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        ds.orderRows(orderby);<a name="line.38"></a>
+<span class="sourceLineNo">039</span><a name="line.39"></a>
+<span class="sourceLineNo">040</span>        colNames = ds.getColumns();<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>        while (ds.next()) {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>            for (final String colName : colNames) {<a name="line.43"></a>
+<span class="sourceLineNo">044</span>                System.out.println("COLUMN NAME: " + colName + " VALUE: " + ds.getString(colName));<a name="line.44"></a>
+<span class="sourceLineNo">045</span>            }<a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46"></a>
+<span class="sourceLineNo">047</span>            System.out.println("===========================================================================");<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        }<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>        if (ds.getErrors() != null &amp;&amp; !ds.getErrors().isEmpty()) {<a name="line.50"></a>
+<span class="sourceLineNo">051</span>            System.out.println("FOUND ERRORS IN FILE....");<a name="line.51"></a>
+<span class="sourceLineNo">052</span>            for (int i = 0; i &lt; ds.getErrors().size(); i++) {<a name="line.52"></a>
+<span class="sourceLineNo">053</span>                final DataError de = (DataError) ds.getErrors().get(i);<a name="line.53"></a>
+<span class="sourceLineNo">054</span>                System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());<a name="line.54"></a>
+<span class="sourceLineNo">055</span>            }<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        }<a name="line.56"></a>
+<span class="sourceLineNo">057</span><a name="line.57"></a>
+<span class="sourceLineNo">058</span>    }<a name="line.58"></a>
+<span class="sourceLineNo">059</span>}<a name="line.59"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
