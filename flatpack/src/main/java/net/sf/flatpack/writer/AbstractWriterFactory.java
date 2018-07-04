@@ -11,7 +11,6 @@ import net.sf.flatpack.InitialisationException;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.xml.MapParser;
 
-
 /**
  *
  * @author Dirk Holmes and Holger Holger Hoffstatte
@@ -36,7 +35,7 @@ public abstract class AbstractWriterFactory implements WriterFactory {
         this();
 
         try {
-            mapping = MapParser.parse(mappingSrc, null);
+            mapping = MapParser.parse2(mappingSrc, null);
         } catch (final Exception jde) {
             throw new InitialisationException(jde);
         }

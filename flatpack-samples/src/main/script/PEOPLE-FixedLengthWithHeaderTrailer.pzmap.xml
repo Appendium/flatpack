@@ -1,8 +1,5 @@
 <?xml version='1.0'?>
-<!-- DTD can be pulled from the Jar or over the web-->
 <!DOCTYPE PZMAP SYSTEM	"flatpack.dtd" >
-<!--<!DOCTYPE PZMAP SYSTEM	"http://flatpack.sourceforge.net/flatpack.dtd" >-->
-
 <PZMAP>
     <RECORD id="header" startPosition="1" endPosition="7" indicator="HEADER ">
         <COLUMN name="INDICATOR" length="7" />
@@ -18,5 +15,4 @@
         <COLUMN name="INDICATOR" length="7" />
 	    <COLUMN name="TRAILERDATA" length="19" />
     </RECORD>
-		
 </PZMAP> 

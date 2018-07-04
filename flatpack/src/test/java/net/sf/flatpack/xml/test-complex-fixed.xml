@@ -1,0 +1,27 @@
+<?xml version='1.0'?>
+<!DOCTYPE PZMAP SYSTEM "flatpack.dtd" >
+<PZMAP>
+    <RECORD id="header" startPosition="1" endPosition="2" indicator="HI">
+        <COLUMN name="HeaderRecordType" length="2" />
+        <COLUMN name="FileIdentifier" length="4" />
+        <COLUMN name="TradeDate" length="8" />
+        <COLUMN name="NumberOfRecords" length="7" />
+        <COLUMN name="FileSignatures" length="40" />
+        <COLUMN name="TradingStatus" length="2" />
+        <COLUMN name="Dummy" length="18" />
+    </RECORD>
+    <RECORD id="exchange" startPosition="1" endPosition="2" indicator="TE">
+        <COLUMN name="RecordType" length="2" />
+        <COLUMN name="StatusIndicator" length="1" />
+        <COLUMN name="ExchangeCode" length="8" />
+        <COLUMN name="ExchangeName" length="259" />
+    </RECORD>
+    <RECORD id="country" startPosition="1" endPosition="2" indicator="XC">
+        <COLUMN name="RecordType" length="2" />
+        <COLUMN name="StatusIndicator" length="1" />
+        <COLUMN name="ExchangeCode" length="8" />
+        <COLUMN name="CountryName" length="50" />
+        <COLUMN name="CountryCode" length="209" />
+    </RECORD>
+    <COLUMN name="ignoramus" length="270"/>
+</PZMAP>
