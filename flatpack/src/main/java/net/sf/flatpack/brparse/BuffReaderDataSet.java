@@ -46,6 +46,7 @@ import net.sf.flatpack.xml.MetaData;
  */
 public class BuffReaderDataSet extends DefaultDataSet {
     private final InterfaceBuffReaderParse brParser;
+    private int index = 0;
 
     /**
      *
@@ -75,6 +76,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
         final Row r = brParser.buildRow(this);
         if (r != null) {
             addRow(r);
+            index++;
         }
 
         return super.next();
@@ -119,12 +121,11 @@ public class BuffReaderDataSet extends DefaultDataSet {
     }
 
     /**
-     * Not Supported!
      * @return int
      */
     @Override
     public int getIndex() {
-        throw new UnsupportedOperationException("getIndex() is Not Implemented");
+        return index;
     }
 
     /**
