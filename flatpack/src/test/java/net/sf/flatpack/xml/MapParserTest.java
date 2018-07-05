@@ -78,7 +78,7 @@ public class MapParserTest extends TestCase {
     }
 
     public void testParseComplexFixedMap() throws IOException, ParserConfigurationException, SAXException {
-        final Map<String, Object> parse = MapParser.parse2(new InputStreamReader(getClass().getResourceAsStream("test-complex-fixed.xml")), null);
+        final Map<String, Object> parse = MapParser.parse2(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("test-complex-fixed.xml")), null);
         assertThat(parse).hasSize(8);
         final XMLRecordElement details = (XMLRecordElement) parse.get("exchange");
         assertThat(details).isNotNull();
