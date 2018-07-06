@@ -96,7 +96,7 @@ public class DelimiterParser extends AbstractDelimiterParser {
         try {
             // check to see if the user is using a File or InputStream. This is
             // here for backwards compatibility
-            initStreamOrSource();
+            initStreamOrSource(dataSourceStream, dataSource);
 
             boolean closeMapReader = false;
             if (pzmapXML != null) {
@@ -120,24 +120,11 @@ public class DelimiterParser extends AbstractDelimiterParser {
             }
 
             setInitialised(true);
-        } catch (final IOException e) {
-            throw new InitialisationException(e);
         } catch (final Exception e) {
             throw new InitialisationException(e);
         }
     }
 
-    private void initStreamOrSource() throws FileNotFoundException {
-        if (dataSourceStream != null) {
-            final Reader r = new InputStreamReader(dataSourceStream);
-            setDataSourceReader(r);
-            addToCloseReaderList(r);
-        } else if (dataSource != null) {
-            final Reader r = new FileReader(dataSource);
-            setDataSourceReader(r);
-            addToCloseReaderList(r);
-        }
-    }
 
     @Override
     protected boolean shouldCreateMDFromFile() {

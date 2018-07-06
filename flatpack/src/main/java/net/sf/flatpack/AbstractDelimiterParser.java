@@ -115,7 +115,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
     }
 
     /*
-     * This is the new version of doDelimitedFile using InputStrem instead of
+     * This is the new version of doDelimitedFile using InputStream instead of
      * File. This is more flexible especially it is working with WebStart.
      *
      * puts together the dataset for a DELIMITED file. This is used for PZ XML

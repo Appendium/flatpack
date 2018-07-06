@@ -32,8 +32,7 @@
  */
 package net.sf.flatpack;
 
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -103,6 +102,18 @@ public abstract class AbstractParser implements Parser {
     protected AbstractParser(final Reader dataSourceReader, final String dataDefinition) {
         this.dataSourceReader = dataSourceReader;
         this.dataDefinition = dataDefinition;
+    }
+
+    protected void initStreamOrSource(InputStream dataSourceStream, File dataSource) throws FileNotFoundException {
+        if (dataSourceStream != null) {
+            final Reader r = new InputStreamReader(dataSourceStream);
+            setDataSourceReader(r);
+            addToCloseReaderList(r);
+        } else if (dataSource != null) {
+            final Reader r = new FileReader(dataSource);
+            setDataSourceReader(r);
+            addToCloseReaderList(r);
+        }
     }
 
     /*
