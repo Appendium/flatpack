@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
 	private final char FIELD_DELIMITER = ',';
 	private final char FIELD_QUALIFIER = '"';
-	private final String LINE_SEPERATOR = "\r\n";
+	private final String LINE_SEPARATOR = "\r\n";
 
 
 	/*
@@ -46,7 +46,7 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
 		assertThat(result, is(notNullValue()));
 		assertThat(result.length(), is(26));
 
-		String[] lines = result.split(LINE_SEPERATOR);
+		String[] lines = result.split(LINE_SEPARATOR);
 		assertThat(lines, is(notNullValue()));
 		assertThat(lines.length, is(2));
 		assertThat(lines[0], is("aaa,bbb,ccc"));
@@ -77,7 +77,7 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
 		assertThat(result, is(notNullValue()));
 		assertThat(result.length(), is(23));
 
-		String[] lines = result.split(LINE_SEPERATOR);
+		String[] lines = result.split(LINE_SEPARATOR);
 		assertThat(lines, is(notNullValue()));
 		assertThat(lines.length, is(2));
 		assertThat(lines[0], is("aaa,bbb,ccc"));
@@ -110,7 +110,7 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
 		assertThat(result, is(notNullValue()));
 		assertThat(result.length(), is(34));
 
-		String[] lines = result.split(LINE_SEPERATOR);
+		String[] lines = result.split(LINE_SEPARATOR);
 		assertThat(lines, is(notNullValue()));
 		assertThat(lines.length, is(2));
 		assertThat(lines[0], is("aaa , bbb,c cc"));
@@ -141,7 +141,7 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
 		assertThat(result, is(notNullValue()));
 		assertThat(result.length(), is(26));
 
-		String[] lines = result.split(LINE_SEPERATOR);
+		String[] lines = result.split(LINE_SEPARATOR);
 		assertThat(lines, is(notNullValue()));
 		assertThat(lines.length, is(2));
 		assertThat(lines[0].length(), is(11));
@@ -154,7 +154,7 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
 	private Writer getWriterForRfc4180(java.io.Writer out, boolean autoPrintHeader) throws IOException {
 		WriterOptions options = WriterOptions.getInstance();
 		options.autoPrintHeader(autoPrintHeader);
-		options.setLineSeperator(LINE_SEPERATOR);
+		options.setLineSeparator(LINE_SEPARATOR);
 
 		final DelimiterWriterFactory factory = new DelimiterWriterFactory(FIELD_DELIMITER, FIELD_QUALIFIER)//
 				.addColumnTitle("col1")
