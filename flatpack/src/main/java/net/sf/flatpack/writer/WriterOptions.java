@@ -8,6 +8,7 @@ package net.sf.flatpack.writer;
 public class WriterOptions {
 
     private boolean autoPrintHeader = true;
+    private String lineSeparator = System.lineSeparator();
 
     /**
      * Returns a DelimiterWriterOptions instance
@@ -36,4 +37,21 @@ public class WriterOptions {
         return this;
     }
 
+    /**
+     * Get the current line separator. Default is the system line separator.
+     * @return
+     */
+    public String getLineSeparator() {
+        return lineSeparator;
+    }
+
+    /**
+     * Set the line leperator.
+     * @param lineSeparator the line separator
+     * @return
+     */
+    public WriterOptions setLineSeparator(String lineSeparator) {
+        this.lineSeparator = lineSeparator;
+        return this;
+    }
 }

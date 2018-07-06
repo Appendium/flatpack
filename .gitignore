@@ -55,3 +55,4 @@ Thumbs.db
 flatpack/.project
 
 release.properties
+*.iml

@@ -12,10 +12,17 @@ import java.util.Map;
 public abstract class AbstractWriter implements Writer {
     private final BufferedWriter writer;
     private Map<String, Object> rowMap;
+    protected String lineSeparator = System.lineSeparator();
 
     public AbstractWriter(final java.io.Writer output) {
         super();
         writer = new BufferedWriter(output);
+    }
+
+    public AbstractWriter(final java.io.Writer writer, final String lineSeparator) {
+        super();
+        this.writer = new BufferedWriter(writer);
+        this.lineSeparator = lineSeparator;
     }
 
     @Override
@@ -53,7 +60,7 @@ public abstract class AbstractWriter implements Writer {
         // the row should have been written out by the subclass so it's safe to
         // discard it here
         rowMap = null;
-        writer.newLine();
+        writer.write(this.lineSeparator);
         return this;
     }
 

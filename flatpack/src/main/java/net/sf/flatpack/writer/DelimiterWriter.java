@@ -26,8 +26,9 @@ public class DelimiterWriter extends AbstractWriter {
         super(output);
         this.delimiter = delimiter;
         this.qualifier = qualifier;
+        this.lineSeparator = options.getLineSeparator();
 
-        columnTitles = new ArrayList<String>();
+        columnTitles = new ArrayList<>();
         final List<ColumnMetaData> columns = (List<ColumnMetaData>) columnMapping.get(FPConstants.DETAIL_ID);
         for (final ColumnMetaData cmd : columns) {
             columnTitles.add(cmd.getColName());
