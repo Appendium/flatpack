@@ -17,6 +17,8 @@
             <action dev="benoitx" type="fix" issue="27" due-to="benoitx">Delimiter Writer does not handle field ending with new line.</action>
             <action dev="benoitx" type="fix" issue="33" due-to="benoitx">CSV Writer not compliant with RFC4180, Thanks to Martin Diphoorn for the patch. Also fixed some
             reader issues for double qualifiers.</action>
+            <action dev="benoitx" type="enhance" issue="11" due-to="benoitx">Remove JDOM's depencency.</action>
+            <action dev="martindiphoorn" type="enhance" issue="36" due-to="martindiphoorn">Adding tests for strict RFC4180 (CSV) compliance.</action>
 		</release>
 		<release version="4.0.1" date="2014-12-10" description="Maintenance">
 			<action dev="ks-appendium" type="fix" issue="10">When parsing a header column, trim the leading and trailing spaces.</action>

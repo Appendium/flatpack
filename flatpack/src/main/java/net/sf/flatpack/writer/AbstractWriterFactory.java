@@ -35,7 +35,7 @@ public abstract class AbstractWriterFactory implements WriterFactory {
         this();
 
         try {
-            mapping = MapParser.parse2(mappingSrc, null);
+            mapping = MapParser.parse(mappingSrc, null);
         } catch (final Exception jde) {
             throw new InitialisationException(jde);
         }

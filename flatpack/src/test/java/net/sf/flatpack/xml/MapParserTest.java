@@ -60,7 +60,7 @@ public class MapParserTest extends TestCase {
     public void testInvalidMap() throws IOException, ParserConfigurationException, SAXException {
         try {
             final Map<String, Object> parse = MapParser
-                    .parse2(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("BrokenMapping.pzmap.xml")), null);
+                    .parse(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("BrokenMapping.pzmap.xml")), null);
             fail("Expected Exception SAXException");
         } catch (SAXException io) {
             assertThat(io.getMessage()).contains("The element type \"COLUMN\" must be terminated by the matching end-tag \"</COLUMN>\"");
@@ -68,7 +68,7 @@ public class MapParserTest extends TestCase {
     }
 
     public void testParseFixedMap() throws IOException, ParserConfigurationException, SAXException {
-        final Map<String, Object> parse = MapParser.parse2(new StringReader(PZ_FIXED_MAP), null);
+        final Map<String, Object> parse = MapParser.parse(new StringReader(PZ_FIXED_MAP), null);
         assertThat(parse).hasSize(6);
         final List<ColumnMetaData> details = (List<ColumnMetaData>) parse.get(FPConstants.DETAIL_ID);
         assertThat(details).isNotNull();
@@ -78,7 +78,7 @@ public class MapParserTest extends TestCase {
     }
 
     public void testParseComplexFixedMap() throws IOException, ParserConfigurationException, SAXException {
-        final Map<String, Object> parse = MapParser.parse2(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("test-complex-fixed.xml")), null);
+        final Map<String, Object> parse = MapParser.parse(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("test-complex-fixed.xml")), null);
         assertThat(parse).hasSize(8);
         final XMLRecordElement details = (XMLRecordElement) parse.get("exchange");
         assertThat(details).isNotNull();
@@ -93,7 +93,7 @@ public class MapParserTest extends TestCase {
     }
 
     public void testParse() throws IOException, ParserConfigurationException, SAXException {
-        final Map<String, Object> parse = MapParser.parse2(new StringReader(PZ_MAP), null);
+        final Map<String, Object> parse = MapParser.parse(new StringReader(PZ_MAP), null);
         assertThat(parse).hasSize(2);
         final List<ColumnMetaData> details = (List<ColumnMetaData>) parse.get(FPConstants.DETAIL_ID);
         assertThat(details).isNotNull();
@@ -105,7 +105,7 @@ public class MapParserTest extends TestCase {
         final Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader("hello"), ',', '"');
         parser.setColumnNamesCaseSensitive(true);
         try {
-            MapParser.parse2(new StringReader(INVALID_DUPLICATE_COL), parser);
+            MapParser.parse(new StringReader(INVALID_DUPLICATE_COL), parser);
             fail("Expecting exception due to duplicate col");
         } catch (IllegalArgumentException iae) {
             assertThat(iae.getMessage()).contains("'LASTNAME'");
@@ -115,7 +115,7 @@ public class MapParserTest extends TestCase {
     public void testParseCaseSensitive() throws IOException, ParserConfigurationException, SAXException {
         final Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader("hello"), ',', '"');
         parser.setColumnNamesCaseSensitive(true);
-        final Map<String, Object> parse = MapParser.parse2(new StringReader(PZ_MAP), parser);
+        final Map<String, Object> parse = MapParser.parse(new StringReader(PZ_MAP), parser);
         assertThat(parse).hasSize(2);
         final List<ColumnMetaData> details = (List<ColumnMetaData>) parse.get(FPConstants.DETAIL_ID);
         assertThat(details).isNotNull();
@@ -129,7 +129,7 @@ public class MapParserTest extends TestCase {
     public void testParseIgnoreCase() throws SAXException, IOException, ParserConfigurationException {
         final Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader("hello"), ',', '"');
         parser.setColumnNamesCaseSensitive(false);
-        final Map<String, Object> parse = MapParser.parse2(new StringReader(PZ_MAP), parser);
+        final Map<String, Object> parse = MapParser.parse(new StringReader(PZ_MAP), parser);
         assertThat(parse).hasSize(2);
         final List<ColumnMetaData> details = (List<ColumnMetaData>) parse.get(FPConstants.DETAIL_ID);
         assertThat(details).isNotNull();

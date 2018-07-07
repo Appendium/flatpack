@@ -93,7 +93,7 @@ public final class MapParser {
     @Deprecated
     public static Map<String, Object> parse(final InputStream xmlStream) throws IOException, ParserConfigurationException, SAXException {
         try (InputStreamReader isr = new InputStreamReader(xmlStream)) {
-            return parse2(isr, null);
+            return parse(isr, null);
         }
     }
 
@@ -110,7 +110,7 @@ public final class MapParser {
      * @throws ParserConfigurationException 
      * @throws SAXException 
      */
-    public static Map<String, Object> parse2(final Reader xmlStreamReader, final Parser pzparser)
+    public static Map<String, Object> parse(final Reader xmlStreamReader, final Parser pzparser)
             throws IOException, ParserConfigurationException, SAXException {
         if (xmlStreamReader == null) {
             throw new NullPointerException("XML Reader Is Not Allowed To Be Null...");
@@ -118,7 +118,6 @@ public final class MapParser {
         final Map<String, Object> mdIndex = new LinkedHashMap<String, Object>(); // retain the same order
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        // factory.setValidating(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setEntityResolver(new ResolveLocalDTD());
         org.w3c.dom.Document document = builder.parse(new InputSource(xmlStreamReader));
@@ -161,34 +160,6 @@ public final class MapParser {
 
             }
         }
-
-        /*
-             // get all of the "record" elements and the columns under them
-        final Iterator<Element> recordDescriptors = root.getChildren("RECORD").iterator();
-        while (recordDescriptors.hasNext()) {
-            final Element xmlElement = recordDescriptors.next();
-        
-            if (xmlElement.getAttributeValue("id").equals(FPConstants.DETAIL_ID)) {
-                // make sure the id attribute does not have a value of "detail" this
-                // is the harcoded
-                // value we are using to mark columns specified outside of a
-                // <RECORD> element
-                throw new IllegalArgumentException("The ID 'detail' on the <RECORD> element is reserved, please select another id");
-            }
-        
-            columns = getColumnChildren(xmlElement);
-            final XMLRecordElement xmlre = new XMLRecordElement();
-            xmlre.setColumns(columns, pzparser);
-            xmlre.setIndicator(xmlElement.getAttributeValue("indicator"));
-            xmlre.setElementNumber(convertAttributeToInt(xmlElement.getAttribute("elementNumber")));
-            xmlre.setStartPosition(convertAttributeToInt(xmlElement.getAttribute("startPosition")));
-            xmlre.setEndPositition(convertAttributeToInt(xmlElement.getAttribute("endPosition")));
-            xmlre.setElementCount(convertAttributeToInt(xmlElement.getAttribute("elementCount")));
-            mdIndex.put(xmlElement.getAttributeValue("id"), xmlre);
-            // make a column index for non detail records
-            mdIndex.put(FPConstants.COL_IDX + "_" + xmlElement.getAttributeValue("id"), ParserUtils.buidColumnIndexMap(columns, pzparser));
-        }
-        */
         if (showDebug) {
             setShowDebug(mdIndex);
         }
@@ -207,7 +178,6 @@ public final class MapParser {
             Node node = nodeList.item(i);
 
             final String nodeName = node.getNodeName();
-            // final String nodeValue = node.getNodeValue();
 
             switch (nodeName) {
             case "COLUMN":
@@ -246,82 +216,6 @@ public final class MapParser {
         return columnResults;
     }
 
-    /*
-    public static Map<String, Object> parse(final Reader xmlStreamReader, final Parser pzparser) throws JDOMException, IOException {
-        if (xmlStreamReader == null) {
-            throw new NullPointerException("XML Reader Is Not Allowed To Be Null...");
-        }
-        final SAXBuilder builder = new SAXBuilder();
-        builder.setValidation(true);
-        // handle the ability to pull DTD from Jar if needed
-        builder.setEntityResolver(new ResolveLocalDTD());
-    
-        // JDOM started to blow up on the parse if the system id param was not
-        // specified
-        // not sure why this started to happen now. Was not making to
-        // EntityResolver to pull
-        // dtd out of the jar if needed
-        final Document document = builder.build(xmlStreamReader, "file:///");
-    
-        final Element root = document.getRootElement();
-    
-        // lets first get all of the columns that are declared directly under
-        // the PZMAP
-        List<ColumnMetaData> columns = getColumnChildren(root);
-        final Map<String, Object> mdIndex = new LinkedHashMap<String, Object>(); // retain the same order
-        // specified in the mapping
-        mdIndex.put(FPConstants.DETAIL_ID, columns); // always force detail
-        // to the top of
-        // the map no matter what
-        mdIndex.put(FPConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columns, pzparser));
-    
-        // get all of the "record" elements and the columns under them
-        final Iterator<Element> recordDescriptors = root.getChildren("RECORD").iterator();
-        while (recordDescriptors.hasNext()) {
-            final Element xmlElement = recordDescriptors.next();
-    
-            if (xmlElement.getAttributeValue("id").equals(FPConstants.DETAIL_ID)) {
-                // make sure the id attribute does not have a value of "detail" this
-                // is the harcoded
-                // value we are using to mark columns specified outside of a
-                // <RECORD> element
-                throw new IllegalArgumentException("The ID 'detail' on the <RECORD> element is reserved, please select another id");
-            }
-    
-            columns = getColumnChildren(xmlElement);
-            final XMLRecordElement xmlre = new XMLRecordElement();
-            xmlre.setColumns(columns, pzparser);
-            xmlre.setIndicator(xmlElement.getAttributeValue("indicator"));
-            xmlre.setElementNumber(convertAttributeToInt(xmlElement.getAttribute("elementNumber")));
-            xmlre.setStartPosition(convertAttributeToInt(xmlElement.getAttribute("startPosition")));
-            xmlre.setEndPositition(convertAttributeToInt(xmlElement.getAttribute("endPosition")));
-            xmlre.setElementCount(convertAttributeToInt(xmlElement.getAttribute("elementCount")));
-            mdIndex.put(xmlElement.getAttributeValue("id"), xmlre);
-            // make a column index for non detail records
-            mdIndex.put(FPConstants.COL_IDX + "_" + xmlElement.getAttributeValue("id"), ParserUtils.buidColumnIndexMap(columns, pzparser));
-        }
-    
-        if (showDebug) {
-            setShowDebug(mdIndex);
-        }
-    
-        return mdIndex;
-    }
-    
-    
-    // helper to convert to integer
-    private static int convertAttributeToInt(final Attribute attribute) {
-        if (attribute == null) {
-            return 0;
-        }
-    
-        try {
-            return attribute.getIntValue();
-        } catch (final Exception ignore) {
-            return 0;
-        }
-    }
-    */
     // helper to convert to integer
     private static int convertAttributeToInt(final String attribute) {
         if (attribute == null) {
@@ -334,46 +228,6 @@ public final class MapParser {
             return 0;
         }
     }
-    /*
-    // helper to retrieve the "COLUMN" elements from the given parent
-    private static List<ColumnMetaData> getColumnChildren(final Element parent) {
-        final List<ColumnMetaData> columnResults = new ArrayList<ColumnMetaData>();
-        final Set<String> columnNames = new HashSet<>();
-        final Iterator<Element> xmlChildren = parent.getChildren("COLUMN").iterator();
-    
-        while (xmlChildren.hasNext()) {
-            final ColumnMetaData cmd = new ColumnMetaData();
-            final Element xmlColumn = xmlChildren.next();
-    
-            // make sure the name attribute is present on the column
-            final String columnName = xmlColumn.getAttributeValue("name");
-            if (columnName == null) {
-                throw new IllegalArgumentException("Name attribute is required on the column tag!");
-            }
-    
-            // make sure the names in columnInfo are unique
-            if (columnNames.contains(columnName)) {
-                throw new IllegalArgumentException("Duplicate name column '" + columnName + "'");
-            }
-    
-            cmd.setColName(columnName);
-            columnNames.add(columnName);
-    
-            // check to see if the column length can be set
-            if (xmlColumn.getAttributeValue("length") != null) {
-                try {
-                    cmd.setColLength(Integer.parseInt(xmlColumn.getAttributeValue("length")));
-                } catch (final Exception ex) {
-                    throw new IllegalArgumentException(
-                            "LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: " + xmlColumn.getAttributeValue("length"), ex);
-                }
-            }
-            columnResults.add(cmd);
-        }
-    
-        return columnResults;
-    }
-    */
 
     /**
      * If set to true, debug information for the map file will be thrown to the
@@ -424,7 +278,7 @@ public final class MapParser {
      */
     public static MetaData parseMap(final Reader xmlStreamReader, final Parser pzparser)
             throws IOException, ParserConfigurationException, SAXException {
-        final Map map = parse2(xmlStreamReader, pzparser);
+        final Map map = parse(xmlStreamReader, pzparser);
 
         final List<ColumnMetaData> col = (List<ColumnMetaData>) map.get(FPConstants.DETAIL_ID);
         map.remove(FPConstants.DETAIL_ID);
