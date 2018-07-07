@@ -1,0 +1,46 @@
+Paul Zepernick and ObjectLab are pleased to announce release 2.3.0 of
+PZFileReader for Java 1.4+.
+
+Open Source flat file parser (CSV, Fixed Length, Custom) using XML 
+to configure formats.
+
+http://pzfilereader.sourceforge.net
+
+PZFileReader is released under the business friendly Apache License v2.0.
+
+It is available immediately for download via SourceForge or the Maven Central
+Repository (both Maven 1 and Maven 2). The homepage has some very 
+quick examples.
+
+The library is small, lightweight and does not force you to adopt a
+framework.
+
+The implementation is useful to any business that deal with flat files.
+The library allow you to define an XML mapping (or in a database) of
+the format of your file. Once this is done, the parsed data can be accessed
+via a simple name lookup mechanism.
+
+It is our aim to publish at some point some well know file formats for
+your immediate use.
+
+ObjectLab is not new to the open-source community having used numerous OS 
+projects, It has recently launched the ObjectLab Kit family, including:
+- QALab (http://qalab.sourceforge.net), a tool that keeps track over-time
+  of the static analysis results from FindBugs, Checkstyle, PMD, Cobertura etc.
+- DateCalculators (http://objectlabkit.sourceforge.net), a set of generic
+  lightweight and thread-safe Date calculators for Business and Finance.
+- JTreeMap, (http://jtreemap.sourceforge.net), probably the only Java Open 
+  Source implementation of treemap/heatmaps, available as a Swing or SWT
+  component.
+ 
+We would like to thanks our friends and colleagues at XXXX for their help, 
+reviews and suggestions.
+
+Sorry for the long email... 
+
+Feel free to pass on to people who may be interested.
+
+Enjoy!!
+
+Paul Zepernick and The ObjectLab Team (Benoit Xhenseval, Marcin Jekot)
+
