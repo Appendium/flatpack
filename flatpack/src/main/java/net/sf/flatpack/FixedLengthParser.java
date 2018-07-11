@@ -87,15 +87,7 @@ public class FixedLengthParser extends AbstractFixedLengthParser {
         try {
             // check to see if the user is using a File or InputStream. This is
             // here for backwards compatability
-            if (dataSourceStream != null) {
-                final Reader r = new InputStreamReader(dataSourceStream);
-                setDataSourceReader(r);
-                addToCloseReaderList(r);
-            } else if (dataSource != null) {
-                final Reader r = new FileReader(dataSource);
-                setDataSourceReader(r);
-                addToCloseReaderList(r);
-            }
+            initStreamOrSource(dataSourceStream, dataSource);
 
             boolean closeMapReader = false;
             if (pzmapXML != null) {
@@ -115,8 +107,6 @@ public class FixedLengthParser extends AbstractFixedLengthParser {
                     this.pzmapReader.close();
                 }
             }
-        } catch (final IOException e) {
-            throw new InitialisationException(e);
         } catch (final Exception e) {
             throw new InitialisationException(e);
         }

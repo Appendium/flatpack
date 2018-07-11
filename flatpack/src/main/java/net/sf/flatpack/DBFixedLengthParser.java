@@ -42,6 +42,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.ParserUtils;
 
 /**
@@ -83,17 +84,9 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
         try {
             // check to see if the user is using a File or InputStream. This is
             // here for backwards compatability
-            if (dataSourceStream != null) {
-                final Reader r = new InputStreamReader(dataSourceStream);
-                setDataSourceReader(r);
-                addToCloseReaderList(r);
-            } else if (dataSource != null) {
-                final Reader r = new FileReader(dataSource);
-                setDataSourceReader(r);
-                addToCloseReaderList(r);
-            }
+            initStreamOrSource(dataSourceStream, dataSource);
 
-            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
+            final List<ColumnMetaData> cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
 
             if (cmds.isEmpty()) {
@@ -101,9 +94,7 @@ public class DBFixedLengthParser extends AbstractFixedLengthParser {
             }
 
             setInitialised(true);
-        } catch (final SQLException e) {
-            throw new InitialisationException(e);
-        } catch (final FileNotFoundException e) {
+        } catch (final SQLException | FileNotFoundException e) {
             throw new InitialisationException(e);
         }
     }

@@ -40,6 +40,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.ParserUtils;
 
 /**
@@ -76,16 +77,14 @@ public class DBDelimiterParser extends AbstractDelimiterParser {
                 addToCloseReaderList(r);
             }
 
-            final List cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
+            final List<ColumnMetaData> cmds = ParserUtils.buildMDFromSQLTable(con, getDataDefinition(), this);
             addToMetaData(cmds);
 
             if (cmds.isEmpty()) {
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
             }
             setInitialised(true);
-        } catch (final SQLException e) {
-            throw new InitialisationException(e);
-        } catch (final FileNotFoundException e) {
+        } catch (final SQLException | FileNotFoundException e) {
             throw new InitialisationException(e);
         }
     }

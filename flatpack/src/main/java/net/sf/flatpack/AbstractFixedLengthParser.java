@@ -104,7 +104,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 }
 
                 final String mdkey = FixedWidthParserUtils.getCMDKey(getPzMetaData(), line);
-                final int recordLength = recordLengths.get(mdkey).intValue();
+                final int recordLength = recordLengths.get(mdkey);
 
                 if (line.length() > recordLength) {
                     // Incorrect record length on line log the error. Line will not
