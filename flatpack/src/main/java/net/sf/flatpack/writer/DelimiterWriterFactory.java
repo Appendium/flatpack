@@ -114,7 +114,7 @@ public class DelimiterWriterFactory extends AbstractWriterFactory {
         metaData.setColName(columnTitle);
         columnMetaDatas.add(metaData);
 
-        final Integer columnIndex = Integer.valueOf(columnMetaDatas.indexOf(metaData));
+        final Integer columnIndex = columnMetaDatas.indexOf(metaData);
         columnIndices.put(columnIndex, columnTitle);
         return this;
     }
