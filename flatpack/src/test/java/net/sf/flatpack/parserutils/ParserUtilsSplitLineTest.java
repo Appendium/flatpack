@@ -7,6 +7,11 @@ import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.utilities.UnitTestUtils;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 /**
  * Test the functionality of the splitLine method. This method returns a List of
  * Strings. Each element of the list represents a column created by the parser
@@ -202,6 +207,36 @@ public class ParserUtilsSplitLineTest extends TestCase {
         for (int i = 0; i < expected.length; i++) {
             assertEquals("expecting...", expected[i], splitLineResults.get(i));
         }
+    }
+
+    public void testMultilineExtreme() {
+        // Test without qualifier
+        final List results = ParserUtils.splitLine("col1,col2,col3", ',', '"', 1, true, true);
+        assertThat(results.size(), is(3));
+        assertThat(results.get(0), is("col1"));
+        assertThat(results.get(1), is("col2"));
+        assertThat(results.get(2), is("col3"));
+
+        // Test with qualifier
+        final List results2 = ParserUtils.splitLine("\"col1\",\"col\"2\",\"col\"\"3\"", ',', '"', 1, true, true);
+        assertThat(results2.size(), is(3));
+        assertThat(results2.get(0), is("col1"));
+        assertThat(results2.get(1), is("col\"2")); // Being nice here, it should have been double quoted
+        assertThat(results2.get(2), is("col\"3"));
+
+        // Test with qualifier and multiline
+        final List results3 = ParserUtils.splitLine("\"col1\r\n\",\"\r\ncol2\",\"\r\n", ',', '"', 1, true, true);
+        assertThat(results3.size(), is(3));
+        assertThat(results3.get(0), is("col1\r\n"));
+        assertThat(results3.get(1), is("\r\ncol2"));
+        assertThat(results3.get(2), is("\r\n"));
+
+        // Test with qualifier and multiline
+        final List results4 = ParserUtils.splitLine("\"col1\r\",\"col\n2\",\"\r\n", ',', '"', 1, true, true);
+        assertThat(results4.size(), is(3));
+        assertThat(results4.get(0), is("col1\r"));
+        assertThat(results4.get(1), is("col\n2"));
+        assertThat(results4.get(2), is("\r\n"));
     }
 
     public static void main(final String[] args) {
