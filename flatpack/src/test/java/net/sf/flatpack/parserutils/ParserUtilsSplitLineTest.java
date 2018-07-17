@@ -1,5 +1,7 @@
 package net.sf.flatpack.parserutils;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -202,6 +204,36 @@ public class ParserUtilsSplitLineTest extends TestCase {
         for (int i = 0; i < expected.length; i++) {
             assertEquals("expecting...", expected[i], splitLineResults.get(i));
         }
+    }
+
+    public void testMultilineExtreme() {
+        // Test without qualifier
+        final List results = ParserUtils.splitLine("col1,col2,col3", ',', '"', 1, true, true);
+        assertThat(results.size()).isEqualTo(3);
+        assertThat(results.get(0)).isEqualTo("col1");
+        assertThat(results.get(1)).isEqualTo("col2");
+        assertThat(results.get(2)).isEqualTo("col3");
+
+        // Test with qualifier
+        final List results2 = ParserUtils.splitLine("\"col1\",\"col\"2\",\"col\"\"3\"", ',', '"', 1, true, true);
+        assertThat(results2.size()).isEqualTo(3);
+        assertThat(results2.get(0)).isEqualTo("col1");
+        assertThat(results2.get(1)).isEqualTo("col\"2"); // Being nice here, it should have been double quoted
+        assertThat(results2.get(2)).isEqualTo("col\"3");
+
+        // Test with qualifier and multiline
+        final List results3 = ParserUtils.splitLine("\"col1\r\n\",\"\r\ncol2\",\"\r\n", ',', '"', 1, true, true);
+        assertThat(results3.size()).isEqualTo(3);
+        assertThat(results3.get(0)).isEqualTo("col1\r\n");
+        assertThat(results3.get(1)).isEqualTo("\r\ncol2");
+        assertThat(results3.get(2)).isEqualTo("\r\n");
+
+        // Test with qualifier and multiline
+        final List results4 = ParserUtils.splitLine("\"col1\r\",\"col\n2\",\"\r\n", ',', '"', 1, true, true);
+        assertThat(results4.size()).isEqualTo(3);
+        assertThat(results4.get(0)).isEqualTo("col1\r");
+        assertThat(results4.get(1)).isEqualTo("col\n2");
+        assertThat(results4.get(2)).isEqualTo("\r\n");
     }
 
     public static void main(final String[] args) {
