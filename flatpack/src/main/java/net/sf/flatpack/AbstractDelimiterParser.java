@@ -125,13 +125,10 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         if (dataSource == null) {
             throw new IllegalArgumentException("dataSource is null");
         }
-        BufferedReader br = null;
         final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);
-        try {
+        try (BufferedReader br = new BufferedReader(dataSource)) {
             // gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
-
-            br = new BufferedReader(dataSource);
 
             boolean processedFirst = false;
             /** loop through each line in the file */
@@ -213,9 +210,6 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
 
             }
         } finally {
-            if (br != null) {
-                br.close();
-            }
             closeReaders();
         }
         return ds;

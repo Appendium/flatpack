@@ -28,6 +28,7 @@ public class RowRecord implements Record {
     private final boolean upperCase;
     private final boolean lowerCase;
     private final boolean nullEmptyString;
+    private String[] columns = null;
 
     public RowRecord(final Row row, final MetaData metaData, final boolean columnCaseSensitive, final Properties pzConvertProps,
             final boolean strictNumericParse, final boolean upperCase, final boolean lowerCase, final boolean nullEmptyString) {
@@ -89,20 +90,16 @@ public class RowRecord implements Record {
      */
     @Override
     public String[] getColumns() {
-        ColumnMetaData column = null;
-        String[] array = null;
+        if (metaData != null && columns != null) {
+            final List<ColumnMetaData> cmds = metaData.getColumnsNames();
 
-        if (/* columnMD != null || */metaData != null) {
-            final List cmds = metaData.getColumnsNames();
-
-            array = new String[cmds.size()];
+            columns = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
-                column = (ColumnMetaData) cmds.get(i);
-                array[i] = column.getColName();
+                columns[i] = cmds.get(i).getColName();
             }
         }
 
-        return array;
+        return columns;
     }
 
     /*

@@ -68,6 +68,8 @@ import net.sf.flatpack.util.ParserUtils;
  * Parses a PZmap definition XML file
  */
 public final class MapParser {
+    private static final String LENGTH = "length";
+
     private static boolean showDebug = false;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapParser.class);
@@ -200,12 +202,12 @@ public final class MapParser {
                 columnNames.add(columnName);
 
                 // check to see if the column length can be set
-                if (attributes.getNamedItem("length") != null) {
+                if (attributes.getNamedItem(LENGTH) != null) {
                     try {
-                        cmd.setColLength(Integer.parseInt(attributes.getNamedItem("length").getTextContent()));
+                        cmd.setColLength(Integer.parseInt(attributes.getNamedItem(LENGTH).getTextContent()));
                     } catch (final Exception ex) {
                         throw new IllegalArgumentException(
-                                "LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: " + attributes.getNamedItem("length").getTextContent(),
+                                "LENGTH ATTRIBUTE ON COLUMN ELEMENT MUST BE AN INTEGER.  GOT: " + attributes.getNamedItem(LENGTH).getTextContent(),
                                 ex);
                     }
                 }

@@ -38,14 +38,14 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.FixedWidthParserUtils;
 import net.sf.flatpack.util.ParserUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author xhensevb
@@ -80,18 +80,16 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
      * mappings, and SQL table mappings
      */
     private DataSet doFixedLengthFile(final Reader dataSource) throws IOException {
-        BufferedReader br = null;
 
         final DefaultDataSet ds = new DefaultDataSet(getPzMetaData(), this);
 
-        try {
+        try (BufferedReader br = new BufferedReader(dataSource)) {
             // gather the conversion properties
             ds.setPZConvertProps(ParserUtils.loadConvertProperties());
 
             final Map<String, Integer> recordLengths = ParserUtils.calculateRecordLengths(getPzMetaData());
 
             // Read in the flat file
-            br = new BufferedReader(dataSource);
             String line = null;
             int lineCount = 0;
             // map of record lengths corresponding to the ID's in the columnMD
@@ -156,9 +154,6 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                 ds.addRow(row);
             }
         } finally {
-            if (br != null) {
-                br.close();
-            }
             closeReaders();
         }
         return ds;

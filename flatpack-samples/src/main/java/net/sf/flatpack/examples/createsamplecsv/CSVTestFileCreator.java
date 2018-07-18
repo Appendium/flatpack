@@ -44,12 +44,7 @@ public class CSVTestFileCreator {
     }
 
     public static void createFile(final int cols, final int rows, final String filename) {
-        FileWriter fw = null;
-        PrintWriter out = null;
-        try {
-
-            fw = new FileWriter(filename);
-            out = new PrintWriter(fw);
+        try (FileWriter fw = new FileWriter(filename); PrintWriter out = new PrintWriter(fw)) {
 
             // write the column names across the top of the file
             for (int i = 1; i <= cols; i++) {
@@ -79,17 +74,6 @@ public class CSVTestFileCreator {
 
         } catch (final Exception ex) {
             LOG.error("Issue", ex);
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-                if (fw != null) {
-                    fw.close();
-                }
-            } catch (final Exception ignore) {
-            }
-
         }
     }
 

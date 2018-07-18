@@ -71,6 +71,8 @@ import net.sf.flatpack.xml.XMLRecordElement;
  * @author Benoit Xhenseval
  */
 public final class ParserUtils {
+    private static final String DATASTRUCTURE_LENGTH = "DATASTRUCTURE_LENGTH";
+
     private ParserUtils() {
     }
 
@@ -901,10 +903,10 @@ public final class ParserUtils {
 
                     final ColumnMetaData column = new ColumnMetaData();
                     column.setColName(rs.getString("DATASTRUCTURE_COLUMN"));
-                    column.setColLength(rs.getInt("DATASTRUCTURE_LENGTH"));
+                    column.setColLength(rs.getInt(DATASTRUCTURE_LENGTH));
                     column.setStartPosition(recPosition);
-                    column.setEndPosition(recPosition + rs.getInt("DATASTRUCTURE_LENGTH") - 1);
-                    recPosition += rs.getInt("DATASTRUCTURE_LENGTH");
+                    column.setEndPosition(recPosition + rs.getInt(DATASTRUCTURE_LENGTH) - 1);
+                    recPosition += rs.getInt(DATASTRUCTURE_LENGTH);
 
                     cmds.add(column);
                 }
@@ -914,9 +916,5 @@ public final class ParserUtils {
             }
         }
         return cmds;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("AA\"\"CC".replace("\"\"", "\""));
     }
 }

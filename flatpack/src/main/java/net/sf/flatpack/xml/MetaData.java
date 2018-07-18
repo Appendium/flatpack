@@ -85,9 +85,9 @@ public class MetaData {
     @Override
     public String toString() {
         final StringBuilder buf = new StringBuilder();
-        buf.append("Col Names:").append(columnsNames).append(System.getProperty("line.separator"));
-        buf.append("Col Index Map:").append(columnIndexMap).append(System.getProperty("line.separator"));
-        buf.append("XML Record Elements:").append(xmlRecordElements).append(System.getProperty("line.separator"));
+        buf.append("Col Names:").append(columnsNames).append(System.lineSeparator());
+        buf.append("Col Index Map:").append(columnIndexMap).append(System.lineSeparator());
+        buf.append("XML Record Elements:").append(xmlRecordElements).append(System.lineSeparator());
         return buf.toString();
     }
 }

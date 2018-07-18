@@ -49,15 +49,15 @@ public class Examples implements Repeater {
     }
 
     public void doCall() {
-        System.out.println("");
-        System.out.println("           ___  _     _           _   _          _");
-        System.out.println("          / _ \\| |__ (_) ___  ___| |_| |    __ _| |__");
-        System.out.println("         | | | | '_ \\| |/ _ \\/ __| __| |   / _` | '_ \\");
-        System.out.println("         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |");
-        System.out.println("          \\___/|_.__// |\\___|\\___|\\__|_____\\__,_|_.__/");
-        System.out.println("                   |__/");
-        System.out.println("");
-        System.out.println("             w w w . O b j e c t L a b . c o . u k");
+        System.err.println("");
+        System.err.println("           ___  _     _           _   _          _");
+        System.err.println("          / _ \\| |__ (_) ___  ___| |_| |    __ _| |__");
+        System.err.println("         | | | | '_ \\| |/ _ \\/ __| __| |   / _` | '_ \\");
+        System.err.println("         | |_| | |_) | |  __/ (__| |_| |__| (_| | |_) |");
+        System.err.println("          \\___/|_.__// |\\___|\\___|\\__|_____\\__,_|_.__/");
+        System.err.println("                   |__/");
+        System.err.println("");
+        System.err.println("             w w w . O b j e c t L a b . c o . u k");
     }
 
     private void run() {
@@ -188,7 +188,7 @@ public class Examples implements Repeater {
             final String filename = "LargeSampleCSV.csv";
             CSVTestFileCreator.createFile(cols, rows, filename);
 
-            System.out.println("Large file created");
+            System.err.println("Large file created");
 
             CSVLarge.call(filename);
         } catch (final Exception e) {
@@ -234,17 +234,17 @@ public class Examples implements Repeater {
 
         long start = System.currentTimeMillis();
         for (int i = 0; i < repeat; i++) {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             for (int u = 0; u < 1000; u++) {
                 sb.append("h");
             }
         }
         long stop = System.currentTimeMillis();
 
-        System.out.println("Creating new SB " + (stop - start) + " ms.");
+        System.err.println("Creating new SB " + (stop - start) + " ms.");
 
         start = System.currentTimeMillis();
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < repeat; i++) {
             for (int u = 0; u < characters; u++) {
                 sb.append("h");
@@ -253,7 +253,7 @@ public class Examples implements Repeater {
         }
         stop = System.currentTimeMillis();
 
-        System.out.println("Deleting existing SB " + (stop - start) + " ms.");
+        System.err.println("Deleting existing SB " + (stop - start) + " ms.");
 
     }
 
@@ -262,7 +262,7 @@ public class Examples implements Repeater {
         final int numberOfCols = ConsoleMenu.getInt("How many columns?", 100);
         final boolean qualif = ConsoleMenu.getBoolean("With qualifier?", true);
 
-        final StringBuffer aRow = new StringBuffer();
+        final StringBuilder aRow = new StringBuilder();
         for (int i = 0; i < numberOfCols; i++) {
             if (qualif) {
                 aRow.append("\"");
@@ -281,7 +281,7 @@ public class Examples implements Repeater {
         }
         final long stop = System.currentTimeMillis();
 
-        System.out.println("ParserUtil " + (stop - start) + " ms.");
+        System.err.println("ParserUtil " + (stop - start) + " ms.");
 
     }
 
