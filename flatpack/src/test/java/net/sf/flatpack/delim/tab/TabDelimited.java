@@ -50,7 +50,7 @@ public class TabDelimited {
         if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             System.out.println("FOUND ERRORS IN FILE....");
             for (int i = 0; i < ds.getErrors().size(); i++) {
-                final DataError de = (DataError) ds.getErrors().get(i);
+                final DataError de = ds.getErrors().get(i);
                 System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());
             }
         }
@@ -60,8 +60,8 @@ public class TabDelimited {
     // used for Junit test
 
     public DataSet getDsForTest() throws Exception {
-        final Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
-                new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
+        final Parser parser = DefaultParserFactory.getInstance()
+                .newDelimitedParser(new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
 
         parser.setHandlingShortLines(true);
 

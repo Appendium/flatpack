@@ -244,8 +244,9 @@ public class PZParserOptsTest extends TestCase {
         DataSet ds;
         final String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" + "<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n"
                 + "	<PZMAP>\r\n" + "		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">"
-                + "			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" + "			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n" + "		</RECORD>"
-                + "		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" + "		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" + "	</PZMAP>";
+                + "			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" + "			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n"
+                + "		</RECORD>" + "		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n"
+                + "		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" + "	</PZMAP>";
 
         final String cols = "HHEADER DATA         \r\n" + "DDETAIL DATA         \r\n";
 

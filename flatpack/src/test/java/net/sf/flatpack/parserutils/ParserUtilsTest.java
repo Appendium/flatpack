@@ -86,13 +86,13 @@ public class ParserUtilsTest extends TestCase {
         assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), false);
     }
 
-    private void testCsvSplit(String title, String line, String... expected) {
+    private void testCsvSplit(final String title, final String line, final String... expected) {
         final List<String> splitLine = ParserUtils.splitLine(line, ',', '"', 5, false, false);
         System.out.println(title + " [" + line + "] ==> " + splitLine);
         assertThat(splitLine).as(title).containsExactly(expected);
     }
 
-    private void testFancyCsvSplit(String title, String line, String... expected) {
+    private void testFancyCsvSplit(final String title, final String line, final String... expected) {
         final List<String> splitLine = ParserUtils.splitLine(line, ',', '|', 5, false, false);
         System.out.println(title + " [" + line + "] ==> " + splitLine);
         assertThat(splitLine).as(title).containsExactly(expected);

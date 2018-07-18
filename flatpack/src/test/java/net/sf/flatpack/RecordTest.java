@@ -21,7 +21,7 @@ public class RecordTest extends TestCase {
         final String cols = "stringCol,doubleCol,dateCol,bigDecimalCol,intCol\r\n"//
                 + "hello,2.20,20140523,123.45,6\r\n"//
                 + ",,,,"//
-                ;
+        ;
         final Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         final StreamingDataSet ds = p.parseAsStream();
         ds.next();

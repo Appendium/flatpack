@@ -62,7 +62,7 @@ public class MapParserTest extends TestCase {
             final Map<String, Object> parse = MapParser
                     .parse(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("BrokenMapping.pzmap.xml")), null);
             fail("Expected Exception SAXException");
-        } catch (SAXException io) {
+        } catch (final SAXException io) {
             assertThat(io.getMessage()).contains("The element type \"COLUMN\" must be terminated by the matching end-tag \"</COLUMN>\"");
         }
     }
@@ -78,7 +78,8 @@ public class MapParserTest extends TestCase {
     }
 
     public void testParseComplexFixedMap() throws IOException, ParserConfigurationException, SAXException {
-        final Map<String, Object> parse = MapParser.parse(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("test-complex-fixed.xml")), null);
+        final Map<String, Object> parse = MapParser
+                .parse(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("test-complex-fixed.xml")), null);
         assertThat(parse).hasSize(8);
         final XMLRecordElement details = (XMLRecordElement) parse.get("exchange");
         assertThat(details).isNotNull();
@@ -107,7 +108,7 @@ public class MapParserTest extends TestCase {
         try {
             MapParser.parse(new StringReader(INVALID_DUPLICATE_COL), parser);
             fail("Expecting exception due to duplicate col");
-        } catch (IllegalArgumentException iae) {
+        } catch (final IllegalArgumentException iae) {
             assertThat(iae.getMessage()).contains("'LASTNAME'");
         }
     }

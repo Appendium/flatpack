@@ -148,7 +148,7 @@ public class OrderColumn {
      *
      * @param dateFormatPattern the dateFormatPattern to set
      * @see java.text.SimpleDateFormat
-    
+
      */
     public void setDateFormatPattern(final String dateFormatPattern) {
         this.dateFormatPattern = dateFormatPattern;

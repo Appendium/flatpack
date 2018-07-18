@@ -45,14 +45,13 @@ public class DoubleQualifierWriteReadTest extends TestCase {
         final Writer createWriter = delimiterWriterFactory.createWriter(writer, WriterOptions.getInstance().autoPrintHeader(true));
 
         for (final Map<String, String> data : dataList) {
-            for (final Map.Entry<String, String> entry : data.entrySet() ) {
+            for (final Map.Entry<String, String> entry : data.entrySet()) {
                 createWriter.addRecordEntry(entry.getKey(), entry.getValue());
             }
             createWriter.nextRecord();
         }
         createWriter.flush();
         LOG.info("Content \n{}", writer.toString());
-
 
         final ByteArrayInputStream file = new ByteArrayInputStream(writer.toString().getBytes());
         final DelimiterParser parser = new DelimiterParser(file, ';', '"', false);
