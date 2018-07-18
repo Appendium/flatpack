@@ -32,7 +32,13 @@
  */
 package net.sf.flatpack;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -90,7 +96,7 @@ public abstract class AbstractParser implements Parser {
     }
 
     @Override
-    public Parser setAddSuffixToDuplicateColumnNames(boolean addSuffixToDuplicateColumnNames) {
+    public Parser setAddSuffixToDuplicateColumnNames(final boolean addSuffixToDuplicateColumnNames) {
         this.addSuffixToDuplicateColumnNames = addSuffixToDuplicateColumnNames;
         return this;
     }
@@ -104,7 +110,7 @@ public abstract class AbstractParser implements Parser {
         this.dataDefinition = dataDefinition;
     }
 
-    protected void initStreamOrSource(InputStream dataSourceStream, File dataSource) throws FileNotFoundException {
+    protected void initStreamOrSource(final InputStream dataSourceStream, final File dataSource) throws FileNotFoundException {
         if (dataSourceStream != null) {
             final Reader r = new InputStreamReader(dataSourceStream);
             setDataSourceReader(r);
@@ -204,7 +210,7 @@ public abstract class AbstractParser implements Parser {
     // is completed.
     protected void addToCloseReaderList(final Reader r) {
         if (readersToClose == null) {
-            readersToClose = new ArrayList<Reader>();
+            readersToClose = new ArrayList<>();
         }
         readersToClose.add(r);
     }

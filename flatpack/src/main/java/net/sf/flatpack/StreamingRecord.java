@@ -19,7 +19,7 @@ public class StreamingRecord implements StreamingDataSet {
 
     @Override
     public boolean next() {
-        return dataSet != null ? dataSet.next() : false;
+        return dataSet != null && dataSet.next();
     }
 
     @Override

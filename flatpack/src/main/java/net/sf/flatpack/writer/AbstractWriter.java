@@ -28,7 +28,7 @@ public abstract class AbstractWriter implements Writer {
     @Override
     public Writer addRecordEntry(final String columnName, final Object value) {
         if (rowMap == null) {
-            rowMap = new HashMap<String, Object>();
+            rowMap = new HashMap<>();
         }
 
         if (!validateColumnTitle(columnName)) {

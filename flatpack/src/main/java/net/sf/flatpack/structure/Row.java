@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class Row {
     /** List to hold all columns that exist in the row */
-    private List<String> cols;
+    private List<String> cols = new ArrayList<>();
 
     /** Row number in flat file */
     private int rowNumber;
@@ -60,7 +60,6 @@ public class Row {
      *
      */
     public Row() {
-        cols = new ArrayList<String>();
     }
 
     /**
@@ -80,9 +79,6 @@ public class Row {
      *            List of Strings to append to the row
      */
     public void addColumn(final List<String> columns) {
-        if (cols == null) {
-            cols = new ArrayList<String>();
-        }
         cols.addAll(columns);
     }
 

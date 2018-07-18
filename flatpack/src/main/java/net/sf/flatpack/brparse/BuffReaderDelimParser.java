@@ -39,6 +39,9 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultDataSet;
 import net.sf.flatpack.DelimiterParser;
@@ -46,9 +49,6 @@ import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class BuffReaderDelimParser extends DelimiterParser implements InterfaceBuffReaderParse {
     private BufferedReader br;
@@ -201,6 +201,7 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
      *
      *@throws IOException
      */
+    @Override
     public void close() throws IOException {
         if (br != null) {
             br.close();

@@ -6,6 +6,7 @@ package net.sf.flatpack.examples.exporttoexcel;
  */
 
 import java.io.File;
+import java.io.FileReader;
 
 import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
@@ -41,7 +42,7 @@ public class DelimitedFileExportToExcel {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), ',', '"', true);
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new FileReader(mapping), new FileReader(data), ',', '"', true);
         final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
@@ -52,7 +53,7 @@ public class DelimitedFileExportToExcel {
 
         if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             for (int i = 0; i < ds.getErrors().size(); i++) {
-                final DataError de = (DataError) ds.getErrors().get(i);
+                final DataError de = ds.getErrors().get(i);
                 System.out.println("Error Msg: " + de.getErrorDesc() + " Line: " + de.getLineNo());
             }
         }

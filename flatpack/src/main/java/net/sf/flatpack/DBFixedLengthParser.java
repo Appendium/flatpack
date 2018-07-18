@@ -34,9 +34,7 @@ package net.sf.flatpack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;

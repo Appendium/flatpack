@@ -88,8 +88,8 @@ public final class MapParser {
      * @param xmlStream
      * @return Map &lt;records&gt; with their corresponding
      * @throws IOException
-     * @throws SAXException 
-     * @throws ParserConfigurationException 
+     * @throws SAXException
+     * @throws ParserConfigurationException
      * @deprecated please use parse(Reader)
      */
     @Deprecated
@@ -109,21 +109,21 @@ public final class MapParser {
      *          Can be null.  Allows additional opts to be set during the XML map read
      * @return Map &lt;records&gt; with their corresponding
      * @throws IOException
-     * @throws ParserConfigurationException 
-     * @throws SAXException 
+     * @throws ParserConfigurationException
+     * @throws SAXException
      */
     public static Map<String, Object> parse(final Reader xmlStreamReader, final Parser pzparser)
             throws IOException, ParserConfigurationException, SAXException {
         if (xmlStreamReader == null) {
             throw new NullPointerException("XML Reader Is Not Allowed To Be Null...");
         }
-        final Map<String, Object> mdIndex = new LinkedHashMap<String, Object>(); // retain the same order
+        final Map<String, Object> mdIndex = new LinkedHashMap<>(); // retain the same order
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        final DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setEntityResolver(new ResolveLocalDTD());
-        org.w3c.dom.Document document = builder.parse(new InputSource(xmlStreamReader));
-        NodeList nodeList = document.getDocumentElement().getChildNodes();
+        final org.w3c.dom.Document document = builder.parse(new InputSource(xmlStreamReader));
+        final NodeList nodeList = document.getDocumentElement().getChildNodes();
 
         final List<ColumnMetaData> columnResults = parseColumnElements(nodeList);
 
@@ -133,7 +133,7 @@ public final class MapParser {
         mdIndex.put(FPConstants.COL_IDX, ParserUtils.buidColumnIndexMap(columnResults, pzparser));
 
         for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
+            final Node node = nodeList.item(i);
 
             final String nodeName = node.getNodeName();
 
@@ -168,16 +168,16 @@ public final class MapParser {
         return mdIndex;
     }
 
-    private static String getAttributeValue(NamedNodeMap attributes, String attributeName) {
+    private static String getAttributeValue(final NamedNodeMap attributes, final String attributeName) {
         final Node namedItem = attributes.getNamedItem(attributeName);
         return namedItem != null ? namedItem.getTextContent() : null;
     }
 
-    private static List<ColumnMetaData> parseColumnElements(NodeList nodeList) {
+    private static List<ColumnMetaData> parseColumnElements(final NodeList nodeList) {
         final Set<String> columnNames = new HashSet<>();
         final List<ColumnMetaData> columnResults = new ArrayList<>();
         for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
+            final Node node = nodeList.item(i);
 
             final String nodeName = node.getNodeName();
 
@@ -253,13 +253,13 @@ public final class MapParser {
                 columns = xmlrecEle.getColumns();
             }
 
-            LOGGER.debug(">>>>Column MD Id: " + recordID);
+            LOGGER.debug(">>>>Column MD Id:{}", recordID);
             if (xmlrecEle != null) {
-                LOGGER.debug("Start Position: " + xmlrecEle.getStartPosition() + " " + "End Position: " + xmlrecEle.getEndPositition() + " "
-                        + "Element Number: " + xmlrecEle.getElementNumber() + " " + "Indicator: " + xmlrecEle.getIndicator());
+                LOGGER.debug("Start Position: {} End Postion: {} Element Number: {} Indicator{}", xmlrecEle.getStartPosition(),
+                        xmlrecEle.getEndPositition(), xmlrecEle.getElementNumber(), xmlrecEle.getIndicator());
             }
             for (final ColumnMetaData cmd : columns) {
-                LOGGER.debug("Column Name: " + cmd.getColName() + " LENGTH: " + cmd.getColLength());
+                LOGGER.debug("Column Name: {} LENGTH: {}", cmd.getColName(), cmd.getColLength());
 
             }
         }
@@ -275,8 +275,8 @@ public final class MapParser {
      *          Can be null.  Allows additional opts to be set during the XML map read
      * @return Map &lt;records&gt; with their corresponding
      * @throws IOException
-     * @throws SAXException 
-     * @throws ParserConfigurationException 
+     * @throws SAXException
+     * @throws ParserConfigurationException
      */
     public static MetaData parseMap(final Reader xmlStreamReader, final Parser pzparser)
             throws IOException, ParserConfigurationException, SAXException {

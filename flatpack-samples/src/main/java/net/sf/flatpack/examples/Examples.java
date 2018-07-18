@@ -31,6 +31,9 @@ import net.sf.flatpack.util.ParserUtils;
  * @author Benoit Xhenseval
  */
 public class Examples implements Repeater {
+    private static final String ISSUE = "Issue";
+    private static final String DATA2 = "Data   ";
+    private static final String MAPPING2 = "Mapping ";
     private static final Logger LOG = LoggerFactory.getLogger(Examples.class);
 
     public void tearDown() {
@@ -92,11 +95,11 @@ public class Examples implements Repeater {
 
     public void doCSVHeaderAndTrailer() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", CSVHeaderAndTrailer.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", CSVHeaderAndTrailer.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, CSVHeaderAndTrailer.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, CSVHeaderAndTrailer.getDefaultDataFile());
             CSVHeaderAndTrailer.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
@@ -107,77 +110,77 @@ public class Examples implements Repeater {
             final boolean verbose = ConsoleMenu.getBoolean("Verbose", false);
             CSVPerformanceTest.call(mapping, verbose, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doDelimitedWithPZMap() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", DelimitedWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMap.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, DelimitedWithPZMap.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, DelimitedWithPZMap.getDefaultDataFile());
             DelimitedWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doDelimitedWithPZMapErrors() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", DelimitedWithPZMapErrors.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", DelimitedWithPZMapErrors.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, DelimitedWithPZMapErrors.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, DelimitedWithPZMapErrors.getDefaultDataFile());
             DelimitedWithPZMapErrors.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doDelimitedFileExportToExcel() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", DelimitedFileExportToExcel.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", DelimitedFileExportToExcel.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, DelimitedFileExportToExcel.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, DelimitedFileExportToExcel.getDefaultDataFile());
             DelimitedFileExportToExcel.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doFixedLengthWithPZMap() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", FixedLengthWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", FixedLengthWithPZMap.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, FixedLengthWithPZMap.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, FixedLengthWithPZMap.getDefaultDataFile());
             FixedLengthWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doFixedLengthHeaderAndTrailer() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", FixedLengthHeaderAndTrailer.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", FixedLengthHeaderAndTrailer.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, FixedLengthHeaderAndTrailer.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, FixedLengthHeaderAndTrailer.getDefaultDataFile());
             FixedLengthHeaderAndTrailer.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doLargeDelimitedWithPZMap() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", LargeDelimitedWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", LargeDelimitedWithPZMap.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, LargeDelimitedWithPZMap.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, LargeDelimitedWithPZMap.getDefaultDataFile());
             LargeDelimitedWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doLargeFixedLengthWithPZMap() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", LargeFixedLengthWithPZMap.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", LargeFixedLengthWithPZMap.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, LargeFixedLengthWithPZMap.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, LargeFixedLengthWithPZMap.getDefaultDataFile());
             LargeFixedLengthWithPZMap.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
@@ -192,40 +195,36 @@ public class Examples implements Repeater {
 
             CSVLarge.call(filename);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doLowLevelParse() {
         try {
-            final String data = ConsoleMenu.getString("Data   ", LowLevelParse.getDefaultDataFile());
+            final String data = ConsoleMenu.getString(DATA2, LowLevelParse.getDefaultDataFile());
             LowLevelParse.call(data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doDelimitedMultiLine() {
         try {
-            final String data = ConsoleMenu.getString("Data   ", DelimitedMultiLine.getDefaultDataFile());
+            final String data = ConsoleMenu.getString(DATA2, DelimitedMultiLine.getDefaultDataFile());
             DelimitedMultiLine.call(data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
     }
 
     public void doNumericsAndDates() {
         try {
-            final String mapping = ConsoleMenu.getString("Mapping ", NumericsAndDates.getDefaultMapping());
-            final String data = ConsoleMenu.getString("Data   ", NumericsAndDates.getDefaultDataFile());
+            final String mapping = ConsoleMenu.getString(MAPPING2, NumericsAndDates.getDefaultMapping());
+            final String data = ConsoleMenu.getString(DATA2, NumericsAndDates.getDefaultDataFile());
             NumericsAndDates.call(mapping, data);
         } catch (final Exception e) {
-            LOG.error("Issue", e);
+            LOG.error(ISSUE, e);
         }
-    }
-
-    public void doGC() {
-        System.gc();
     }
 
     public void doStringBuffer() {

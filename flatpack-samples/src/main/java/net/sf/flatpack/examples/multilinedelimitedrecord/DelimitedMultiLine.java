@@ -1,11 +1,6 @@
 package net.sf.flatpack.examples.multilinedelimitedrecord;
 
-/*
- * Created on Dec 31, 2004
- *
- */
-
-import java.io.File;
+import java.io.FileReader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +35,7 @@ public class DelimitedMultiLine {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(data), ',', '\"');
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new FileReader(data), ',', '\"');
         final DataSet ds = pzparser.parse();
 
         final String[] colNames = ds.getColumns();

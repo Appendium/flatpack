@@ -51,7 +51,7 @@ import net.sf.flatpack.util.ParserUtils;
  *
  */
 public abstract class AbstractDelimiterParser extends AbstractParser {
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractDelimiterParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDelimiterParser.class);
     private char delimiter = 0;
     private char qualifier = 0;
     private boolean ignoreFirstRecord = false;
@@ -215,7 +215,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         return ds;
     }
 
-    private boolean oddNumberOfQualifier(String line, char q) {
+    private boolean oddNumberOfQualifier(final String line, final char q) {
         if (line == null || line.isEmpty()) {
             return false;
         }

@@ -31,8 +31,8 @@ public class FixedLengthWriter extends AbstractWriter {
 
             final String valueString = value.toString();
             if (valueString.length() > metaData.getColLength()) {
-                throw new IllegalArgumentException(valueString + " exceeds the maximum length for column " + columnName + "("
-                        + metaData.getColLength() + ")");
+                throw new IllegalArgumentException(
+                        valueString + " exceeds the maximum length for column " + columnName + "(" + metaData.getColLength() + ")");
             }
         }
         return super.addRecordEntry(columnName, value);

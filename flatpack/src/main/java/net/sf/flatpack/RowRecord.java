@@ -54,7 +54,7 @@ public class RowRecord implements Record {
 
     @Override
     public boolean isRecordID(final String recordID) {
-        String rowID = getRecordID();
+        final String rowID = getRecordID();
 
         return rowID.equals(recordID);
     }
@@ -90,7 +90,7 @@ public class RowRecord implements Record {
      */
     @Override
     public String[] getColumns() {
-        if (metaData != null && columns != null) {
+        if (metaData != null && columns == null) {
             final List<ColumnMetaData> cmds = metaData.getColumnsNames();
 
             columns = new String[cmds.size()];

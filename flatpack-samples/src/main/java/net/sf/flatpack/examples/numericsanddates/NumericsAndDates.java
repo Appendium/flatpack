@@ -1,11 +1,6 @@
 package net.sf.flatpack.examples.numericsanddates;
 
-/*
- * Created on Dec 31, 2004
- *
- */
-
-import java.io.File;
+import java.io.FileReader;
 import java.text.SimpleDateFormat;
 
 import net.sf.flatpack.DataSet;
@@ -40,7 +35,7 @@ public class NumericsAndDates {
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
-        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new File(mapping), new File(data), ',', '\"', true);
+        final Parser pzparser = DefaultParserFactory.getInstance().newDelimitedParser(new FileReader(mapping), new FileReader(data), ',', '\"', true);
         final DataSet ds = pzparser.parse();
         // demonstrates the casting abilities of FlatPack
         while (ds.next()) {

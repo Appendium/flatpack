@@ -61,7 +61,7 @@ public class OrderBy implements Comparator, Serializable {
     private static final long serialVersionUID = 5622406168247149895L;
 
     /** collection of order elements to sort by */
-    private final List<OrderColumn> orderbys = new ArrayList<OrderColumn>();
+    private final List<OrderColumn> orderbys = new ArrayList<>();
 
     private MetaData metaData;
 
@@ -110,12 +110,12 @@ public class OrderBy implements Comparator, Serializable {
             // into account when sorting
             Comparable comp0 = null;
             Comparable comp1 = null;
-            final String str0 = row0.getValue(
-                    ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(
-                            Locale.getDefault());
-            final String str1 = row1.getValue(
-                    ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive())).toLowerCase(
-                            Locale.getDefault());
+            final String str0 = row0
+                    .getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive()))
+                    .toLowerCase(Locale.getDefault());
+            final String str1 = row1
+                    .getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive()))
+                    .toLowerCase(Locale.getDefault());
             switch (oc.getSelectedColType()) {
             case OrderColumn.COLTYPE_STRING:
             default:

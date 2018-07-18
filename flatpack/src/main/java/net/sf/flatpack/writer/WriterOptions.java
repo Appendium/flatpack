@@ -50,7 +50,7 @@ public class WriterOptions {
      * @param lineSeparator the line separator
      * @return
      */
-    public WriterOptions setLineSeparator(String lineSeparator) {
+    public WriterOptions setLineSeparator(final String lineSeparator) {
         this.lineSeparator = lineSeparator;
         return this;
     }

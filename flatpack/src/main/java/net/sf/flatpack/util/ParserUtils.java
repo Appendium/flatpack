@@ -104,7 +104,7 @@ public final class ParserUtils {
      */
     public static List<String> splitLine(final String line, final char delimiter, final char qualifier, final int initialSize,
             final boolean preserveLeadingWhitespace, final boolean preserveTrailingWhitespace) {
-        final List<String> list = new ArrayList<String>(initialSize);
+        final List<String> list = new ArrayList<>(initialSize);
 
         if (delimiter == 0) {
             list.add(line);
@@ -389,13 +389,13 @@ public final class ParserUtils {
      * @param qualifier
      * @param p
      *          PZParser used to specify additional option when working with the ColumnMetaData. Can be null
-     * @param addSuffixToDuplicateColumnNames 
+     * @param addSuffixToDuplicateColumnNames
      * @return PZMetaData
      */
     public static MetaData getPZMetaDataFromFile(final String line, final char delimiter, final char qualifier, final Parser p,
-            boolean addSuffixToDuplicateColumnNames) {
-        final List<ColumnMetaData> results = new ArrayList<ColumnMetaData>();
-        final Set<String> dupCheck = new HashSet<String>();
+            final boolean addSuffixToDuplicateColumnNames) {
+        final List<ColumnMetaData> results = new ArrayList<>();
+        final Set<String> dupCheck = new HashSet<>();
 
         final List<String> lineData = splitLine(line, delimiter, qualifier, FPConstants.SPLITLINE_SIZE_INIT, false, false);
         for (final String colName : lineData) {
@@ -455,7 +455,7 @@ public final class ParserUtils {
                         // return true;
                         boolean qualifiedContent = chrArry[0] == qualifier;
                         for (int index = 0; index < chrArry.length; index++) {
-                            char currentChar = chrArry[index];
+                            final char currentChar = chrArry[index];
                             qualifiedContent = currentChar == qualifier;
                             if (qualifiedContent) {
                                 // go until first occurence of closing qualifierdelimiter combination
@@ -509,7 +509,7 @@ public final class ParserUtils {
                     // return true;
                     boolean qualifiedContent = chrArry[0] == qualifier;
                     for (int index = 0; index < chrArry.length; index++) {
-                        char currentChar = chrArry[index];
+                        final char currentChar = chrArry[index];
                         qualifiedContent = currentChar == qualifier;
                         if (qualifiedContent) {
                             // go until first occurence of closing qualifierdelimiter combination
@@ -530,7 +530,7 @@ public final class ParserUtils {
     }
 
     public static Map<String, Integer> calculateRecordLengths(final MetaData columnMD) {
-        final Map<String, Integer> recordLengths = new HashMap<String, Integer>();
+        final Map<String, Integer> recordLengths = new HashMap<>();
 
         // first the basic columns
         int recordLength = 0;
@@ -711,7 +711,7 @@ public final class ParserUtils {
     public static Map<String, Integer> buidColumnIndexMap(final List<ColumnMetaData> columns, final Parser p) {
         Map<String, Integer> map = null;
         if (columns != null && !columns.isEmpty()) {
-            map = new HashMap<String, Integer>();
+            map = new HashMap<>();
             int idx = 0;
             for (final ColumnMetaData meta : columns) {
                 String colName = meta.getColName();
@@ -883,7 +883,7 @@ public final class ParserUtils {
      */
     public static List<ColumnMetaData> buildMDFromSQLTable(final Connection con, final String dataDefinition, final Parser parser)
             throws SQLException {
-        final List<ColumnMetaData> cmds = new ArrayList<ColumnMetaData>();
+        final List<ColumnMetaData> cmds = new ArrayList<>();
         final String dfTbl = parser != null ? parser.getDataFileTable() : "DATAFILE";
         final String dsTbl = parser != null ? parser.getDataStructureTable() : "DATASTRUCTURE";
         final StringBuilder sqlSb = new StringBuilder();

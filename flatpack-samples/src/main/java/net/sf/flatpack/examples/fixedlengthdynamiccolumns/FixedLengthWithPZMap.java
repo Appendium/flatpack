@@ -1,11 +1,6 @@
 package net.sf.flatpack.examples.fixedlengthdynamiccolumns;
 
-/*
- * Created on Dec 31, 2004
- *
- */
-
-import java.io.File;
+import java.io.FileReader;
 
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
@@ -34,7 +29,7 @@ public class FixedLengthWithPZMap {
     }
 
     public static void call(final String mapping, final String data) throws Exception {
-        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new File(mapping), new File(data));
+        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new FileReader(mapping), new FileReader(data));
         final DataSet ds = pzparser.parse();
 
         final String[] colNames = ds.getColumns();

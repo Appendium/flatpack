@@ -133,8 +133,8 @@ public class DefaultParserFactory implements ParserFactory {
      *      java.io.InputStream, char, char, boolean)
      */
     @Override
-    public Parser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter,
-            final char qualifier, final boolean ignoreFirstRecord) {
+    public Parser newDelimitedParser(final InputStream pzmapXMLStream, final InputStream dataSourceStream, final char delimiter, final char qualifier,
+            final boolean ignoreFirstRecord) {
         return new DelimiterParser(pzmapXMLStream, dataSourceStream, delimiter, qualifier, ignoreFirstRecord);
     }
 

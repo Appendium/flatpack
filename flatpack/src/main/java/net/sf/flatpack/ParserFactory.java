@@ -192,7 +192,8 @@ public interface ParserFactory {
      * @return PZParser
      */
     @Deprecated
-    Parser newDelimitedParser(Connection con, InputStream dataSource, String dataDefinition, char delimiter, char qualifier, boolean ignoreFirstRecord);
+    Parser newDelimitedParser(Connection con, InputStream dataSource, String dataDefinition, char delimiter, char qualifier,
+            boolean ignoreFirstRecord);
 
     /**
      * New constructor based on Reader. Constructs a new DataSet using the

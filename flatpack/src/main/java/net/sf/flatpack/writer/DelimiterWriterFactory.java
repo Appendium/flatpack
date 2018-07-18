@@ -9,7 +9,6 @@ import java.util.Map;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
 
-
 /**
  *
  * @author Dirk Holmes and Holger Holger Hoffstatte

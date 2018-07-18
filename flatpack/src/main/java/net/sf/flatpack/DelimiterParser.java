@@ -33,15 +33,12 @@
 package net.sf.flatpack;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
 import net.sf.flatpack.xml.MapParser;
-
 
 /**
  * @author xhensevb
@@ -124,7 +121,6 @@ public class DelimiterParser extends AbstractDelimiterParser {
             throw new InitialisationException(e);
         }
     }
-
 
     @Override
     protected boolean shouldCreateMDFromFile() {

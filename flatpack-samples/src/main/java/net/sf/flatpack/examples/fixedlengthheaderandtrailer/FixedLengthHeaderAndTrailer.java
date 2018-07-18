@@ -1,11 +1,6 @@
 package net.sf.flatpack.examples.fixedlengthheaderandtrailer;
 
-/*
- * Created on Dec 31, 2004
- *
- */
-
-import java.io.File;
+import java.io.FileReader;
 import java.util.Iterator;
 
 import net.sf.flatpack.DataError;
@@ -38,7 +33,7 @@ public class FixedLengthHeaderAndTrailer {
     public static void call(final String mapping, final String data) throws Exception {
         Iterator errors = null;
         DataError dataError = null;
-        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new File(mapping), new File(data));
+        final Parser pzparser = DefaultParserFactory.getInstance().newFixedLengthParser(new FileReader(mapping), new FileReader(data));
         final DataSet ds = pzparser.parse();
 
         while (ds.next()) {

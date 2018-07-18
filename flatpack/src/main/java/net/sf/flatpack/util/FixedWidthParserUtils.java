@@ -65,7 +65,7 @@ public final class FixedWidthParserUtils {
      */
     public static List<String> splitFixedText(final List<ColumnMetaData> columnMetaData, final String lineToParse,
             final boolean preserveLeadingWhitespace, final boolean preserveTrailingWhitespace) {
-        final List<String> splitResult = new ArrayList<String>();
+        final List<String> splitResult = new ArrayList<>();
         int recPosition = 1;
         for (final ColumnMetaData colMetaDataObj : columnMetaData) {
             String tempValue = lineToParse.substring(recPosition - 1, recPosition + colMetaDataObj.getColLength() - 1);

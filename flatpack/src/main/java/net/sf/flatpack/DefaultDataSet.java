@@ -58,11 +58,11 @@ import net.sf.flatpack.xml.MetaData;
  *
  */
 public class DefaultDataSet implements DataSet {
-    private static final String NEW_LINE = System.getProperty("line.separator");
+    private static final String NEW_LINE = System.lineSeparator();
 
-    private final List<Row> rows = new ArrayList<Row>();
+    private final List<Row> rows = new ArrayList<>();
 
-    private final List<DataError> errors = new ArrayList<DataError>();
+    private final List<DataError> errors = new ArrayList<>();
 
     private Properties pzConvertProps = null;
 
@@ -72,8 +72,9 @@ public class DefaultDataSet implements DataSet {
     /** flag to indicate if data should be pulled as lower case */
     private boolean lowerCase = false;
 
-    /** flag to inidicate if data should be pulled as upper case */
+    /** flag to indicate if data should be pulled as upper case */
     private boolean upperCase = false;
+    private String[] columns = null;
 
     /**
      * flag to indicate if a strict parse should be used when getting doubles
@@ -107,18 +108,17 @@ public class DefaultDataSet implements DataSet {
      */
     @Override
     public String[] getColumns() {
-        String[] array = null;
 
-        if (/* columnMD != null || */metaData != null) {
+        if (columns == null && metaData != null) {
             final List<ColumnMetaData> cmds = metaData.getColumnsNames();
-            array = new String[cmds.size()];
+            columns = new String[cmds.size()];
             for (int i = 0; i < cmds.size(); i++) {
                 final ColumnMetaData column = cmds.get(i);
-                array[i] = column.getColName();
+                columns[i] = column.getColName();
             }
         }
 
-        return array;
+        return columns;
     }
 
     /*
@@ -488,6 +488,7 @@ public class DefaultDataSet implements DataSet {
 
     public void setMetaData(final MetaData metaData) {
         this.metaData = metaData;
+        this.columns = null;
     }
 
     @Override
@@ -552,22 +553,22 @@ public class DefaultDataSet implements DataSet {
     }
 
     @Override
-    public LocalDate getLocalDate(String column, Supplier<LocalDate> defaultSupplier) throws ParseException {
+    public LocalDate getLocalDate(final String column, final Supplier<LocalDate> defaultSupplier) throws ParseException {
         return currentRecord.getLocalDate(column, defaultSupplier);
     }
 
     @Override
-    public LocalDate getLocalDate(String column) throws ParseException {
+    public LocalDate getLocalDate(final String column) throws ParseException {
         return currentRecord.getLocalDate(column);
     }
 
     @Override
-    public LocalDate getLocalDate(String column, String dateFormat, Supplier<LocalDate> defaultSupplier) throws ParseException {
+    public LocalDate getLocalDate(final String column, final String dateFormat, final Supplier<LocalDate> defaultSupplier) throws ParseException {
         return currentRecord.getLocalDate(column, dateFormat, defaultSupplier);
     }
 
     @Override
-    public LocalDate getLocalDate(String column, String dateFormat) throws ParseException {
+    public LocalDate getLocalDate(final String column, final String dateFormat) throws ParseException {
         return currentRecord.getLocalDate(column, dateFormat);
     }
 }

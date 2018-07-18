@@ -40,6 +40,9 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultDataSet;
 import net.sf.flatpack.FixedLengthParser;
@@ -48,9 +51,6 @@ import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.FixedWidthParserUtils;
 import net.sf.flatpack.util.ParserUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -153,7 +153,8 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                         addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
                         // user has chosen to ignore the fact that we have too many bytes in the fixed
                         // width file. Truncate the line to the correct length
-                        row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line.substring(0, recordLength), isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
+                        row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line.substring(0, recordLength), isPreserveLeadingWhitespace(),
+                                isPreserveTrailingWhitespace()));
                     } else {
                         addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
                                 isStoreRawDataToDataError() ? line : null);
@@ -164,7 +165,8 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                         // log a warning
                         addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
                         // We can pad this line out
-                        row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line + ParserUtils.padding(recordLength - line.length(), ' '), isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
+                        row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line + ParserUtils.padding(recordLength - line.length(), ' '),
+                                isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));
 
                     } else {
                         addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
@@ -200,6 +202,7 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
      *
      *@throws IOException
      */
+    @Override
     public void close() throws IOException {
         if (br != null) {
             br.close();

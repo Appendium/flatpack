@@ -34,13 +34,11 @@ package net.sf.flatpack;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
 import net.sf.flatpack.xml.MapParser;
-
 
 /**
  * @author xhensevb

@@ -1,12 +1,6 @@
 package net.sf.flatpack.examples.largedataset.delimiteddynamiccolumns;
 
-/*
- * Created on Dec 31, 2004
- *
- */
-
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
 
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.brparse.BuffReaderDelimParser;
@@ -36,8 +30,8 @@ public class LargeDelimitedWithPZMap {
 
     public static void call(final String mapping, final String data) throws Exception {
         String[] colNames = null;
-        try (FileInputStream pzmap = new FileInputStream(new File(mapping));
-                FileInputStream fileToParse = new FileInputStream(new File(data));
+        try (FileReader pzmap = new FileReader(mapping);
+                FileReader fileToParse = new FileReader(data);
                 BuffReaderDelimParser pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(pzmap, fileToParse,
                         ',', '"', true)) {
             // delimited by a comma

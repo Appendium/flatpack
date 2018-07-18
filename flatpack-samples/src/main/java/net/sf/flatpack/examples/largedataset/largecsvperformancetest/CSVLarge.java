@@ -1,7 +1,6 @@
 package net.sf.flatpack.examples.largedataset.largecsvperformancetest;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +44,8 @@ public class CSVLarge {
     }
 
     public static void call(final String data) throws Exception {
-        try (BuffReaderDelimParser pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(new File(data), ',',
-                '"')) {
+        try (BuffReaderDelimParser pzparse = (BuffReaderDelimParser) BuffReaderParseFactory.getInstance().newDelimitedParser(new FileReader(data),
+                ',', '"')) {
 
             // delimited by a comma
             // text qualified by double quotes
@@ -80,7 +79,7 @@ public class CSVLarge {
             if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
                 System.out.println("FOUND ERRORS IN FILE....");
                 for (int i = 0; i < ds.getErrors().size(); i++) {
-                    final DataError de = (DataError) ds.getErrors().get(i);
+                    final DataError de = ds.getErrors().get(i);
                     System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());
                 }
             }

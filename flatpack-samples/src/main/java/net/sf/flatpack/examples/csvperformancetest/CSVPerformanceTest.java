@@ -40,7 +40,7 @@ public class CSVPerformanceTest {
             final String filename = (String) settings.get("csvFile");
             final String verbose = (String) settings.get("verbose");
 
-            call(filename, Boolean.valueOf(verbose).booleanValue(), true);
+            call(filename, Boolean.parseBoolean(verbose), true);
         } catch (final Exception ex) {
             LOG.error("Issue", ex);
         }
@@ -108,7 +108,7 @@ public class CSVPerformanceTest {
         if (ds.getErrors() != null && !ds.getErrors().isEmpty()) {
             System.out.println("FOUND ERRORS IN FILE....");
             for (int i = 0; i < ds.getErrors().size(); i++) {
-                final DataError de = (DataError) ds.getErrors().get(i);
+                final DataError de = ds.getErrors().get(i);
                 System.out.println("Error: " + de.getErrorDesc() + " Line: " + de.getLineNo());
             }
         }
