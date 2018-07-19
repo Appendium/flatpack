@@ -279,7 +279,7 @@ public class RowRecord implements Record {
             return null;
         }
 
-        s = s.replace(",", "").trim();
+        s = ParserUtils.replace(s, ",", "").trim();
 
         if (FPStringUtils.isBlank(s)) {
             // don't do the parse on empties

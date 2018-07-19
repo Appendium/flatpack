@@ -167,7 +167,8 @@ public final class ParserUtils {
                     if (trimmed == null || trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
                         list.add("");
                     } else {
-                        trimmed = trimmed.replace(doubleQualifier, String.valueOf(qualifier));
+                        // trimmed = trimmed.replace(doubleQualifier, String.valueOf(qualifier));
+                        trimmed = replace(trimmed, doubleQualifier, String.valueOf(qualifier));
                         list.add(trimmed);
                     }
                     blockWasInQualifier = false;
@@ -210,7 +211,8 @@ public final class ParserUtils {
                     // last column (e.g. finishes with ")
                     if (i == size - 1) {
                         String str = trimmedLine.substring(startBlock, size - 1);
-                        str = str.replace(doubleQualifier, String.valueOf(qualifier));
+                        // str = str.replace(doubleQualifier, String.valueOf(qualifier));
+                        str = replace(str, doubleQualifier, String.valueOf(qualifier));
                         list.add(str);
                         startBlock = i + 1;
                     }
@@ -221,7 +223,8 @@ public final class ParserUtils {
 
         if (startBlock < size) {
             String str = trimmedLine.substring(startBlock, size);
-            str = str.replace(doubleQualifier, String.valueOf(qualifier));
+            // str = str.replace(doubleQualifier, String.valueOf(qualifier));
+            str = replace(str, doubleQualifier, String.valueOf(qualifier));
             if (blockWasInQualifier) {
                 if (str.charAt(str.length() - 1) == qualifier) {
                     list.add(str.substring(0, str.length() - 1));
@@ -243,6 +246,52 @@ public final class ParserUtils {
         }
 
         return list;
+    }
+
+    /**
+     * Using a much faster String Replace from Apache!
+     * @see https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace
+     */
+    public static String replace(String text, String searchString, String replacement) {
+        return replace(text, searchString, replacement, -1);
+    }
+
+    /**
+     * Using a much faster String Replace from Apache!
+     * @see https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace
+     */
+    private static boolean isEmpty(String str) {
+        return str == null || str.length() == 0;
+    }
+
+    /**
+     * Using a much faster String Replace from Apache!
+     * @see https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace
+     */
+    private static String replace(String text, String searchString, String replacement, int max) {
+        if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
+            return text;
+        }
+        int start = 0;
+        int end = text.indexOf(searchString, start);
+        if (end == -1) {
+            return text;
+        }
+        int replLength = searchString.length();
+        int increase = replacement.length() - replLength;
+        increase = (increase < 0 ? 0 : increase);
+        increase *= (max < 0 ? 16 : (max > 64 ? 64 : max));
+        StringBuilder buf = new StringBuilder(text.length() + increase);
+        while (end != -1) {
+            buf.append(text.substring(start, end)).append(replacement);
+            start = end + replLength;
+            if (--max == 0) {
+                break;
+            }
+            end = text.indexOf(searchString, start);
+        }
+        buf.append(text.substring(start));
+        return buf.toString();
     }
 
     /**
