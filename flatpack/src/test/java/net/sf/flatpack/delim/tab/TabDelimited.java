@@ -6,6 +6,7 @@ package net.sf.flatpack.delim.tab;
  */
 
 import java.io.File;
+import java.io.FileReader;
 
 import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
@@ -61,7 +62,7 @@ public class TabDelimited {
 
     public DataSet getDsForTest() throws Exception {
         final Parser parser = DefaultParserFactory.getInstance()
-                .newDelimitedParser(new File("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
+                .newDelimitedParser(new FileReader("src/test/java/net/sf/flatpack/delim/tab/PEOPLE-TabDelimitedWithQualifier.txt"), '\t', '\"');
 
         parser.setHandlingShortLines(true);
 
