@@ -85,7 +85,7 @@
         <dependency>
             <groupId>net.objectlab.kit</groupId>
             <artifactId>objectlab-utils</artifactId>
-            <version>1.4.1-SNAPSHOT</version>
+            <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>net.sf.flatpack</groupId>
