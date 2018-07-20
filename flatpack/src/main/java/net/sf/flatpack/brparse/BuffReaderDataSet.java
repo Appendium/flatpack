@@ -105,7 +105,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
     /**
      * Not Supported!
      * @param localPointer - int
-     * @exception IndexOutOfBoundsException
+     * @exception UnsupportedOperationException unsupported
      */
     @Override
     public void absolute(final int localPointer) {

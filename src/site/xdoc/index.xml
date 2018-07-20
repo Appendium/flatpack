@@ -99,6 +99,7 @@
                     <li>You do not need to know ALL the column names, columns can be ignored/added/removed without breaking your code.</li>
                     <li>You do not need to know the order of columns, columns order can be modified without breaking your code.</li>
                     <li>The column names are case insensitive by default: record.getString("StATUs") is ok.</li>
+                    <li>If you parse everything in memory, you can restart the dataSet, skip records, go back etc.</li>
                     <li>Java 8 stream like interface: e.g. parser.parseAsStream().filter(xxx).map(yyy).collect(zzz).</li>
                 </ul>
             </subsection>
