@@ -22,9 +22,9 @@
 
 		<subsection name="Code Metrics">
 			<div id="sonar">
-				<a href="http://nemo.sonarqube.org/dashboard/index/665347">
+				<a href="https://sonarcloud.io/dashboard/index/net.sf.flatpack:flatpack-parent">
 					<span>
-						<img src="images/sonar_logo.png" />
+						<img src="https://sonarcloud.io/api/project_badges/quality_gate?project=net.sf.flatpack:flatpack-parent" />
 					</span>
 					<span>
 						View Code Metrics by Sonar
