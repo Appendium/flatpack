@@ -17,3 +17,8 @@ FlatPack on SourceForge: a Java (1.8+) flat file parser that handles CSV,
 fixed length and custom delimiters. It can handle very large files.
 
 The formats are configured in XML, it is fast and released under Apache license 2.0.
+
+Links
+=====
+
+* Thank you to [YourKit](http://www.yourkit.com) for the OSS Licence
