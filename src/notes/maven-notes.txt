@@ -12,6 +12,66 @@ mvn deploy
 If configured to point to OSS Repo, it will deploy a new snapshot.
 
 
+SIMPLER SOLUTION
+=================
+
+mvn clean deploy -Pcode-sign
+This will deploy the code to the REPO and if autoClose is TRUE it WILL be pushed to CENTRAL REPO!
+
+You need in settings.xml
+        <server>
+            <id>ossrh</id>
+            <username>jira-use</username>
+            <password>jira-password</password>
+        </server>
+
+in POM.XML
+
+    <distributionManagement>
+        <site>
+            <id>flatpack.sf.net</id>
+            <url>${site.deploy.url}</url>
+        </site>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+and
+
+
+            <!-- see https://central.sonatype.org/pages/apache-maven.html -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+THEN DONT FORGET TO CHANGE THE VERSION
+
+mvn versions:set -DnewVersion=4.0.3-SNAPSHOT
+
+
+
+
+
+
+
+
 
 SIGN as part of release
 ========================
