@@ -1,214 +1,295 @@
 <document>
-  <properties>
-    <author email="paulz17@yahoo.com">Paul Zepernick</author>
-    <title>Introduction</title>
-  </properties>
-  <head>
-    <meta name="description"
-	content="Flat File Parser (fixed length, csv, etc) via XML Column Mappings, released under the business-friendly Apache 2.0 license."
-	/>
+    <properties>
+        <author email="paulz17@yahoo.com">Paul Zepernick</author>
+        <title>Introduction</title>
+    </properties>
+    <head>
+        <meta name="description"
+            content="Flat File Parser (fixed length, csv, etc) via XML Column Mappings, released under the business-friendly Apache 2.0 license." />
 
-    <meta name="keywords"
-        content="Java CSV, Java Fixed Width, Open Source Java Parser, Java Delimited, Java Fixed Width, Java Flat File, Java Text Parser" />
-    <meta name="Subject" content="Flat File Parser" />
-    <!--<meta name="Copyright" content="ObjectLab Financial Ltd" />-->
-    <meta name="Language" content="English" />
-    <meta name="Designer" content="Paul Zepernick" />
-    <meta name="Distribution" content="Global" />
-    <meta name="robots" content="ALL"/>
-    <meta name="Revisit-After" content="20 Days" />
-  </head>
-  <body>
-    <!-- The body of the document contains a number of sections -->
-    <section name="News">
-	<p style="margin-top:10px; margin-bottom:0; padding-bottom:0; text-align:center; line-height:0"><a href="http://feeds.feedburner.com/~r/ObjectlabOpenSourceNews/~6/1"><img src="http://feeds.feedburner.com/ObjectlabOpenSourceNews.1.gif" alt="ObjectLab Open Source News" style="border:0"/></a></p><p style="margin-top:5px; padding-top:0; font-size:x-small; text-align:center"><a href="http://www.feedburner.com/fb/a/headlineanimator/install?id=829470&amp;w=1" onclick="window.open(this.href, 'haHowto', 'width=520,height=600,toolbar=no,address=no,resizable=yes,scrollbars'); return false" target="_blank">Grab this Headline Animator</a></p>
+        <meta name="keywords"
+            content="Java CSV, Java Fixed Width, Open Source Java Parser, Java Delimited, Java Fixed Width, Java Flat File, Java Text Parser" />
+        <meta name="Subject" content="Flat File Parser" />
+        <!--<meta name="Copyright" content="ObjectLab Financial Ltd" /> -->
+        <meta name="Language" content="English" />
+        <meta name="Designer" content="Paul Zepernick" />
+        <meta name="Distribution" content="Global" />
+        <meta name="robots" content="ALL" />
+        <meta name="Revisit-After" content="20 Days" />
+    </head>
+    <body>
+        <!-- The body of the document contains a number of sections -->
+        <section name="News">
+            <p style="margin-top:10px; margin-bottom:0; padding-bottom:0; text-align:center; line-height:0">
+                <a href="http://feeds.feedburner.com/~r/ObjectlabOpenSourceNews/~6/1">
+                    <img src="http://feeds.feedburner.com/ObjectlabOpenSourceNews.1.gif" alt="ObjectLab Open Source News" style="border:0" />
+                </a>
+            </p>
+            <p style="margin-top:5px; padding-top:0; font-size:x-small; text-align:center">
+                <a href="http://www.feedburner.com/fb/a/headlineanimator/install?id=829470&amp;w=1"
+                    onclick="window.open(this.href, 'haHowto', 'width=520,height=600,toolbar=no,address=no,resizable=yes,scrollbars'); return false"
+                    target="_blank">Grab this Headline Animator</a>
+            </p>
 
-	<p>Reminder: we have moved to <a href="http://www.github.com/appendium/flatpack">GitHub</a>.</p>
+            <p>
+                Reminder: we have moved to
+                <a href="http://www.github.com/appendium/flatpack">GitHub</a>
+                .
+            </p>
 
-	<p><strong>We have two branches: 3_4_branch which remains JDK 1.5 and master/4_x which is JDK8.</strong> New development will be limited to master.</p>
+            <p>
+                <strong>We have two branches: 3_4_branch which remains JDK 1.5 and master/4_x which is JDK8.</strong>
+                New development will be limited to master.
+            </p>
 
-    <p>September 04, 2014: FlatPack 4.0.0 is released, JDK8 Release! with some fluent changes, see the <a href="changes-report.html">change log</a></p>
-    </section>
-
-
-    <section name="FlatPack Introduction">
-
-    <p>FlatPack came out of the frustration of having to mix file parsing logic with business logic.</p>
-
-    <p>FlatPack on SourceForge: a Java (1.8+) flat file parser that handles CSV (including values containing ','), 
-    fixed length and custom delimiters. 
-    The formats can be configured in XML, it is fast and released under Apache license 2.0.</p>
-
-	<p>Starting at release 3.1, FlatPack introduces <b>exporters</b> via the writer package. This mechanism allows you to export a DataSet to a fixed length or delimited format. A big thank you to Dirk and Holger from the <a href="http://www.mulesource.org">Mule project</a>
-	for the initial code contribution. FlatPack should integrate nicely with Mule, the open source choice for integration and SOA.</p>
-
-    <p>Substrings in a <strong>fixed width parse</strong> can be daunting to deal with when trying to analyze what existing code is doing,
-    and what about when you have no comments...</p>
-
-    <p>We also provide <strong>delimited file parsing</strong>; works with any delimiter / qualifier, multiline records, delimiter or qualifier allowed in column value.</p>
-
-    <p>A manual is available as <a href="documentation/flatpack-manual.doc">Word</a> document or a <a href="documentation/flatpack-manual.pdf">PDF</a>.</p>
-
-    <p>FlatPack is part of the ObjectLab Kit family.</p>
-
-    <subsection name="Why should you use FlatPack?">
-
-	<p>There is more to it than one could imagine at first sight:</p>
-	<ul>
-
-	<li><strong>Problem Sorting Data Prior To File Processing?</strong></li>
-	<ul><li>FlatPack provides a sorting mechanism for your flat files.  This allows for your data to be properly sorted before processing your business logic.</li></ul>
-    	<li><strong>Bad Numeric Data?</strong></li>
-    	<ul><li>Do you often receive numeric data with dollar signs, or commas?  FlatPack has the ability to strip these out and return as a double or int.
-            Even empty elements or hard spaces can be converted to a numeric without issue.</li></ul>
-
-    	<li><strong>Problems With One Bad Record Blowing Up The Entire Parse?</strong></li>
-        <ul><li>Bad records get excluded from the DataSet and added to an error collection.  This error collection can be checked at the end of the parse to
-        report on bad records.  A description of the error and the line number in the file is provided.  Why blow up an entire import for one bad record?</li></ul>
-        </ul>
-    </subsection>
-
-    <subsection name="Which JDK?">
-        <p>1.8 and up</p>
-    </subsection>
-
-    </section>
-
-    <section name="How do I use it?">
-    <p>Basic Steps</p>
-    <ol>
-    	<li>Obtain a Parser from a parser factory (DefaultParserFactory) with a  File, InputStream, or a reader(coming soon)</li>
-    	<li>Set additional Parser options, Parser.setAnOption()</li>
-        <li>Obtain a DataSet Parser.parse()</li>
-    	<li>Call DataSet.next() to advance record pointer</li>
-    	<li>Process columns; DataSet.getString("colname"), getInt("colname"), getDouble("colname"), getDate("colname"), etc</li>
-        <li>Check for parse errors; DataSet.getErrors()</li>
-    </ol>
-
-    <subsection name="New JDK8 to Read Delimited File">
-    
-    <script src="https://gist.github.com/benoitx/3e40808566d62c724232.js"></script>
-    
-    </subsection>
-
-    <subsection name="New way to Read Delimited File With Immutable Record">
-
-    <div class="source"><pre>
-    // Obtain the proper parser for your needs: basic CSV Parser with column Header
-    Parser parser = DefaultParserFactory.newCsvParser(new FileReader("DataFile.csv"));
-
-    //obtain DataSet
-    StreamingDataSet ds = parser.parseAsStream();
-
-    while (ds.next()){ //loop through file
-        Record record = ds.getRecord(); // immutable object, you can give it to a thread.
-        String value = record.getString("mycolumnName"); // columns name are case INsensitive
-    }
-    </pre></div>
-
-    </subsection>
+            <p>
+                September 04, 2014: FlatPack 4.0.0 is released, JDK8 Release! with some fluent changes, see the
+                <a href="changes-report.html">change log</a>
+            </p>
+        </section>
 
 
+        <section name="FlatPack Introduction">
 
-    <subsection name="Reading Delimited File With Column Mapping">
+            <p>FlatPack came out of the frustration of having to mix file parsing logic with business logic.</p>
 
-    <div class="source"><pre>
-    //Obtain the proper parser for your needs
-    Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
-        new FileReader("map.fpmap.xml"), //xml column mapping
-        new FileReader("DataFile.txt"),  //txt file to parse
-        ',', //delimiter
-        '"', //text qualfier
-        false); //ignore the first record (may need to be done if first record contain column names)
+            <p>FlatPack on SourceForge: a Java (1.8+) flat file parser that handles CSV (including values containing ','),
+                fixed length and custom delimiters.
+                The formats can be configured in XML, it is fast and released under Apache license 2.0.
+            </p>
 
-    //obtain DataSet
-    DataSet ds = parser.parse();
+            <p>
+                Starting at release 3.1, FlatPack introduces
+                <b>exporters</b>
+                via the writer package. This mechanism allows you to export a DataSet to a fixed length or delimited format. A big thank you to Dirk
+                and Holger from the
+                <a href="http://www.mulesource.org">Mule project</a>
+                for the initial code contribution. FlatPack should integrate nicely with Mule, the open source choice for integration and SOA.
+            </p>
 
-    while (ds.next()){ //loop through file
-       ds.getString("mycolumnName");
-    }
-    </pre></div>
+            <p>
+                Substrings in a
+                <strong>fixed width parse</strong>
+                can be daunting to deal with when trying to analyze what existing code is doing,
+                and what about when you have no comments...
+            </p>
 
-    </subsection>
+            <p>
+                We also provide
+                <strong>delimited file parsing</strong>
+                ; works with any delimiter / qualifier, multiline records, delimiter or qualifier allowed in column value.
+            </p>
 
-    <subsection name="Reading Delimited File Column Names In First Record Of File">
+            <p>
+                A manual is available as
+                <a href="documentation/flatpack-manual.doc">Word</a>
+                document or a
+                <a href="documentation/flatpack-manual.pdf">PDF</a>
+                .
+            </p>
 
-    <div class="source"><pre>
-    //Obtain the proper parser for your needs
-    Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
-        new FileReader("DataFile.txt"),  //txt file to parse
-        ',', //delimiter
-        '"'); //text qualifier
+            <p>FlatPack is part of the ObjectLab Kit family.</p>
 
-    //obtain DataSet
-    DataSet ds = parser.parse();
+            <subsection name="What does FlatPack do?">
+                <p>It parses or creates Delimited files (e.g. CSV) or Fixed Width 'files'.</p>
+                <ul>
+                    <li>CSV, TAB, Fixed Width, etc Readers and Writers.</li>
+                    <li>It is reasonable and fast.</li>
+                    <li>It can handle large files/records (see BuffReaderDelimiterFactory) or read everything in memory.</li>
+                    <li>You do not need to know ALL the column names, columns can be ignored/added/removed without breaking your code.</li>
+                    <li>You do not need to know the order of columns, columns order can be modified without breaking your code.</li>
+                    <li>The column names are case insensitive by default: record.getString("StATUs") is ok.</li>
+                    <li>Java 8 stream like interface: e.g. parser.parseAsStream().filter(xxx).map(yyy).collect(zzz).</li>
+                </ul>
+            </subsection>
 
-    while (ds.next()){ //loop through file
-        ds.getString("mycolumnName");
-    }
-    </pre></div>
+            <subsection name="Why should you use FlatPack?">
 
-    </subsection>
+                <p>There is more to it than one could imagine at first sight:</p>
+                <ul>
+
+                    <li>
+                        <strong>Problem Sorting Data Prior To File Processing?</strong>
+                    </li>
+                    <ul>
+                        <li>FlatPack provides a sorting mechanism for your flat files. This allows for your data to be properly sorted before
+                            processing your business logic.</li>
+                    </ul>
+                    <li>
+                        <strong>Bad Numeric Data?</strong>
+                    </li>
+                    <ul>
+                        <li>Do you often receive numeric data with dollar signs, or commas? FlatPack has the ability to strip these out and return as
+                            a double or int.
+                            Even empty elements or hard spaces can be converted to a numeric without issue.
+                        </li>
+                    </ul>
+
+                    <li>
+                        <strong>Problems With One Bad Record Blowing Up The Entire Parse?</strong>
+                    </li>
+                    <ul>
+                        <li>Bad records get excluded from the DataSet and added to an error collection. This error collection can be checked at the
+                            end of the parse to
+                            report on bad records. A description of the error and the line number in the file is provided. Why blow up an entire import for one bad record?
+                        </li>
+                    </ul>
+                </ul>
+            </subsection>
+
+            <subsection name="Which JDK?">
+                <p>1.8 and up</p>
+            </subsection>
+
+        </section>
+
+        <section name="How do I use it?">
+            <p>Basic Steps</p>
+            <ol>
+                <li>Obtain a Parser from a parser factory (DefaultParserFactory) with a File, InputStream, or a reader(coming soon)</li>
+                <li>Set additional Parser options, Parser.setAnOption()</li>
+                <li>Obtain a DataSet Parser.parse()</li>
+                <li>Call DataSet.next() to advance record pointer</li>
+                <li>Process columns; DataSet.getString("colname"), getInt("colname"), getDouble("colname"), getDate("colname"), etc</li>
+                <li>Check for parse errors; DataSet.getErrors()</li>
+            </ol>
+
+            <subsection name="New JDK8 to Read Delimited File">
+
+                <script src="https://gist.github.com/benoitx/3e40808566d62c724232.js"></script>
+
+            </subsection>
+
+            <subsection name="New way to Read Delimited File With Immutable Record">
+
+                <div class="source">
+                    <pre>
+                        // Obtain the proper parser for your needs: basic CSV Parser with column Header
+                        Parser parser = DefaultParserFactory.newCsvParser(new FileReader("DataFile.csv"));
+
+                        //obtain DataSet
+                        StreamingDataSet ds = parser.parseAsStream();
+
+                        while (ds.next()){ //loop through file
+                        Record record = ds.getRecord(); // immutable object, you can give it to a thread.
+                        String value = record.getString("mycolumnName"); // columns name are case INsensitive
+                        }
+                    </pre>
+                </div>
+
+            </subsection>
 
 
-    <subsection name="Reading Fixed Width File">
 
-    <div class="source"><pre>
-    //Obtain the proper parser for your needs
-    Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
-    	new FileReader("map.fpmap.xml"), //fixed with column map
-        new FileReader("DataFile.txt"));  //txt file to parse
+            <subsection name="Reading Delimited File With Column Mapping">
 
-    //obtain DataSet
-    DataSet ds = parser.parse();
+                <div class="source">
+                    <pre>
+                        //Obtain the proper parser for your needs
+                        Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+                        new FileReader("map.fpmap.xml"), //xml column mapping
+                        new FileReader("DataFile.txt"), //txt file to parse
+                        ',', //delimiter
+                        '"', //text qualfier
+                        false); //ignore the first record (may need to be done if first record contain column names)
 
-    while (ds.next()){ //loop through file
-        ds.getString("mycolumnName");
-    }
-    </pre></div>
+                        //obtain DataSet
+                        DataSet ds = parser.parse();
 
-    </subsection>
+                        while (ds.next()){ //loop through file
+                        ds.getString("mycolumnName");
+                        }
+                    </pre>
+                </div>
 
-    <subsection name="Reading a Message of Fixed Width">
+            </subsection>
 
-    <div class="source"><pre>
-	final String msg = "data     data2     data3     data4"
-	//Obtain the proper parser for your needs
-    Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
-    	new FileReader("map.fpmap.xml"), //fixed with column map to bind col names
-        new StringReader(mag));  //data to parse
+            <subsection name="Reading Delimited File Column Names In First Record Of File">
 
-    //obtain DataSet
-    DataSet ds = parser.parse();
+                <div class="source">
+                    <pre>
+                        //Obtain the proper parser for your needs
+                        Parser parser = DefaultParserFactory.getInstance().newDelimitedParser(
+                        new FileReader("DataFile.txt"), //txt file to parse
+                        ',', //delimiter
+                        '"'); //text qualifier
 
-    while (ds.next()){ //loop through file
-       ds.getString("mycolumnName");
-    }
-    </pre></div>
+                        //obtain DataSet
+                        DataSet ds = parser.parse();
 
-    </subsection>
+                        while (ds.next()){ //loop through file
+                        ds.getString("mycolumnName");
+                        }
+                    </pre>
+                </div>
 
-    <subsection name="Using SLF4J With FlatPack">
-
-    <div class="source"><pre>
-Slf4j is utilized to capture logging information that occurred during a parse.
-By default, this information will be logged to the console.  SLF supports the following loggers; log4j, jcl, nop, and jdk1.4.
-Please go to http://www.slf4j.org to download the proper jar for your logging preference.  Here is a typical SLF4j setup:
-
-SLF-api-XXX.jar + SLF-MyLoggerPreference.jar + MyLogger.jar (lo4j.jar for example)
-
-Here are the steps that would need to be taken for log4j:
-
-1.	Install log4j.jar
-2.	Setup log4j.properties or log4j.xml
-3.	Install SLF-api-XXX.jar
-4.	Install SLF-log4j12-XXX.jar
-    </pre></div>
-
-    </subsection>
+            </subsection>
 
 
-    </section>
+            <subsection name="Reading Fixed Width File">
 
-  </body>
+                <div class="source">
+                    <pre>
+                        //Obtain the proper parser for your needs
+                        Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
+                        new FileReader("map.fpmap.xml"), //fixed with column map
+                        new FileReader("DataFile.txt")); //txt file to parse
+
+                        //obtain DataSet
+                        DataSet ds = parser.parse();
+
+                        while (ds.next()){ //loop through file
+                        ds.getString("mycolumnName");
+                        }
+                    </pre>
+                </div>
+
+            </subsection>
+
+            <subsection name="Reading a Message of Fixed Width">
+
+                <div class="source">
+                    <pre>
+                        final String msg = "data data2 data3 data4"
+                        //Obtain the proper parser for your needs
+                        Parser parser = DefaultParserFactory.getInstance().newFixedLengthParser(
+                        new FileReader("map.fpmap.xml"), //fixed with column map to bind col names
+                        new StringReader(mag)); //data to parse
+
+                        //obtain DataSet
+                        DataSet ds = parser.parse();
+
+                        while (ds.next()){ //loop through file
+                        ds.getString("mycolumnName");
+                        }
+                    </pre>
+                </div>
+
+            </subsection>
+
+            <subsection name="Using SLF4J With FlatPack">
+
+                <div class="source">
+                    <pre>
+                        Slf4j is utilized to capture logging information that occurred during a parse.
+                        By default, this information will be logged to the console. SLF supports the following loggers; log4j, jcl, nop, and jdk1.4.
+                        Please go to http://www.slf4j.org to download the proper jar for your logging preference. Here is a typical SLF4j setup:
+
+                        SLF-api-XXX.jar + SLF-MyLoggerPreference.jar + MyLogger.jar (lo4j.jar for example)
+
+                        Here are the steps that would need to be taken for log4j:
+
+                        1. Install log4j.jar
+                        2. Setup log4j.properties or log4j.xml
+                        3. Install SLF-api-XXX.jar
+                        4. Install SLF-log4j12-XXX.jar
+                    </pre>
+                </div>
+
+            </subsection>
+
+
+        </section>
+
+    </body>
 </document>
