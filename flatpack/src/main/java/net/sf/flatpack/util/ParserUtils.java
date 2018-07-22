@@ -168,8 +168,8 @@ public final class ParserUtils {
                         list.add("");
                     } else {
                         // trimmed = trimmed.replace(doubleQualifier, String.valueOf(qualifier));
-                        trimmed = replace(trimmed, doubleQualifier, String.valueOf(qualifier));
-                        list.add(trimmed);
+                        // list.add(replace(trimmed, doubleQualifier, String.valueOf(qualifier), -1));
+                        list.add(replace(trimmed, doubleQualifier, String.valueOf(qualifier), -1));
                     }
                     blockWasInQualifier = false;
                     startBlock = i + 1;
@@ -212,7 +212,8 @@ public final class ParserUtils {
                     if (i == size - 1) {
                         String str = trimmedLine.substring(startBlock, size - 1);
                         // str = str.replace(doubleQualifier, String.valueOf(qualifier));
-                        str = replace(str, doubleQualifier, String.valueOf(qualifier));
+                        // str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
+                        str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
                         list.add(str);
                         startBlock = i + 1;
                     }
@@ -224,7 +225,8 @@ public final class ParserUtils {
         if (startBlock < size) {
             String str = trimmedLine.substring(startBlock, size);
             // str = str.replace(doubleQualifier, String.valueOf(qualifier));
-            str = replace(str, doubleQualifier, String.valueOf(qualifier));
+            // str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
+            str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
             if (blockWasInQualifier) {
                 if (str.charAt(str.length() - 1) == qualifier) {
                     list.add(str.substring(0, str.length() - 1));
@@ -252,23 +254,16 @@ public final class ParserUtils {
      * Using a much faster String Replace from Apache!
      * @see <a href="https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace">StackOverflow</a>
      */
-    public static String replace(String text, String searchString, String replacement) {
-        return replace(text, searchString, replacement, -1);
-    }
-
-    /**
-     * Using a much faster String Replace from Apache!
-     * @see <a href="https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace">StackOverflow</a>
-     */
     private static boolean isEmpty(String str) {
         return str == null || str.length() == 0;
     }
 
     /**
      * Using a much faster String Replace from Apache!
+     * @param ignore TODO
      * @see <a href="https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace">StackOverflow</a>
      */
-    private static String replace(String text, String searchString, String replacement, int max) {
+    public static String replace(String text, String searchString, String replacement, int max) {
         if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
             return text;
         }

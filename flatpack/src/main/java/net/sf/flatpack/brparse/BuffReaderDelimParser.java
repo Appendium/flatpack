@@ -124,13 +124,7 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             }
 
             // check to see if the user has elected to skip the first record
-            if (!processedFirst && isIgnoreFirstRecord()) {
-                processedFirst = true;
-                continue;
-            } else if (!processedFirst && shouldCreateMDFromFile()) {
-                processedFirst = true;
-                setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, getDelimiter(), getQualifier(), this, isAddSuffixToDuplicateColumnNames()));
-                ds.setMetaData(getPzMetaData());
+            if (shouldSkipFirstRecord(line, ds)) {
                 continue;
             }
 
@@ -142,58 +136,81 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
                     isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace());
             final String mdkey = ParserUtils.getCMDKeyForDelimitedFile(getPzMetaData(), columns);
             final List<ColumnMetaData> cmds = ParserUtils.getColumnMetaData(mdkey, getPzMetaData());
-            final int columnCount = cmds.size();
             // DEBUG
 
             // Incorrect record length on line log the error. Line
             // will not be included in the dataset
-            if (columns.size() > columnCount) {
-                if (isIgnoreExtraColumns()) {
-                    // user has choosen to ignore the fact that we have too many columns in the data from
-                    // what the mapping has described. sublist the array to remove un-needed columns
-                    columns = columns.subList(0, columnCount);
-                    addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
-                } else {
-                    // log the error
-                    addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
-                            isStoreRawDataToDataError() ? line : null);
-                    continue;
-                }
-            } else if (columns.size() < columnCount) {
-                if (isHandlingShortLines()) {
-                    // We can pad this line out
-                    while (columns.size() < columnCount) {
-                        columns.add("");
-                    }
-
-                    // log a warning
-                    addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
-
-                } else {
-                    addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
-                            isStoreRawDataToDataError() ? line : null);
-                    continue;
-                }
+            if (!validateColumns(ds, columns, cmds, line)) {
+                continue;
             }
 
-            final Row row = new Row();
-            row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
-            // to limit the memory use
-            row.setCols(columns);
-            row.setRowNumber(getLineCount());
-
-            if (isFlagEmptyRows()) {
-                // user has elected to have the parser flag rows that are empty
-                row.setEmpty(ParserUtils.isListElementsEmpty(columns));
-            }
-            if (isStoreRawDataToDataSet()) {
-                // user told the parser to keep a copy of the raw data in the row
-                // WARNING potential for high memory usage here
-                row.setRawData(line);
-            }
-
-            return row;
+            return createRow(line, columns, mdkey);
         }
+    }
+
+    private boolean shouldSkipFirstRecord(String line, DefaultDataSet ds) {
+        if (!processedFirst && isIgnoreFirstRecord()) {
+            processedFirst = true;
+            return true;
+        } else if (!processedFirst && shouldCreateMDFromFile()) {
+            processedFirst = true;
+            setPzMetaData(ParserUtils.getPZMetaDataFromFile(line, getDelimiter(), getQualifier(), this, isAddSuffixToDuplicateColumnNames()));
+            ds.setMetaData(getPzMetaData());
+            return true;
+        }
+        return false;
+    }
+
+    private Row createRow(String line, List<String> columns, final String mdkey) {
+        final Row row = new Row();
+        row.setMdkey(mdkey.equals(FPConstants.DETAIL_ID) ? null : mdkey); // try
+        // to limit the memory use
+        row.setCols(columns);
+        row.setRowNumber(getLineCount());
+
+        if (isFlagEmptyRows()) {
+            // user has elected to have the parser flag rows that are empty
+            row.setEmpty(ParserUtils.isListElementsEmpty(columns));
+        }
+        if (isStoreRawDataToDataSet()) {
+            // user told the parser to keep a copy of the raw data in the row
+            // WARNING potential for high memory usage here
+            row.setRawData(line);
+        }
+        return row;
+    }
+
+    private boolean validateColumns(DefaultDataSet ds, List<String> columns, List<ColumnMetaData> cmds, String line) {
+        final int columnCount = cmds.size();
+        if (columns.size() > columnCount) {
+            if (isIgnoreExtraColumns()) {
+                // user has choosen to ignore the fact that we have too many columns in the data from
+                // what the mapping has described. sublist the array to remove un-needed columns
+                columns = columns.subList(0, columnCount);
+                addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
+            } else {
+                // log the error
+                addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
+                        isStoreRawDataToDataError() ? line : null);
+                return false;
+            }
+        } else if (columns.size() < columnCount) {
+            if (isHandlingShortLines()) {
+                // We can pad this line out
+                while (columns.size() < columnCount) {
+                    columns.add("");
+                }
+
+                // log a warning
+                addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
+
+            } else {
+                addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
+                        isStoreRawDataToDataError() ? line : null);
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

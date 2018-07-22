@@ -52,6 +52,8 @@ import net.sf.flatpack.util.ParserUtils;
  */
 public abstract class AbstractDelimiterParser extends AbstractParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDelimiterParser.class);
+    private static final String LINE_BREAK = System.lineSeparator();
+
     private char delimiter = 0;
     private char qualifier = 0;
     private boolean ignoreFirstRecord = false;
@@ -247,7 +249,6 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
     protected String fetchNextRecord(final BufferedReader br, final char qual, final char delim) throws IOException {
         String line = null;
         final StringBuilder lineData = new StringBuilder();
-        final String linebreak = System.getProperty("line.separator");
         boolean processingMultiLine = false;
 
         while ((line = br.readLine()) != null) {
@@ -284,11 +285,11 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     // it is safe to assume we have reached the end of the
                     // line break
                     processingMultiLine = false;
-                    lineData.append(linebreak).append(line);
+                    lineData.append(LINE_BREAK).append(line);
                 } else {
                     // check to see if this is the last line of the record
                     // looking for a qualifier followed by a delimiter
-                    lineData.append(linebreak).append(line);
+                    lineData.append(LINE_BREAK).append(line);
                     boolean qualiFound = false;
                     for (final char element : chrArry) {
                         if (qualiFound) {
@@ -314,7 +315,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 // throw the line into lineData var.
                 // need to check to see if we need to insert a line break.
                 // The buffered reader excludes the breaks
-                lineData.append(trimmedLen == 0 ? linebreak : line);
+                lineData.append(trimmedLen == 0 ? LINE_BREAK : line);
                 if (processingMultiLine) {
                     continue; // if we are working on a multiline rec, get
                     // the data on the next line
