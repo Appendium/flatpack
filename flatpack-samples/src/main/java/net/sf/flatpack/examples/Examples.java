@@ -39,9 +39,6 @@ public class Examples implements Repeater {
     public void tearDown() {
     }
 
-    /**
-     * @param args
-     */
     public static void main(final String[] args) {
         final Examples examples = new Examples();
         examples.run();
