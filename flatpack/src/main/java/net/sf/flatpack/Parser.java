@@ -56,12 +56,14 @@ public interface Parser {
      * Parse the data and return an interface where one can extract one record at a time, until
      * next returns false;
      * @since 3.4
+     * @return a stream of Dataset
      */
     StreamingDataSet parseAsStream();
 
     /**
      * Parse the data and return a stream or records;
      * @since 4.0
+     * @return a stream of Record
      */
     Stream<Record> stream();
 
@@ -76,12 +78,14 @@ public interface Parser {
      *            when flagged as true, lines with less columns then the amount
      *            of column headers will be added as empty's instead of
      *            producing an error
+     * @return the Parser
      */
     Parser setHandlingShortLines(boolean handleShortLines);
 
     /**
      * @param addSuffixToDuplicateColumnNames
      *          when true, add a count to duplicate colum names. eg the second column called "Asset" will become "Asset2".
+     * @return the Parser
      */
     Parser setAddSuffixToDuplicateColumnNames(boolean addSuffixToDuplicateColumnNames);
 
@@ -99,6 +103,7 @@ public interface Parser {
      *            when true, detail lines with a length or column count &gt; the
      *            mapping definition will be truncated and the reader will NOT
      *            register these lines as errors in the DataError collection.
+     * @return the Parser
      */
     Parser setIgnoreExtraColumns(boolean ignoreExtraColumns);
 
@@ -112,6 +117,7 @@ public interface Parser {
      * Defaults to <code>true</code>.
      * @param preserveLeadingWhitespace
      *            when true, the parser will preserve leading whitespace in each column when splitting a line
+     * @return the Parser
      */
     Parser setPreserveLeadingWhitespace(boolean preserveLeadingWhitespace);
 
@@ -125,7 +131,8 @@ public interface Parser {
      * Defaults to <code>false</code>.
      * @param preserveTrailingWhitespace
      *            when true, the parser will preserve trailing whitespace in each column when splitting a line
-     */
+      * @return the Parser
+    */
     Parser setPreserveTrailingWhitespace(boolean preserveTrailingWhitespace);
 
     /**
@@ -148,7 +155,8 @@ public interface Parser {
      *            name = AColumnName ; getString("acolumnname") would fail
      *            Example when false: Column name = AColumnName ;
      *            getString("acolumnname") would pass
-     */
+     * @return the Parser
+    */
     Parser setColumnNamesCaseSensitive(boolean columnNamesCaseSensitive);
 
     /**
@@ -164,6 +172,7 @@ public interface Parser {
      * @param ignoreParseWarnings
      *            when true, warnings encountered during parsing will not be
      *            included in the DataSet errors
+     * @return the Parser
      */
     Parser setIgnoreParseWarnings(boolean ignoreParseWarnings);
 
@@ -179,6 +188,7 @@ public interface Parser {
      * @param nullEmptyStrings
      *            when true, empty Strings will get returned as NULL when
      *            calling DataSet.getString()
+     * @return the Parser
      */
     Parser setNullEmptyStrings(boolean nullEmptyStrings);
 
@@ -195,7 +205,8 @@ public interface Parser {
      * place a flag on the DataSet indicating if the row is empty.  This will slow
      * down the parse and should only be used when necessary.  It is off by default.
      *
-     * @param flagEmptyRows
+     * @param flagEmptyRows true if we need to flag empty rows
+     * @return the Parser
      */
     Parser setFlagEmptyRows(boolean flagEmptyRows);
 
@@ -211,7 +222,8 @@ public interface Parser {
      * place it into the DataError object.  DataError.getRawData() can be called to retrieve
      * the line.
      *
-     * @param storeRawDataToDataError
+     * @param storeRawDataToDataError true if we need to store each lines
+     * @return the Parser
      */
     Parser setStoreRawDataToDataError(boolean storeRawDataToDataError);
 
@@ -227,7 +239,8 @@ public interface Parser {
      * when true, the parser will place the data of the line into the DataSet object.
      * DataSet.getRawData() can be called to retrieve the line.
      *
-     * @param storeRawDataToDataError
+     * @param storeRawDataToDataError true if we need to store the raw data
+     * @return the Parser
      */
     Parser setStoreRawDataToDataSet(boolean storeRawDataToDataError);
 
@@ -251,6 +264,7 @@ public interface Parser {
      *
      * @param dataFileTable
      * 			Name of the table name to use in place of "DATAFILE"
+     * @return the Parser
      */
     Parser setDataFileTable(String dataFileTable);
 
@@ -275,6 +289,7 @@ public interface Parser {
      * @param dataStructureTable
      * 			Name of the table name to us in placfe of "DATASTRUCTURE"
      *
+     * @return the Parser
      */
     Parser setDataStructureTable(String dataStructureTable);
 }

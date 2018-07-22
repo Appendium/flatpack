@@ -244,7 +244,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      *          Delimiter being used for parse
      * @return String
      *          Record from delimited file
-     *
+     * @throws IOException if any problem with the stream of data (e.g. file reader)
      */
     protected String fetchNextRecord(final BufferedReader br, final char qual, final char delim) throws IOException {
         String line = null;

@@ -118,7 +118,6 @@ public interface DataSet extends Record, RecordDataSet {
      *
      * @param localPointer -
      *            int
-     * @exception IndexOutOfBoundsException
      */
     void absolute(int localPointer);
 

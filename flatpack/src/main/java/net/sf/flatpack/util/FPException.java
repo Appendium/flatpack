@@ -12,23 +12,19 @@ public class FPException extends RuntimeException {
     }
 
     /**
-     * @param message
+     * @param message the exception message
      */
     public FPException(final String message) {
         super(message);
     }
 
     /**
-     * @param cause
+     * @param cause the original exception
      */
     public FPException(final Throwable cause) {
         super(cause);
     }
 
-    /**
-     * @param message
-     * @param cause
-     */
     public FPException(final String message, final Throwable cause) {
         super(message, cause);
     }

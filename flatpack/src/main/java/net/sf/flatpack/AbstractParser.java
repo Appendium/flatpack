@@ -261,6 +261,8 @@ public abstract class AbstractParser implements Parser {
      * Adds a new error to this DataSet. These can be collected, and retrieved
      * after processing
      *
+     * @param ds
+     *            the data set from the parser
      * @param errorDesc
      *            String description of error
      * @param lineNo

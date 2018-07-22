@@ -17,7 +17,6 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @exception NoSuchElementException
      * @return String
      */
     String getString(String column);
@@ -40,8 +39,8 @@ public interface Record {
      * @param column
      *            - Name of the column
      * @param defaultSupplier for default value if result in column is null/empty
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return double
      * @since 4.0
      */
@@ -52,8 +51,8 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return double
      */
     double getDouble(String column);
@@ -64,8 +63,8 @@ public interface Record {
      * @param column
      *            - Name of the column
      * @param defaultSupplier for default value if result in column is null/empty
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return BigDecimal
      * @since 4.0
      */
@@ -76,8 +75,8 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return BigDecimal
      */
     BigDecimal getBigDecimal(String column);
@@ -88,8 +87,8 @@ public interface Record {
      * @param column
      *            - Name of the column
      * @param defaultSupplier for default value if result in column is null/empty
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return double
      * @since 4.0
      */
@@ -100,8 +99,8 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return double
      */
     int getInt(String column);
@@ -112,8 +111,8 @@ public interface Record {
      * @param column
      *            - Name of the column
      * @param defaultSupplier for default value if result in column is null/empty
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return long
      * @since 4.0
      */
@@ -124,8 +123,8 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @exception NoSuchElementException
-     * @exception NumberFormatException
+     * @exception NoSuchElementException if no such record
+     * @exception NumberFormatException if wrong number format
      * @return long
      */
     long getLong(String column);
@@ -140,7 +139,7 @@ public interface Record {
      * @param column
      *            - Name of the column
      * @param defaultSupplier for default value if result in column is null/empty
-     * @exception ParseException
+     * @exception ParseException if date format incorect
      * @return Date
      * @since 4.0
      */
@@ -155,7 +154,7 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @exception ParseException
+     * @exception ParseException if date format incorrect
      * @return Date
      */
     Date getDate(String column) throws ParseException;
@@ -190,7 +189,7 @@ public interface Record {
      *            - Name of the column
      * @param sdf
      *            - SimpleDateFormat of the date
-     * @exception ParseException
+     * @exception ParseException if date format does not match the SimpleDateFormat
      * @see java.text.SimpleDateFormat
      * @return Date
      */
@@ -206,7 +205,7 @@ public interface Record {
      * @param column
      *            - Name of the column
      * @param defaultSupplier for default value if result in column is null/empty
-     * @exception ParseException
+     * @exception ParseException if date format does not match
      * @return Date
      * @since 4.0
      */
@@ -221,7 +220,7 @@ public interface Record {
      *
      * @param column
      *            - Name of the column
-     * @exception ParseException
+     * @exception ParseException if date format does not match
      * @return Date
      */
     LocalDate getLocalDate(String column) throws ParseException;
@@ -238,7 +237,7 @@ public interface Record {
      * @param dateFormat
      *            - dateFormat of the date
      * @param defaultSupplier for default value if result in column is null/empty
-     * @exception ParseException
+     * @exception ParseException if date format does not match
      * @see java.text.SimpleDateFormat
      * @return Date
      * @since 4.0
@@ -256,7 +255,7 @@ public interface Record {
      *            - Name of the column
      * @param dateFormat
      *            - dateFormat of the date
-     * @exception ParseException
+     * @exception ParseException if date format does not match
      * @see java.text.SimpleDateFormat
      * @return Date
      */
@@ -319,7 +318,7 @@ public interface Record {
      *
      * @param column
      *          Column name to check for
-     * @return boolean
+     * @return boolean true if the row contain that column name.
      */
     boolean contains(String column);
 
@@ -327,7 +326,7 @@ public interface Record {
      * Checks to see if there was no data on the row which was parsed.  This
      * will thrown an exception if Parser.FlagEmptyRows() is not set to true.
      *
-     * @return
+     * @return true if the row has no data
      */
     boolean isRowEmpty();
 

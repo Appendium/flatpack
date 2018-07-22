@@ -394,8 +394,8 @@ public class DefaultDataSet implements DataSet {
     /**
      * Checks to see if the row has the given &lt;RECORD&gt; id
      *
-     * @param recordID
-     * @return boolean
+     * @param recordID record to check
+     * @return boolean true if current record is of recordID
      */
     @Override
     public boolean isRecordID(final String recordID) {
@@ -412,7 +412,7 @@ public class DefaultDataSet implements DataSet {
      *
      * @param localPointer
      *            - int
-     * @exception IndexOutOfBoundsException
+     * @exception IndexOutOfBoundsException if wrong index
      */
     @Override
     public void absolute(final int localPointer) {

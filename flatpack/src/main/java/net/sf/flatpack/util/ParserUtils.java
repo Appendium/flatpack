@@ -260,7 +260,6 @@ public final class ParserUtils {
 
     /**
      * Using a much faster String Replace from Apache!
-     * @param ignore TODO
      * @see <a href="https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace">StackOverflow</a>
      */
     public static String replace(String text, String searchString, String replacement, int max) {
