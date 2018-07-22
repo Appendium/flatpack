@@ -6,7 +6,7 @@
 		<title>Changes</title>
 	</properties>
 	<body>
-		<release version="4.0.2" date="TBD" description="Maintenance">
+		<release version="4.0.2" date="2018-07-21" description="Maintenance">
 			<action dev="benoitx" type="add">
 				new option to automatically "de-duplicate" column names by appending a number at the end of it if it already exist. This is off by default but can be set
 				via call to parser.setAddSuffixToDuplicateColumnNames(true).
