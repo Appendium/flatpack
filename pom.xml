@@ -31,8 +31,6 @@
     </modules>
 
     <inceptionYear>2006</inceptionYear>
-    <!--<url>http://flatpack.sourceforge.net/</url>
-    -->
     <organization>
         <name>Appendium - Portfolio Financing Platform</name>
         <url>http://www.appendium.com/</url>
@@ -137,7 +135,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -146,7 +144,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.3</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -273,7 +271,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -287,7 +285,6 @@
                 </plugins>
             </build>
         </profile>
-
     </profiles>
 
     <scm>
@@ -311,7 +308,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-changes-plugin</artifactId>
-                <version>2.10</version>
+                <version>2.12.1</version>
                 <configuration>
                     <configuration>
                         <githubAPIScheme>https</githubAPIScheme>
