@@ -37,6 +37,7 @@ import net.sf.flatpack.DefaultDataSet;
 import net.sf.flatpack.Parser;
 import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.structure.Row;
+import net.sf.flatpack.util.FPException;
 import net.sf.flatpack.xml.MetaData;
 
 /**
@@ -65,7 +66,7 @@ public class BuffReaderDataSet extends DefaultDataSet {
 
         if (brParser == null) {
             // this should not happen, throw exception
-            throw new RuntimeException("No parser available to fetch row");
+            throw new FPException("No parser available to fetch row");
         }
 
         if (getMetaData() == null) {

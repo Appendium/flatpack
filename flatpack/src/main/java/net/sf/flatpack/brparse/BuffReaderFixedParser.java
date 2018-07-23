@@ -49,6 +49,7 @@ import net.sf.flatpack.FixedLengthParser;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FPException;
 import net.sf.flatpack.util.FixedWidthParserUtils;
 import net.sf.flatpack.util.ParserUtils;
 
@@ -58,13 +59,10 @@ import net.sf.flatpack.util.ParserUtils;
  * @author Paul Zepernick
  */
 public class BuffReaderFixedParser extends FixedLengthParser implements InterfaceBuffReaderParse {
-    private BufferedReader br = null;
-
-    private int lineCount = 0;
-
-    private Map recordLengths = null;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(BuffReaderFixedParser.class);
+    private BufferedReader br = null;
+    private int lineCount = 0;
+    private Map recordLengths = null;
 
     /**
      *
@@ -191,7 +189,7 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
             }
 
         } catch (final IOException e) {
-            throw new RuntimeException("Error Fetching Record From File...", e);
+            throw new FPException("Error Fetching Record From File...", e);
         }
 
         return null;

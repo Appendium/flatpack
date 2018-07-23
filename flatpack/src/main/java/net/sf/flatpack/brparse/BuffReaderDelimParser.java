@@ -48,6 +48,7 @@ import net.sf.flatpack.DelimiterParser;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.structure.Row;
 import net.sf.flatpack.util.FPConstants;
+import net.sf.flatpack.util.FPException;
 import net.sf.flatpack.util.ParserUtils;
 
 public class BuffReaderDelimParser extends DelimiterParser implements InterfaceBuffReaderParse {
@@ -116,7 +117,7 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             try {
                 line = fetchNextRecord(br, getQualifier(), getDelimiter());
             } catch (final IOException e) {
-                throw new RuntimeException("Error Fetching Record From File...", e);
+                throw new FPException("Error Fetching Record From File...", e);
             }
 
             if (line == null) {
@@ -184,9 +185,11 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
         final int columnCount = cmds.size();
         if (columns.size() > columnCount) {
             if (isIgnoreExtraColumns()) {
-                // user has choosen to ignore the fact that we have too many columns in the data from
+                // user has chosen to ignore the fact that we have too many columns in the data from
                 // what the mapping has described. sublist the array to remove un-needed columns
-                columns = columns.subList(0, columnCount);
+                //
+                // columns = columns.subList(0, columnCount);
+                columns.removeAll(columns.subList(0, columnCount));
                 addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
             } else {
                 // log the error
@@ -203,7 +206,6 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
 
                 // log a warning
                 addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
-
             } else {
                 addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
                         isStoreRawDataToDataError() ? line : null);

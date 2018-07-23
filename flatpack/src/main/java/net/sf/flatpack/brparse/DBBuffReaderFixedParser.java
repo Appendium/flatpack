@@ -29,9 +29,7 @@ public class DBBuffReaderFixedParser extends BuffReaderFixedParser implements In
                 throw new FileNotFoundException("DATA DEFINITION CAN NOT BE FOUND IN THE DATABASE " + getDataDefinition());
             }
             setInitialised(true);
-        } catch (final SQLException e) {
-            throw new InitialisationException(e);
-        } catch (final FileNotFoundException e) {
+        } catch (final SQLException | FileNotFoundException e) {
             throw new InitialisationException(e);
         }
     }

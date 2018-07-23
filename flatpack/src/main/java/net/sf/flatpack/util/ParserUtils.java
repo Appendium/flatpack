@@ -884,11 +884,7 @@ public final class ParserUtils {
         try {
             final Converter pzconverter = (Converter) Class.forName(sConverter).newInstance();
             return pzconverter.convertValue(value);
-        } catch (final IllegalAccessException ex) {
-            throw new FPConvertException(ex);
-        } catch (final InstantiationException ex) {
-            throw new FPConvertException(ex);
-        } catch (final ClassNotFoundException ex) {
+        } catch (final IllegalAccessException | InstantiationException | ClassNotFoundException ex) {
             throw new FPConvertException(ex);
         }
     }

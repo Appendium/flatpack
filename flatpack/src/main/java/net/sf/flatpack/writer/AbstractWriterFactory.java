@@ -47,7 +47,4 @@ public abstract class AbstractWriterFactory implements WriterFactory {
         // citizen of the library
         return Collections.unmodifiableMap(mapping);
     }
-
-    @Override
-    public abstract Writer createWriter(java.io.Writer out) throws IOException;
 }

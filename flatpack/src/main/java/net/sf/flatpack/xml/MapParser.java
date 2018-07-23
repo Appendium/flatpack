@@ -68,11 +68,10 @@ import net.sf.flatpack.util.ParserUtils;
  * Parses a PZmap definition XML file
  */
 public final class MapParser {
-    private static final String LENGTH = "length";
-
-    private static boolean showDebug = false;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(MapParser.class);
+    private static final String COLUMN = "COLUMN";
+    private static final String LENGTH = "length";
+    private static boolean showDebug = false;
 
     /**
      * Constructor
@@ -181,10 +180,8 @@ public final class MapParser {
 
             final String nodeName = node.getNodeName();
 
-            switch (nodeName) {
-            case "COLUMN":
+            if (COLUMN.equalsIgnoreCase(nodeName)) {
                 final NamedNodeMap attributes = node.getAttributes();
-                System.out.println("COL:" + attributes.getNamedItem("name"));
                 final ColumnMetaData cmd = new ColumnMetaData();
 
                 // make sure the name attribute is present on the column
@@ -212,7 +209,6 @@ public final class MapParser {
                     }
                 }
                 columnResults.add(cmd);
-                break;
             }
         }
         return columnResults;
