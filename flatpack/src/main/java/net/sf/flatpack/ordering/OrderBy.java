@@ -32,7 +32,6 @@
  */
 package net.sf.flatpack.ordering;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,9 +56,7 @@ import net.sf.flatpack.xml.MetaData;
  *
  * @version 2.0
  */
-public class OrderBy implements Comparator, Serializable {
-    private static final long serialVersionUID = 5622406168247149895L;
-
+public class OrderBy implements Comparator<Row> {
     /** collection of order elements to sort by */
     private final List<OrderColumn> orderbys = new ArrayList<>();
 
@@ -85,9 +82,7 @@ public class OrderBy implements Comparator, Serializable {
      * @return int
      */
     @Override
-    public int compare(final Object arg0, final Object arg1) {
-        final Row row0 = (Row) arg0;
-        final Row row1 = (Row) arg1;
+    public int compare(final Row row0, final Row row1) {
         int result = 0;
 
         for (int i = 0; i < orderbys.size(); i++) {

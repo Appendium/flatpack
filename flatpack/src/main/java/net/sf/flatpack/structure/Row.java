@@ -56,13 +56,6 @@ public class Row {
     private String rawData;
 
     /**
-     * Constructs a new Row
-     *
-     */
-    public Row() {
-    }
-
-    /**
      * Adds a column to a row
      *
      * @param colValue -
