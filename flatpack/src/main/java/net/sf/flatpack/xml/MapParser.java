@@ -188,10 +188,8 @@ public final class MapParser {
                 final String columnName = attributes.getNamedItem("name").getTextContent();
                 if (columnName == null) {
                     throw new IllegalArgumentException("Name attribute is required on the column tag!");
-                }
-
-                // make sure the names in columnInfo are unique
-                if (columnNames.contains(columnName)) {
+                } else if (columnNames.contains(columnName)) {
+                    // make sure the names in columnInfo are unique
                     throw new IllegalArgumentException("Duplicate name column '" + columnName + "'");
                 }
 

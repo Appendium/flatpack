@@ -186,10 +186,10 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
         if (columns.size() > columnCount) {
             if (isIgnoreExtraColumns()) {
                 // user has chosen to ignore the fact that we have too many columns in the data from
-                // what the mapping has described. sublist the array to remove un-needed columns
+                // what the mapping has described. sublist the array to remove unneeded columns
                 //
                 // columns = columns.subList(0, columnCount);
-                columns.removeAll(columns.subList(0, columnCount));
+                columns.retainAll(columns.subList(0, columnCount));
                 addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
             } else {
                 // log the error

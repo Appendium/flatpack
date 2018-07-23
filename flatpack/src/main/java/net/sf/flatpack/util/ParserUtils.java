@@ -167,8 +167,6 @@ public final class ParserUtils {
                     if (trimmed == null || trimmed.length() == 1 && (trimmed.charAt(0) == delimiter || trimmed.charAt(0) == qualifier)) {
                         list.add("");
                     } else {
-                        // trimmed = trimmed.replace(doubleQualifier, String.valueOf(qualifier));
-                        // list.add(replace(trimmed, doubleQualifier, String.valueOf(qualifier), -1));
                         list.add(replace(trimmed, doubleQualifier, String.valueOf(qualifier), -1));
                     }
                     blockWasInQualifier = false;
@@ -211,8 +209,6 @@ public final class ParserUtils {
                     // last column (e.g. finishes with ")
                     if (i == size - 1) {
                         String str = trimmedLine.substring(startBlock, size - 1);
-                        // str = str.replace(doubleQualifier, String.valueOf(qualifier));
-                        // str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
                         str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
                         list.add(str);
                         startBlock = i + 1;
@@ -224,8 +220,6 @@ public final class ParserUtils {
 
         if (startBlock < size) {
             String str = trimmedLine.substring(startBlock, size);
-            // str = str.replace(doubleQualifier, String.valueOf(qualifier));
-            // str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
             str = replace(str, doubleQualifier, String.valueOf(qualifier), -1);
             if (blockWasInQualifier) {
                 if (str.charAt(str.length() - 1) == qualifier) {
