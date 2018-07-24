@@ -97,6 +97,11 @@
             <artifactId>flatpack</artifactId>
             <version>4.0.3-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.flatpack</groupId>
+            <artifactId>flatpack-excel</artifactId>
+            <version>4.0.3-SNAPSHOT</version>
+        </dependency>
         <!--
             <dependency>
             <groupId>org.jdom</groupId>

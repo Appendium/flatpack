@@ -30,6 +30,7 @@
 
     <modules>
         <module>flatpack</module>
+        <module>flatpack-excel</module>
         <module>flatpack-samples</module>
     </modules>
 

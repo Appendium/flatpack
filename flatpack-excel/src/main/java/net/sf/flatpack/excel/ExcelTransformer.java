@@ -12,7 +12,7 @@
  CONDITIONS OF ANY KIND, either express or implied. See the License for
  the specific language governing permissions and limitations under the License.
  */
-package net.sf.flatpack.util;
+package net.sf.flatpack.excel;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +30,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import net.sf.flatpack.DataSet;
+import net.sf.flatpack.util.FPConstants;
 
 /**
  * Converts a DataSet object into an excel spreadsheet.

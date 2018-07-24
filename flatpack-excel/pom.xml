@@ -9,12 +9,11 @@
     </parent>
 
 
-    <artifactId>flatpack</artifactId>
-    <name>FlatPack</name>
+    <artifactId>flatpack-excel</artifactId>
+    <name>FlatPack Excel</name>
     <packaging>bundle</packaging> <!-- (1) OSGi -->
 
-    <description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
-       Maps column positions in the file to user friendly names via XML. See FlatPack Feature List under News for complete feature list.</description>
+    <description>Simple utility to handle Excel.</description>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -59,7 +58,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Automatic-Module-Name>net.sf.flatpack</Automatic-Module-Name>
+                            <Automatic-Module-Name>net.sf.flatpack.excel</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -110,13 +109,6 @@
         </plugins>
     </build>
     <dependencies>
-    <!-- 
-        <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>jdom</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>net.sourceforge.jexcelapi</groupId>
             <artifactId>jxl</artifactId>
@@ -124,7 +116,11 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
-     -->
+        <dependency>
+            <groupId>net.sf.flatpack</groupId>
+            <artifactId>flatpack</artifactId>
+            <version>4.0.3-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -149,26 +145,5 @@
             <version>3.10.0</version>
             <scope>test</scope>
         </dependency>
-        <!--
-            <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0</version>
-            <scope>test</scope>
-            </dependency>
-        -->
     </dependencies>
-    <!-- 
-    <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-changes-plugin</artifactId>
-                <configuration>
-                    <issueLinkTemplate>http://sourceforge.net/support/tracker.php?aid=%ISSUE%</issueLinkTemplate>
-                    <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
-     -->
 </project>

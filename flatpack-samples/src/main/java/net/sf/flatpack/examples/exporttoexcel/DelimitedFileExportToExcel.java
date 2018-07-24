@@ -12,9 +12,9 @@ import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
 import net.sf.flatpack.Parser;
+import net.sf.flatpack.excel.ExcelTransformer;
 import net.sf.flatpack.ordering.OrderBy;
 import net.sf.flatpack.ordering.OrderColumn;
-import net.sf.flatpack.util.ExcelTransformer;
 
 /**
  * @author zepernick
