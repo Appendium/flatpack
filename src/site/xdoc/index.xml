@@ -43,7 +43,7 @@
             </p>
 
             <p>
-                September 04, 2014: FlatPack 4.0.0 is released, JDK8 Release! with some fluent changes, see the
+                August 01, 2018: FlatPack 4.0.3 is released, see the
                 <a href="changes-report.html">change log</a>
             </p>
         </section>
@@ -100,7 +100,7 @@
                     <li>You do not need to know the order of columns, columns order can be modified without breaking your code.</li>
                     <li>The column names are case insensitive by default: record.getString("StATUs") is ok.</li>
                     <li>If you parse everything in memory, you can restart the dataSet, skip records, go back etc.</li>
-                    <li>Java 8 stream like interface: e.g. parser.parseAsStream().filter(xxx).map(yyy).collect(zzz).</li>
+                    <li>Java 8 stream like interface: e.g. CsvParserFactory.newInMemoryParser(..reader...).parseAsStream().filter(xxx).map(yyy).collect(zzz).</li>
                 </ul>
             </subsection>
 
@@ -167,7 +167,7 @@
                 <div class="source">
                     <pre>
 // Obtain the proper parser for your needs: basic CSV Parser with column Header
-Parser parser = DefaultParserFactory.newCsvParser(new FileReader("DataFile.csv"));
+Parser parser = CsvParserFactory.newForwardCsvParser(new FileReader("DataFile.csv"));
 
 //obtain DataSet
 StreamingDataSet ds = parser.parseAsStream();
@@ -178,7 +178,6 @@ while (ds.next()){ //loop through file
 }
                     </pre>
                 </div>
-
             </subsection>
 
 
@@ -207,7 +206,6 @@ while (ds.next()){ //loop through file
             </subsection>
 
             <subsection name="Reading Delimited File Column Names In First Record Of File">
-
                 <div class="source">
                     <pre>
 //Obtain the proper parser for your needs
@@ -224,7 +222,6 @@ while (ds.next()){ //loop through file
 }
                     </pre>
                 </div>
-
             </subsection>
 
 

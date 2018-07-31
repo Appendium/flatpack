@@ -39,7 +39,7 @@ public class StreamingTest extends TestCase {
                 + "MacBook,1890.20,20140523\r\n"//
                 + "Surface3,850.00,20140524\r\n"//
         ;
-        final Parser p = DefaultParserFactory.newCsvParser(new StringReader(cols));
+        final Parser p = CsvParserFactory.newInMemoryParser(new StringReader(cols));
         final List<Test> ds = p.stream() //
                 .map(t -> {
                     final Test r = new Test();
