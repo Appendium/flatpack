@@ -273,8 +273,14 @@ public final class ParserUtils {
         int replLength = searchString.length();
         int increase = replacement.length() - replLength;
         increase = (increase < 0 ? 0 : increase);
-        increase *= (max < 0 ? 16 : (max > 64 ? 64 : max));
-        StringBuilder buf = new StringBuilder(text.length() + increase);
+        int multiplier = max;
+        if (max < 0) {
+            multiplier = 16;
+        } else if (max > 64) {
+            multiplier = 64;
+        }
+        increase *= multiplier;
+        final StringBuilder buf = new StringBuilder(text.length() + increase);
         while (end != -1) {
             buf.append(text.substring(start, end)).append(replacement);
             start = end + replLength;

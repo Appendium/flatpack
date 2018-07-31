@@ -18,7 +18,7 @@ public class FixedLengthWriter extends AbstractWriter {
     private final Map<?, ?> columnMapping;
     private final char padChar;
 
-    protected FixedLengthWriter(final Map parsedMapping, final java.io.Writer output, final char padChar) throws IOException {
+    protected FixedLengthWriter(final Map parsedMapping, final java.io.Writer output, final char padChar) {
         super(output);
         this.columnMapping = parsedMapping;
         this.padChar = padChar;

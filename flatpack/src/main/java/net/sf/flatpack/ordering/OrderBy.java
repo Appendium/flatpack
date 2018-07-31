@@ -126,11 +126,6 @@ public class OrderBy implements Comparator<Row> {
                 .getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive()))
                 .toLowerCase(Locale.getDefault());
         switch (oc.getSelectedColType()) {
-        case OrderColumn.COLTYPE_STRING:
-        default:
-            comp0 = str0;
-            comp1 = str1;
-            break;
         case OrderColumn.COLTYPE_NUMERIC:
             comp0 = Double.valueOf(ParserUtils.stripNonDoubleChars(str0));
             comp1 = Double.valueOf(ParserUtils.stripNonDoubleChars(str1));
@@ -149,6 +144,11 @@ public class OrderBy implements Comparator<Row> {
             } catch (final ParseException e) {
                 comp1 = getBadDateDefault();
             }
+            break;
+        case OrderColumn.COLTYPE_STRING:
+        default:
+            comp0 = str0;
+            comp1 = str1;
             break;
         }
 
