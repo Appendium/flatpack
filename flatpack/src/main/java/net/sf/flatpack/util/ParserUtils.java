@@ -145,6 +145,11 @@ public final class ParserUtils {
         for (int i = 0; i < size; i++) {
 
             final char currentChar = trimmedLine.charAt(i);
+
+            if (currentChar == '\uFEFF') {
+                continue; // skip bad char
+            }
+
             if (currentChar != delimiter && currentChar != qualifier) {
                 previousChar = currentChar;
                 endBlock = i + 1;

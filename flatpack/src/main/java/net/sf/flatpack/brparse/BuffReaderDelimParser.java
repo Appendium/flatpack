@@ -184,35 +184,45 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
     private boolean validateColumns(DefaultDataSet ds, List<String> columns, List<ColumnMetaData> cmds, String line) {
         final int columnCount = cmds.size();
         if (columns.size() > columnCount) {
-            if (isIgnoreExtraColumns()) {
-                // user has chosen to ignore the fact that we have too many columns in the data from
-                // what the mapping has described. sublist the array to remove unneeded columns
-                //
-                // columns = columns.subList(0, columnCount);
-                columns.retainAll(columns.subList(0, columnCount));
-                addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
-            } else {
-                // log the error
-                addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
-                        isStoreRawDataToDataError() ? line : null);
-                return false;
-            }
+            return handleTooManyColumns(ds, columns, line, columnCount);
         } else if (columns.size() < columnCount) {
-            if (isHandlingShortLines()) {
-                // We can pad this line out
-                while (columns.size() < columnCount) {
-                    columns.add("");
-                }
-
-                // log a warning
-                addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
-            } else {
-                addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
-                        isStoreRawDataToDataError() ? line : null);
-                return false;
-            }
+            return handleTooFewColumns(ds, columns, line, columnCount);
         }
         return true;
+    }
+
+    private boolean handleTooFewColumns(DefaultDataSet ds, List<String> columns, String line, final int columnCount) {
+        if (isHandlingShortLines()) {
+            // We can pad this line out
+            while (columns.size() < columnCount) {
+                columns.add("");
+            }
+
+            // log a warning
+            addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
+            return true;
+        } else {
+            addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
+                    isStoreRawDataToDataError() ? line : null);
+            return false;
+        }
+    }
+
+    private boolean handleTooManyColumns(DefaultDataSet ds, List<String> columns, String line, final int columnCount) {
+        if (isIgnoreExtraColumns()) {
+            // user has chosen to ignore the fact that we have too many columns in the data from
+            // what the mapping has described. sublist the array to remove unneeded columns
+            //
+            // columns = columns.subList(0, columnCount);
+            columns.retainAll(columns.subList(0, columnCount));
+            addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
+            return true;
+        } else {
+            // log the error
+            addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
+                    isStoreRawDataToDataError() ? line : null);
+            return false;
+        }
     }
 
     /**

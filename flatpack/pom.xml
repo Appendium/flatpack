@@ -108,6 +108,7 @@
                     </includes>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
     <dependencies>

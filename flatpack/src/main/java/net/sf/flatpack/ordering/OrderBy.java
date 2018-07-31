@@ -101,45 +101,7 @@ public class OrderBy implements Comparator<Row> {
                 return !mdkey0.equals(FPConstants.DETAIL_ID) ? 1 : 0;
             }
 
-            // convert to one type of case so the comparator does not take case
-            // into account when sorting
-            Comparable comp0 = null;
-            Comparable comp1 = null;
-            final String str0 = row0
-                    .getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive()))
-                    .toLowerCase(Locale.getDefault());
-            final String str1 = row1
-                    .getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive()))
-                    .toLowerCase(Locale.getDefault());
-            switch (oc.getSelectedColType()) {
-            case OrderColumn.COLTYPE_STRING:
-            default:
-                comp0 = str0;
-                comp1 = str1;
-                break;
-            case OrderColumn.COLTYPE_NUMERIC:
-                comp0 = Double.valueOf(ParserUtils.stripNonDoubleChars(str0));
-                comp1 = Double.valueOf(ParserUtils.stripNonDoubleChars(str1));
-                break;
-            case OrderColumn.COLTYPE_DATE:
-                final SimpleDateFormat sdf = new SimpleDateFormat(oc.getDateFormatPattern());
-                try {
-                    comp0 = sdf.parse(str0);
-                } catch (final ParseException e) {
-                    comp0 = getBadDateDefault();
-
-                }
-
-                try {
-                    comp1 = sdf.parse(str1);
-                } catch (final ParseException e) {
-                    comp1 = getBadDateDefault();
-                }
-                break;
-            }
-
-            // multiply by the sort indicator to get a ASC or DESC result
-            result = comp0.compareTo(comp1) * oc.getSortIndicator();
+            result = compareCol(row0, row1, oc);
 
             // if it is = 0 then the primary sort is done, and it can start the
             // secondary sorts
@@ -148,6 +110,50 @@ public class OrderBy implements Comparator<Row> {
             }
         }
 
+        return result;
+    }
+
+    private int compareCol(final Row row0, final Row row1, final OrderColumn oc) {
+        int result;
+        // convert to one type of case so the comparator does not take case
+        // into account when sorting
+        Comparable comp0 = null;
+        Comparable comp1 = null;
+        final String str0 = row0
+                .getValue(ParserUtils.getColumnIndex(row0.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive()))
+                .toLowerCase(Locale.getDefault());
+        final String str1 = row1
+                .getValue(ParserUtils.getColumnIndex(row1.getMdkey(), metaData, oc.getColumnName(), parser.isColumnNamesCaseSensitive()))
+                .toLowerCase(Locale.getDefault());
+        switch (oc.getSelectedColType()) {
+        case OrderColumn.COLTYPE_STRING:
+        default:
+            comp0 = str0;
+            comp1 = str1;
+            break;
+        case OrderColumn.COLTYPE_NUMERIC:
+            comp0 = Double.valueOf(ParserUtils.stripNonDoubleChars(str0));
+            comp1 = Double.valueOf(ParserUtils.stripNonDoubleChars(str1));
+            break;
+        case OrderColumn.COLTYPE_DATE:
+            final SimpleDateFormat sdf = new SimpleDateFormat(oc.getDateFormatPattern());
+            try {
+                comp0 = sdf.parse(str0);
+            } catch (final ParseException e) {
+                comp0 = getBadDateDefault();
+
+            }
+
+            try {
+                comp1 = sdf.parse(str1);
+            } catch (final ParseException e) {
+                comp1 = getBadDateDefault();
+            }
+            break;
+        }
+
+        // multiply by the sort indicator to get a ASC or DESC result
+        result = comp0.compareTo(comp1) * oc.getSortIndicator();
         return result;
     }
 
