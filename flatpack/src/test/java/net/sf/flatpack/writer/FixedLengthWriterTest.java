@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 
 import junit.framework.Assert;
 import net.sf.flatpack.InitialisationException;
@@ -24,11 +25,12 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
                 .addRecordEntry("ZIP", "44035") //
                 .addRecordEntry("FIRSTNAME", "JOHN") //
                 .addRecordEntry("CITY", "ELYRIA") //
+                .addRecordEntry("REVENUE", BigDecimal.ZERO) //
                 .nextRecord() //
                 .flush();
 
         final String expected = this.normalizeLineEnding(
-                "JOHN                               DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH44035");
+                "JOHN                               DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH440350         ");
         Assert.assertEquals(expected, out.toString());
     }
 
@@ -46,7 +48,7 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
         writer.flush();
 
         final String expected = this.normalizeLineEnding(
-                "JOHN...............................DOE................................1234 CIRCLE CT......................................................................................ELYRIA..............................................................................................OH44035");
+                "JOHN...............................DOE................................1234 CIRCLE CT......................................................................................ELYRIA..............................................................................................OH44035..........");
         Assert.assertEquals(expected, out.toString());
     }
 
@@ -83,11 +85,12 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
         // note that we don't write a firstname
         writer.addRecordEntry("FIRSTNAME", null);
         writer.addRecordEntry("CITY", "ELYRIA");
+        writer.addRecordEntry("REVENUE", BigDecimal.TEN);
         writer.nextRecord();
         writer.flush();
 
         final String expected = this.normalizeLineEnding(
-                "                                   DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH44035");
+                "                                   DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH4403510        ");
         Assert.assertEquals(expected, out.toString());
     }
 
@@ -121,11 +124,16 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
     }
 
     private Reader getMappingDiffRecordTypes() {
-        final String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" + "<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n"
-                + "	<PZMAP>\r\n" + "		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">"
-                + "			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" + "			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n"
-                + "		</RECORD>" + "		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n"
-                + "		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" + "	</PZMAP>";
+        final String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" //
+                + "<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n" //
+                + "	<PZMAP>\r\n" //
+                + "		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">" //
+                + "			<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" //
+                + "			<COLUMN name=\"headerdata1\" length=\"20\" /> \r\n" //
+                + "		</RECORD>" //
+                + "		<COLUMN name=\"recordtype\" length=\"1\" /> \r\n" //
+                + "		<COLUMN name=\"detaildata1\" length=\"20\" /> \r\n" //
+                + "	</PZMAP>";
 
         return new StringReader(xml);
     }

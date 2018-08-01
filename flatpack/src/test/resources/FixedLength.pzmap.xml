@@ -8,4 +8,5 @@
     <COLUMN name="CITY" length="100" />
     <COLUMN name="STATE" length="2" />
     <COLUMN name="ZIP" length="5" />        
+    <COLUMN name="REVENUE" length="10" />        
 </PZMAP> 
