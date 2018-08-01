@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.Map;
 
 import junit.framework.Assert;
@@ -25,6 +26,7 @@ public class DelimiterWriterTest extends PZWriterTestCase {
                 .addColumnTitle("ADDRESS") //
                 .addColumnTitle("CITY") //
                 .addColumnTitle("STATE") //
+                .addColumnTitle("REVENUE") //
                 .addColumnTitle("ZIP");
 
         try (Writer writer = factory.createWriter(out)) {
@@ -35,6 +37,7 @@ public class DelimiterWriterTest extends PZWriterTestCase {
                     .addRecordEntry("CITY", "ELYRIA") //
                     .addRecordEntry("STATE", "OH") //
                     .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
+                    .addRecordEntry("REVENUE", BigDecimal.ZERO) //
                     .nextRecord() //
                     .flush();
         }
@@ -50,7 +53,7 @@ public class DelimiterWriterTest extends PZWriterTestCase {
                 .addColumnTitle("ADDRESS") //
                 .addColumnTitle("CITY") //
                 .addColumnTitle("STATE") //
-                .addColumnTitle("ZIP");
+                .addColumnTitle("ZIP").addColumnTitle("REVENUE");
 
         final Writer writer = factory.createWriter(out);
         // write one line of data ... not in the correct order of fields
@@ -60,11 +63,12 @@ public class DelimiterWriterTest extends PZWriterTestCase {
                 .addRecordEntry("CITY", "ELYRIA") //
                 .addRecordEntry("STATE", "OH") //
                 .addRecordEntry("ADDRESS", "1234 CIRCLE CT") //
+                .addRecordEntry("REVENUE", BigDecimal.TEN) //
                 .nextRecord() //
                 .flush();
 
         // make sure the tests work on Windows and on Linux
-        final String expected = this.joinLines("FIRSTNAME;LASTNAME;ADDRESS;CITY;STATE;ZIP", "JOHN;ANAME;1234 CIRCLE CT;ELYRIA;OH;44035");
+        final String expected = this.joinLines("FIRSTNAME;LASTNAME;ADDRESS;CITY;STATE;ZIP;REVENUE", "JOHN;ANAME;1234 CIRCLE CT;ELYRIA;OH;44035;10");
 
         Assert.assertEquals(expected, out.toString());
     }

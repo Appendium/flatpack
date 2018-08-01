@@ -32,12 +32,7 @@
  */
 package net.sf.flatpack.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -388,46 +383,6 @@ public final class ParserUtils {
     }
 
     /**
-     * Will return a null if the String is empty returns the
-     * trimmed string otherwise.
-     *
-     * @param value
-     *          to be trimmed
-     * @return String
-     */
-    public static String trimToNull(final String value) {
-        if (value == null) {
-            return null;
-        }
-
-        final String ret = value.trim();
-
-        return ret.length() == 0 ? null : ret;
-
-    }
-
-    /**
-     * Removes a single string character from a given string
-     *
-     * @param theChar -
-     *            string char
-     * @param theString -
-     *            string to search
-     * @return String
-     */
-    public static String removeChar(final char theChar, final String theString) {
-        final StringBuilder s = new StringBuilder();
-        for (int i = 0; i < theString.length(); i++) {
-            final char currentChar = theString.charAt(i);
-            if (currentChar != theChar) {
-                s.append(currentChar);
-            }
-        }
-
-        return s.toString();
-    }
-
-    /**
      * Returns a list of ColumnMetaData objects. This is for use with delimited
      * files. The first line of the file which contains data will be used as the
      * column names
@@ -663,53 +618,6 @@ public final class ParserUtils {
     }
 
     /**
-     * Create an InputStream based on a File.
-     *
-     * @param file
-     *            The file.
-     * @return the InputStream.
-     * @throws FileNotFoundException
-     */
-    public static InputStream createInputStream(final File file) throws FileNotFoundException {
-        if (file == null) {
-            throw new IllegalArgumentException("null not allowed");
-        }
-        return new FileInputStream(file);
-    }
-
-    /**
-     * Closes the given reader
-     *
-     * @param reader
-     *
-     */
-    public static void closeReader(final Reader reader) {
-        try {
-            if (reader != null) {
-                reader.close();
-            }
-        } catch (final IOException ex) {
-            throw new FPException(ex);
-        }
-    }
-
-    /**
-     * Closes the given reader
-     *
-     * @param reader
-     *
-     */
-    public static void closeReader(final InputStream reader) {
-        try {
-            if (reader != null) {
-                reader.close();
-            }
-        } catch (final IOException ex) {
-            throw new FPException(ex);
-        }
-    }
-
-    /**
      * <p>
      * Returns padding using the specified delimiter repeated to a given length.
      * </p>
@@ -892,22 +800,6 @@ public final class ParserUtils {
         } catch (final IllegalAccessException | InstantiationException | ClassNotFoundException ex) {
             throw new FPConvertException(ex);
         }
-    }
-
-    /**
-     * Returns a definition of pz column metadata from a given
-     * pz datastructure held in an SQL database
-     *
-     * @param con
-     *          Database connection containing the Datafile and Datastructure
-     *          tables
-     * @param dataDefinition
-     *          Name of the data definition stored in the Datafile table
-     * @throws SQLException
-     * @return List
-     */
-    public static List<ColumnMetaData> buildMDFromSQLTable(final Connection con, final String dataDefinition) throws SQLException {
-        return buildMDFromSQLTable(con, dataDefinition, null);
     }
 
     /**
