@@ -7,9 +7,10 @@
     </properties>
     <body>
         <release version="4.0.3" date="TBD" description="Maintenance">
-            <action dev="benoitx" type="enhance">Fixing SonaCloud.io issues</action>
-            <action dev="benoitx" type="enhance" issue="44">Create an Excel module and remove dependency on JExcelAPI for the main Flatpack, see ExcelTransformer.</action>
-            <action dev="benoitx" type="enhance">Create CsvParserFactory as an easy way to get one of the most common CSV Parser.</action>
+            <action dev="benoitx" type="update">Fixing SonaCloud.io issues</action>
+            <action dev="benoitx" type="add" issue="44">Create an Excel module and remove dependency on JExcelAPI for the main Flatpack, see ExcelTransformer.</action>
+            <action dev="benoitx" type="add">Create CsvParserFactory as an easy way to get one of the most common CSV Parser.</action>
+            <action dev="benoitx" type="remove">Removed Version class.</action>
         </release>
         <release version="4.0.2" date="2018-07-21" description="Maintenance">
             <action dev="benoitx" type="add">
@@ -25,9 +26,9 @@
                 Also fixed some
                 reader issues for double qualifiers.
             </action>
-            <action dev="benoitx" type="enhance" issue="11" due-to="benoitx">Remove JDOM's depencency.</action>
-            <action dev="martindiphoorn" type="enhance" issue="36" due-to="martindiphoorn">Adding tests for strict RFC4180 (CSV) compliance.</action>
-            <action dev="benoitx" type="enhance" issue="28">It transpired that String.replace is very inefficient and we replaced it with the Apache
+            <action dev="benoitx" type="update" issue="11" due-to="benoitx">Remove JDOM's depencency.</action>
+            <action dev="martindiphoorn" type="update" issue="36" due-to="martindiphoorn">Adding tests for strict RFC4180 (CSV) compliance.</action>
+            <action dev="benoitx" type="update" issue="28">It transpired that String.replace is very inefficient and we replaced it with the Apache
                 Commons equivalent. 50% speed improvement.</action>
         </release>
         <release version="4.0.1" date="2014-12-10" description="Maintenance">
@@ -105,7 +106,7 @@
                 data file were reversed in the
                 BuffReaderDelimParser.
             </action>
-            <action dev="zepernick" type="change">Added optional 3rd parameter to
+            <action dev="zepernick" type="update">Added optional 3rd parameter to
                 the OrderColumn constructor which
                 allows the specification of the type
                 of column
@@ -113,7 +114,7 @@
                 OrderColumn.COLTYPE_STRING, OrderColumn.COLTYPE_DATE,
                 OrderColumn.COLTYPE_NUMERIC
             </action>
-            <action dev="zepernick" type="change">New Parser option to log the raw
+            <action dev="zepernick" type="update">New Parser option to log the raw
                 line data of the record in the
                 DataSet object.
                 Parser.setStoreRawDataToDataSet()
@@ -124,7 +125,7 @@
                 ParserUtils.rTrim()
                 method.
             </action>
-            <action dev="zepernick" type="change">Added getLong() to DataSet
+            <action dev="zepernick" type="update">Added getLong() to DataSet
                 interface
             </action>
             <action dev="zepernick" type="fix">Added check for duplicate column
@@ -143,7 +144,7 @@
                 was returning a null
                 and was never getting a DataSet returned
             </action>
-            <action dev="zepernick" type="change">Added an option on the Paser
+            <action dev="zepernick" type="update">Added an option on the Paser
                 setFlagEmptyRows().
                 This will make the DataSet.isRowEmpty() method
                 available. This
@@ -151,7 +152,7 @@
                 will return
                 true when there is no data on any columns in the row.
             </action>
-            <action dev="zepernick" type="change">New Parser option to log the raw
+            <action dev="zepernick" type="update">New Parser option to log the raw
                 line data in the
                 DataError object for parse errors.
                 Parser.setStoreRawDataToDataError()
@@ -184,28 +185,28 @@
                 Delimited (csv, etc) format.
                 Thanks guys!
             </action>
-            <action dev="zepernick" type="change">added contains() method to
+            <action dev="zepernick" type="update">added contains() method to
                 DataSet to check for the existance of
                 a column name on the current row.
                 DataSet must
                 be on a valid row.
             </action>
-            <action dev="zepernick" type="change">Added clearRows(), clearErrors(),
+            <action dev="zepernick" type="update">Added clearRows(), clearErrors(),
                 and clearAll() methods to DataSet
             </action>
-            <action dev="benoitx" type="change">Goodbye PZFileReader, Hello
+            <action dev="benoitx" type="update">Goodbye PZFileReader, Hello
                 FlatPack!!!
             </action>
-            <action dev="zepernick" type="change">Moved package strcuture from
+            <action dev="zepernick" type="update">Moved package strcuture from
                 net.sf.pzfilereader to net.sf.flatpack
             </action>
-            <action dev="zepernick" type="change">XML mapping dtd renamed from
+            <action dev="zepernick" type="update">XML mapping dtd renamed from
                 pzfilereader.dtd to flatpack.dtd
             </action>
-            <action dev="zepernick" type="change">pzconvert.properties renamed to
+            <action dev="zepernick" type="update">pzconvert.properties renamed to
                 fpconvert.properties
             </action>
-            <action dev="zepernick" type="change">The following classes had the
+            <action dev="zepernick" type="update">The following classes had the
                 "PZ" removed from their name;
                 PZMapParser, PZMetaData,
                 BuffReaderDelimPZParser,
@@ -217,17 +218,17 @@
                 DBDelimiterPZParser, DBFixedLengthPZParser, DefaultPZParserFactory, DelimiterPZParser,
                 FixedLengthPZParser, PZParser, PZParserFactory, PZConverter
             </action>
-            <action dev="zepernick" type="change">The following classes had the
+            <action dev="zepernick" type="update">The following classes had the
                 "PZ" changed to "FP" in their name;
                 PZConstants, PZStringUtils,
                 PZConvertException
             </action>
-            <action dev="benoitx" type="change">Created a PZMetaData class for
+            <action dev="benoitx" type="update">Created a PZMetaData class for
                 internal use, it contains the list of column names and index for
                 fast
                 access.
             </action>
-            <action dev="zepernick" type="change">Feature Request 1596087. Added
+            <action dev="zepernick" type="update">Feature Request 1596087. Added
                 attribute "elementCount" on record
                 element mapping, which can determine a
                 header,
@@ -235,14 +236,14 @@
                 the number of elements contained
                 on the record. This only applies to delimited files.
             </action>
-            <action dev="zepernick" type="change">Feature Request 1569891. Added
+            <action dev="zepernick" type="update">Feature Request 1569891. Added
                 setNullEmptyStrings to the
                 PZParser. This will make the
                 DataSet.getString() return
                 null if the column is
                 empty.
             </action>
-            <action dev="zepernick" type="change">Added option to the PZParser
+            <action dev="zepernick" type="update">Added option to the PZParser
                 setIgnoreParseWarnings(boolean).
                 When true, the parser will not log warning
                 into the
@@ -250,11 +251,11 @@
                 the DataSet. The
                 default is false.
             </action>
-            <action dev="zepernick" type="change">Removing deprecated methods in
+            <action dev="zepernick" type="update">Removing deprecated methods in
                 ParserUtils;
                 isMultiLine(), splitLine(), getCMDKeyForFixedLengthFile()
             </action>
-            <action dev="zepernick" type="change">Added option to PZParser
+            <action dev="zepernick" type="update">Added option to PZParser
                 setColumnNamesCaseSensitive().
                 This will force the user to lookup the column
                 value in
@@ -271,14 +272,14 @@
                 the ability to see what
                 options were set pertaining to data retrieval.
             </action>
-            <action dev="zepernick" type="change">Changing the PZParseFactory to
+            <action dev="zepernick" type="update">Changing the PZParseFactory to
                 use java.io.Reader instead of File
                 or InputStream. The File and
                 InputStream
                 methods are still available,
                 but are now deprecated.
             </action>
-            <action dev="zepernick" type="change">Removed deprecated
+            <action dev="zepernick" type="update">Removed deprecated
                 PZMapParser.parse(File).
                 Added PZMapParser.parse(Reader). Deprecated
                 PZMapParser.parse(InputStream).
@@ -286,7 +287,7 @@
             <action dev="zepernick" type="fix">Stopped column lookup from being
                 case sensitive
             </action>
-            <action dev="zepernick" type="change">Feature Request 1566626. Added
+            <action dev="zepernick" type="update">Feature Request 1566626. Added
                 setIgnoreExtraColumns() method to the PZParser.
                 Added the ability to
                 ignore extra
@@ -296,22 +297,22 @@
             </action>
         </release>
         <release version="3.0.0" date="2007-02-11" description="Move to Maven and Subversion">
-            <action dev="zepernick" type="change">Added new dependency, SLF4j. This
+            <action dev="zepernick" type="update">Added new dependency, SLF4j. This
                 is used to log parsing issues. SLF4j is a facade
                 to the following
                 loggers;
                 log4j, jcl, nop, and jdk 1.4. See 3.0 User
                 Doc for further instruction.
             </action>
-            <action dev="zepernick" type="change">DataSet.getDate() will now return
+            <action dev="zepernick" type="update">DataSet.getDate() will now return
                 a null on empty Strings
             </action>
-            <action dev="zepernick" type="change">Removed
+            <action dev="zepernick" type="update">Removed
                 ParserUtils.getColumnMDFromFile(InputStream, String, String) this
                 method
                 was deprecated in 2.2
             </action>
-            <action dev="zepernick" type="change">Removed setters and default
+            <action dev="zepernick" type="update">Removed setters and default
                 constructor from DataError. Error properties
                 are set through the new
                 constructor.
