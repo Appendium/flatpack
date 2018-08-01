@@ -46,23 +46,12 @@ public class DelimiterWriter extends AbstractWriter {
 
     @Override
     protected void write(final Object value) throws IOException {
-        String stringValue = "";
-
-        if (value != null) {
-            // TODO DO: format the value
-            if (value instanceof BigDecimal) {
-                final BigDecimal bd = (BigDecimal) value;
-                stringValue = bd.signum() == 0 ? "0" : bd.toPlainString();
-            } else {
-                stringValue = value.toString();
-            }
-        }
+        String stringValue = toString(value);
 
         final boolean foundQualifier = qualifier != FPConstants.NO_QUALIFIER && stringValue.indexOf(qualifier) != -1;
         final boolean needsQuoting = stringValue.indexOf(delimiter) != -1 //
                 || foundQualifier //
                 || stringValue.indexOf('\n') != -1;
-        // || stringValue.split("\r\n|\r|\n").length > 1;
 
         if (needsQuoting) {
             super.write(qualifier);
@@ -83,6 +72,21 @@ public class DelimiterWriter extends AbstractWriter {
         if (needsQuoting) {
             super.write(qualifier);
         }
+    }
+
+    private String toString(final Object value) {
+        String stringValue = "";
+
+        if (value != null) {
+            // TODO DO: format the value
+            if (value instanceof BigDecimal) {
+                final BigDecimal bd = (BigDecimal) value;
+                stringValue = bd.signum() == 0 ? "0" : bd.toPlainString();
+            } else {
+                stringValue = value.toString();
+            }
+        }
+        return stringValue;
     }
 
     protected void writeColumnTitles() throws IOException {

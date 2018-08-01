@@ -65,10 +65,7 @@ public abstract class AbstractWriter implements Writer {
     }
 
     protected void write(final Object val) throws IOException {
-        Object value = val;
-        if (value == null) {
-            value = "";
-        }
+        Object value = val == null ? "" : val;
         // TODO DO: converter/formatter for converting value to string?
         writer.write(value.toString());
     }

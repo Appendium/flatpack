@@ -49,11 +49,7 @@ public class FixedLengthWriter extends AbstractWriter {
     }
 
     protected char[] formattedValue(final Object val, final ColumnMetaData element) {
-        Object value = val;
-        if (value == null) {
-            // TODO DO: maybe have a way to substitute default values here?
-            value = "";
-        }
+        Object value = val == null ? "" : val;
 
         String stringValue;
         if (value instanceof BigDecimal) {

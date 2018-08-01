@@ -33,8 +33,6 @@
 package net.sf.flatpack.xml;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -77,25 +75,6 @@ public final class MapParser {
      * Constructor
      */
     private MapParser() {
-    }
-
-    /**
-     * Method based on InputStream. Reads the XMLDocument for a PZMetaData
-     * file from an InputStream, WebStart compatible. Parses the XML file, and
-     * returns a Map containing Lists of ColumnMetaData.
-     *
-     * @param xmlStream
-     * @return Map &lt;records&gt; with their corresponding
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
-     * @deprecated please use parse(Reader)
-     */
-    @Deprecated
-    public static Map<String, Object> parse(final InputStream xmlStream) throws IOException, ParserConfigurationException, SAXException {
-        try (InputStreamReader isr = new InputStreamReader(xmlStream)) {
-            return parse(isr, null);
-        }
     }
 
     /**

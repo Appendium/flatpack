@@ -63,7 +63,6 @@ public class BuffReaderDataSet extends DefaultDataSet {
 
     @Override
     public boolean next() {
-
         if (brParser == null) {
             // this should not happen, throw exception
             throw new FPException("No parser available to fetch row");
@@ -160,5 +159,4 @@ public class BuffReaderDataSet extends DefaultDataSet {
     public int getRowCount() {
         throw new UnsupportedOperationException("getRowCount() is Not Implemented");
     }
-
 }

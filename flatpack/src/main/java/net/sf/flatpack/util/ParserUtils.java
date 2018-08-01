@@ -262,7 +262,7 @@ public final class ParserUtils {
      * @see <a href="https://stackoverflow.com/questions/16228992/commons-lang-stringutils-replace-performance-vs-string-replace">StackOverflow</a>
      */
     public static String replace(String text, String searchString, String replacement, int max) {
-        if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
+        if (text.length() == 0 || isEmpty(searchString) || replacement == null || max == 0) {
             return text;
         }
         int start = 0;
