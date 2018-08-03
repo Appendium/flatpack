@@ -22,12 +22,6 @@ public class MetaData {
     private Map columnIndexMap;
     private final Map<String, XMLRecordElement> xmlRecordElements;
 
-    public MetaData(final Map fullMapFromPZParser) {
-        columnsNames = (List<ColumnMetaData>) fullMapFromPZParser.get(FPConstants.DETAIL_ID);
-        columnIndexMap = (Map) fullMapFromPZParser.get(FPConstants.COL_IDX);
-        xmlRecordElements = fullMapFromPZParser;
-    }
-
     public MetaData(final List<ColumnMetaData> columnNames, final Map columnIndexMap) {
         this.columnsNames = Collections.unmodifiableList(columnNames);
         this.columnIndexMap = Collections.unmodifiableMap(columnIndexMap);

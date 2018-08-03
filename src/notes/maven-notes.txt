@@ -1,3 +1,10 @@
+Encrypt SONATYPE Environments
+See https://gist.github.com/letmaik/4060735
+
+travis encrypt -r Appendium/jtreemap SONATYPE_PASSWORD=XXXXX --add
+
+This will add the key to the .travis.yml
+
 Build site:
 ======================
 from the flatpack root dir:
