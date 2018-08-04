@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sf.flatpack</groupId>
         <artifactId>flatpack-parent</artifactId>
-        <version>4.0.4-SNAPSHOT</version>
+        <version>4.0.3</version>
     </parent>
 
 
@@ -94,21 +94,13 @@
         <dependency>
             <groupId>net.sf.flatpack</groupId>
             <artifactId>flatpack</artifactId>
-            <version>4.0.4-SNAPSHOT</version>
+            <version>4.0.3</version>
         </dependency>
         <dependency>
             <groupId>net.sf.flatpack</groupId>
             <artifactId>flatpack-excel</artifactId>
-            <version>4.0.4-SNAPSHOT</version>
+            <version>4.0.3</version>
         </dependency>
-        <!--
-            <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>jdom</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
-            </dependency>
-        -->
         <dependency>
             <groupId>net.sourceforge.jexcelapi</groupId>
             <artifactId>jxl</artifactId>
