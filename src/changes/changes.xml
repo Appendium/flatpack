@@ -6,9 +6,12 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.4" date="TBD" description="Maintenance">
+        </release>
         <release version="4.0.3" date="2018-08-04" description="Maintenance">
             <action dev="benoitx" type="update">Fixing SonaCloud.io issues</action>
-            <action dev="benoitx" type="add" issue="44">Create an Excel module and remove dependency on JExcelAPI for the main Flatpack, see ExcelTransformer.</action>
+            <action dev="benoitx" type="add" issue="44">Create an Excel module and remove dependency on JExcelAPI for the main Flatpack, see
+                ExcelTransformer.</action>
             <action dev="benoitx" type="add">Create CsvParserFactory as an easy way to get one of the most common CSV Parser.</action>
             <action dev="benoitx" type="remove">Removed Version class.</action>
         </release>

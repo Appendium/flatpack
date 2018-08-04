@@ -10,7 +10,7 @@
     <groupId>net.sf.flatpack</groupId>
     <artifactId>flatpack-parent</artifactId>
     <name>FlatPack Parent</name>
-    <version>4.0.3</version>
+    <version>4.0.4-SNAPSHOT</version>
     <url>https://github.com/Appendium/flatpack</url>
     <packaging>pom</packaging>
 
