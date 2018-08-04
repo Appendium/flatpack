@@ -56,3 +56,7 @@ flatpack/.project
 
 release.properties
 *.iml
+flatpack/src/main/java/TestLoad.java
+flatpack/pom.xml.versionsBackup
+flatpack-samples/pom.xml.versionsBackup
+pom.xml.versionsBackup
