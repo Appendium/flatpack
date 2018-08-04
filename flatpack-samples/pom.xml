@@ -13,7 +13,7 @@
     <name>FlatPack Examples</name>
     <packaging>bundle</packaging> <!-- (1) OSGi -->
 
-    <description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
+    <description>Examples to handle CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
        Maps column positions in the file to user friendly names via XML. See FlatPack Feature List under News for complete feature list.</description>
 
     <properties>
@@ -52,7 +52,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Export-Package>net.sf.flatpack.*;version="${project.version}"</Export-Package>
+                        <Export-Package>net.sf.flatpack.examples.*;version="${project.version}"</Export-Package>
                         <Private-Package />
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
