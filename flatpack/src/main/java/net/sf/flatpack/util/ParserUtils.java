@@ -142,6 +142,9 @@ public final class ParserUtils {
             final char currentChar = trimmedLine.charAt(i);
 
             if (currentChar == '\uFEFF') {
+                if (startBlock == 0) {
+                    startBlock++;
+                }
                 continue; // skip bad char
             }
 
