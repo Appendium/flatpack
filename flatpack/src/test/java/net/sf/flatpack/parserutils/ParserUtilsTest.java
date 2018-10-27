@@ -142,6 +142,18 @@ public class ParserUtilsTest extends TestCase {
         testCsvSplit("Simple CSV Split with Multi Delimiter Inside 2nd of 3 Col", "\"col1\",\"col\"\"\"\"2\",\"col3\"", "col1", "col\"\"2", "col3");
     }
 
+    public void testDodgyCharacter() {
+        testCsvSplit("Simple CSV Split Dodgy character in middle", "col1,\uFEFFcol2,col3", "col1", "col2", "col3");
+    }
+
+    public void testStartDodgyCharacter() {
+        testCsvSplit("Simple CSV Split Starting with Dodgy character", "\uFEFFcol1,col2,col3", "col1", "col2", "col3");
+    }
+
+    public void testDodgyCharacterInQualifier() {
+        testCsvSplit("Simple CSV Split with Dodgy character in qualifier", "\"\uFEFFcol1\",col2,col3", "col1", "col2", "col3");
+    }
+
     public void testFancyQualifierCsvSplit() {
         testFancyCsvSplit("Simple Fancy Qualifier Split", "col1,col2,col3", "col1", "col2", "col3");
     }
