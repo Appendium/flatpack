@@ -77,14 +77,12 @@ public class DelimiterWriter extends AbstractWriter {
     private String toString(final Object value) {
         String stringValue = "";
 
-        if (value != null) {
-            // TODO DO: format the value
-            if (value instanceof BigDecimal) {
-                final BigDecimal bd = (BigDecimal) value;
-                stringValue = bd.signum() == 0 ? "0" : bd.toPlainString();
-            } else {
-                stringValue = value.toString();
-            }
+        // TODO DO: format the value
+        if (value instanceof BigDecimal) {
+            final BigDecimal bd = (BigDecimal) value;
+            stringValue = bd.signum() == 0 ? "0" : bd.toPlainString();
+        } else if (value != null) {
+            stringValue = value.toString();
         }
         return stringValue;
     }

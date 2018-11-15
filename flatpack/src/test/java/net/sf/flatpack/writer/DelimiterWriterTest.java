@@ -73,6 +73,25 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         Assert.assertEquals(expected, out.toString());
     }
 
+    public void testWritingALong() throws Exception {
+        final StringWriter out = new StringWriter();
+
+        final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"')//
+                .addColumnTitle("LONGNUMBER") // new fluent
+        ;
+
+        final Writer writer = factory.createWriter(out);
+        // write one line of data ... not in the correct order of fields
+        writer.addRecordEntry("LONGNUMBER", 123_456_789_101_123L) //
+                .nextRecord() //
+                .flush();
+
+        // make sure the tests work on Windows and on Linux
+        final String expected = this.joinLines("LONGNUMBER", "123456789101123");
+
+        Assert.assertEquals(expected, out.toString());
+    }
+
     public void testWriteCsvWithMappingFile() throws Exception {
         final InputStream mapping = this.getClass().getClassLoader().getResourceAsStream("DelimitedWithHeader.pzmap.xml");
         final Reader mappingReader = new InputStreamReader(mapping);
