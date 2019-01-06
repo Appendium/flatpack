@@ -210,7 +210,9 @@
                     </links>
                     <linksource>true</linksource>
                     <show>private</show>
-                    <additionalparam>${javadoc.opts}</additionalparam>
+                    <additionalOptions>
+                        <additionalOption>-Xdoclint:none</additionalOption>
+                    </additionalOptions>
                 </configuration>
             </plugin>
 
