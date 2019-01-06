@@ -14,7 +14,7 @@ env:
   - secure: MtZwtUKZtF83MDYsKbZeyJn0R9xvSFBA9jJpk1wQXJ/zZCQsNbBJGm8ez8l5x++tGwX5BvbEeH3rqWrul9gNLcNG5PXUnar5rAHUFAHnEr3OuPfKogkOGMXxK0xXWzeKIJx5nDAAPvqlMe7lGOogA60ZFfQM3CdHwbWlNo/xVVI=
   - secure: DSPCcO+Ny49IioFE8AHUyAEIVCP+j+5xJSyj3z9TvFfSgvLVrVPbhb62dkvheA0j2gaIOWVqivmqp3ZLzCDavyUZFzKtpp1Jo1SwcrG0kKG2dR/abQ8Vf2ct1n+5l0ebOQlAxVZnJpbAoKNYl3aT7wrOkrVtEAB4dUNaKUDJ7aU=
 jdk:
-- oraclejdk8
+- openjdk8
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 cache:
