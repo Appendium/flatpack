@@ -458,7 +458,6 @@ public final class ParserUtils {
                         // before deciding if this is the begining of a qualified new line
                         // I think we have to go back to the beginning of the line and see if we are inside a qualified
                         // field or not?
-                        // return true;
                         boolean qualifiedContent = chrArry[0] == qualifier;
                         for (int index = 0; index < chrArry.length; index++) {
                             final char currentChar = chrArry[index];
@@ -512,7 +511,6 @@ public final class ParserUtils {
                     // before deciding if this is the begining of a qualified new line
                     // I think we have to go back to the beginning of the line and see if we are inside a qualified
                     // field or not?
-                    // return true;
                     boolean qualifiedContent = chrArry[0] == qualifier;
                     for (int index = 0; index < chrArry.length; index++) {
                         final char currentChar = chrArry[index];
