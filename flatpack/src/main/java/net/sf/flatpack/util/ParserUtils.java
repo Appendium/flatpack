@@ -152,7 +152,7 @@ public final class ParserUtils {
                 continue; // skip bad char
             }
 
-            if (currentChar != delimiter && currentChar != qualifier) {
+            if ((currentChar != delimiter || insideQualifier) && currentChar != qualifier) {
                 previousChar = currentChar;
                 newBlock[sizeSelected++] = currentChar;
                 // endBlock = i + 1;
