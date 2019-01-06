@@ -30,5 +30,5 @@ notifications:
   slack:
     secure: DTRTtJQpTUX4XkoS8Df2Zi1pcWVLQKIsfMjHmPEv481V3DeBQWJvn7LPWE5YpK/pdD/3LasnASWIGS2ijb9i0bfrwcaH+MWm0vSfg9+5lDhtSlFDM1QXJIhOmjm1bozEYG2lcPZz6u8CSIEBFSATAXZCkxzYAJ5bH5AM1jxJfoI=
 after_success:
-- '[[ $TRAVIS_BRANCH == "master" ]] && { python travis/addServer.py; mvn clean deploy
+- '[[ $TRAVIS_BRANCH == "master" ]] && { python travis/addServer.py; mvn clean deploy -Pcode-sign
   --settings ~/.m2/mySettings.xml; };'
