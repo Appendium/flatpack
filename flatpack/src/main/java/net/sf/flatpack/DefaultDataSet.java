@@ -42,6 +42,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
 import net.sf.flatpack.ordering.OrderBy;
@@ -183,17 +186,17 @@ public class DefaultDataSet implements DataSet {
     }
 
     @Override
-    public double getDouble(final String column, final Supplier<Double> defaultSupplier) {
+    public double getDouble(final String column, final DoubleSupplier defaultSupplier) {
         return currentRecord.getDouble(column, defaultSupplier);
     }
 
     @Override
-    public int getInt(final String column, final Supplier<Integer> defaultSupplier) {
+    public int getInt(final String column, final IntSupplier defaultSupplier) {
         return currentRecord.getInt(column, defaultSupplier);
     }
 
     @Override
-    public long getLong(final String column, final Supplier<Long> defaultSupplier) {
+    public long getLong(final String column, final LongSupplier defaultSupplier) {
         return currentRecord.getLong(column, defaultSupplier);
     }
 

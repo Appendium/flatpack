@@ -10,6 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
 import net.sf.flatpack.structure.ColumnMetaData;
@@ -190,10 +193,10 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public double getDouble(final String column, final Supplier<Double> defaultSupplier) {
+    public double getDouble(final String column, final DoubleSupplier defaultSupplier) {
         final String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
-            return defaultSupplier.get();
+            return defaultSupplier.getAsDouble();
         }
         return getDouble(column);
     }
@@ -213,10 +216,10 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public int getInt(final String column, final Supplier<Integer> defaultSupplier) {
+    public int getInt(final String column, final IntSupplier defaultSupplier) {
         final String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
-            return defaultSupplier.get();
+            return defaultSupplier.getAsInt();
         }
         return getInt(column);
     }
@@ -233,10 +236,10 @@ public class RowRecord implements Record {
     }
 
     @Override
-    public long getLong(final String column, final Supplier<Long> defaultSupplier) {
+    public long getLong(final String column, final LongSupplier defaultSupplier) {
         final String s = getStringValue(column);
         if (FPStringUtils.isBlank(s)) {
-            return defaultSupplier.get();
+            return defaultSupplier.getAsLong();
         }
         return getLong(column);
     }

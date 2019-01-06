@@ -263,7 +263,7 @@ public final class MapParser {
 
         // loop through the map and remove anything else that is an index of FPConstancts.COL_IDX + _
         // these were put in for the writer.
-        // TODO maybe these shoudld be thrown into the MetaData instead of just discarded, but they are unused
+        // TODO maybe these should be thrown into the MetaData instead of just discarded, but they are unused
         // in the Reader the moment. This parseMap is not utilized in the writer so it is safe to remove them here
         final Iterator entrySetIt = map.entrySet().iterator();
         while (entrySetIt.hasNext()) {

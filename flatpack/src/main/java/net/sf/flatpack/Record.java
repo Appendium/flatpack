@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
 /**
@@ -44,7 +47,7 @@ public interface Record {
      * @return double
      * @since 4.0
      */
-    double getDouble(String column, Supplier<Double> defaultSupplier);
+    double getDouble(String column, DoubleSupplier defaultSupplier);
 
     /**
      * Returns the double value of a specified column
@@ -92,7 +95,7 @@ public interface Record {
      * @return double
      * @since 4.0
      */
-    int getInt(String column, Supplier<Integer> defaultSupplier);
+    int getInt(String column, IntSupplier defaultSupplier);
 
     /**
      * Returns the integer value of a specified column
@@ -116,7 +119,7 @@ public interface Record {
      * @return long
      * @since 4.0
      */
-    long getLong(String column, Supplier<Long> defaultSupplier);
+    long getLong(String column, LongSupplier defaultSupplier);
 
     /**
      * Returns the long value of a specified column
