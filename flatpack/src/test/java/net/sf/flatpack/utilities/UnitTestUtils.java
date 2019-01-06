@@ -8,12 +8,14 @@ package net.sf.flatpack.utilities;
 public class UnitTestUtils {
 
     /**
-     * Builds a delimited qualified string containing the elements passed in
+     * Builds a delimited qualified string containing the elements passed in.
      *
      * @param elements
      *            Elements To Include In Delimited String
      * @param delimiter
+     *            The delimiter, e.g. a comma
      * @param qualifier
+     *            The qualifier, e.g. a double quote
      * @return String
      */
     public static String buildDelimString(final String[] elements, final char delimiter, final char qualifier) {
