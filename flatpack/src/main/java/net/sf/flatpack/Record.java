@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.function.DoubleSupplier;
@@ -229,7 +230,23 @@ public interface Record {
     LocalDate getLocalDate(String column) throws ParseException;
 
     /**
-     * Returns the lcoal date value of a specified column. This should be used if the
+     * Returns the local date value of a specified column. This assumes the date is in
+     * yyyy-MM-dd. If your date is not in this format, see
+     * getLocalDate(String,SimpleDateFormat)
+     *
+     * Will return "null" on empty Strings
+     *
+     * @param column
+     *            - Name of the column
+     *        formatter
+     *            - formatter for the date parsing
+     * @exception ParseException if date format does not match
+     * @return Date
+     */
+    LocalDate getLocalDate(String column, DateTimeFormatter formatter) throws ParseException;
+
+    /**
+     * Returns the local date value of a specified column. This should be used if the
      * date is NOT in yyyyMMdd format. The SimpleDateFormat object will specify
      * what kind of format the date is in.
      *

@@ -179,7 +179,17 @@ public class RowRecord implements Record {
 
     @Override
     public LocalDate getLocalDate(final String column) throws ParseException {
-        return getLocalDate(column, "yyyy-mm-dd");
+        return getLocalDate(column, "yyyy-MM-dd");
+    }
+
+    @Override
+    public LocalDate getLocalDate(final String column, DateTimeFormatter formatter) throws ParseException {
+        final String s = getStringValue(column);
+        if (FPStringUtils.isBlank(s)) {
+            // don't do the parse on empties
+            return null;
+        }
+        return LocalDate.parse(s, formatter);
     }
 
     @Override
