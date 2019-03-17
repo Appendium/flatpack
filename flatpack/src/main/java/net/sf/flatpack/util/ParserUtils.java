@@ -202,7 +202,6 @@ public final class ParserUtils {
                         if (charToCheck != delimiter) {
                             previousChar = currentChar;
                             newBlock[sizeSelected++] = currentChar;
-                            // endBlock = i + 1;
                             continue;
                         }
 
