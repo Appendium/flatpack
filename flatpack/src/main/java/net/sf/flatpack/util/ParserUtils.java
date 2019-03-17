@@ -150,7 +150,6 @@ public final class ParserUtils {
             if ((currentChar != delimiter || insideQualifier) && currentChar != qualifier) {
                 previousChar = currentChar;
                 newBlock[sizeSelected++] = currentChar;
-                // endBlock = i + 1;
                 continue;
             }
 
