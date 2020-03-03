@@ -7,16 +7,18 @@
     </properties>
     <body>
         <release version="4.0.5" date="TBD" description="Maintenance">
-            <action dev="benoitx" type="fix">Fixing default LocalDate Parsing to be ISO 8601 and add the ability to give a DateTimeFormatter to the parser.</action>
-       </release>
+            <action dev="benoitx" type="fix">Fixing default LocalDate Parsing to be ISO 8601 and add the ability to give a DateTimeFormatter to the
+                parser.</action>
+        </release>
         <release version="4.0.4" date="2019-01-06" description="Maintenance">
             <action dev="benoitx" type="fix">Fixing issue with comma inside double quote (delimiter inside qualifier).</action>
             <action dev="benoitx" type="update">Fixing ability to handle '\uFEFF' dodgy character.</action>
-       </release>
+        </release>
         <release version="4.0.3" date="2018-08-04" description="Maintenance">
             <action dev="benoitx" type="update">Fixing SonaCloud.io issues</action>
             <action dev="benoitx" type="add" issue="44">Create an Excel module and remove dependency on JExcelAPI for the main Flatpack, see
-                ExcelTransformer.</action>
+                ExcelTransformer.
+            </action>
             <action dev="benoitx" type="add">Create CsvParserFactory as an easy way to get one of the most common CSV Parser.</action>
             <action dev="benoitx" type="remove">Removed Version class.</action>
         </release>
