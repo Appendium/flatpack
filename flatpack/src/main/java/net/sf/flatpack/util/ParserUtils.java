@@ -462,7 +462,7 @@ public final class ParserUtils {
                             qualifiedContent = currentChar == qualifier;
                             if (qualifiedContent) {
                                 // go until first occurence of closing qualifierdelimiter combination
-                                for (; index < chrArry.length; index++) {
+                                for (; chrArry.length > 0 && index < chrArry.length - 1; index++) {
                                     if (chrArry[index] == delimiter && chrArry[++index] == qualifier) {
                                         qualifiedContent = false;
                                     }
