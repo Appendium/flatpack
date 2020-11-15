@@ -1,11 +1,11 @@
 language: java
 sudo: false
 install: true
-addons:
-  sonarcloud:
-    organization: benoitx-github
-    token:
-      secure: 13b70009cbae7646c3458517212a3ba73faff609
+#addons:
+#  sonarcloud:
+#    organization: benoitx-github
+#    token:
+#      secure: 13b70009cbae7646c3458517212a3ba73faff609
 git:
   depth: false
 env:
