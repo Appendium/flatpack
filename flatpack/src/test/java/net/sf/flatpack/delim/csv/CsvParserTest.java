@@ -2,10 +2,13 @@ package net.sf.flatpack.delim.csv;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
 import junit.framework.TestCase;
 import net.sf.flatpack.DataSet;
+import net.sf.flatpack.DelimiterParser;
 import net.sf.flatpack.Parser;
 import net.sf.flatpack.brparse.BuffReaderParseFactory;
 import net.sf.flatpack.util.FPConstants;
@@ -57,6 +60,42 @@ public class CsvParserTest extends TestCase {
         } catch (final Throwable e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot read mapping", e);
+        }
+
+    }
+
+    /**
+     * Fails with the error "Odd number of qualifiers"
+     */
+    public void testCsvDocumentWithMultilineString() {
+        final String testCsv =
+            "Bob,Smith,bsmiht@test.com,\"This is a long fragment of text" + System.lineSeparator() +
+            "that should be processed as a single field\", 1988, 111-222-33,\"another field with new line character" + System.lineSeparator() +
+            "that should be considered as a field of the same data row\"";
+
+        final String[] expectedResult = {
+            "Bob",
+            "Smith",
+            "bsmiht@test.com",
+            "This is a long fragment of text" + System.lineSeparator() + "that should be processed as a single field",
+            " 1988",
+            " 111-222-33",
+            "another field with new line character" + System.lineSeparator() + "that should be considered as a field of the same data row"
+        };
+
+        final ByteArrayInputStream bis = new ByteArrayInputStream(testCsv.getBytes(StandardCharsets.UTF_8));
+        final DelimiterParser parser = new DelimiterParser(bis, ',', '"', false);
+        final DataSet result =  parser.parse();
+
+        assertThat(result.getErrorCount()).isEqualTo(0);
+        assertThat(result.getColumns().length).isEqualTo(expectedResult.length);
+        assertThat(result.getRowCount()).isEqualTo(1);
+
+        result.next();
+        String[] row = result.getColumns();
+
+        for (int i = 0; i < expectedResult.length; ++i) {
+            assertThat(expectedResult[i]).isEqualTo(row[i]);
         }
 
     }
