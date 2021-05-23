@@ -14,7 +14,7 @@
     <name>FlatPack</name>
     <packaging>bundle</packaging> <!-- (1) OSGi -->
 
-    <description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few. 
+    <description>Simple Java delimited and fixed width file parser. Handles CSV, Excel CSV, Tab, Pipe delimiters, just to name a few.
        Maps column positions in the file to user friendly names via XML. See FlatPack Feature List under News for complete feature list.</description>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>4.1.0</version>
+                <version>5.1.2</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>

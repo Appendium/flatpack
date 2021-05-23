@@ -236,6 +236,18 @@ public class ParserUtilsSplitLineTest extends TestCase {
         assertThat(results4.get(2)).isEqualTo("\r\n");
     }
 
+    public void testLineWithQualifiersAsText() {
+        final String testLine = "Bob, Smith,\"\"\"Test\"\" , 2, Some string, still string, also part of the string.\",11111111";
+        final List<String> result = ParserUtils.splitLine(testLine, ',', '"', 10, true, true);
+
+        assertThat(result.size()).isEqualTo(4);
+        assertThat(result.get(0)).isEqualTo("Bob");
+        assertThat(result.get(1)).isEqualTo(" Smith");
+        assertThat(result.get(2)).isEqualTo("\"Test\" , 2, Some string, still string, also part of the string.");
+        assertThat(result.get(3)).isEqualTo("11111111");
+
+    }
+
     public static void main(final String[] args) {
         junit.textui.TestRunner.run(ParserUtilsSplitLineTest.class);
     }

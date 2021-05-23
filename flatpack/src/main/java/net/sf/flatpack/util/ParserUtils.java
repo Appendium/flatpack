@@ -182,6 +182,12 @@ public final class ParserUtils {
                     } else {
                         newBlock[sizeSelected++] = currentChar;
                     }
+                } else if (insideQualifier && currentChar == qualifier && i + 1 < size && trimmedLine.charAt(i + 1) == qualifier) {
+                    newBlock[sizeSelected++] = qualifier;
+                    newBlock[sizeSelected++] = qualifier;
+                    i += 1;
+                    previousChar = qualifier;
+                    continue;
                 } else {
                     if (i + 1 < size && delimiter != ' ') {
                         // this is used to allow unescaped qualifiers to be contained within the element
