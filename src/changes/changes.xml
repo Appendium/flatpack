@@ -6,9 +6,11 @@
         <title>Changes</title>
     </properties>
     <body>
-        <release version="4.0.5" date="TBD" description="Maintenance">
+        <release version="4.0.5" date="2021-05-30" description="Maintenance">
             <action dev="benoitx" type="fix">Fixing default LocalDate Parsing to be ISO 8601 and add the ability to give a DateTimeFormatter to the
                 parser.</action>
+            <action dev="omarsmak" type="update">Update libraries to work under Java 16/17.</action>
+            <action dev="mvlakh" type="fix" issue="60" due-to="mvlakh">Issues when parsing CSV files that extensively use text qualifiers.</action>
         </release>
         <release version="4.0.4" date="2019-01-06" description="Maintenance">
             <action dev="benoitx" type="fix">Fixing issue with comma inside double quote (delimiter inside qualifier).</action>
