@@ -22,9 +22,6 @@ import net.sf.flatpack.ordering.OrderColumn;
  */
 public class DelimitedColumnNamesInFile {
     public static void main(final String[] args) throws Exception {
-        String[] colNames = null;
-        OrderBy orderby = null;
-
         // delimited by a comma
         // text qualified by double quotes
         // ignore first record
@@ -33,12 +30,12 @@ public class DelimitedColumnNamesInFile {
         final DataSet ds = pzparser.parse();
 
         // re order the data set by last name
-        orderby = new OrderBy();
+        OrderBy orderby = new OrderBy();
         orderby.addOrderColumn(new OrderColumn("CITY", false));
         orderby.addOrderColumn(new OrderColumn("LASTNAME", true));
         ds.orderRows(orderby);
 
-        colNames = ds.getColumns();
+        String[] colNames = ds.getColumns();
 
         while (ds.next()) {
             for (final String colName : colNames) {

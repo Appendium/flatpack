@@ -608,12 +608,11 @@ public final class ParserUtils {
     }
 
     public static int getColumnIndex(final String key, final MetaData columnMD, final String colName, final boolean columNameCaseSensitive) {
-        int idx = -1;
         String column = colName;
         if (!columNameCaseSensitive) {
             column = colName.toLowerCase(Locale.getDefault());
         }
-        idx = columnMD.getColumnIndex(key, column);
+        int idx = columnMD.getColumnIndex(key, column);
 
         if (idx < 0) {
             throw new NoSuchElementException(
