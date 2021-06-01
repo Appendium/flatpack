@@ -69,6 +69,7 @@ public class CsvParserTest extends TestCase {
      */
     public void testCsvDocumentWithMultilineString() {
         final String testCsv =
+            "col1,col2,col3,col4,col5,col6,col7" + System.lineSeparator() +
             "Bob,Smith,bsmiht@test.com,\"This is a long fragment of text" + System.lineSeparator() +
             "that should be processed as a single field\", 1988, 111-222-33,\"another field with new line character" + System.lineSeparator() +
             "that should be considered as a field of the same data row\"";
@@ -87,17 +88,16 @@ public class CsvParserTest extends TestCase {
         final DelimiterParser parser = new DelimiterParser(bis, ',', '"', false);
         final DataSet result =  parser.parse();
 
+        // no errors should be in result, we should have 1 row with 7 columns
         assertThat(result.getErrorCount()).isEqualTo(0);
         assertThat(result.getColumns().length).isEqualTo(expectedResult.length);
         assertThat(result.getRowCount()).isEqualTo(1);
 
+        String[] columns = result.getColumns();
+
         result.next();
-        String[] row = result.getColumns();
-
         for (int i = 0; i < expectedResult.length; ++i) {
-            assertThat(expectedResult[i]).isEqualTo(row[i]);
+            assertThat(expectedResult[i]).isEqualTo(result.getString(columns[i]));
         }
-
     }
-
 }

@@ -236,101 +236,147 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      * could span multiple lines.
      * NULL will be returned when the end of the file is reached
      *
-     * @param br
+     * @param aContentReader
      *          Open reader being used to read through the file
-     * @param qual
+     * @param aQualifier
      *          Qualifier being used for parse
-     * @param delim
+     * @param aDelimiter
      *          Delimiter being used for parse
      * @return String
      *          Record from delimited file
      * @throws IOException if any problem with the stream of data (e.g. file reader)
+     *
+     * Improved version of line fetching that solves some of the issues of flatpack parser.
      */
-    protected String fetchNextRecord(final BufferedReader br, final char qual, final char delim) throws IOException {
+    protected String fetchNextRecord(BufferedReader aContentReader, char aQualifier, char aDelimiter) throws IOException
+    {
+        if (aQualifier == FPConstants.NO_QUALIFIER)
+        {
+            // no qualifier defined, then there can't be line breaks in the line
+            return aContentReader.readLine();
+        }
+
+        StringBuilder lineData = null;
         String line = null;
-        final StringBuilder lineData = new StringBuilder();
-        boolean processingMultiLine = false;
+        boolean multiline = false;
 
-        while ((line = br.readLine()) != null) {
+        // consuming lines until we find end of the data row
+        while ((line = aContentReader.readLine()) != null)
+        {
+            if(lineData == null)
+            {
+                lineData = new StringBuilder(line);
+            }
+            else
+            {
+                lineData.append(LINE_BREAK).append(line);
+            }
+
+            multiline = isMultiline(line.toCharArray(), multiline, aQualifier, aDelimiter);
+            if(! multiline)
+            {
+                // data row ended
+                break;
+            }
+        }
+
+        if(lineData != null)
+        {
             lineCount++;
-            final String trimmed = line.trim();
-            final int trimmedLen = trimmed.length();
-            if (!processingMultiLine && trimmed.length() == 0) {
-                // empty line skip past it, as long as it
-                // is not part of the multiline
-                continue;
+
+            String result = lineData.toString();
+            // no line break character at the end of data row
+            return result.endsWith(LINE_BREAK) ? result.substring(0, result.length() - LINE_BREAK.length()) : result;
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks if we need to consume one more line because data row was splitted to multiple lines.
+     * @param aСhrArray
+     * @param aMultiline
+     * @param aQualifier
+     * @param aDelimiter
+     * @return
+     */
+    protected boolean isMultiline(char[] aСhrArray, boolean aMultiline, char aQualifier, char aDelimiter)
+    {
+        // do not trim the line, according to rfc4180:
+        // Spaces are considered part of a field and should not be ignored
+        int position = 0;
+
+        do
+        {
+            // field processing here
+            if (! aMultiline && aСhrArray[position] == aDelimiter)
+            {
+                // empty field
+                position++;
             }
+            else if (!aMultiline && aСhrArray[position] != aQualifier)
+            {
+                // if the first char of the line is NOT a qualifier, then the field should not
+                // contain CRLF, double quotes, and commas
+                // therefore find the end of the field by looking for the first delimiter
 
-            // ********************************************************
-            // new functionality as of 2.1.0 check to see if we have
-            // any line breaks in the middle of the record, this will only
-            // be checked if we have specified a delimiter
-            // ********************************************************
-            final char[] chrArry = trimmed.toCharArray();
-            if (!processingMultiLine && delim > 0 && qual != FPConstants.NO_QUALIFIER) {
-                processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
+                while (++position < aСhrArray.length)
+                {
+                    if (aСhrArray[position] == aDelimiter)
+                    {
+                        position++;
+                        break;
+                    }
+                }
+
+                if (position >= aСhrArray.length)
+                {
+                    // end of the line without any delimiters so it's safe to say its the end of the line
+                    // and not multiline
+                    return false;
+                }
             }
+            else
+            {
+                // the first char is a qualifier, the field may contain CRLF, double quotes, and commas
+                // double quotes must be escaped with a double quote (i.e. "some ""data"" here").
+                // newline won't be present in the line because it's removed by the reader during
+                // readLine() call. so look for dangling "
 
-            // check to see if we have reached the end of the linebreak in
-            // the record
+                aMultiline = true;
+                if(aСhrArray[position] == aQualifier)
+                {
+                    // if we have just now found a qualifier we need to pome cursor to the next char
+                    position++;
+                }
 
-            final String trimmedLineData = lineData.toString().trim();
-            if (processingMultiLine && trimmedLineData.length() > 0 && trimmedLen > 0) {
-                // need to do one last check here. it is possible that the "
-                // could be part of the data
-                // excel will escape these with another quote; here is some
-                // data "" This would indicate
-                // there is more to the multiline
-                if (trimmed.charAt(trimmed.length() - 1) == qual && !trimmed.endsWith("" + qual + qual)) {
-                    // it is safe to assume we have reached the end of the
-                    // line break
-                    processingMultiLine = false;
-                    lineData.append(LINE_BREAK).append(line);
-                } else {
-                    // check to see if this is the last line of the record
-                    // looking for a qualifier followed by a delimiter
-                    lineData.append(LINE_BREAK).append(line);
-                    boolean qualiFound = false;
-                    for (final char element : chrArry) {
-                        if (qualiFound) {
-                            if (element == ' ') {
-                                continue;
-                            } else if (element == delim) {
-                                processingMultiLine = ParserUtils.isMultiLine(chrArry, delim, qual);
-                                break;
-                            }
-                            qualiFound = false;
-                        } else if (element == qual) {
-                            qualiFound = true;
+                // looking for the end of the text field
+                while(position < aСhrArray.length)
+                {
+                    if(aСhrArray[position] == aQualifier)
+                    {
+                        if(position == (aСhrArray.length - 1) || aСhrArray[position + 1] != aQualifier)
+                        {
+                            // end of text found
+                            position++;
+                            aMultiline = false;
+                            break;
+                        }
+                        else
+                        {
+                            // skipping escaped qualified like ""
+                            position += 2;
                         }
                     }
-
-                    // check to see if we are still in multi line mode, if
-                    // so grab the next line
-                    if (processingMultiLine) {
-                        continue;
+                    else
+                    {
+                        position++;
                     }
                 }
-            } else {
-                // throw the line into lineData var.
-                // need to check to see if we need to insert a line break.
-                // The buffered reader excludes the breaks
-                lineData.append(trimmedLen == 0 ? LINE_BREAK : line);
-                if (processingMultiLine) {
-                    continue; // if we are working on a multiline rec, get
-                    // the data on the next line
-                }
             }
-
-            break;
         }
+        while( position < aСhrArray.length - 1 );
 
-        if (line == null && lineData.length() == 0) {
-            // eof
-            return null;
-        }
-
-        return lineData.toString();
-
+        return aMultiline;
     }
 }
