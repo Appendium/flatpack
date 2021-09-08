@@ -110,6 +110,9 @@ public class DataError {
         final StringBuilder buf = new StringBuilder();
         buf.append("Line:").append(lineNo).append(" Level:").append(errorLevel).append(" Desc:").append(errorDesc)
                 .append(System.getProperty("line.separator"));
+        if (rawData != null) {
+            buf.append("RawData:").append(rawData).append(System.lineSeparator());
+        }
         return buf.toString();
     }
 
