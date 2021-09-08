@@ -248,10 +248,8 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      *
      * Improved version of line fetching that solves some of the issues of flatpack parser.
      */
-    protected String fetchNextRecord(BufferedReader aContentReader, char aQualifier, char aDelimiter) throws IOException
-    {
-        if (aQualifier == FPConstants.NO_QUALIFIER)
-        {
+    protected String fetchNextRecord(BufferedReader aContentReader, char aQualifier, char aDelimiter) throws IOException {
+        if (aQualifier == FPConstants.NO_QUALIFIER) {
             // no qualifier defined, then there can't be line breaks in the line
             return aContentReader.readLine();
         }
@@ -261,27 +259,21 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         boolean multiline = false;
 
         // consuming lines until we find end of the data row
-        while ((line = aContentReader.readLine()) != null)
-        {
-            if(lineData == null)
-            {
+        while ((line = aContentReader.readLine()) != null) {
+            if (lineData == null) {
                 lineData = new StringBuilder(line);
-            }
-            else
-            {
+            } else {
                 lineData.append(LINE_BREAK).append(line);
             }
 
             multiline = isMultiline(line.toCharArray(), multiline, aQualifier, aDelimiter);
-            if(! multiline)
-            {
+            if (!multiline) {
                 // data row ended
                 break;
             }
         }
 
-        if(lineData != null)
-        {
+        if (lineData != null) {
             lineCount++;
 
             String result = lineData.toString();
@@ -300,82 +292,66 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      * @param aDelimiter
      * @return
      */
-    protected boolean isMultiline(char[] aСhrArray, boolean aMultiline, char aQualifier, char aDelimiter)
-    {
+    protected boolean isMultiline(char[] aСhrArray, boolean aMultiline, char aQualifier, char aDelimiter) {
         // do not trim the line, according to rfc4180:
         // Spaces are considered part of a field and should not be ignored
         int position = 0;
 
-        do
-        {
+        if (aСhrArray == null || aСhrArray.length == 0) {
+            return aMultiline;
+        }
+        do {
             // field processing here
-            if (! aMultiline && aСhrArray[position] == aDelimiter)
-            {
+            if (!aMultiline && aСhrArray[position] == aDelimiter) {
                 // empty field
                 position++;
-            }
-            else if (!aMultiline && aСhrArray[position] != aQualifier)
-            {
+            } else if (!aMultiline && aСhrArray[position] != aQualifier) {
                 // if the first char of the line is NOT a qualifier, then the field should not
                 // contain CRLF, double quotes, and commas
                 // therefore find the end of the field by looking for the first delimiter
 
-                while (++position < aСhrArray.length)
-                {
-                    if (aСhrArray[position] == aDelimiter)
-                    {
+                while (++position < aСhrArray.length) {
+                    if (aСhrArray[position] == aDelimiter) {
                         position++;
                         break;
                     }
                 }
 
-                if (position >= aСhrArray.length)
-                {
+                if (position >= aСhrArray.length) {
                     // end of the line without any delimiters so it's safe to say its the end of the line
                     // and not multiline
                     return false;
                 }
-            }
-            else
-            {
+            } else {
                 // the first char is a qualifier, the field may contain CRLF, double quotes, and commas
                 // double quotes must be escaped with a double quote (i.e. "some ""data"" here").
                 // newline won't be present in the line because it's removed by the reader during
                 // readLine() call. so look for dangling "
 
                 aMultiline = true;
-                if(aСhrArray[position] == aQualifier)
-                {
+                if (aСhrArray[position] == aQualifier) {
                     // if we have just now found a qualifier we need to pome cursor to the next char
                     position++;
                 }
 
                 // looking for the end of the text field
-                while(position < aСhrArray.length)
-                {
-                    if(aСhrArray[position] == aQualifier)
-                    {
-                        if(position == (aСhrArray.length - 1) || aСhrArray[position + 1] != aQualifier)
-                        {
+                while (position < aСhrArray.length) {
+                    if (aСhrArray[position] == aQualifier) {
+                        if (position == (aСhrArray.length - 1) || aСhrArray[position + 1] != aQualifier) {
                             // end of text found
                             position++;
                             aMultiline = false;
                             break;
-                        }
-                        else
-                        {
+                        } else {
                             // skipping escaped qualified like ""
                             position += 2;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         position++;
                     }
                 }
             }
-        }
-        while( position < aСhrArray.length - 1 );
+        } while (position < aСhrArray.length - 1);
 
         return aMultiline;
     }
