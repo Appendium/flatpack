@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.6" date="2021-09-12" description="Maintenance">
+            <action dev="mvlakh" type="fix" issue="63" due-to="mvlakh">Issues with multi-lines.</action>
+        </release>
         <release version="4.0.5" date="2021-05-30" description="Maintenance">
             <action dev="benoitx" type="fix">Fixing default LocalDate Parsing to be ISO 8601 and add the ability to give a DateTimeFormatter to the
                 parser.</action>
