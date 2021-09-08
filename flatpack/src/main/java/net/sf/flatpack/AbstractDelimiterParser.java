@@ -351,7 +351,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                     }
                 }
             }
-        } while (position < aСhrArray.length - 1);
+        } while (position <= aСhrArray.length - 1);
 
         return aMultiline;
     }

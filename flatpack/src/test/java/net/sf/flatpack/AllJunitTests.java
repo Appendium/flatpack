@@ -18,6 +18,9 @@ public class AllJunitTests {
         // $JUnit-BEGIN$
         suite.addTest(new TestSuite(net.sf.flatpack.columninfile.DelimitedColumnNamesInFileTest.class));
         suite.addTest(new TestSuite(net.sf.flatpack.delim.tab.TabDelimitedTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.delim.csv.CsvParserTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.delim.pipe.PipeParserTest.class));
+        suite.addTest(new TestSuite(net.sf.flatpack.delim.tab.TabDelimitedTest.class));
         suite.addTest(new TestSuite(net.sf.flatpack.parserutils.FixedWidthParserUtilsTest.class));
         suite.addTest(new TestSuite(net.sf.flatpack.parserutils.ParserUtilsLTrimTest.class));
         suite.addTest(new TestSuite(net.sf.flatpack.parserutils.ParserUtilsSplitLineTest.class));

@@ -6,10 +6,13 @@
         <title>Changes</title>
     </properties>
     <body>
-        <release version="4.0.7" date="2021-09-12" description="Maintenance">
+        <release version="4.0.8" date="2021-09-08" description="Maintenance">
+            <action dev="benoitx" type="fix">Fix issue if multi-line starts with first or last character..</action>
+        </release>
+        <release version="4.0.7" date="2021-09-08" description="Maintenance">
             <action dev="benoitx" type="fix">Multi line did not cope with a true empty line part of a group.</action>
         </release>
-        <release version="4.0.6" date="2021-09-12" description="Maintenance">
+        <release version="4.0.6" date="2021-09-08" description="Maintenance">
             <action dev="mvlakh" type="fix" issue="63" due-to="mvlakh">Issues with multi-lines.</action>
         </release>
         <release version="4.0.5" date="2021-05-30" description="Maintenance">
