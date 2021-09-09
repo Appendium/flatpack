@@ -6,6 +6,12 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.12" date="2021-09-09" description="Maintenance">
+            <action dev="benoitx" type="add">DataError may contain last Column Name and Value for better investigation.</action>
+        </release>
+        <release version="4.0.11" date="2021-09-09" description="Maintenance">
+            <action dev="benoitx" type="add">Improve error message for the too few columns error.</action>
+        </release>
         <release version="4.0.10" date="2021-09-09" description="Maintenance">
             <action dev="benoitx" type="add">Improve error message for the too few columns error.</action>
         </release>

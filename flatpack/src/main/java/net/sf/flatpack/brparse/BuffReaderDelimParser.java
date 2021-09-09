@@ -205,8 +205,9 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             StringBuilder sb = new StringBuilder();
             sb.append("Too few columns expected size: ").append(columnCount).append(" Actual size: ").append(columns.size());
 
-            String lastColumnName = colTitles != null && colTitles.size() > 0 ? colTitles.get(columns.size() - 1).getColName() : null;
-            String lastColumnValue = columns != null && columns.size() > 0 ? columns.get(columns.size() - 1) : null;
+            String lastColumnName = colTitles != null && !colTitles.isEmpty() && !columns.isEmpty() ? colTitles.get(columns.size() - 1).getColName()
+                    : null;
+            String lastColumnValue = columns != null && !columns.isEmpty() ? columns.get(columns.size() - 1) : null;
             /*
             if (columns.size() >= 2) {
                 sb.append(System.lineSeparator()).append(" Last 2 Cols:").append(colTitles.get(columns.size() - 2).getColName())//
