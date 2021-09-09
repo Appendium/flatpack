@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.10" date="2021-09-09" description="Maintenance">
+            <action dev="benoitx" type="add">Improve error message for the too few columns error.</action>
+        </release>
         <release version="4.0.9" date="2021-09-09" description="Maintenance">
             <action dev="benoitx" type="add">Error for 'too few columns' will attempt to show the last column parsed (most likely with issue).</action>
         </release>

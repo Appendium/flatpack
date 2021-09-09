@@ -186,12 +186,12 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
         if (columns.size() > columnCount) {
             return handleTooManyColumns(ds, columns, line, columnCount);
         } else if (columns.size() < columnCount) {
-            return handleTooFewColumns(ds, columns, line, columnCount);
+            return handleTooFewColumns(ds, columns, line, columnCount, cmds);
         }
         return true;
     }
 
-    private boolean handleTooFewColumns(DefaultDataSet ds, List<String> columns, String line, final int columnCount) {
+    private boolean handleTooFewColumns(DefaultDataSet ds, List<String> columns, String line, final int columnCount, List<ColumnMetaData> colTitles) {
         if (isHandlingShortLines()) {
             // We can pad this line out
             while (columns.size() < columnCount) {
@@ -202,10 +202,20 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             addError(ds, "Padded line to correct number of columns", getLineCount(), 1);
             return true;
         } else {
-            addError(ds,
-                    "Too few columns expected size: " + columnCount + " Actual size: " + columns.size()
-                            + (columns != null ? " Last Col:" + columns.get(columns.size() - 1) : ""),
-                    getLineCount(), 2, isStoreRawDataToDataError() ? line : null);
+            StringBuilder sb = new StringBuilder();
+            sb.append("Too few columns expected size: ").append(columnCount).append(" Actual size: ").append(columns.size());
+
+            if (columns.size() >= 2) {
+                sb.append(" Last 2 Cols:").append(colTitles.get(columns.size() - 2))//
+                        .append(" and ").append(colTitles.get(columns.size() - 1));
+                sb.append(" Last 2 Cols VALUES:").append(columns.get(columns.size() - 2))//
+                        .append(" and ").append(columns.get(columns.size() - 1));
+            } else if (columns.size() >= 1) {
+                sb.append(" Last Col:").append(colTitles.get(columns.size() - 1));
+                sb.append(" Last Col VALUE:").append(columns.get(columns.size() - 1));
+            }
+
+            addError(ds, sb.toString(), getLineCount(), 2, isStoreRawDataToDataError() ? line : null);
             return false;
         }
     }
