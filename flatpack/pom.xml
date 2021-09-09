@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sf.flatpack</groupId>
         <artifactId>flatpack-parent</artifactId>
-        <version>4.0.10</version>
+        <version>4.0.11-SNAPSHOT</version>
     </parent>
 
 
