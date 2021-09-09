@@ -10,7 +10,7 @@
     <groupId>net.sf.flatpack</groupId>
     <artifactId>flatpack-parent</artifactId>
     <name>FlatPack Parent</name>
-    <version>4.0.12-SNAPSHOT</version>
+    <version>4.0.12</version>
     <url>https://github.com/Appendium/flatpack</url>
     <packaging>pom</packaging>
 
@@ -264,7 +264,7 @@
         <connection>scm:git:git@github.com:appendium/flatpack.git</connection>
         <url>git://github.com:appendium/flatpack.git</url>
         <developerConnection>scm:git:git@github.com:appendium/flatpack.git</developerConnection>
-        <tag>flatpack-parent-4.0.3</tag>
+        <tag>flatpack-parent-4.0.12</tag>
     </scm>
 
     <issueManagement>
