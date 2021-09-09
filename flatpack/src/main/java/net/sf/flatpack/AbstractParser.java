@@ -245,23 +245,6 @@ public abstract class AbstractParser implements Parser {
      * after processing
      *
      * @param ds
-     *            the dataset
-     * @param errorDesc
-     *            String description of error
-     * @param lineNo
-     *            line number error occurred on
-     * @param errorLevel
-     *            errorLevel 1,2,3 1=warning 2=error 3= severe error
-     */
-    protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel) {
-        addError(ds, errorDesc, lineNo, errorLevel, null);
-    }
-
-    /**
-     * Adds a new error to this DataSet. These can be collected, and retrieved
-     * after processing
-     *
-     * @param ds
      *            the data set from the parser
      * @param errorDesc
      *            String description of error
@@ -278,6 +261,34 @@ public abstract class AbstractParser implements Parser {
             return;
         }
         ds.addError(new DataError(errorDesc, lineNo, errorLevel, lineData));
+    }
+
+    /**
+     * Adds a new error to this DataSet. These can be collected, and retrieved
+     * after processing
+     *
+     * @param ds
+     *            the data set from the parser
+     * @param errorDesc
+     *            String description of error
+     * @param lineNo
+     *            line number error occurred on
+     * @param errorLevel
+     *            errorLevel 1,2,3 1=warning 2=error 3= severe error'
+     * @param lineData
+     *            Data of the line which failed the parse
+     * @param lastColName
+     *            Column name which was the last one parsed successfully (in case of too few col)
+     * @param lastColValue
+     *            value of the last Column
+     */
+    protected void addError(final DefaultDataSet ds, final String errorDesc, final int lineNo, final int errorLevel, final String lineData,
+            final String lastColName, final String lastColValue) {
+        if (errorLevel == 1 && isIgnoreParseWarnings()) {
+            // user has selected to not log warnings in the parser
+            return;
+        }
+        ds.addError(new DataError(errorDesc, lineNo, errorLevel, lineData, lastColName, lastColValue));
     }
 
     /**

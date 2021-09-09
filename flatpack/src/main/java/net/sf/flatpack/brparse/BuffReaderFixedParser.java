@@ -148,7 +148,7 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                     // be included in the
                     // dataset
                     if (isIgnoreExtraColumns()) {
-                        addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
+                        addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1, isStoreRawDataToDataError() ? line : null);
                         // user has chosen to ignore the fact that we have too many bytes in the fixed
                         // width file. Truncate the line to the correct length
                         row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line.substring(0, recordLength), isPreserveLeadingWhitespace(),
@@ -161,7 +161,7 @@ public class BuffReaderFixedParser extends FixedLengthParser implements Interfac
                 } else if (line.length() < recordLength) {
                     if (isHandlingShortLines()) {
                         // log a warning
-                        addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
+                        addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1, isStoreRawDataToDataError() ? line : null);
                         // We can pad this line out
                         row.addColumn(FixedWidthParserUtils.splitFixedText(cmds, line + ParserUtils.padding(recordLength - line.length(), ' '),
                                 isPreserveLeadingWhitespace(), isPreserveTrailingWhitespace()));

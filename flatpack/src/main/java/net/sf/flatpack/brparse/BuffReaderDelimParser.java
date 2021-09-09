@@ -199,23 +199,27 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             }
 
             // log a warning
-            addError(ds, "Padded line to correct number of columns", getLineCount(), 1);
+            addError(ds, "Padded line to correct number of columns", getLineCount(), 1, isStoreRawDataToDataError() ? line : null);
             return true;
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append("Too few columns expected size: ").append(columnCount).append(" Actual size: ").append(columns.size());
 
+            String lastColumnName = colTitles != null && colTitles.size() > 0 ? colTitles.get(columns.size() - 1).getColName() : null;
+            String lastColumnValue = columns != null && columns.size() > 0 ? columns.get(columns.size() - 1) : null;
+            /*
             if (columns.size() >= 2) {
-                sb.append(" Last 2 Cols:").append(colTitles.get(columns.size() - 2))//
-                        .append(" and ").append(colTitles.get(columns.size() - 1));
-                sb.append(" Last 2 Cols VALUES:").append(columns.get(columns.size() - 2))//
+                sb.append(System.lineSeparator()).append(" Last 2 Cols:").append(colTitles.get(columns.size() - 2).getColName())//
+                        .append(" and ").append(colTitles.get(columns.size() - 1).getColName());
+                sb.append(System.lineSeparator()).append(" Last 2 Cols VALUES:").append(columns.get(columns.size() - 2))//
                         .append(" and ").append(columns.get(columns.size() - 1));
             } else if (columns.size() >= 1) {
-                sb.append(" Last Col:").append(colTitles.get(columns.size() - 1));
-                sb.append(" Last Col VALUE:").append(columns.get(columns.size() - 1));
+                sb.append(System.lineSeparator()).append(" Last Col:").append(colTitles.get(columns.size() - 1).getColName());
+                sb.append(System.lineSeparator()).append(" Last Col VALUE:").append(columns.get(columns.size() - 1));
             }
+            */
 
-            addError(ds, sb.toString(), getLineCount(), 2, isStoreRawDataToDataError() ? line : null);
+            addError(ds, sb.toString(), getLineCount(), 2, isStoreRawDataToDataError() ? line : null, lastColumnName, lastColumnValue);
             return false;
         }
     }
@@ -225,11 +229,11 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             // user has chosen to ignore the fact that we have too many columns in the data from
             // what the mapping has described. sublist the array to remove unneeded columns
             columns.retainAll(columns.subList(0, columnCount));
-            addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
+            addError(ds, "TRUNCATED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1, isStoreRawDataToDataError() ? line : null);
             return true;
         } else {
             // log the error
-            addError(ds, "TOO MANY COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
+            addError(ds, "Too many columns expected size: " + columnCount + " Actual size: " + columns.size(), getLineCount(), 2,
                     isStoreRawDataToDataError() ? line : null);
             return false;
         }

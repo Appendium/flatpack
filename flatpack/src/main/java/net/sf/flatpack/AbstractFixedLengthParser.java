@@ -95,6 +95,7 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
             // map of record lengths corresponding to the ID's in the columnMD
             // array loop through each line in the file
             while ((line = br.readLine()) != null) {
+                String originalLine = line;
                 lineCount++;
                 // empty line skip past it
                 if (line.trim().length() == 0) {
@@ -112,10 +113,10 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                         // user has choosen to ignore the fact that we have too many bytes in the fixed
                         // width file. Truncate the line to the correct length
                         line = line.substring(0, recordLength);
-                        addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1);
+                        addError(ds, "TRUNCATED LINE TO CORRECT LENGTH", lineCount, 1, isStoreRawDataToDataError() ? originalLine : null);
                     } else {
-                        addError(ds, "LINE TOO LONG. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
-                                isStoreRawDataToDataError() ? line : null);
+                        addError(ds, "LINE TOO LONG. LINE IS " + originalLine.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
+                                isStoreRawDataToDataError() ? originalLine : null);
                         continue;
                     }
                 } else if (line.length() < recordLength) {
@@ -124,11 +125,11 @@ public abstract class AbstractFixedLengthParser extends AbstractParser {
                         line += ParserUtils.padding(recordLength - line.length(), ' ');
 
                         // log a warning
-                        addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1);
+                        addError(ds, "PADDED LINE TO CORRECT RECORD LENGTH", lineCount, 1, isStoreRawDataToDataError() ? originalLine : null);
 
                     } else {
                         addError(ds, "LINE TOO SHORT. LINE IS " + line.length() + " LONG. SHOULD BE " + recordLength, lineCount, 2,
-                                isStoreRawDataToDataError() ? line : null);
+                                isStoreRawDataToDataError() ? originalLine : null);
                         continue;
                     }
                 }

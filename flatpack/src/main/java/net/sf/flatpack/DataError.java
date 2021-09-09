@@ -40,12 +40,11 @@ package net.sf.flatpack;
  */
 public class DataError {
     private final String errorDesc;
-
     private final int lineNo;
-
     private final int errorLevel;
-
     private final String rawData;
+    private final String lastColumnName;
+    private final String lastColumnValue;
 
     /**
      *
@@ -57,7 +56,7 @@ public class DataError {
      *          Level of the error (1=warning, 2=moderate, 3=severe)
      */
     public DataError(final String errorDesc, final int lineNo, final int errorLevel) {
-        this(errorDesc, lineNo, errorLevel, null);
+        this(errorDesc, lineNo, errorLevel, null, null, null);
     }
 
     /**
@@ -72,10 +71,28 @@ public class DataError {
      *          String of data which the parse failed on
      */
     public DataError(final String errorDesc, final int lineNo, final int errorLevel, final String rawData) {
+        this(errorDesc, lineNo, errorLevel, rawData, null, null);
+    }
+
+    /**
+     *
+     * @param errorDesc
+     *          Text description of the error that occurred
+     * @param lineNo
+     *          Line number in the data file the error occurred on
+     * @param errorLevel
+     *          Level of the error (1=warning, 2=moderate, 3=severe)
+     * @param rawData
+     *          String of data which the parse failed on
+     */
+    public DataError(final String errorDesc, final int lineNo, final int errorLevel, final String rawData, final String lastColumnName,
+            final String lastColumnValue) {
         this.errorDesc = errorDesc;
         this.lineNo = lineNo;
         this.errorLevel = errorLevel;
         this.rawData = rawData;
+        this.lastColumnName = lastColumnName;
+        this.lastColumnValue = lastColumnValue;
     }
 
     /**
@@ -113,7 +130,18 @@ public class DataError {
         if (rawData != null) {
             buf.append("RawData:").append(rawData).append(System.lineSeparator());
         }
+        if (lastColumnName != null) {
+            buf.append("LastColName:").append(lastColumnName).append(" Value:").append(lastColumnValue).append(System.lineSeparator());
+        }
         return buf.toString();
+    }
+
+    public String getLastColumnName() {
+        return lastColumnName;
+    }
+
+    public String getLastColumnValue() {
+        return lastColumnValue;
     }
 
     /**
