@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.9" date="2021-09-09" description="Maintenance">
+            <action dev="benoitx" type="add">Error for 'too few columns' will attempt to show the last column parsed (most likely with issue).</action>
+        </release>
         <release version="4.0.8" date="2021-09-08" description="Maintenance">
             <action dev="benoitx" type="fix">Fix issue if multi-line starts with first or last character..</action>
         </release>

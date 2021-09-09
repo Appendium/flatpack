@@ -199,11 +199,13 @@ public class BuffReaderDelimParser extends DelimiterParser implements InterfaceB
             }
 
             // log a warning
-            addError(ds, "PADDED LINE TO CORRECT NUMBER OF COLUMNS", getLineCount(), 1);
+            addError(ds, "Padded line to correct number of columns", getLineCount(), 1);
             return true;
         } else {
-            addError(ds, "TOO FEW COLUMNS WANTED: " + columnCount + " GOT: " + columns.size(), getLineCount(), 2,
-                    isStoreRawDataToDataError() ? line : null);
+            addError(ds,
+                    "Too few columns expected size: " + columnCount + " Actual size: " + columns.size()
+                            + (columns != null ? " Last Col:" + columns.get(columns.size() - 1) : ""),
+                    getLineCount(), 2, isStoreRawDataToDataError() ? line : null);
             return false;
         }
     }
