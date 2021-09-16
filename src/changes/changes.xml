@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.13" date="2021-09-16" description="Small Improvement">
+            <action dev="benoitx" type="add">WriterOptions provides option to replace newLine/CarriageReturn in a string.</action>
+        </release>
         <release version="4.0.12" date="2021-09-09" description="Maintenance">
             <action dev="benoitx" type="add">DataError may contain last Column Name and Value for better investigation.</action>
         </release>

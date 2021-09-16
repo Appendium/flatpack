@@ -3,6 +3,7 @@ package net.sf.flatpack.delim.csv;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
@@ -92,6 +93,56 @@ public class CsvParserTest extends TestCase {
         for (int i = 0; i < expectedResult.length; ++i) {
             assertThat(expectedResult[i]).isEqualTo(result.getString(columns[i]));
         }
+    }
+
+    /**
+     * Fails with the error "Odd number of qualifiers"
+     */
+    public void testCsvDocumentWithMultilineEmptyString() {
+        final String testCsv = "col1,col2,col3" + System.lineSeparator() + "Bob,\"Smith" + System.lineSeparator() + System.lineSeparator()
+                + "\",val3";
+
+        final String[] expectedResult = { "Bob", "Smith" + System.lineSeparator() + System.lineSeparator(), "val3" };
+
+        final ByteArrayInputStream bis = new ByteArrayInputStream(testCsv.getBytes(StandardCharsets.UTF_8));
+        final DelimiterParser parser = new DelimiterParser(bis, ',', '"', false);
+        final DataSet result = parser.parse();
+
+        // no errors should be in result, we should have 1 row with 7 columns
+        assertThat(result.getErrorCount()).isEqualTo(0);
+        assertThat(result.getColumns().length).isEqualTo(expectedResult.length);
+        assertThat(result.getRowCount()).isEqualTo(1);
+
+        String[] columns = result.getColumns();
+
+        result.next();
+        for (int i = 0; i < expectedResult.length; ++i) {
+            assertThat(expectedResult[i]).isEqualTo(result.getString(columns[i]));
+        }
+    }
+
+    /**
+     * Fails with the error "Odd number of qualifiers"
+     */
+    public void testBX() {
+        File tmpFile = new File("net/sf/flatpack/delim/csv/test.txt");
+
+        // InputStream in = this.getClass().getResourceAsStream("/test.txt");
+
+        final DelimiterParser parser = new DelimiterParser(tmpFile, ',', '"', false);
+        final DataSet result = parser.parse();
+
+        // no errors should be in result, we should have 1 row with 7 columns
+        assertThat(result.getErrorCount()).isEqualTo(0);
+        // assertThat(result.getColumns().length).isEqualTo(expectedResult.length);
+        // assertThat(result.getRowCount()).isEqualTo(1);
+        //
+        // String[] columns = result.getColumns();
+        //
+        // result.next();
+        // for (int i = 0; i < expectedResult.length; ++i) {
+        // assertThat(expectedResult[i]).isEqualTo(result.getString(columns[i]));
+        // }
     }
 
     /**

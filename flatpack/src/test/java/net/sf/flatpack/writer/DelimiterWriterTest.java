@@ -213,6 +213,24 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         Assert.assertEquals(expected, result);
     }
 
+    public void testWriteMultiLineSuppressed() throws Exception {
+        final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
+        factory.addColumnTitle("col1");
+        factory.addColumnTitle("col2");
+        factory.addColumnTitle("col3");
+        final StringWriter out = new StringWriter();
+        final Writer writer = factory.createWriter(out, WriterOptions.getInstance().setReplaceCarriageReturnWith(":"));
+        writer.addRecordEntry("col1", "value");
+        final String newLine = System.getProperty("line.separator");
+        writer.addRecordEntry("col2", "value2" + newLine + "Hello");
+        writer.addRecordEntry("col3", "value3");
+        writer.nextRecord();
+        writer.flush();
+        final String expected = this.joinLines("col1;col2;col3", "value;value2:Hello;value3");
+        final String result = out.toString();
+        Assert.assertEquals(expected, result);
+    }
+
     public void testWriteMultiLineAtTheEnd() throws Exception {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
         factory.addColumnTitle("col1");

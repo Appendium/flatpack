@@ -8,6 +8,7 @@ package net.sf.flatpack.writer;
 public class WriterOptions {
 
     private boolean autoPrintHeader = true;
+    private String replaceCarriageReturnWith = null;
     private String lineSeparator = System.lineSeparator();
 
     /**
@@ -46,12 +47,24 @@ public class WriterOptions {
     }
 
     /**
-     * Set the line leperator.
+     * Set the line separator.
      * @param lineSeparator the line separator
      * @return
      */
     public WriterOptions setLineSeparator(final String lineSeparator) {
         this.lineSeparator = lineSeparator;
         return this;
+    }
+
+    /**
+     * Set the string to replace the CR with.
+     */
+    public WriterOptions setReplaceCarriageReturnWith(final String replaceCarriageReturnWith) {
+        this.replaceCarriageReturnWith = replaceCarriageReturnWith;
+        return this;
+    }
+
+    public String getReplaceCarriageReturnWith() {
+        return replaceCarriageReturnWith;
     }
 }

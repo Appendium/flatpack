@@ -18,6 +18,7 @@ import net.sf.flatpack.util.FPConstants;
 public class DelimiterWriter extends AbstractWriter {
     private final char delimiter;
     private final char qualifier;
+    private final String replaceCarriageReturnWith;
     private List<String> columnTitles = null;
     private boolean columnTitlesWritten = false;
 
@@ -27,6 +28,7 @@ public class DelimiterWriter extends AbstractWriter {
         this.delimiter = delimiter;
         this.qualifier = qualifier;
         this.lineSeparator = options.getLineSeparator();
+        this.replaceCarriageReturnWith = options.getReplaceCarriageReturnWith();
 
         columnTitles = new ArrayList<>();
         final List<ColumnMetaData> columns = (List<ColumnMetaData>) columnMapping.get(FPConstants.DETAIL_ID);
@@ -84,6 +86,11 @@ public class DelimiterWriter extends AbstractWriter {
         } else if (value != null) {
             stringValue = value.toString();
         }
+
+        if (replaceCarriageReturnWith != null) {
+            stringValue = stringValue.replaceAll("\r\n", replaceCarriageReturnWith).replaceAll("\n", replaceCarriageReturnWith);
+        }
+
         return stringValue;
     }
 
