@@ -248,7 +248,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      *
      * Improved version of line fetching that solves some of the issues of flatpack parser.
      */
-    protected String fetchNextRecord(BufferedReader aContentReader, char aQualifier, char aDelimiter) throws IOException {
+    protected String fetchNextRecord(final BufferedReader aContentReader, final char aQualifier, final char aDelimiter) throws IOException {
         if (aQualifier == FPConstants.NO_QUALIFIER) {
             // no qualifier defined, then there can't be line breaks in the line
             return aContentReader.readLine();
@@ -276,7 +276,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
         if (lineData != null) {
             lineCount++;
 
-            String result = lineData.toString();
+            final String result = lineData.toString();
             // no line break character at the end of data row
             return result.endsWith(LINE_BREAK) ? result.substring(0, result.length() - LINE_BREAK.length()) : result;
         }
@@ -292,7 +292,7 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
      * @param aDelimiter
      * @return
      */
-    protected boolean isMultiline(char[] aСhrArray, boolean aMultiline, char aQualifier, char aDelimiter) {
+    protected boolean isMultiline(final char[] aСhrArray, boolean aMultiline, final char aQualifier, final char aDelimiter) {
         // do not trim the line, according to rfc4180:
         // Spaces are considered part of a field and should not be ignored
         int position = 0;
@@ -328,16 +328,23 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 // newline won't be present in the line because it's removed by the reader during
                 // readLine() call. so look for dangling "
 
-                aMultiline = true;
+                if (aMultiline && position == 0 && aСhrArray[position] == aQualifier) {
+                    // if we start the new line with the qualifier AND we are already in multiline we therefore have
+                    // found the end of the multiline
+                    aMultiline = false;
+                } else {
+                    aMultiline = true;
+                }
+
                 if (aСhrArray[position] == aQualifier) {
-                    // if we have just now found a qualifier we need to pome cursor to the next char
+                    // if we have just now found a qualifier we need to move cursor to the next char
                     position++;
                 }
 
                 // looking for the end of the text field
                 while (position < aСhrArray.length) {
                     if (aСhrArray[position] == aQualifier) {
-                        if (position == (aСhrArray.length - 1) || aСhrArray[position + 1] != aQualifier) {
+                        if (position == aСhrArray.length - 1 || aСhrArray[position + 1] != aQualifier) {
                             // end of text found
                             position++;
                             aMultiline = false;

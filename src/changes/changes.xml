@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.14" date="2021-09-16" description="Maintenance">
+            <action dev="benoitx" type="fix">Fixed esoteric Delimiter multi-line issue if the CR is just at the end of the String and the next line is the qualifier.</action>
+        </release>
         <release version="4.0.13" date="2021-09-16" description="Small Improvement">
             <action dev="benoitx" type="add">WriterOptions provides option to replace newLine/CarriageReturn in a string.</action>
         </release>
