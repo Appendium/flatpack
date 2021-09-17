@@ -328,7 +328,9 @@ public abstract class AbstractDelimiterParser extends AbstractParser {
                 // newline won't be present in the line because it's removed by the reader during
                 // readLine() call. so look for dangling "
 
-                if (aMultiline && position == 0 && aСhrArray[position] == aQualifier) {
+                if (aMultiline && position == 0 && aСhrArray[0] == aQualifier && aСhrArray.length > 1 && aСhrArray[1] == aQualifier) {
+                    position++;
+                } else if (aMultiline && position == 0 && aСhrArray[0] == aQualifier && aСhrArray.length > 1 && aСhrArray[1] != aQualifier) {
                     // if we start the new line with the qualifier AND we are already in multiline we therefore have
                     // found the end of the multiline
                     aMultiline = false;

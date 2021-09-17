@@ -128,6 +128,39 @@ public class CsvParserTest extends TestCase {
     }
 
     /**
+     */
+    public void testCsvDocumentWithMultilineEmptyStringAndDoubleQuote() {
+        final String testCsv = "col1,col2,col3" + System.lineSeparator() //
+                + "B,\"S" + System.lineSeparator() + "\"\" " + System.lineSeparator() + "Hello \"\"" + "\",val3" + System.lineSeparator() //
+                + "v1,v2,v3" //
+        ;
+
+        final String[] expectedResult = { "B", "S" + System.lineSeparator() + "\" " + System.lineSeparator() + "Hello \"", "val3" };
+        final String[] expectedResultR2 = { "v1", "v2", "v3" };
+
+        final ByteArrayInputStream bis = new ByteArrayInputStream(testCsv.getBytes(StandardCharsets.UTF_8));
+        final DelimiterParser parser = new DelimiterParser(bis, ',', '"', false);
+        final DataSet result = parser.parse();
+
+        // no errors should be in result, we should have 1 row with 7 columns
+        assertThat(result.getErrorCount()).isEqualTo(0);
+        assertThat(result.getColumns().length).isEqualTo(expectedResult.length);
+        assertThat(result.getRowCount()).isEqualTo(2);
+
+        String[] columns = result.getColumns();
+
+        result.next();
+        for (int i = 0; i < expectedResult.length; ++i) {
+            assertThat(expectedResult[i]).isEqualTo(result.getString(columns[i]));
+        }
+
+        result.next();
+        for (int i = 0; i < expectedResult.length; ++i) {
+            assertThat(expectedResultR2[i]).isEqualTo(result.getString(columns[i]));
+        }
+    }
+
+    /**
      * Fails with the error "Odd number of qualifiers"
      */
     public void testCsvDocumentWithMultilineStringFirstLine() {

@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.15" date="2021-09-17" description="Maintenance">
+            <action dev="benoitx" type="fix">Fixed when new line of a multi line starts with "".</action>
+        </release>
         <release version="4.0.14" date="2021-09-16" description="Maintenance">
             <action dev="benoitx" type="fix">Fixed esoteric Delimiter multi-line issue if the CR is just at the end of the String and the next line is the qualifier.</action>
         </release>
