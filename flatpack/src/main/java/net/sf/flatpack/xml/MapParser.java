@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -98,6 +99,7 @@ public final class MapParser {
         final Map<String, Object> mdIndex = new LinkedHashMap<>(); // retain the same order
 
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         final DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setEntityResolver(new ResolveLocalDTD());
         final org.w3c.dom.Document document = builder.parse(new InputSource(xmlStreamReader));

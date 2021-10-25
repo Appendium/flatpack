@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.16" date="2021-11-01" description="Maintenance">
+            <action dev="benoitx" type="fix" due-to="srikanthprathi">Fixed Security issue for XXE.</action>
+        </release>
         <release version="4.0.15" date="2021-09-17" description="Maintenance">
             <action dev="benoitx" type="fix">Fixed when new line of a multi line starts with "".</action>
         </release>
