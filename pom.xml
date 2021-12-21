@@ -24,7 +24,7 @@
         <github.global.server>github</github.global.server>
         <github.global.oauth2Token>${env.GITHUB_OAUTH_TOKEN}</github.global.oauth2Token>
         <javadoc.opts>-Xdoclint:none</javadoc.opts>
-        <slf4j.version>1.7.21</slf4j.version>
+        <slf4j.version>1.7.32</slf4j.version>
     </properties>
 
     <modules>
@@ -119,7 +119,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.20</version>
+                <version>1.18.22</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>

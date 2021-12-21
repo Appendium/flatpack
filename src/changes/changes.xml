@@ -6,6 +6,9 @@
         <title>Changes</title>
     </properties>
     <body>
+        <release version="4.0.17" date="2021-12-22" description="Maintenance">
+            <action dev="benoitx" type="fix">Upgrades to Lombok and SLF4j.</action>
+        </release>
         <release version="4.0.16" date="2021-11-01" description="Maintenance">
             <action dev="benoitx" type="fix" due-to="srikanthprathi">Fixed Security issue for XXE.</action>
         </release>
