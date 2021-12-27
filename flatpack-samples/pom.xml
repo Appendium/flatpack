@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sf.flatpack</groupId>
         <artifactId>flatpack-parent</artifactId>
-        <version>4.0.18-SNAPSHOT</version>
+        <version>4.0.18</version>
     </parent>
 
 
@@ -53,7 +53,7 @@
                 <configuration>
                     <instructions>
                         <Export-Package>net.sf.flatpack.examples.*;version="${project.version}"</Export-Package>
-                        <Private-Package/>
+                        <Private-Package />
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Bundle-RequiredExecutionEnvironment>J2SE-1.4</Bundle-RequiredExecutionEnvironment>
@@ -88,12 +88,12 @@
         <dependency>
             <groupId>net.sf.flatpack</groupId>
             <artifactId>flatpack</artifactId>
-            <version>4.0.18-SNAPSHOT</version>
+            <version>4.0.18</version>
         </dependency>
         <dependency>
             <groupId>net.sf.flatpack</groupId>
             <artifactId>flatpack-excel</artifactId>
-            <version>4.0.18-SNAPSHOT</version>
+            <version>4.0.18</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.jexcelapi</groupId>
