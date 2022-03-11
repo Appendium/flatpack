@@ -43,7 +43,7 @@
                 <configuration>
                     <instructions>
                         <Export-Package>net.sf.flatpack.excel.*;version="${project.version}"</Export-Package>
-                        <Private-Package />
+                        <Private-Package/>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Bundle-RequiredExecutionEnvironment>J2SE-1.4</Bundle-RequiredExecutionEnvironment>
@@ -109,7 +109,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.36</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
