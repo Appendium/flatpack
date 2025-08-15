@@ -1,5 +1,9 @@
 package net.sf.flatpack.writer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,16 +12,17 @@ import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import junit.framework.Assert;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Dirk Holmes and Holger Holger Hoffstatte
  * @author Benoit Xhenseval
  */
-public class DelimiterWriterTest extends PZWriterTestCase {
+class DelimiterWriterTest extends PZWriterTestCase {
 
-    public void testCloseable() throws Exception {
+    @Test
+    void testCloseable() throws Exception {
         final StringWriter out = new StringWriter();
 
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"')//
@@ -44,7 +49,8 @@ public class DelimiterWriterTest extends PZWriterTestCase {
 
     }
 
-    public void testWriteCsvNoMappingFile() throws Exception {
+    @Test
+    void testWriteCsvNoMappingFile() throws Exception {
         final StringWriter out = new StringWriter();
 
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"')//
@@ -70,10 +76,11 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         // make sure the tests work on Windows and on Linux
         final String expected = this.joinLines("FIRSTNAME;LASTNAME;ADDRESS;CITY;STATE;ZIP;REVENUE", "JOHN;ANAME;1234 CIRCLE CT;ELYRIA;OH;44035;10");
 
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void testWritingALong() throws Exception {
+    @Test
+    void testWritingALong() throws Exception {
         final StringWriter out = new StringWriter();
 
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"')//
@@ -89,10 +96,11 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         // make sure the tests work on Windows and on Linux
         final String expected = this.joinLines("LONGNUMBER", "123456789101123");
 
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void testWriteCsvWithMappingFile() throws Exception {
+    @Test
+    void testWriteCsvWithMappingFile() throws Exception {
         final InputStream mapping = this.getClass().getClassLoader().getResourceAsStream("DelimitedWithHeader.pzmap.xml");
         final Reader mappingReader = new InputStreamReader(mapping);
         final StringWriter out = new StringWriter();
@@ -109,10 +117,11 @@ public class DelimiterWriterTest extends PZWriterTestCase {
 
         final String expected = this.joinLines("FIRSTNAME;LASTNAME;ADDRESS;CITY;STATE;ZIP", "JOHN;ANAME;1234 CIRCLE CT;ELYRIA;OH;44035");
 
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void testWriteCsvWithMissingColumns() throws Exception {
+    @Test
+    void testWriteCsvWithMissingColumns() throws Exception {
         final InputStream mapping = this.getClass().getClassLoader().getResourceAsStream("DelimitedWithHeader.pzmap.xml");
         final InputStreamReader mappingReader = new InputStreamReader(mapping);
         final StringWriter out = new StringWriter();
@@ -128,28 +137,26 @@ public class DelimiterWriterTest extends PZWriterTestCase {
 
         final String expected = this.joinLines("FIRSTNAME;LASTNAME;ADDRESS;CITY;STATE;ZIP", ";ANAME;;ELYRIA;OH;44035");
 
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void testCreateWriterWithoutColumnMapping() throws Exception {
-        try {
+    @Test
+    void testCreateWriterWithoutColumnMapping() throws Exception {
+        assertThrows(IllegalArgumentException.class, () -> {
             final Writer writer = new DelimiterWriterFactory(';', '"').createWriter(new StringWriter());
             writer.addRecordEntry("ThisColumnDoesNotExist", "foo");
-            Assert.fail("Writing to a DelimiterWriter without column mapping is not supported");
-        } catch (final IllegalArgumentException iae) {
-            // exception was expected
-        }
+        }, "Writing to a DelimiterWriter without column mapping is not supported");
     }
 
-    public void testCreateWriterWithNullOutputStream() throws IOException {
-        try {
+    @Test
+    void testCreateWriterWithNullOutputStream() throws IOException {
+        assertThrows(NullPointerException.class, () -> {
             new DelimiterWriterFactory((Map) null).createWriter(null);
-        } catch (final NullPointerException npe) {
-            // this one was expected
-        }
+        });
     }
 
-    public void testAllowWriteWithNoMapping() throws Exception {
+    @Test
+    void testAllowWriteWithNoMapping() throws Exception {
         final StringWriter sw = new StringWriter();
 
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
@@ -170,10 +177,11 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         writer.nextRecord();
         writer.flush();
 
-        Assert.assertTrue(out.toString().startsWith("a;b;c;d"));
+        assertTrue(out.toString().startsWith("a;b;c;d"));
     }
 
-    public void testWriteValueWithQualifier() throws Exception {
+    @Test
+    void testWriteValueWithQualifier() throws Exception {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
         factory.addColumnTitle("col1");
         factory.addColumnTitle("col2");
@@ -192,10 +200,11 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         final String expected = this.joinLines("col1;col2;col3;col4",
                 "\"value;with;delimiter\";normal value;\"value \"\"with qualifier\"\"\";\"value \"\"with qualifier\"\" and ;delimiter;\"");
 
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void testWriteMultiLine() throws Exception {
+    @Test
+    void testWriteMultiLine() throws Exception {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
         factory.addColumnTitle("col1");
         factory.addColumnTitle("col2");
@@ -210,10 +219,11 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         writer.flush();
         final String expected = this.joinLines("col1;col2;col3", "value;\"value2" + newLine + "Hello\";value3");
         final String result = out.toString();
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
-    public void testWriteMultiLineSuppressed() throws Exception {
+    @Test
+    void testWriteMultiLineSuppressed() throws Exception {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
         factory.addColumnTitle("col1");
         factory.addColumnTitle("col2");
@@ -228,10 +238,11 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         writer.flush();
         final String expected = this.joinLines("col1;col2;col3", "value;value2:Hello;value3");
         final String result = out.toString();
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
-    public void testWriteMultiLineAtTheEnd() throws Exception {
+    @Test
+    void testWriteMultiLineAtTheEnd() throws Exception {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(';', '"');
         factory.addColumnTitle("col1");
         factory.addColumnTitle("col2");
@@ -246,6 +257,6 @@ public class DelimiterWriterTest extends PZWriterTestCase {
         writer.flush();
         final String expected = this.joinLines("col1;col2;col3", "value;\"value2" + newLine + "\";value3");
         final String result = out.toString();
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 }

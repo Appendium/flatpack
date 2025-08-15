@@ -1,5 +1,7 @@
 package net.sf.flatpack.writer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -10,19 +12,20 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import junit.framework.TestCase;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DelimiterParser;
 import net.sf.flatpack.Record;
 
-public class DoubleQualifierWriteReadTest extends TestCase {
+class DoubleQualifierWriteReadTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(DoubleQualifierWriteReadTest.class);
 
-    public void testDelimiter() throws Exception {
+    @Test
+    void testDelimiter() throws Exception {
         final java.io.Writer writer = new StringWriter();
 
         final Set<String> header = new LinkedHashSet<String>();

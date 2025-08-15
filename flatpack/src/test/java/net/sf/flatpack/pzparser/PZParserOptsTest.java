@@ -1,10 +1,18 @@
 package net.sf.flatpack.pzparser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.StringReader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.DataError;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
@@ -21,43 +29,46 @@ import net.sf.flatpack.util.FPInvalidUsageException;
  *
  * @author Paul Zepernick
  */
-public class PZParserOptsTest extends TestCase {
+class PZParserOptsTest {
 
-    public void testHandleShortLines() {
+    @Test
+    void testHandleShortLines() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setHandlingShortLines(true);
         // p.setIgnoreParseWarnings(true);
         ds = p.parse();
-        assertEquals("Should have a row of data", true, ds.next());
+        assertTrue(ds.next(), "Should have a row of data");
 
         // re-test the buffered reader
         p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setHandlingShortLines(true);
         // p.setIgnoreParseWarnings(true);
         ds = p.parse();
-        assertEquals("Should have a row of data", true, ds.next());
+        assertTrue(ds.next(), "Should have a row of data");
     }
 
-    public void testIgnoreExtraColumns() {
+    @Test
+    void testIgnoreExtraColumns() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n \"value1\",value2,value3,value4";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
         p.setIgnoreExtraColumns(true);
         // p.setIgnoreParseWarnings(true);
         ds = p.parse();
-        assertEquals("Should have a row of data", true, ds.next());
+        assertTrue(ds.next(), "Should have a row of data");
 
         // re-test the buffered reader
         p = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
         p.setIgnoreExtraColumns(true);
         // p.setIgnoreParseWarnings(true);
         ds = p.parse();
-        assertEquals("Should have a row of data", true, ds.next());
+        assertTrue(ds.next(), "Should have a row of data");
     }
 
-    public void testEmptyToNull() {
+    @Test
+    void testEmptyToNull() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1,,value3";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -65,17 +76,18 @@ public class PZParserOptsTest extends TestCase {
         ds = p.parse();
         ds.next();
 
-        assertEquals("String should be null...", null, ds.getString("column2"));
+        assertNull(ds.getString("column2"), "String should be null...");
 
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setNullEmptyStrings(false);
         ds = p.parse();
         ds.next();
 
-        assertEquals("String should be empty...", "", ds.getString("column2"));
+        assertEquals("", ds.getString("column2"), "String should be empty...");
     }
 
-    public void testIgnoreWarnings() {
+    @Test
+    void testIgnoreWarnings() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1,value2";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -83,7 +95,7 @@ public class PZParserOptsTest extends TestCase {
         p.setIgnoreParseWarnings(true);
         ds = p.parse();
 
-        assertEquals("Error collection should be empty...", 0, ds.getErrors().size());
+        assertEquals(0, ds.getErrors().size(), "Error collection should be empty...");
 
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setHandlingShortLines(true);
@@ -91,10 +103,11 @@ public class PZParserOptsTest extends TestCase {
         ds = p.parse();
         ds.next();
 
-        assertEquals("Error collection should contain warning...", 1, ds.getErrors().size());
+        assertEquals(1, ds.getErrors().size(), "Error collection should contain warning...");
     }
 
-    public void testCaseSensitiveMetaData() {
+    @Test
+    void testCaseSensitiveMetaData() {
         DataSet ds;
         final String cols = "COLUMN1,column2,Column3\r\n value1,value2,value3";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -103,12 +116,8 @@ public class PZParserOptsTest extends TestCase {
         p.setColumnNamesCaseSensitive(true);
         ds = p.parse();
         ds.next();
-        try {
-            ds.getString("COLUMN2");
-            fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
-        } catch (final NoSuchElementException e) {
-            // this should happen since we are matching case
-        }
+        assertThrows(NoSuchElementException.class, () -> ds.getString("COLUMN2"),
+                "Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
 
         // check that column names are NOT case sensitive
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -128,12 +137,8 @@ public class PZParserOptsTest extends TestCase {
         p.setColumnNamesCaseSensitive(true);
         ds = p.parse();
         ds.next();
-        try {
-            ds.getString("COLUMN2");
-            fail("Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
-        } catch (final NoSuchElementException e) {
-            // this should happen since we are matching case
-        }
+        assertThrows(NoSuchElementException.class, () -> ds.getString("COLUMN2"),
+                "Column was mapped as 'column2' and lookup was 'COLUMN2'...should fail with case sensitivity turned on");
 
         // check that column names are NOT case sensitive
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -147,7 +152,8 @@ public class PZParserOptsTest extends TestCase {
         }
     }
 
-    public void testEmptyRowCheck() {
+    @Test
+    void testEmptyRowCheck() {
         DataSet ds;
         final String cols = "column1,column2,column3\r\n,,";
 
@@ -156,21 +162,18 @@ public class PZParserOptsTest extends TestCase {
         p.setFlagEmptyRows(true);
         ds = p.parse();
         ds.next();
-        assertEquals("Row should return empty...", ds.isRowEmpty(), true);
+        assertTrue(ds.isRowEmpty(), "Row should return empty...");
 
         // do not set to flag empty rows, but make the check anyhow to make sure we get an exception
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
         ds.next();
-        try {
-            ds.isRowEmpty();
-            fail("should have got FPInvalidUsageException...");
-        } catch (final FPInvalidUsageException e) {
-        }
+        assertThrows(FPInvalidUsageException.class, () -> ds.isRowEmpty(), "should have got FPInvalidUsageException...");
 
     }
 
-    public void testStoreRawDataToDataError() {
+    @Test
+    void testStoreRawDataToDataError() {
         DataSet ds;
         final String cols = "column1,column2,column3\r\nVAL1,VAL2,VAL3,VAL4";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -179,17 +182,18 @@ public class PZParserOptsTest extends TestCase {
         Iterator errors = ds.getErrors().iterator();
         DataError de = (DataError) errors.next();
 
-        assertNotNull("DataError should contain line data...", de.getRawData());
+        assertNotNull(de.getRawData(), "DataError should contain line data...");
 
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         p.setStoreRawDataToDataError(false);
         ds = p.parse();
         errors = ds.getErrors().iterator();
         de = (DataError) errors.next();
-        assertNull("DataError should have <null> line data...", de.getRawData());
+        assertNull(de.getRawData(), "DataError should have <null> line data...");
     }
 
-    public void testStoreRawData() {
+    @Test
+    void testStoreRawData() {
         DataSet ds;
         final String cols = "column1,column2,column3\r\nVAL1,VAL2,VAL3";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -201,15 +205,12 @@ public class PZParserOptsTest extends TestCase {
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
         ds.next();
-        try {
-            ds.getRawData();
-            fail("Should have received an FPExcpetion...");
-        } catch (final FPInvalidUsageException e) {
-        }
+        assertThrows(FPInvalidUsageException.class, () -> ds.getRawData(), "Should have received an FPExcpetion...");
 
     }
 
-    public void testEmptyLastColumn() {
+    @Test
+    void testEmptyLastColumn() {
         // this was reported as a bug in the forums check to see
         // if we actually have a problem
         DataSet ds;
@@ -217,16 +218,17 @@ public class PZParserOptsTest extends TestCase {
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
         ds = p.parse();
 
-        assertEquals(true, ds.next());
+        assertTrue(ds.next());
 
         cols = "column1,column2,column3\r\n\"VAL1\",\"VAL2\",\"\"";
         p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', '"');
         ds = p.parse();
 
-        assertEquals(true, ds.next());
+        assertTrue(ds.next());
     }
 
-    public void testBRParseParameters() {
+    @Test
+    void testBRParseParameters() {
         DataSet ds;
         final String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" + "<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n"
                 + "	<PZMAP>\r\n" + "		<COLUMN name=\"column1\" /> \r\n" + "		<COLUMN name=\"column2\" /> \r\n" + "	</PZMAP>";
@@ -237,10 +239,11 @@ public class PZParserOptsTest extends TestCase {
                 FPConstants.NO_QUALIFIER, false);
         ds = p.parse();
 
-        assertEquals(true, ds.next());
+        assertTrue(ds.next());
     }
 
-    public void testFixedWidthMultipleRecordElementsInMapping() {
+    @Test
+    void testFixedWidthMultipleRecordElementsInMapping() {
         DataSet ds;
         final String xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?> \r\n" + "<!DOCTYPE PZMAP SYSTEM	\"pzfilereader.dtd\" > \r\n"
                 + "	<PZMAP>\r\n" + "		<RECORD id=\"header\" startPosition=\"1\" endPosition=\"1\" indicator=\"H\">"
@@ -255,10 +258,10 @@ public class PZParserOptsTest extends TestCase {
         int i = 0;
         while (ds.next()) {
             if (i == 0) {
-                assertEquals("Checking to see if we have the header record...", ds.isRecordID("header"), true);
-                assertEquals("Checking header data", ds.getString("headerdata1"), "HEADER DATA");
+                assertTrue(ds.isRecordID("header"), "Checking to see if we have the header record...");
+                assertEquals("HEADER DATA", ds.getString("headerdata1"), "Checking header data");
             } else {
-                assertEquals("Checking detail data", ds.getString("detaildata1"), "DETAIL DATA");
+                assertEquals("DETAIL DATA", ds.getString("detaildata1"), "Checking detail data");
             }
 
             i++;
@@ -266,7 +269,8 @@ public class PZParserOptsTest extends TestCase {
 
     }
 
-    public void testSorting() {
+    @Test
+    void testSorting() {
         DataSet ds;
         String cols = "fname,lname,dob,anumber\r\npaul,zepernick,06/21/1981,2\r\nbenoit,xhenseval,05/01/1970,12";
         Parser p = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(cols), ',', FPConstants.NO_QUALIFIER);
@@ -320,9 +324,5 @@ public class PZParserOptsTest extends TestCase {
         ds.next();
         assertEquals("zepernick", ds.getString("lname"));
 
-    }
-
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(PZParserOptsTest.class);
     }
 }

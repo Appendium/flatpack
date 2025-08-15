@@ -5,7 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.Reader;
 import java.io.StringReader;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.Parser;
 import net.sf.flatpack.brparse.BuffReaderParseFactory;
@@ -14,10 +15,11 @@ import net.sf.flatpack.brparse.BuffReaderParseFactory;
  * @author xhensevalb
  *
  */
-public class PipeParserTest extends TestCase {
+class PipeParserTest {
     /**
      */
-    public void testPipe() {
+    @Test
+    void testPipe() {
         final String testCsv = "\"col1\"|\"col2\"|\"col3\"" + System.lineSeparator() + "\"val1\"|\"val2\"|\"val3\"";
 
         final String[] expectedResult = { "val1", "val2", "val3" };
@@ -25,21 +27,24 @@ public class PipeParserTest extends TestCase {
         parseAndCheck(testCsv, expectedResult);
     }
 
-    public void testPipeMultiline() {
+    @Test
+    void testPipeMultiline() {
         final String testCsv = "\"col1\"|\"col2\"|\"col3\"" + System.lineSeparator() + "\"val" + System.lineSeparator() + "1\"|\"val2\"|\"val3\"";
 
         final String[] expectedResult = { "val" + System.lineSeparator() + "1", "val2", "val3" };
         parseAndCheck(testCsv, expectedResult);
     }
 
-    public void testPipeMultilineAfterDelimiter() {
+    @Test
+    void testPipeMultilineAfterDelimiter() {
         final String testCsv = "\"col1\"|\"col2\"|\"col3\"" + System.lineSeparator() + "\"val1\"|\"" + System.lineSeparator() + "val2\"|\"val3\"";
 
         final String[] expectedResult = { "val1", System.lineSeparator() + "val2", "val3" };
         parseAndCheck(testCsv, expectedResult);
     }
 
-    public void testPipeMultilineDelimiterIsFirst() {
+    @Test
+    void testPipeMultilineDelimiterIsFirst() {
         final String testCsv = "\"col1\"|\"col2\"|\"col3\"" + System.lineSeparator() + "\"" + System.lineSeparator() + "val1\"|\"val2\"|\"val3\"";
 
         final String[] expectedResult = { System.lineSeparator() + "val1", "val2", "val3" };
@@ -47,7 +52,8 @@ public class PipeParserTest extends TestCase {
         parseAndCheck(testCsv, expectedResult);
     }
 
-    public void testPipeMultilineDoubleLine() {
+    @Test
+    void testPipeMultilineDoubleLine() {
         final String testCsv = "\"col1\"|\"col2\"|\"col3\"" + System.lineSeparator() + "\"val" //
                 + System.lineSeparator() + System.lineSeparator() + "1" + System.lineSeparator() + "2\"|\"val2\"|\"val3\"";
 
@@ -57,7 +63,8 @@ public class PipeParserTest extends TestCase {
         parseAndCheck(testCsv, expectedResult);
     }
 
-    public void testPipeMultilineEmpty() {
+    @Test
+    void testPipeMultilineEmpty() {
         final String testCsv = "\"col1\"|\"col2\"|\"col3\"" + System.lineSeparator() + "\"val" + System.lineSeparator() + "2\"|\"\"|\"\"";
 
         final String[] expectedResult = { "val" + System.lineSeparator() + "2", "", "" };

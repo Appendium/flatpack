@@ -6,7 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DelimiterParser;
 import net.sf.flatpack.Parser;
@@ -18,7 +19,7 @@ import net.sf.flatpack.util.FPConstants;
  * @author xhensevalb
  *
  */
-public class CsvParserTest extends TestCase {
+class CsvParserTest {
 
     private final String csvData = "RefDate,Program,MEMBERID,LNAME,FNAME,DOB,GENDER_CD,ADDR_LINE_1,ADDR_LINE_2,CITY_NM,ST_CD,ZIP_CD,PRIMARY_PHONE_NUM,SECONDARY_PHONE_NUM,LANG_NM,Hearing,PLan_Level,ENROLLED_GR,GR_TOTAL_REWARD_AMOUNT,GR_ACTIVITIES_ HRA1_$10,GR_ACTIVITIES_ HRA2_$10,GR_ACTIVITIES_ AWV_$15,GR_ACTIVITIES_ BONUS_$50,GR_ACTIVITIES_ BCS_$75,GR_ACTIVITIES_ DSC_$100,GR_ACTIVITIES_ CO_$50,TRANSPORTATION,OTC_AMOUNT_Q,OTC_AMOUNT_Y,Flu_shot,MEMBERID2,CHANGE_INDICATOR"
             + System.getProperty("line.separator")
@@ -36,7 +37,8 @@ public class CsvParserTest extends TestCase {
             + "    <COLUMN name=\"CHANGE_INDICATOR\" />" + System.getProperty("line.separator") //
             + "</PZMAP>";
 
-    public void testCsvWithWrongPzMap() {
+    @Test
+    void testCsvWithWrongPzMap() {
 
         try {
             final Parser parser = BuffReaderParseFactory.getInstance().newDelimitedParser(new StringReader(columnMapping), new StringReader(csvData),
@@ -67,7 +69,8 @@ public class CsvParserTest extends TestCase {
     /**
      * Fails with the error "Odd number of qualifiers"
      */
-    public void testCsvDocumentWithMultilineString() {
+    @Test
+    void testCsvDocumentWithMultilineString() {
         final String testCsv = "col1,col2,col3,col4,col5,col6,col7" + System.lineSeparator()
                 + "Bob,Smith,bsmiht@test.com,\"This is a long fragment of text" + System.lineSeparator()
                 + "that should be processed as a single field\", 1988, 111-222-33,\"another field with new line character" + System.lineSeparator()
@@ -96,7 +99,8 @@ public class CsvParserTest extends TestCase {
 
     /**
      */
-    public void testCsvDocumentWithMultilineEmptyString() {
+    @Test
+    void testCsvDocumentWithMultilineEmptyString() {
         final String testCsv = "col1,col2,col3" + System.lineSeparator() //
                 + "B,\"S" + System.lineSeparator() + System.lineSeparator() + "\",val3" + System.lineSeparator() //
                 + "v1,v2,v3" //
@@ -129,7 +133,8 @@ public class CsvParserTest extends TestCase {
 
     /**
      */
-    public void testCsvDocumentWithMultilineEmptyStringAndDoubleQuote() {
+    @Test
+    void testCsvDocumentWithMultilineEmptyStringAndDoubleQuote() {
         final String testCsv = "col1,col2,col3" + System.lineSeparator() //
                 + "B,\"S" + System.lineSeparator() + "\"\" " + System.lineSeparator() + "Hello \"\"" + "\",val3" + System.lineSeparator() //
                 + "v1,v2,v3" //
@@ -163,7 +168,8 @@ public class CsvParserTest extends TestCase {
     /**
      * Fails with the error "Odd number of qualifiers"
      */
-    public void testCsvDocumentWithMultilineStringFirstLine() {
+    @Test
+    void testCsvDocumentWithMultilineStringFirstLine() {
         final String testCsv = "col1,col2,col3,col4,col5,col6,col7" + System.lineSeparator() + "\"Bob" + System.lineSeparator()
                 + "by\",\"Smith\",\"bsmiht@test.com\",\"This is a long fragment of text" + System.lineSeparator()
                 + "that should be processed as a single field\", 1988, 111-222-33,\"another field with new line character" + System.lineSeparator()

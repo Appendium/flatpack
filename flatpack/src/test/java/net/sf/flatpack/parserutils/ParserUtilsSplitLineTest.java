@@ -1,10 +1,12 @@
 package net.sf.flatpack.parserutils;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 import net.sf.flatpack.utilities.UnitTestUtils;
@@ -16,7 +18,7 @@ import net.sf.flatpack.utilities.UnitTestUtils;
  *
  * @author Paul Zepernick
  */
-public class ParserUtilsSplitLineTest extends TestCase {
+class ParserUtilsSplitLineTest {
     private static final String[] DELIMITED_DATA_NO_BREAKS = { "Column 1", "Column 2", "Column 3", "Column 4", "Column 5" };
 
     private static final String[] DELIMITED_DATA_WITH_BREAKS = { "Column 1 \r\n\r\n Test After Break \r\n Another Break", "Column 2",
@@ -37,7 +39,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
      * Test without any line breaks
      *
      */
-    public void testNoLineBreaks() {
+    @Test
+    void testNoLineBreaks() {
         // loop down all delimiter qualifier pairs to test
         for (final char[] element : DELIM_QUAL_PAIR) {
             final char d = element[0];
@@ -45,17 +48,17 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_NO_BREAKS, d, q);
 
-            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10, false, false);
+            final List<String> splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10, false, false);
 
             // check to make sure we have the same amount of elements which were
             // expected
-            assertEquals("Expected size (d = [" + d + "] q = [" + (q != 0 ? String.valueOf(q) : "") + "] txt [" + txtToParse + "])",
-                    DELIMITED_DATA_NO_BREAKS.length, splitLineResults.size());
+            assertEquals(DELIMITED_DATA_NO_BREAKS.length, splitLineResults.size(),
+                    "Expected size (d = [" + d + "] q = [" + (q != 0 ? String.valueOf(q) : "") + "] txt [" + txtToParse + "])");
 
             // loop through each value and compare what came back
             for (int j = 0; j < DELIMITED_DATA_NO_BREAKS.length; j++) {
-                assertEquals("Data Element Value Does Not Match (d = [" + d + "] q = [" + q + "] txt [" + txtToParse + "])",
-                        DELIMITED_DATA_NO_BREAKS[j], (String) splitLineResults.get(j));
+                assertEquals(DELIMITED_DATA_NO_BREAKS[j], (String) splitLineResults.get(j),
+                        "Data Element Value Does Not Match (d = [" + d + "] q = [" + q + "] txt [" + txtToParse + "])");
             }
         }
     }
@@ -64,7 +67,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
      * Test with any line breaks
      *
      */
-    public void testLineBreaks() {
+    @Test
+    void testLineBreaks() {
         // loop down all delimiter qualifier pairs to test
         for (final char[] element : DELIM_QUAL_PAIR) {
             final char d = element[0];
@@ -72,17 +76,15 @@ public class ParserUtilsSplitLineTest extends TestCase {
 
             final String txtToParse = UnitTestUtils.buildDelimString(DELIMITED_DATA_WITH_BREAKS, d, q);
 
-            final List splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10, false, false);
+            final List<String> splitLineResults = ParserUtils.splitLine(txtToParse, d, q, 10, false, false);
 
             // check to make sure we have the same amount of elements which were
             // expected
-            assertEquals("Did Not Get Amount Of Elements Expected (d = " + d + " q = " + q + ")", DELIMITED_DATA_WITH_BREAKS.length,
-                    splitLineResults.size());
+            assertEquals(DELIMITED_DATA_WITH_BREAKS.length, splitLineResults.size(), "Did Not Get Amount Of Elements Expected (d = " + d + " q = " + q + ")");
 
             // loop through each value and compare what came back
             for (int j = 0; j < DELIMITED_DATA_WITH_BREAKS.length; j++) {
-                assertEquals("Data Element Value Does Not Match (d = " + d + " q = " + q + ")", DELIMITED_DATA_WITH_BREAKS[j],
-                        (String) splitLineResults.get(j));
+                assertEquals(DELIMITED_DATA_WITH_BREAKS[j], (String) splitLineResults.get(j), "Data Element Value Does Not Match (d = " + d + " q = " + q + ")");
             }
         }
 
@@ -96,16 +98,18 @@ public class ParserUtilsSplitLineTest extends TestCase {
      * Test to make sure we get the correct amount of elements for malformed
      * data
      */
-    public void testMalformedData() {
-        final List splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, ',', '\"', 10, false, false);
+    @Test
+    void testMalformedData() {
+        final List<String> splitLineResults = ParserUtils.splitLine(DELIMITED_BAD_DATA, ',', '\"', 10, false, false);
 
-        assertEquals("Expecting 2 Data Elements From The Malformed Data", 2, splitLineResults.size());
+        assertEquals(2, splitLineResults.size(), "Expecting 2 Data Elements From The Malformed Data");
     }
 
     /**
      * Test some extreme cases
      */
-    public void testSomeExtremeCases() {
+    @Test
+    void testSomeExtremeCases() {
         check(null, ',', '\"', new String[] {});
         check("a", ',', '\"', new String[] { "a" });
         check("", ',', '\"', new String[] { "" });
@@ -167,7 +171,8 @@ public class ParserUtilsSplitLineTest extends TestCase {
     /**
      * Test some extreme cases
      */
-    public void testSomeExtremeCases2() {
+    @Test
+    void testSomeExtremeCases2() {
         check("\"a,b,c\"", ',', '\'', new String[] { "\"a", "b", "c\"" });
         check("\"a,b\",\"c\"", ',', '\'', new String[] { "\"a", "b\"", "\"c\"" });
         check("a,b,c", ',', '\'', new String[] { "a", "b", "c" });
@@ -196,47 +201,48 @@ public class ParserUtilsSplitLineTest extends TestCase {
     }
 
     private void check(final String txtToParse, final char delim, final char qualifier, final String[] expected) {
-        final List splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier, 10, false, false);
+        final List<String> splitLineResults = ParserUtils.splitLine(txtToParse, delim, qualifier, 10, false, false);
 
-        assertEquals("Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]", expected.length,
-                splitLineResults.size());
+        assertEquals(expected.length, splitLineResults.size(), "Did Not Get Amount Of Elements Expected (d = " + delim + " q = " + qualifier + ") txt [" + txtToParse + "]");
 
         for (int i = 0; i < expected.length; i++) {
-            assertEquals("expecting...", expected[i], splitLineResults.get(i));
+            assertEquals(expected[i], splitLineResults.get(i), "expecting...");
         }
     }
 
-    public void testMultilineExtreme() {
+    @Test
+    void testMultilineExtreme() {
         // Test without qualifier
-        final List results = ParserUtils.splitLine("col1,col2,col3", ',', '"', 1, true, true);
+        final List<String> results = ParserUtils.splitLine("col1,col2,col3", ',', '"', 1, true, true);
         assertThat(results.size()).isEqualTo(3);
         assertThat(results.get(0)).isEqualTo("col1");
         assertThat(results.get(1)).isEqualTo("col2");
         assertThat(results.get(2)).isEqualTo("col3");
 
         // Test with qualifier
-        final List results2 = ParserUtils.splitLine("\"col1\",\"col\"2\",\"col\"\"3\"", ',', '"', 1, true, true);
+        final List<String> results2 = ParserUtils.splitLine("\"col1\",\"col\"2\",\"col\"\"3\"", ',', '"', 1, true, true);
         assertThat(results2.size()).isEqualTo(3);
         assertThat(results2.get(0)).isEqualTo("col1");
         assertThat(results2.get(1)).isEqualTo("col\"2"); // Being nice here, it should have been double quoted
         assertThat(results2.get(2)).isEqualTo("col\"3");
 
         // Test with qualifier and multiline
-        final List results3 = ParserUtils.splitLine("\"col1\r\n\",\"\r\ncol2\",\"\r\n", ',', '"', 1, true, true);
+        final List<String> results3 = ParserUtils.splitLine("\"col1\r\n\",\"\r\ncol2\",\"\r\n", ',', '"', 1, true, true);
         assertThat(results3.size()).isEqualTo(3);
         assertThat(results3.get(0)).isEqualTo("col1\r\n");
         assertThat(results3.get(1)).isEqualTo("\r\ncol2");
         assertThat(results3.get(2)).isEqualTo("\r\n");
 
         // Test with qualifier and multiline
-        final List results4 = ParserUtils.splitLine("\"col1\r\",\"col\n2\",\"\r\n", ',', '"', 1, true, true);
+        final List<String> results4 = ParserUtils.splitLine("\"col1\r\",\"col\n2\",\"\r\n", ',', '"', 1, true, true);
         assertThat(results4.size()).isEqualTo(3);
         assertThat(results4.get(0)).isEqualTo("col1\r");
         assertThat(results4.get(1)).isEqualTo("col\n2");
         assertThat(results4.get(2)).isEqualTo("\r\n");
     }
 
-    public void testLineWithQualifiersAsText() {
+    @Test
+    void testLineWithQualifiersAsText() {
         final String testLine = "Bob, Smith,\"\"\"Test\"\" , 2, Some string, still string, also part of the string.\",11111111";
         final List<String> result = ParserUtils.splitLine(testLine, ',', '"', 10, true, true);
 
@@ -246,9 +252,5 @@ public class ParserUtilsSplitLineTest extends TestCase {
         assertThat(result.get(2)).isEqualTo("\"Test\" , 2, Some string, still string, also part of the string.");
         assertThat(result.get(3)).isEqualTo("11111111");
 
-    }
-
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(ParserUtilsSplitLineTest.class);
     }
 }

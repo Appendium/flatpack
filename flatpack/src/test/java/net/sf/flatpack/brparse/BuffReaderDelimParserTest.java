@@ -1,8 +1,12 @@
 package net.sf.flatpack.brparse;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.StringReader;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.DefaultDataSet;
 import net.sf.flatpack.Parser;
 import net.sf.flatpack.structure.Row;
@@ -12,7 +16,7 @@ import net.sf.flatpack.structure.Row;
  *
  * @author Tim Zimmerman
  */
-public class BuffReaderDelimParserTest extends TestCase {
+class BuffReaderDelimParserTest {
 
     private static final char DELIMTER = ',';
     private static final char QUALIFIER = '\"';
@@ -23,13 +27,13 @@ public class BuffReaderDelimParserTest extends TestCase {
     private static final String SHORT_LINE_STRING = "shorter,than,four";
     private static final String LONG_LINE_STRING = "longer,than,four,fields,fifth";
 
-    public String parseRawData(final String pzMapXML, final String dataString) {
+    private String parseRawData(final String pzMapXML, final String dataString) {
         String rawData = null;
         final StringReader pzReader = new StringReader(pzMapXML);
         final StringReader lineReader = new StringReader(dataString);
         try {
             final Parser parser = BuffReaderParseFactory.getInstance().newDelimitedParser(pzReader, lineReader, DELIMTER, QUALIFIER, false);
-            assertTrue("Parser is not an instance of " + BuffReaderDelimParser.class, parser instanceof BuffReaderDelimParser);
+            assertTrue(parser instanceof BuffReaderDelimParser, "Parser is not an instance of " + BuffReaderDelimParser.class);
 
             final BuffReaderDelimParser delimParser = (BuffReaderDelimParser) parser;
             delimParser.setIgnoreExtraColumns(true);
@@ -46,22 +50,21 @@ public class BuffReaderDelimParserTest extends TestCase {
         return rawData;
     }
 
-    public void testBuildExactRow() {
+    @Test
+    void testBuildExactRow() {
         final String rawData = this.parseRawData(PZ_MAP_XML_STRING, EXACT_LINE_STRING);
-        assertTrue("The raw data does not match the orginal line", rawData.equals(EXACT_LINE_STRING));
+        assertEquals(EXACT_LINE_STRING, rawData, "The raw data does not match the orginal line");
     }
 
-    public void testBuildShortRow() {
+    @Test
+    void testBuildShortRow() {
         final String rawData = this.parseRawData(PZ_MAP_XML_STRING, SHORT_LINE_STRING);
-        assertTrue("The raw data does not match the orginal line", rawData.equals(SHORT_LINE_STRING));
+        assertEquals(SHORT_LINE_STRING, rawData, "The raw data does not match the orginal line");
     }
 
-    public void testBuildLongRow() {
+    @Test
+    void testBuildLongRow() {
         final String rawData = this.parseRawData(PZ_MAP_XML_STRING, LONG_LINE_STRING);
-        assertTrue("The raw data does not match the orginal line", rawData.equals(LONG_LINE_STRING));
-    }
-
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(BuffReaderDelimParserTest.class);
+        assertEquals(LONG_LINE_STRING, rawData, "The raw data does not match the orginal line");
     }
 }

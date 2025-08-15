@@ -1,13 +1,15 @@
 package net.sf.flatpack.parserutils;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Properties;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.util.FPConstants;
 import net.sf.flatpack.util.ParserUtils;
 
@@ -17,9 +19,10 @@ import net.sf.flatpack.util.ParserUtils;
  *
  * @author Paul Zepernick
  */
-public class ParserUtilsTest extends TestCase {
+class ParserUtilsTest {
 
-    public void testStripNonDouble() {
+    @Test
+    void testStripNonDouble() {
         checkDoubleStrip("  $10.00   ", "10.00");
         checkDoubleStrip("random chars  $10.00   more random", "10.00");
         checkDoubleStrip(" $ 1 0 . 0 0 ", "10.00");
@@ -32,10 +35,11 @@ public class ParserUtilsTest extends TestCase {
 
     private void checkDoubleStrip(final String txtToStrip, final String expected) {
         final String stripRes = ParserUtils.stripNonDoubleChars(txtToStrip);
-        assertEquals("expecting...", stripRes, expected);
+        assertEquals(expected, stripRes, "expecting...");
     }
 
-    public void testStripNonLong() {
+    @Test
+    void testStripNonLong() {
         checkLongStrip("  $10.00   ", "10");
         checkLongStrip("random chars  $10.00   more random", "10");
         checkLongStrip(" $ 1 0 . 0 0 ", "10");
@@ -48,42 +52,48 @@ public class ParserUtilsTest extends TestCase {
 
     private void checkLongStrip(final String txtToStrip, final String expected) {
         final String stripRes = ParserUtils.stripNonLongChars(txtToStrip);
-        assertEquals("expecting...", stripRes, expected);
+        assertEquals(expected, stripRes, "expecting...");
     }
 
-    public void testPZConverter() throws IOException {
+    @Test
+    void testPZConverter() throws IOException {
         final Properties convertProps = ParserUtils.loadConvertProperties();
 
-        assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Double.class), new Double("5.00"));
-        assertEquals(ParserUtils.runPzConverter(convertProps, "$5.00C", Integer.class), new Integer("5"));
-        assertEquals(ParserUtils.runPzConverter(convertProps, "$5.3556", BigDecimal.class), new BigDecimal("5.3556"));
+        assertEquals(new Double("5.00"), ParserUtils.runPzConverter(convertProps, "$5.00C", Double.class));
+        assertEquals(new Integer("5"), ParserUtils.runPzConverter(convertProps, "$5.00C", Integer.class));
+        assertEquals(new BigDecimal("5.3556"), ParserUtils.runPzConverter(convertProps, "$5.3556", BigDecimal.class));
     }
 
-    public void testEmptyRow() {
+    @Test
+    void testEmptyRow() {
         final String data = ",,,";
         final List l = ParserUtils.splitLine(data, ',', FPConstants.NO_QUALIFIER, 4, false, false);
-        assertEquals("list should be empty and is not...", ParserUtils.isListElementsEmpty(l), true);
+        assertEquals(true, ParserUtils.isListElementsEmpty(l), "list should be empty and is not...");
     }
 
-    public void testQualifiedNonMultiLine() {
+    @Test
+    void testQualifiedNonMultiLine() {
         final String data = "data 1-1,data 1-2,\"qualified,data 1-3,\"\n";
-        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), false);
+        assertEquals(false, ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'));
     }
 
-    public void testQualifiedMultiLine() {
+    @Test
+    void testQualifiedMultiLine() {
         final String data = "data 1-1,data 1-2,\"qualified,data 1-3,\n" + "qualified data 1-3 continued from previous line\"\n";
-        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), true);
+        assertEquals(true, ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'));
     }
 
-    public void testNonQualifiedNonMultiLine() {
+    @Test
+    void testNonQualifiedNonMultiLine() {
         final String data = "data 1-1,data 1-2,qualified,data 1-3\n";
-        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), false);
+        assertEquals(false, ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'));
     }
 
-    public void testNonQualifiedMultiLine() {
+    @Test
+    void testNonQualifiedMultiLine() {
         // can't really have multiline without qualifier
         final String data = "data 1-1,data 1-2,qualified,data 1-3\n" + "qualified data 1-3 continued from previous line\n";
-        assertEquals(ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'), false);
+        assertEquals(false, ParserUtils.isMultiLine(data.toCharArray(), ',', '\"'));
     }
 
     private void testCsvSplit(final String title, final String line, final String... expected) {
@@ -98,108 +108,134 @@ public class ParserUtilsTest extends TestCase {
         assertThat(splitLine).as(title).containsExactly(expected);
     }
 
-    public void testCsvSplit() {
+    @Test
+    void testCsvSplit() {
         testCsvSplit("Simple CSV Split", "col1,col2,col3", "col1", "col2", "col3");
     }
 
-    public void testCsvSplitWithDelimiter() {
+    @Test
+    void testCsvSplitWithDelimiter() {
         testCsvSplit("Simple CSV Split with Delimiter", "col1,\"col2\",col3", "col1", "col2", "col3");
     }
 
-    public void testCsvSplitWithDelimiterOnAll() {
+    @Test
+    void testCsvSplitWithDelimiterOnAll() {
         testCsvSplit("Simple CSV Split with Delimiter on All", "\"col1\",\"col2\",\"col3\"", "col1", "col2", "col3");
     }
 
-    public void testCsvSplitWithDelimiterInsideOnFirstSingleCol() {
+    @Test
+    void testCsvSplitWithDelimiterInsideOnFirstSingleCol() {
         testCsvSplit("Simple CSV Split with Delimiter Inside on 1st Colt", "\"col\"\"1\"", "col\"1");
     }
 
-    public void testCsvSplitWithMultiDelimiterInsideOnFirstSingleCol() {
+    @Test
+    void testCsvSplitWithMultiDelimiterInsideOnFirstSingleCol() {
         testCsvSplit("Simple CSV Split with Multi Delimiter Inside on 1st Colt", "\"col\"\"\"\"1\"", "col\"\"1");
     }
 
-    public void testCsvSplitWithDelimiterInsideOnLastColTwoCol() {
+    @Test
+    void testCsvSplitWithDelimiterInsideOnLastColTwoCol() {
         testCsvSplit("Simple CSV Split with Delimiter Inside on last 2Col", "\"col1\",\"col\"\"2\"", "col1", "col\"2");
     }
 
-    public void testCsvSplitWithMultiDelimiterInsideOnLastColTwoCol() {
+    @Test
+    void testCsvSplitWithMultiDelimiterInsideOnLastColTwoCol() {
         testCsvSplit("Simple CSV Split with Multi Delimiter Inside on last 2Col", "\"col1\",\"col\"\"\"\"2\"", "col1", "col\"\"2");
     }
 
-    public void testCsvSplitWithDelimiterInsideOnLastCol3Col() {
+    @Test
+    void testCsvSplitWithDelimiterInsideOnLastCol3Col() {
         testCsvSplit("Simple CSV Split with Delimiter Inside on last 3 Col", "\"col1\",\"col2\",\"col\"\"3\"", "col1", "col2", "col\"3");
     }
 
-    public void testCsvSplitWithDelimiterInsideOnFirst() {
+    @Test
+    void testCsvSplitWithDelimiterInsideOnFirst() {
         testCsvSplit("Simple CSV Split with Delimiter Inside 1st of 3 col", "\"col\"\"1\",\"col2\",\"col3\"", "col\"1", "col2", "col3");
     }
 
-    public void testCsvSplitWithDelimiterInside() {
+    @Test
+    void testCsvSplitWithDelimiterInside() {
         testCsvSplit("Simple CSV Split with Delimiter Inside 2nd of 3 Col", "\"col1\",\"col\"\"2\",\"col3\"", "col1", "col\"2", "col3");
     }
 
-    public void testCsvSplitWithMultiDelimiterInside() {
+    @Test
+    void testCsvSplitWithMultiDelimiterInside() {
         testCsvSplit("Simple CSV Split with Multi Delimiter Inside 2nd of 3 Col", "\"col1\",\"col\"\"\"\"2\",\"col3\"", "col1", "col\"\"2", "col3");
     }
 
-    public void testDodgyCharacter() {
+    @Test
+    void testDodgyCharacter() {
         testCsvSplit("Simple CSV Split Dodgy character in middle", "col1,\uFEFFcol2,col3", "col1", "col2", "col3");
     }
 
-    public void testStartDodgyCharacter() {
+    @Test
+    void testStartDodgyCharacter() {
         testCsvSplit("Simple CSV Split Starting with Dodgy character", "\uFEFFcol1,col2,col3", "col1", "col2", "col3");
     }
 
-    public void testDodgyCharacterInQualifier() {
+    @Test
+    void testDodgyCharacterInQualifier() {
         testCsvSplit("Simple CSV Split with Dodgy character in qualifier", "\"\uFEFFcol1\",col2,col3", "col1", "col2", "col3");
     }
 
-    public void testFancyQualifierCsvSplit() {
+    @Test
+    void testFancyQualifierCsvSplit() {
         testFancyCsvSplit("Simple Fancy Qualifier Split", "col1,col2,col3", "col1", "col2", "col3");
     }
 
-    public void testFancyQualifierSplitWithDelimiter() {
+    @Test
+    void testFancyQualifierSplitWithDelimiter() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Delimiter", "col1,|col2|,col3", "col1", "col2", "col3");
     }
 
-    public void testFancyQualifierSplitWithDelimiterOnAll() {
+    @Test
+    void testFancyQualifierSplitWithDelimiterOnAll() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Delimiter on All", "|col1|,|col2|,|col3|", "col1", "col2", "col3");
     }
 
-    public void testFancyQualifierCsvSplitWithDelimiterInsideOnFirstSingleCol() {
+    @Test
+    void testFancyQualifierCsvSplitWithDelimiterInsideOnFirstSingleCol() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Delimiter Inside on 1st Colt", "|col||1|", "col|1");
     }
 
-    public void testFancyQualifierCsvSplitWithMultiDelimiterInsideOnFirstSingleCol() {
+    @Test
+    void testFancyQualifierCsvSplitWithMultiDelimiterInsideOnFirstSingleCol() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Multi Delimiter Inside on 1st Colt", "|col||||1|", "col||1");
     }
 
-    public void testFancyQualifierCsvSplitWithDelimiterInsideOnLastColTwoCol() {
+    @Test
+    void testFancyQualifierCsvSplitWithDelimiterInsideOnLastColTwoCol() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Delimiter Inside on last 2Col", "|col1|,|col||2|", "col1", "col|2");
     }
 
-    public void testFancyQualifierCsvSplitWithMultiDelimiterInsideOnLastColTwoCol() {
+    @Test
+    void testFancyQualifierCsvSplitWithMultiDelimiterInsideOnLastColTwoCol() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Multi Delimiter Inside on last 2Col", "|col1|,|col||||2|", "col1", "col||2");
     }
 
-    public void testFancyQualifierCsvSplitWithDelimiterInsideOnLastCol3Col() {
+    @Test
+    void testFancyQualifierCsvSplitWithDelimiterInsideOnLastCol3Col() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Delimiter Inside on last 3 Col", "|col1|,|col2|,|col||3|", "col1", "col2", "col|3");
     }
 
-    public void testFancyQualifierCsvSplitWithDelimiterInsideOnFirst() {
+    @Test
+    void testFancyQualifierCsvSplitWithDelimiterInsideOnFirst() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Delimiter Inside 1st of 3 col", "|col||1|,|col2|,|col3|", "col|1", "col2", "col3");
     }
 
-    public void testFancyQualifierCsvSplitWithDelimiterInside() {
+    @Test
+    void testFancyQualifierCsvSplitWithDelimiterInside() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Delimiter Inside 2nd of 3 Col", "|col1|,|col||2|,|col3|", "col1", "col|2", "col3");
     }
 
-    public void testFancyQualifierCsvSplitWithMultiDelimiterInside() {
+    @Test
+    void testFancyQualifierCsvSplitWithMultiDelimiterInside() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Multi Delimiter Inside 2nd of 3 Col", "|col1|,|col||||2|,|col3|", "col1", "col||2",
                 "col3");
     }
 
-    public void testFancyQualifierCsvSplitWithMultiDelimiterInsideLast() {
+    @Test
+    void testFancyQualifierCsvSplitWithMultiDelimiterInsideLast() {
         testFancyCsvSplit("Simple Fancy Qualifier CSV Split with Multi Delimiter Inside 2nd of 3 Col", "|col1|,|col2|,|col3|||", "col1", "col2",
                 "col3|");
     }

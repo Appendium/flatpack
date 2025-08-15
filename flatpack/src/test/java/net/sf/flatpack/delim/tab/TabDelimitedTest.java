@@ -6,7 +6,10 @@
  */
 package net.sf.flatpack.delim.tab;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.DataSet;
 
 /**
@@ -15,13 +18,10 @@ import net.sf.flatpack.DataSet;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class TabDelimitedTest extends TestCase {
-    public TabDelimitedTest(final String name) {
-        super(name);
-    }
-
+class TabDelimitedTest {
     // tests to make sure we have 0 errors
-    public void testErrorCount() {
+    @Test
+    void testErrorCount() {
         DataSet ds = null;
 
         try {
@@ -40,7 +40,8 @@ public class TabDelimitedTest extends TestCase {
 
     // test to make sure we parsed the correct number
     // of rows in the file
-    public void testRowCount() {
+    @Test
+    void testRowCount() {
         DataSet ds = null;
 
         try {
@@ -58,7 +59,8 @@ public class TabDelimitedTest extends TestCase {
     }
 
     // test to make sure we have the right number of column names from the file
-    public void testColumnNameCount() {
+    @Test
+    void testColumnNameCount() {
         DataSet ds = null;
 
         try {
@@ -73,9 +75,5 @@ public class TabDelimitedTest extends TestCase {
             ex.printStackTrace();
         } finally {
         }
-    }
-
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(TabDelimitedTest.class);
     }
 }

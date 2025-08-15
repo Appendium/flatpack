@@ -3,17 +3,19 @@ package net.sf.flatpack.rfc4180;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 import java.io.StringWriter;
+
+import org.junit.jupiter.api.Test;
 
 import net.sf.flatpack.writer.DelimiterWriterFactory;
 import net.sf.flatpack.writer.Rfc4180TestCase;
 import net.sf.flatpack.writer.Writer;
 import net.sf.flatpack.writer.WriterOptions;
 
-public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
+class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
     private final char FIELD_DELIMITER = ',';
     private final char FIELD_QUALIFIER = '"';
     private final String LINE_SEPARATOR = "\r\n";
@@ -24,7 +26,8 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
      * aaa,bbb,ccc CRLF
      * zzz,yyy,xxx CRLF
      */
-    public void testLineSeparation() throws IOException {
+    @Test
+    void testLineSeparation() throws IOException {
         final StringWriter out = new StringWriter();
 
         try (Writer writer = getWriterForRfc4180(out, false)) {
@@ -49,7 +52,8 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
     /*
      * 2.4a. Each line should contain the same number of fields throughout the file
      */
-    public void testSameNumberOffFields() throws IOException {
+    @Test
+    void testSameNumberOffFields() throws IOException {
         final StringWriter out = new StringWriter();
 
         try (Writer writer = getWriterForRfc4180(out, false)) {
@@ -78,7 +82,8 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
     /*
      * 2.4b. Spaces are considered part of a field and should not be ignored.
      */
-    public void testSpacesArePartOfField() throws IOException {
+    @Test
+    void testSpacesArePartOfField() throws IOException {
         final StringWriter out = new StringWriter();
 
         try (Writer writer = getWriterForRfc4180(out, false)) {
@@ -103,7 +108,8 @@ public class CsvWriterFormatDefintionTest extends Rfc4180TestCase {
     /*
      * 2.4c. The last field in the record must not be followed by a comma
      */
-    public void testLastFieldShouldNotHaveDelimiter() throws IOException {
+    @Test
+    void testLastFieldShouldNotHaveDelimiter() throws IOException {
         final StringWriter out = new StringWriter();
 
         try (Writer writer = getWriterForRfc4180(out, false)) {

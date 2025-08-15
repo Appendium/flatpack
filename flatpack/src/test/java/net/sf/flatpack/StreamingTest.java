@@ -1,19 +1,22 @@
 package net.sf.flatpack;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * JDK 8 Streaming test.
  * @author Benoit Xhenseval
  */
-public class StreamingTest extends TestCase {
+class StreamingTest {
 
-    private static class Test {
+    private static class TestObject {
         private String itemName;
         private BigDecimal price;
 
@@ -34,15 +37,16 @@ public class StreamingTest extends TestCase {
         }
     }
 
-    public void testContains() {
+    @Test
+    void testContains() {
         final String cols = "item,price,purchaseDate\r\n"//
                 + "MacBook,1890.20,20140523\r\n"//
                 + "Surface3,850.00,20140524\r\n"//
         ;
         final Parser p = CsvParserFactory.newInMemoryParser(new StringReader(cols));
-        final List<Test> ds = p.stream() //
+        final List<TestObject> ds = p.stream() //
                 .map(t -> {
-                    final Test r = new Test();
+                    final TestObject r = new TestObject();
                     r.setItemName(t.getString("item"));
                     r.setPrice(t.getBigDecimal("price"));
                     return r;
@@ -51,9 +55,9 @@ public class StreamingTest extends TestCase {
                 .collect(Collectors.toList());
 
         // test record 1 with Data in file!
-        assertEquals("Size", 1, ds.size());
-        final Test test = ds.get(0);
-        assertEquals("Item", "Surface3", test.getItemName());
-        assertTrue("Price", new BigDecimal("850").compareTo(test.getPrice()) == 0);
+        assertEquals(1, ds.size(), "Size");
+        final TestObject test = ds.get(0);
+        assertEquals("Surface3", test.getItemName(), "Item");
+        assertTrue(new BigDecimal("850").compareTo(test.getPrice()) == 0, "Price");
     }
 }

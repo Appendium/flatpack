@@ -14,7 +14,10 @@
  */
 package net.sf.flatpack.parserutils;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.util.ParserUtils;
 
 /**
@@ -22,12 +25,13 @@ import net.sf.flatpack.util.ParserUtils;
  *
  * @author paul zepernick
  */
-public class ParserUtilsLTrimTest extends TestCase {
+class ParserUtilsLTrimTest {
     /**
      * Make sure all spaces are properly removed from the front of the String
      *
      */
-    public void testTrimLeadingSpaces() {
+    @Test
+    void testTrimLeadingSpaces() {
         final String testS = "     RemoveAll SpacesFromMe";
         assertEquals("RemoveAll SpacesFromMe", ParserUtils.lTrim(testS));
     }
@@ -37,7 +41,8 @@ public class ParserUtilsLTrimTest extends TestCase {
      * leaving the trailing spaces at the end
      *
      */
-    public void testTrimLeadingSpacesWithTrailingSpaces() {
+    @Test
+    void testTrimLeadingSpacesWithTrailingSpaces() {
         final String testS = "     RemoveAll SpacesFromMe     ";
         final String tResult = ParserUtils.lTrim(testS);
         assertEquals("RemoveAll SpacesFromMe     ", tResult);
@@ -48,7 +53,8 @@ public class ParserUtilsLTrimTest extends TestCase {
      * leaving the trailing spaces at the end
      *
      */
-    public void testTrimLeadingTabs() {
+    @Test
+    void testTrimLeadingTabs() {
         final String testS = "\t\t\tRemoveAll SpacesFromMe     ";
         final String tResult = ParserUtils.lTrim(testS);
         assertEquals("RemoveAll SpacesFromMe     ", tResult);
@@ -59,7 +65,8 @@ public class ParserUtilsLTrimTest extends TestCase {
      * leaving the trailing spaces at the end
      *
      */
-    public void testKeepLeadingTabs() {
+    @Test
+    void testKeepLeadingTabs() {
         final String testS = "     \t\t\tRemoveAll SpacesFromMe     ";
         final String tResult = ParserUtils.lTrimKeepTabs(testS);
         assertEquals("\t\t\tRemoveAll SpacesFromMe     ", tResult);
@@ -69,7 +76,8 @@ public class ParserUtilsLTrimTest extends TestCase {
      * Ensure that spaces and tabs in the middle of the string will
      * not be removed.
      */
-    public void testWithTabsInMiddleAndEnd() {
+    @Test
+    void testWithTabsInMiddleAndEnd() {
         assertEquals("RemoveAll \tSpaces \t\t", ParserUtils.lTrim("\t \t RemoveAll \tSpaces \t\t"));
         assertEquals("\t \t RemoveAll \tSpaces \t\t ", ParserUtils.lTrimKeepTabs(" \t \t RemoveAll \tSpaces \t\t "));
         assertEquals("\t \t RemoveAll \tSpaces \t\t", ParserUtils.lTrimKeepTabs("\t \t RemoveAll \tSpaces \t\t"));
@@ -79,15 +87,12 @@ public class ParserUtilsLTrimTest extends TestCase {
      * Make sure all spaces are properly removed from the end of the String
      *
      */
-    public void testTrimTrailingSpaces() {
+    @Test
+    void testTrimTrailingSpaces() {
         final String testS = "  RemoveAll trailing SpacesFromMe     ";
         assertEquals("  RemoveAll trailing SpacesFromMe", ParserUtils.rTrim(testS));
 
         assertEquals("", ParserUtils.rTrim("     "));
         assertEquals("test", ParserUtils.rTrim("test"));
-    }
-
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(ParserUtilsLTrimTest.class);
     }
 }

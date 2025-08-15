@@ -1,5 +1,7 @@
 package net.sf.flatpack.writer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -7,23 +9,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import junit.framework.TestCase;
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.DefaultParserFactory;
 import net.sf.flatpack.structure.ColumnMetaData;
 import net.sf.flatpack.util.FPConstants;
 
-public class MultiLineTest extends TestCase {
+class MultiLineTest {
     private static final String NEW_LINE = System.getProperty("line.separator");
     private static final String CONTENT = "this is a" + NEW_LINE + " multiline " + NEW_LINE + "....";
 
     private static final Logger LOG = LoggerFactory.getLogger(MultiLineTest.class);
     private Map<String, Object> mapping;
 
-    @Override
+    @BeforeEach
     public void setUp() {
         mapping = new HashMap<>();
         final List<ColumnMetaData> listColumns = new ArrayList<>();
@@ -35,7 +38,8 @@ public class MultiLineTest extends TestCase {
         mapping.put(FPConstants.DETAIL_ID, listColumns);
     }
 
-    public void testMultipleLine() throws Exception {
+    @Test
+    void testMultipleLine() throws Exception {
         final DelimiterWriterFactory factory = new DelimiterWriterFactory(mapping, ',', '"');
 
         final StringWriter strWriter = new StringWriter();
@@ -52,7 +56,7 @@ public class MultiLineTest extends TestCase {
         final DataSet ds = DefaultParserFactory.getInstance().newDelimitedParser(new StringReader(toRead), ',', '"').parse();
         if (ds.next()) {
             LOG.info("Parsed content \n{}", ds.getString("Description"));
-            assertEquals(ds.getString("Description"), CONTENT);
+            assertEquals(CONTENT, ds.getString("Description"));
         }
 
     }

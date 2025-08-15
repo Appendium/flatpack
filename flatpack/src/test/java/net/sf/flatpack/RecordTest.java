@@ -1,5 +1,9 @@
 package net.sf.flatpack;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -7,7 +11,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.util.FPConstants;
 
 /**
@@ -15,9 +20,10 @@ import net.sf.flatpack.util.FPConstants;
  *
  * @author Paul Zepernick
  */
-public class RecordTest extends TestCase {
+class RecordTest {
 
-    public void testContains() {
+    @Test
+    void testContains() {
         final String cols = "stringCol,doubleCol,dateCol,bigDecimalCol,intCol\r\n"//
                 + "hello,2.20,20140523,123.45,6\r\n"//
                 + ",,,,"//
@@ -28,28 +34,29 @@ public class RecordTest extends TestCase {
         final Optional<Record> record1 = ds.getRecord();
 
         // test record 1 with Data in file!
-        assertEquals("rec1 string", "hello", record1.get().getString("stringCol"));
-        assertTrue("rec1 doubleCol", Double.compare(2.2, record1.get().getDouble("doubleCol")) == 0);
+        assertEquals("hello", record1.get().getString("stringCol"), "rec1 string");
+        assertTrue(Double.compare(2.2, record1.get().getDouble("doubleCol")) == 0, "rec1 doubleCol");
         try {
-            assertEquals("rec1 dateCol", new Date(114, Calendar.MAY, 23), record1.get().getDate("dateCol"));
+            assertEquals(new Date(114, Calendar.MAY, 23), record1.get().getDate("dateCol"), "rec1 dateCol");
         } catch (final ParseException e) {
             fail();
         }
-        assertEquals("rec1 intCol", 6, record1.get().getInt("intCol"));
-        assertEquals("rec1 bigDecimalCol", new BigDecimal("123.45"), record1.get().getBigDecimal("bigDecimalCol"));
+        assertEquals(6, record1.get().getInt("intCol"), "rec1 intCol");
+        assertEquals(new BigDecimal("123.45"), record1.get().getBigDecimal("bigDecimalCol"), "rec1 bigDecimalCol");
 
         // NOW RECORD 2 with ALL defaults
         ds.next();
         final Optional<Record> record2 = ds.getRecord();
-        assertEquals("rec2 string", "Hi", record2.get().getString("stringCol", () -> "Hi"));
-        assertTrue("rec2 doubleCol", Double.compare(3.76, record2.get().getDouble("doubleCol", () -> 3.76d)) == 0);
+        assertEquals("Hi", record2.get().getString("stringCol", () -> "Hi"), "rec2 string");
+        assertTrue(Double.compare(3.76, record2.get().getDouble("doubleCol", () -> 3.76d)) == 0, "rec2 doubleCol");
         try {
-            assertEquals("rec2 dateCol", new Date(114, Calendar.JUNE, 11), record2.get().getDate("dateCol", () -> new Date(114, Calendar.JUNE, 11)));
+            assertEquals(new Date(114, Calendar.JUNE, 11), record2.get().getDate("dateCol", () -> new Date(114, Calendar.JUNE, 11)),
+                    "rec2 dateCol");
         } catch (final ParseException e) {
             fail();
         }
-        assertEquals("rec2 intCol", 8, record2.get().getInt("intCol", () -> 8));
-        assertEquals("rec2 bigDecimalCol", new BigDecimal("555"), record2.get().getBigDecimal("bigDecimalCol", () -> new BigDecimal("555")));
+        assertEquals(8, record2.get().getInt("intCol", () -> 8), "rec2 intCol");
+        assertEquals(new BigDecimal("555"), record2.get().getBigDecimal("bigDecimalCol", () -> new BigDecimal("555")), "rec2 bigDecimalCol");
 
     }
 

@@ -1,5 +1,8 @@
 package net.sf.flatpack.writer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -7,15 +10,17 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 
-import junit.framework.Assert;
+import org.junit.jupiter.api.Test;
+
 import net.sf.flatpack.InitialisationException;
 
 /**
  *
  * @author Dirk Holmes and Holger Holger Hoffstatte
  */
-public class FixedLengthWriterTest extends PZWriterTestCase {
-    public void testWriteFixedLength() throws Exception {
+class FixedLengthWriterTest extends PZWriterTestCase {
+    @Test
+    void testWriteFixedLength() throws Exception {
         final StringWriter out = new StringWriter();
         final Writer writer = new FixedWriterFactory(this.getMapping()).createWriter(out);
 
@@ -31,10 +36,11 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
 
         final String expected = this.normalizeLineEnding(
                 "JOHN                               DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH440350         ");
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void testWriterWithDifferentFillChar() throws Exception {
+    @Test
+    void testWriterWithDifferentFillChar() throws Exception {
         final StringWriter out = new StringWriter();
         final Writer writer = new FixedWriterFactory(this.getMapping(), '.').createWriter(out);
 
@@ -49,32 +55,29 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
 
         final String expected = this.normalizeLineEnding(
                 "JOHN...............................DOE................................1234 CIRCLE CT......................................................................................ELYRIA..............................................................................................OH44035..........");
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void testCreateParserWithMalformedMappingFile() throws Exception {
-        try {
+    @Test
+    void testCreateParserWithMalformedMappingFile() throws Exception {
+        assertThrows(InitialisationException.class, () -> {
             final InputStream mapping = this.getClass().getClassLoader().getResourceAsStream("BrokenMapping.pzmap.xml");
             final InputStreamReader mappingReader = new InputStreamReader(mapping);
             new FixedWriterFactory(mappingReader);
-            Assert.fail();
-        } catch (final InitialisationException ie) {
-            // this excecption must occur, mapping xml is invalid
-        }
+        });
     }
 
-    public void testWriteStringWiderThanColumnDefinition() throws Exception {
+    @Test
+    void testWriteStringWiderThanColumnDefinition() throws Exception {
         final StringWriter out = new StringWriter();
         final Writer writer = new FixedWriterFactory(this.getMapping()).createWriter(out);
-        try {
+        assertThrows(IllegalArgumentException.class, () -> {
             writer.addRecordEntry("STATE", "THISISTOOLONG");
-            Assert.fail("writing entries that are too long should fail");
-        } catch (final IllegalArgumentException iae) {
-            // expected exception
-        }
+        }, "writing entries that are too long should fail");
     }
 
-    public void testWriteNullColumn() throws Exception {
+    @Test
+    void testWriteNullColumn() throws Exception {
         final StringWriter out = new StringWriter();
         final Writer writer = new FixedWriterFactory(this.getMapping()).createWriter(out);
 
@@ -91,10 +94,11 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
 
         final String expected = this.normalizeLineEnding(
                 "                                   DOE                                1234 CIRCLE CT                                                                                      ELYRIA                                                                                              OH4403510        ");
-        Assert.assertEquals(expected, out.toString());
+        assertEquals(expected, out.toString());
     }
 
-    public void DONOTtestWriteDifferentRecords() throws Exception {
+    @Test
+    void DONOTtestWriteDifferentRecords() throws Exception {
         final String ls = System.getProperty("line.separator");
         final StringWriter out = new StringWriter();
         final Writer writer = new FixedWriterFactory(getMappingDiffRecordTypes()).createWriter(out);
@@ -114,7 +118,7 @@ public class FixedLengthWriterTest extends PZWriterTestCase {
         expected.append("D");
         expected.append("detail data         ").append(ls);
 
-        assertEquals("Checking writer for different record types...", expected.toString(), out.toString());
+        assertEquals(expected.toString(), out.toString(), "Checking writer for different record types...");
 
     }
 

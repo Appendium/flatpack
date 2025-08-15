@@ -15,20 +15,20 @@
 package net.sf.flatpack.excel;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.Number;
-import jxl.write.WritableCell;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableFont;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+
 import net.sf.flatpack.DataSet;
 import net.sf.flatpack.util.FPConstants;
 
@@ -69,13 +69,11 @@ public class ExcelTransformer {
      * Writes the Excel file to disk
      *
      * @throws IOException
-     * @throws WriteException
      */
-    public void writeExcelFile() throws IOException, WriteException {
-        WritableWorkbook excelWrkBook = null;
+    public void writeExcelFile() throws IOException {
         int curDsPointer = 0;
 
-        try {
+        try (Workbook excelWrkBook = new SXSSFWorkbook()) {
             final String[] columnNames = ds.getColumns();
             final List<String> exportOnlyColumnsList = getExportOnlyColumns() != null ? Arrays.asList(exportOnlyColumns) : null;
             final List<String> excludeFromExportColumnsList = getExcludeFromExportColumns() != null ? Arrays.asList(excludeFromExportColumns) : null;
@@ -86,13 +84,22 @@ public class ExcelTransformer {
             curDsPointer = ds.getIndex();
             ds.goTop();
 
-            excelWrkBook = Workbook.createWorkbook(xlsFile);
-            final WritableSheet wrkSheet = excelWrkBook.createSheet("results", 0);
+            final Sheet wrkSheet = excelWrkBook.createSheet("results");
 
-            final WritableFont times10ptBold = new WritableFont(WritableFont.TIMES, 10, WritableFont.BOLD);
-            final WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10, WritableFont.NO_BOLD);
+            final Font times10ptBold = excelWrkBook.createFont();
+            times10ptBold.setFontName("Times New Roman");
+            times10ptBold.setFontHeightInPoints((short) 10);
+            times10ptBold.setBold(true);
+
+            final Font times10pt = excelWrkBook.createFont();
+            times10pt.setFontName("Times New Roman");
+            times10pt.setFontHeightInPoints((short) 10);
+
             // write the column headings in the spreadsheet
-            WritableCellFormat cellFormat = new WritableCellFormat(times10ptBold);
+            CellStyle cellFormat = excelWrkBook.createCellStyle();
+            cellFormat.setFont(times10ptBold);
+
+            Row headerRow = wrkSheet.createRow(0);
             int colOffset = 0;
             for (int i = 0; i < columnNames.length; i++) {
                 if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])
@@ -100,18 +107,20 @@ public class ExcelTransformer {
                     colOffset++;
                     continue;
                 }
-
-                final Label xlsTextLbl = new Label(i - colOffset, 0, columnNames[i], cellFormat);
-                wrkSheet.addCell(xlsTextLbl);
+                Cell cell = headerRow.createCell(i - colOffset);
+                cell.setCellValue(columnNames[i]);
+                cell.setCellStyle(cellFormat);
             }
 
-            cellFormat = new WritableCellFormat(times10pt);
-            int row = 1;
+            cellFormat = excelWrkBook.createCellStyle();
+            cellFormat.setFont(times10pt);
+            int rowNum = 1;
             while (ds.next()) {
                 if (!ds.isRecordID(FPConstants.DETAIL_ID)) {
                     continue;
                 }
 
+                Row row = wrkSheet.createRow(rowNum++);
                 colOffset = 0;
                 for (int i = 0; i < columnNames.length; i++) {
                     if (exportOnlyColumnsList != null && !exportOnlyColumnsList.contains(columnNames[i])
@@ -120,30 +129,25 @@ public class ExcelTransformer {
                         continue;
                     }
 
-                    WritableCell wc = null;
+                    Cell cell = row.createCell(i - colOffset);
                     if (numericColumnList.contains(columnNames[i])) {
-                        wc = new Number(i - colOffset, row, ds.getDouble(columnNames[i]), cellFormat);
+                        cell.setCellValue(ds.getDouble(columnNames[i]));
                     } else {
-                        wc = new Label(i - colOffset, row, ds.getString(columnNames[i]), cellFormat);
+                        cell.setCellValue(ds.getString(columnNames[i]));
                     }
-
-                    wrkSheet.addCell(wc);
+                    cell.setCellStyle(cellFormat);
                 }
-
-                row++;
             }
 
-            excelWrkBook.write();
+            try (FileOutputStream fileOut = new FileOutputStream(xlsFile)) {
+                excelWrkBook.write(fileOut);
+            }
 
         } finally {
             if (curDsPointer > -1) {
                 ds.absolute(curDsPointer);
             }
-            if (excelWrkBook != null) {
-                excelWrkBook.close();
-            }
         }
-
     }
 
     /**
